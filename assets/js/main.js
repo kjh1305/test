@@ -193,6 +193,134 @@
     });
   }
 
+  /* ---------- 메인: 단어가 하나씩 진해지는 문장 ---------- */
+  const scrub = $('[data-scrub]');
+  if (scrub && !reduced()) {
+    const words = $$('.mw', scrub);
+    let lit = -1;
+    scrub.classList.add('is-scrub');
+    scrollTasks.push(() => {
+      const r = scrub.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height + vh * 0.35)));
+      const n = Math.round(p * words.length);
+      if (n === lit) return;
+      words.forEach((w, i) => w.classList.toggle('is-lit', i < n));
+      lit = n;
+    });
+  }
+
+  /* ---------- 메인: 위로 쌓이는 서비스 카드 ---------- */
+  const stackEl = $('.stack');
+  if (stackEl) {
+    const cards = $$('.stack-card', stackEl);
+    let tops = [];
+    const measureTops = () => { tops = cards.map(c => parseFloat(getComputedStyle(c).top) || 0); };
+    measureTops();
+    window.addEventListener('resize', measureTops);
+    scrollTasks.push(() => {
+      const sr = stackEl.getBoundingClientRect();
+      if (sr.bottom < 0 || sr.top > window.innerHeight) return;
+      for (let i = 0; i < cards.length - 1; i++) {
+        const d = cards[i + 1].getBoundingClientRect().top - tops[i + 1];
+        const t = Math.min(1, Math.max(0, 1 - d / cards[i].offsetHeight));
+        cards[i].style.setProperty('--t', t.toFixed(3));
+      }
+    });
+  }
+
+  /* ---------- 메인: 세로 스크롤로 넘기는 사례 ---------- */
+  const hwork = $('.hwork');
+  if (hwork) {
+    const track = $('.hwork-track', hwork);
+    const hcards = $$('.hcard', hwork);
+    const currentEl = $('.hwork-current', hwork);
+    const bar = $('.hwork-progress', hwork);
+    let total = 0;
+    const measureWork = () => {
+      total = Math.max(0, track.scrollWidth - window.innerWidth);
+      hwork.style.height = `${total + window.innerHeight}px`;
+      requestTick();
+    };
+    measureWork();
+    window.addEventListener('resize', measureWork);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureWork);
+    scrollTasks.push(() => {
+      const range = hwork.offsetHeight - window.innerHeight;
+      const p = range > 0 ? Math.min(1, Math.max(0, -hwork.getBoundingClientRect().top / range)) : 0;
+      track.style.transform = `translate3d(${(-p * total).toFixed(1)}px, 0, 0)`;
+      bar.style.setProperty('--p', p.toFixed(4));
+      currentEl.textContent = String(Math.min(hcards.length, Math.round(p * (hcards.length - 1)) + 1));
+    });
+    // 키보드로 카드에 들어오면 그 카드가 보이는 위치로 페이지를 옮깁니다.
+    track.addEventListener('focusin', e => {
+      const card = e.target.closest('.hcard');
+      if (!card || !total) return;
+      const pad = parseFloat(getComputedStyle(track).paddingLeft) || 0;
+      const p = Math.min(1, Math.max(0, (card.offsetLeft - pad) / total));
+      const top = hwork.getBoundingClientRect().top + window.scrollY + p * (hwork.offsetHeight - window.innerHeight);
+      window.scrollTo({ top, behavior: 'auto' });
+    });
+  }
+
+  /* ---------- 메인: 스크롤에 맞춰 그려지는 일하는 방식 ---------- */
+  const pline = $('[data-pline]');
+  if (pline) {
+    const steps = $$('.pl-step', pline);
+    scrollTasks.push(() => {
+      const r = pline.getBoundingClientRect();
+      const mark = window.innerHeight * 0.6;
+      const p = Math.min(1, Math.max(0, (mark - r.top) / r.height));
+      pline.style.setProperty('--p', p.toFixed(4));
+      steps.forEach(s => s.classList.toggle('is-on', s.getBoundingClientRect().top < mark));
+    });
+  }
+
+  /* ---------- 메인: 스크롤 속도에 맞춰 흐르는 큰 문구 ---------- */
+  const vband = $('.vband');
+  if (vband && hasIO && !reduced()) {
+    const rows = $$('.vrow', vband).map(row => {
+      const t = $('.vtrack', row);
+      Array.from(t.children).forEach(child => t.appendChild(child.cloneNode(true)));
+      return { track: t, dir: Number(row.dataset.dir) || 1, x: 0, half: 0 };
+    });
+    const measureBand = () => rows.forEach(r => {
+      r.half = r.track.scrollWidth / 2;
+      if (r.dir < 0 && r.x === 0) r.x = -r.half * 0.37; // 두 줄의 시작 위치를 엇갈리게
+    });
+    measureBand();
+    window.addEventListener('resize', measureBand);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureBand);
+    let running = false;
+    let lastY = window.scrollY;
+    let velocity = 0;
+    const tick = () => {
+      if (!running) return;
+      const y = window.scrollY;
+      velocity += (Math.min(90, Math.abs(y - lastY)) - velocity) * 0.12;
+      lastY = y;
+      rows.forEach(r => {
+        r.x -= (0.7 + velocity * 0.55) * r.dir;
+        if (r.half) {
+          while (r.x <= -r.half) r.x += r.half;
+          while (r.x > 0) r.x -= r.half;
+        }
+        r.track.style.transform = `translate3d(${r.x.toFixed(1)}px, 0, 0)`;
+      });
+      requestAnimationFrame(tick);
+    };
+    new IntersectionObserver(entries => {
+      const visible = entries[entries.length - 1].isIntersecting;
+      if (visible && !running) {
+        running = true;
+        lastY = window.scrollY;
+        requestAnimationFrame(tick);
+      } else if (!visible) {
+        running = false;
+      }
+    }).observe(vband);
+  }
+
   /* ---------- 패럴랙스 ---------- */
   const parallaxEls = $$('[data-parallax]');
   if (parallaxEls.length && hasIO && !reduced()) {

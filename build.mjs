@@ -7,13 +7,14 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import {
-  SITE, STATS, WALL, SCENES, SERVICES, INDUSTRIES, CASES, FEATURED,
+  SITE, STATS, SERVICES, INDUSTRIES, CASES,
   PRINCIPLES, TIMELINE, TEAMS, PROCESS, FAQ, CONTACT_STEPS, POSTS
 } from './src/data.mjs';
-import { BRANDS, creative, icon } from './src/creatives.mjs';
+import { creative, icon } from './src/creatives.mjs';
 import {
-  page, pageHero, ctaBand, caseCard, postRow, phone, lines, plotLine, dotDate, rootFor
+  page, pageHero, ctaBand, caseCard, postRow, lines, plotLine, dotDate, rootFor
 } from './src/components.mjs';
+import { homePage } from './src/home.mjs';
 
 const OUT = dirname(fileURLToPath(import.meta.url));
 const written = [];
@@ -26,133 +27,6 @@ function write(path, html) {
 
 const enc = encodeURIComponent;
 const casesFor = name => CASES.filter(c => c.services.includes(name));
-
-/* ---------------------------------------------------------
-   메인
-   --------------------------------------------------------- */
-function home() {
-  const path = '';
-  const R = rootFor(path);
-  const durations = [62, 76, 68, 84];
-  const wall = WALL.map((col, ci) => `<div class="wall-col${ci % 2 ? ' is-down' : ''}" style="--dur:${durations[ci]}s">
-      <div class="wall-track">${col.map(id => `<div class="wall-item">${creative(id, 'feed', { decorative: true })}</div>`).join('')}</div>
-    </div>`).join('');
-
-  const wordmarks = Object.values(BRANDS).map(b => {
-    const w = b.word;
-    return `<li style="font-family:${w.family.replaceAll('"', '&quot;')};font-weight:${w.weight};letter-spacing:${w.spacing}em;${w.italic ? 'font-style:italic;' : ''}">${w.text}</li>`;
-  }).join('');
-
-  const featured = FEATURED.map(id => CASES.find(c => c.id === id)).map(c => `<article class="feature">
-      <a class="feature-media" href="${R}work/${c.id}/" data-reveal="wipe" data-parallax="0.05" data-cursor="자세히 보기" tabindex="-1" aria-hidden="true">
-        <div class="feature-media-inner">${creative(c.id, 'banner', { decorative: true })}</div>
-      </a>
-      <div class="feature-copy">
-        <p class="feature-meta"><span>${c.brand}</span><span>${c.industry}</span></p>
-        <h3 class="feature-title"><a href="${R}work/${c.id}/">${c.title}</a></h3>
-        <p class="feature-result"><span class="hl">${c.card}</span></p>
-        <p class="feature-desc">${c.challenge}</p>
-      </div>
-    </article>`).join('');
-
-  const main = `
-<section class="hero-main" data-dark>
-  <div class="hero-wall" aria-hidden="true"><div class="wall-grid">${wall}</div></div>
-  <div class="wrap hero-inner">
-    <h1 class="hero-title">${lines(['고객이 스크롤을', '멈추는 순간부터', '결제 버튼을 누르는', '순간까지.'])}</h1>
-    <p class="hero-lede">플롯라인은 그 사이의 장면을 설계하는 마케팅 회사입니다. 광고 집행, 콘텐츠 제작, 데이터 분석을 한&nbsp;팀이 맡습니다.</p>
-    <div class="hero-actions">
-      <a class="btn btn-light btn-lg" href="${R}contact/">문의하기</a>
-      <a class="btn btn-ghost-light btn-lg" href="${R}work/">사례 보기</a>
-    </div>
-  </div>
-  <p class="wall-note" aria-hidden="true">
-    <svg viewBox="0 0 70 44"><path d="M4 38 C 20 40, 44 30, 60 8"/><path d="M50 9.5 L 60.5 7.5 L 60 18"/></svg>
-    <span>이번 달 운영 중인 광고 소재</span>
-  </p>
-  <a class="scroll-cue" href="#scenes"><span>세 장면 보기</span><i aria-hidden="true"></i></a>
-</section>
-
-<section class="clients" aria-labelledby="clients-title">
-  <div class="wrap clients-head">
-    <h2 id="clients-title">함께한 브랜드</h2>
-    <p>2019년부터 브랜드 140곳과 일했습니다.</p>
-  </div>
-  <div class="marquee"><ul class="marquee-track">${wordmarks}${wordmarks}</ul></div>
-</section>
-
-<section class="scenes" id="scenes" data-step="1" aria-labelledby="scenes-title">
-  <div class="scenes-sticky">
-    <div class="wrap scenes-grid">
-      <div class="scenes-copy">
-        <h2 class="scenes-title" id="scenes-title">광고 한 편이 <br>매출이 되기까지</h2>
-        <p class="scenes-sub">데이미스트 캠페인에서 고객이 지나간 세 장면입니다.</p>
-        <ol class="scene-steps">
-          ${SCENES.map((s, i) => `<li class="scene-step" data-step="${i + 1}">
-            <p class="scene-pen">${i + 1}. ${s.pen}</p>
-            <p class="scene-desc">${s.desc}</p>
-            <p class="scene-metric">${s.metricLabel} <strong data-count>${s.metric}</strong></p>
-          </li>`).join('')}
-        </ol>
-        <a class="text-link scenes-link" href="${R}work/daymist/">데이미스트 캠페인 자세히 보기</a>
-      </div>
-      <div class="scenes-stage">
-        ${phone()}
-        <div class="scene-rail" aria-hidden="true"><span style="--k:0"></span><span style="--k:1"></span><span style="--k:2"></span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section stats tone-mist" aria-labelledby="stats-title">
-  <div class="wrap">
-    <h2 class="stats-lead" id="stats-title" data-reveal>광고를 맡긴 브랜드 열 곳 중 일곱 곳이 다음 해에도 함께합니다.</h2>
-    <ul class="stat-list">
-      ${STATS.map((s, i) => `<li data-reveal style="--d:${i}"><strong data-count>${s.value}</strong><span>${s.label}</span></li>`).join('')}
-    </ul>
-  </div>
-</section>
-
-<section class="section svc-overview" aria-labelledby="svc-title">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 id="svc-title" data-reveal="lines">${lines(['광고부터 콘텐츠, 데이터까지', '한 팀이 맡습니다'])}</h2>
-      <a class="text-link" href="${R}services/">서비스 자세히 보기</a>
-    </div>
-    <ul class="svc-rows">
-      ${SERVICES.map(s => `<li><a class="svc-row" href="${R}services/#${s.id}">
-        <span class="svc-name">${s.name}</span>
-        <span class="svc-short">${s.short}</span>
-        <span class="svc-arrow">${icon('arrow')}</span>
-      </a></li>`).join('')}
-    </ul>
-  </div>
-</section>
-
-<section class="section featured" aria-labelledby="featured-title">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 id="featured-title" data-reveal="lines">${lines(['최근 사례'])}</h2>
-      <a class="text-link" href="${R}work/">포트폴리오 전체 보기</a>
-    </div>
-    <div class="feature-list">${featured}</div>
-  </div>
-</section>
-
-<section class="section tone-mist" aria-labelledby="insights-title">
-  <div class="wrap">
-    <div class="section-head">
-      <h2 id="insights-title" data-reveal="lines">${lines(['인사이트'])}</h2>
-      <a class="text-link" href="${R}insights/">인사이트 전체 보기</a>
-    </div>
-    <ul class="post-rows">${POSTS.slice(0, 3).map(p => postRow(p, R)).join('')}</ul>
-  </div>
-</section>
-
-${ctaBand(R)}`;
-
-  write('index.html', page({ path, title: '', description: SITE.description, bodyClass: 'is-home', main }));
-}
 
 /* ---------------------------------------------------------
    회사소개
@@ -609,7 +483,7 @@ function notFound() {
   write('404.html', page({ path: '404.html', title: '페이지를 찾을 수 없어요', main, rootOverride: R }));
 }
 
-home();
+write('index.html', homePage());
 about();
 services();
 work();

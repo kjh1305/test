@@ -177,8 +177,6 @@ export const CASES = [
   }
 ];
 
-export const FEATURED = ['daymist', 'stridewell', 'tideroom', 'hearth'];
-
 export const PRINCIPLES = [
   { title: '한 사람이 끝까지 맡습니다', text: '첫 미팅에서 만난 담당자가 전략, 집행, 리포트까지 직접 챙깁니다. 중간에 담당자가 바뀌어 설명을 다시 하는 일이 없습니다.' },
   { title: '매주 숫자로 이야기합니다', text: '매주 월요일, 지난주 광고비와 매출, 이번 주에 바꿀 것을 한 장으로 정리해 보내 드립니다.' },
@@ -204,11 +202,53 @@ export const TEAMS = [
 
 /* 일하는 방식 — 주 단위 일정표. from/to는 격자 열 번호(데스크톱), mfrom/mto는 모바일 */
 export const PROCESS = [
-  { title: '진단', text: '지금의 광고 계정, 매출 데이터, 경쟁 브랜드를 함께 살펴봅니다. 1주차에 진행합니다.', from: 2, to: 3, mfrom: 1, mto: 2 },
-  { title: '전략', text: '누구에게 어떤 장면을 보여 줄지 정하고, 채널별 예산을 나눕니다. 2주차에 진행합니다.', from: 3, to: 4, mfrom: 2, mto: 3 },
-  { title: '제작과 집행', text: '소재를 만들고 광고를 켭니다. 3주차부터 계속 운영하고, 첫 2주는 매일 조정합니다.', from: 4, to: 8, mfrom: 3, mto: 7, kind: 'ongoing' },
-  { title: '리포트', text: '매주 결과를 공유하고, 매달 다음 달 계획을 같이 정합니다. 3주차부터 매주 보내 드립니다.', from: 4, to: 8, mfrom: 3, mto: 7, kind: 'weekly' }
+  { title: '진단', when: '1주차', text: '지금의 광고 계정, 매출 데이터, 경쟁 브랜드를 함께 살펴봅니다. 1주차에 진행합니다.', from: 2, to: 3, mfrom: 1, mto: 2 },
+  { title: '전략', when: '2주차', text: '누구에게 어떤 장면을 보여 줄지 정하고, 채널별 예산을 나눕니다. 2주차에 진행합니다.', from: 3, to: 4, mfrom: 2, mto: 3 },
+  { title: '제작과 집행', when: '3주차부터', text: '소재를 만들고 광고를 켭니다. 3주차부터 계속 운영하고, 첫 2주는 매일 조정합니다.', from: 4, to: 8, mfrom: 3, mto: 7, kind: 'ongoing' },
+  { title: '리포트', when: '매주 월요일', text: '매주 결과를 공유하고, 매달 다음 달 계획을 같이 정합니다. 3주차부터 매주 보내 드립니다.', from: 4, to: 8, mfrom: 3, mto: 7, kind: 'weekly' }
 ];
+
+/* ---------- 메인 페이지 전용 ---------- */
+
+/* 스크롤하면 단어가 하나씩 진해지는 문장 */
+export const MANIFESTO = '광고는 매일 수천 개씩 지나갑니다. 사람들이 기억하는 건 그중 몇 개의 장면뿐입니다. 플롯라인은 고객이 멈추고, 저장하고, 결제하는 그 장면을 설계합니다.';
+
+/* 서비스 카드 색과 함께 보여 줄 광고 소재 */
+export const STACK = {
+  performance: { tone: 'ink', visuals: ['daymist', 'fairway'] },
+  search: { tone: 'cobalt', visuals: ['tideroom'] },
+  social: { tone: 'marker', visuals: ['greencrumb', 'pawlette'] },
+  content: { tone: 'light', visuals: ['softkiln', 'hearth'] },
+  influencer: { tone: 'ink', visuals: ['stridewell'] },
+  data: { tone: 'cobalt', visuals: ['pocketledger'] }
+};
+
+/* 시작 전과 후 (사례 본문의 수치) */
+export const RESULTS = [
+  { id: 'softkiln', metric: '원두 구독 회원', before: 900, after: 4300, unit: '명' },
+  { id: 'hearth', metric: '월 쇼룸 방문 예약', before: 40, after: 150, unit: '건' },
+  { id: 'daymist', metric: 'ROAS', before: 190, after: 518, unit: '%' },
+  { id: 'pawlette', metric: '재구매율', before: 29, after: 64, unit: '%' },
+  { id: 'tideroom', metric: '비수기 예약률', before: 41, after: 78, unit: '%' },
+  { id: 'pocketledger', metric: '7일 차 유지율', before: 18, after: 31, unit: '%' }
+];
+
+/* 주간 리포트 예시 (ROAS = 매출 ÷ 광고비, 요일별 매출 합계 = 주간 매출) */
+export const REPORT = {
+  brand: '데이미스트',
+  period: '10월 20일 ~ 26일',
+  kpis: [
+    { label: '광고비', value: '482만 원', delta: '+6%' },
+    { label: '매출', value: '2,497만 원', delta: '+18%' },
+    { label: 'ROAS', value: '518%', delta: '+52%p' },
+    { label: '신규 구매자', value: '1,240명', delta: '+12%' }
+  ],
+  days: [['월', 312], ['화', 298], ['수', 341], ['목', 365], ['금', 402], ['토', 428], ['일', 351]],
+  todo: ['반응이 떨어진 소재 2개를 새 장면으로 교체', '쇼핑검색 상위 키워드 3개 입찰 조정', '상세페이지 첫 문장 A/B 테스트 시작']
+};
+
+/* 스크롤 속도에 맞춰 흐르는 큰 문구 */
+export const BAND = ['엄지가 멈추는 장면', '친구를 부르는 장면', '결제 버튼을 누르는 장면'];
 
 export const FAQ = [
   { q: '최소 계약 기간이 있나요?', a: '3개월부터 시작합니다. 첫 달은 진단과 테스트가 많아서, 성과를 판단하려면 최소 3개월은 보셔야 합니다.' },
