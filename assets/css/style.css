@@ -545,6 +545,9 @@ mark { font-weight: inherit; }
 @media (max-width: 1100px) {
   .wall-note { display: none; }
 }
+@media (max-width: 1180px) and (min-width: 900px) {
+  .hero-lede { max-width: 21em; }
+}
 @media (max-width: 899px) {
   .hero-main { align-items: flex-end; }
   .hero-main::before {
