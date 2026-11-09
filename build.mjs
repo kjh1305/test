@@ -480,7 +480,9 @@ function notFound() {
     </div>
   </div>
 </section>`;
-  write('404.html', page({ path: '404.html', title: '페이지를 찾을 수 없어요', main, rootOverride: R }));
+  // 코리아트레이 시안(/test/koreatray/) 아래의 없는 주소는 그쪽 안내 페이지로 보냅니다
+  const ktRedirect = `<script>(function(){var m=location.pathname.match(/^\\/test\\/koreatray\\/(?:(en|ja|vi|th)\\/)?/);if(m)location.replace('/test/koreatray/'+(m[1]?m[1]+'/':'')+'404.html');})();</script>`;
+  write('404.html', page({ path: '404.html', title: '페이지를 찾을 수 없어요', main, rootOverride: R }).replace('<head>', `<head>\n${ktRedirect}`));
 }
 
 write('index.html', homePage());
