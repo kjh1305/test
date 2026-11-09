@@ -39,4 +39,5 @@
 - `koreatray/`: 글로벌 코리아트레이 홈페이지 시안 (한국어, 영어, 일본어, 베트남어, 태국어). 자세한 내용은 `koreatray/README.md`를 보세요.
 - `gonggam/`: 공감 행정사사무소 홈페이지 시안. 자세한 내용은 `gonggam/README.md`를 보세요.
 - `ire/`: 이레산업개발 홈페이지 시안. 자세한 내용은 `ire/README.md`를 보세요.
-- `/test/koreatray/`, `/test/gonggam/`, `/test/ire/` 아래의 없는 주소는 `404.html`이 각 시안의 안내 페이지로 보냅니다.
+- `getscreen/`: 겟스크린미 한국총판 홈페이지 시안. 자세한 내용은 `getscreen/README.md`를 보세요.
+- `/test/koreatray/`, `/test/gonggam/`, `/test/ire/`, `/test/getscreen/` 아래의 없는 주소는 `404.html`이 각 시안의 안내 페이지로 보냅니다.
