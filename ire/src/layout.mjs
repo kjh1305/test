@@ -25,7 +25,7 @@ export function secHead({ eb, en, title, sub, cls = '' }) {
 }
 
 function logo(c, cls = '') {
-  return `<a class="logo ${cls}" href="${c.url('')}" aria-label="${CO.name} 홈">${logoMark()}<span class="logo-text"><b>${CO.name}</b><small>${CO.field}</small></span></a>`;
+  return `<a class="logo ${cls}" href="${c.url('')}" aria-label="${CO.name} 홈">${logoMark()}<span class="logo-text"><b>${CO.name}</b><small>${CO.en}</small></span></a>`;
 }
 
 function header(c) {
@@ -64,7 +64,7 @@ function footer(c) {
     </div>
     <div class="f-info">
       <p><b>${CO.legal}</b><span>대표: <em class="ph-inline">${CO.ph}</em></span><span>전화 ${CO.phone}</span><span>${CO.email}</span></p>
-      <p><span>주소: <em class="ph-inline">${CO.ph}</em></span><span>사업자등록번호: <em class="ph-inline">${CO.ph}</em></span></p>
+      <p><span>주소: ${CO.address}</span><span>사업자등록번호: <em class="ph-inline">${CO.ph}</em></span></p>
     </div>
     <div class="f-bottom">
       <p class="f-note">이 사이트는 홈페이지 제작 시안입니다. 표시한 자리와 일부 문구는 실제 자료로 바꿀 예정입니다.</p>
@@ -103,7 +103,8 @@ export function page(c, { title, desc, body, bodyClass = '' }) {
 <meta property="og:locale" content="ko_KR">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#15181B">
-<link rel="icon" href="${c.asset('favicon.svg')}" type="image/svg+xml">
+<link rel="icon" href="${c.asset('favicon.png')}" type="image/png">
+<link rel="apple-touch-icon" href="${c.asset('apple-touch-icon.png')}">
 <link rel="stylesheet" href="${c.asset('fonts/pretendard/pretendardvariable-dynamic-subset.css')}">
 <link rel="stylesheet" href="${c.asset('css/site.css')}">
 <script>document.documentElement.classList.replace('no-js','js');setTimeout(function(){if(!window.__ire)document.documentElement.classList.add('no-motion-fallback')},2500)</script>
@@ -122,8 +123,9 @@ ${quickbar(c)}
 `;
 }
 
-export function pageHero(c, { en, eb, title, lede, crumb }) {
-  return `<section class="page-hero" data-dark>
+export function pageHero(c, { en, eb, title, lede, crumb, img }) {
+  return `<section class="page-hero${img ? ' has-img' : ''}" data-dark>
+  ${img ? `<div class="page-hero-img" aria-hidden="true"><img src="${c.asset('img/' + img)}" alt="" width="966" height="520" decoding="async" fetchpriority="high"></div>` : ''}
   <div class="grid-bg" aria-hidden="true"></div>
   <p class="page-en" aria-hidden="true">${en}</p>
   <div class="wrap page-hero-in">

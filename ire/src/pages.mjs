@@ -1,5 +1,5 @@
 /* 페이지 본문: 홈, 회사소개, 사업분야, 시공사례, 건축 가이드, 견적문의, 없는 주소 */
-import { CO, SCOPE, TYPES, STRENGTHS, PROCESS, COSTS, LAND, REGIONS, CATS, POSTS, HOME, ABOUT, CONTACT, META } from './content.mjs';
+import { CO, SCOPE, TYPES, STRENGTHS, PROCESS, COSTS, LAND, REGIONS, CATS, POSTS, BAND, PROJECTS, HOME, ABOUT, CONTACT, META } from './content.mjs';
 import { icon, typeArt, heroBuilding } from './art.mjs';
 import { page, pageHero, ctaBand, btn, phoneBtn, lines, eyebrow, secHead, esc } from './layout.mjs';
 
@@ -7,7 +7,7 @@ const pad2 = n => String(n).padStart(2, '0');
 const inkWords = t => t.split(' ').map((w, i, a) => `<span class="w">${w}${i < a.length - 1 ? ' ' : ''}</span>`).join('');
 const ph = (t = CO.ph) => `<span class="ph">${t}</span>`;
 const LAND_IC = ['map', 'road', 'hill', 'plug'];
-const postRow = p => `<li data-cat="${p.cat}"><a href="${CO.blog}" target="_blank" rel="noopener">
+const postRow = p => `<li data-cat="${p.cat}"><a href="${p.url || CO.blog}" target="_blank" rel="noopener">
   <span class="post-meta"><span class="post-cat">${CATS[p.cat]}</span><time datetime="${p.date}">${p.date.replace(/-/g, '.')}</time></span>
   <b>${p.title}</b>${icon('external')}
 </a></li>`;
@@ -16,6 +16,18 @@ const projectCard = (t, i) => `<li class="pj" data-reveal style="--d:${(i % 3) *
   <p class="pj-tag">${t.name}</p>
   <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
 </li>`;
+/* 블로그 글에 이름이 나온 현장: 이름과 위치만 쓰고 나머지는 채울 자리 */
+const namedProject = (pj, i) => `<li class="pj pj-named" data-reveal style="--d:${(i % 3) * 0.07}s">
+  <div class="pj-ph">${icon('camera')}<span>현장 사진 자리</span></div>
+  <p class="pj-tag">${pj.name}<small>${pj.note}</small></p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd>${pj.where}</dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li>`;
+/* 블로그 표지가 있는 글은 카드로 (표지에 제목이 들어 있어 이미지는 장식으로 둠) */
+const postCard = (c, p, i) => `<li data-reveal style="--d:${i * 0.07}s"><a class="pcard" href="${p.url}" target="_blank" rel="noopener">
+  <span class="pcard-img"><img src="${c.asset('img/' + p.cover)}" width="520" height="520" alt="" loading="lazy" decoding="async"></span>
+  <span class="post-meta"><span class="post-cat">${CATS[p.cat]}</span><time datetime="${p.date}">${p.date.replace(/-/g, '.')}</time></span>
+  <b>${p.title}</b>
+</a></li>`;
 
 /* ================= 홈 ================= */
 export function home(c) {
@@ -42,6 +54,10 @@ export function home(c) {
     <blockquote class="statement-q"><p>${inkWords(CO.intro)}</p></blockquote>
     <p class="statement-sub" data-reveal>${HOME.statementSub}</p>
   </div>
+</section>`;
+
+  const band = `<section class="band" aria-label="현장 사진">
+  <ul class="band-grid">${BAND.map((b, i) => `<li data-reveal style="--d:${i * 0.06}s"><img src="${c.asset('img/' + b.src)}" width="${b.w}" height="${b.h}" alt="${b.alt}" loading="lazy" decoding="async"></li>`).join('')}</ul>
 </section>`;
 
   const types = `<section class="types">
@@ -90,14 +106,14 @@ export function home(c) {
   const projects = `<section class="projects-home">
   <div class="wrap">
     <div class="sec-row">${secHead({ en: 'PROJECTS', title: HOME.projectsTitle, sub: HOME.projectsSub })}${btn(c.url('projects/'), '시공사례 보기', { variant: 'outline' })}</div>
-    <ul class="pj-grid">${TYPES.slice(0, 3).map(projectCard).join('')}</ul>
+    <ul class="pj-grid">${PROJECTS.map(namedProject).join('')}${TYPES.slice(0, 3 - PROJECTS.length).map((t, i) => projectCard(t, i + PROJECTS.length)).join('')}</ul>
   </div>
 </section>`;
 
   const guide = `<section class="guide-home">
-  <div class="wrap guide-in">
-    <div>${secHead({ en: 'GUIDE', title: HOME.guideTitle, sub: HOME.guideSub })}<div class="guide-btns">${btn(c.url('guide/'), '건축 가이드 전체', { variant: 'outline' })}${btn(CO.blog, '블로그', { variant: 'outline', ext: true })}</div></div>
-    <ul class="post-list">${POSTS.slice(0, 5).map(postRow).join('')}</ul>
+  <div class="wrap">
+    <div class="sec-row">${secHead({ en: 'GUIDE', title: HOME.guideTitle, sub: HOME.guideSub })}<div class="guide-btns">${btn(c.url('guide/'), '건축 가이드 전체', { variant: 'outline' })}${btn(CO.blog, '블로그', { variant: 'outline', ext: true })}</div></div>
+    <ul class="pcards">${POSTS.filter(p => p.cover).slice(0, 4).map((p, i) => postCard(c, p, i)).join('')}</ul>
   </div>
 </section>`;
 
@@ -108,7 +124,7 @@ export function home(c) {
   </div>
 </section>`;
 
-  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + statement + types + direct + process + budget + projects + guide + regions + ctaBand(c) });
+  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + statement + band + types + direct + process + budget + projects + guide + regions + ctaBand(c) });
 }
 
 /* ================= 회사소개 ================= */
@@ -139,7 +155,7 @@ export function about(c) {
     ['공사', SCOPE.map(s => s.name).join(', ')],
     ['전화', `<a href="${CO.phoneHref}">${CO.phone}</a>`],
     ['이메일', `<a href="mailto:${CO.email}">${CO.email}</a>`],
-    ['주소', ph()],
+    ['주소', CO.address],
     ['사업자등록번호', ph()],
     ['건설업 등록', ph()],
     ['블로그', `<a href="${CO.blog}" target="_blank" rel="noopener">${CO.blogName}${icon('external')}</a>`]
@@ -153,12 +169,19 @@ export function about(c) {
   const map = `<section class="map-sec" id="location">
   <div class="wrap">
     ${secHead({ en: 'LOCATION', title: ABOUT.mapTitle })}
-    <div class="map-ph" data-reveal>${icon('pin')}<b>회사 주소를 받으면 지도를 넣을 자리</b><span>${HOME.regionsTitle}: ${REGIONS.join(', ')}</span></div>
+    <div class="map-card" data-reveal>
+      <div class="map-addr">${icon('pin')}<div><b>${CO.address}</b><p>${CO.legal}</p></div></div>
+      <div class="map-links">
+        <a href="https://map.naver.com/p/search/${encodeURIComponent(CO.mapQuery)}" target="_blank" rel="noopener">네이버 지도${icon('external')}</a>
+        <a href="https://map.kakao.com/link/search/${encodeURIComponent(CO.mapQuery)}" target="_blank" rel="noopener">카카오맵${icon('external')}</a>
+      </div>
+      <p class="map-note">지도는 실제 사이트에서 넣습니다. ${HOME.regionsTitle}: ${REGIONS.join(', ')}</p>
+    </div>
   </div>
 </section>`;
   return page(c, {
     title: '회사소개', desc: META.about, bodyClass: 'p-about',
-    body: pageHero(c, { en: 'ABOUT', eb: '회사소개', title: ABOUT.heroTitle, lede: ABOUT.heroLede, crumb: '회사소개' }) + greet + principles + info + map + ctaBand(c)
+    body: pageHero(c, { en: 'ABOUT', eb: '회사소개', title: ABOUT.heroTitle, lede: ABOUT.heroLede, crumb: '회사소개', img: 'hero-about.webp' }) + greet + principles + info + map + ctaBand(c)
   });
 }
 
@@ -186,7 +209,7 @@ export function business(c) {
 </section>`;
   return page(c, {
     title: '사업분야', desc: META.business, bodyClass: 'p-business',
-    body: pageHero(c, { en: 'BUSINESS', eb: '사업분야', title: ['쓰임에 맞춰', '짓습니다'], lede: '공장, 창고, 근린생활시설부터 상가주택과 빌딩, 증축과 대수선까지 맡습니다.', crumb: '사업분야' }) + chips + secs + scope + ctaBand(c)
+    body: pageHero(c, { en: 'BUSINESS', eb: '사업분야', title: ['쓰임에 맞춰', '짓습니다'], lede: '공장, 창고, 근린생활시설부터 상가주택과 빌딩, 증축과 대수선까지 맡습니다.', crumb: '사업분야', img: 'hero-business.webp' }) + chips + secs + scope + ctaBand(c)
   });
 }
 
@@ -195,12 +218,12 @@ export function projects(c) {
   const body = `<section class="pj-page">
   <div class="wrap">
     <p class="pj-note">${icon('camera')}<span>${HOME.projectsSub} 사진, 위치, 규모, 공사 종류를 카드마다 넣습니다.</span></p>
-    <ul class="pj-grid pj-grid-full">${[...TYPES, ...TYPES.slice(0, 3)].map(projectCard).join('')}</ul>
+    <ul class="pj-grid pj-grid-full">${PROJECTS.map(namedProject).join('')}${[...TYPES, ...TYPES.slice(0, 3 - PROJECTS.length)].map((t, i) => projectCard(t, i + PROJECTS.length)).join('')}</ul>
   </div>
 </section>`;
   return page(c, {
     title: '시공사례', desc: META.projects, bodyClass: 'p-projects',
-    body: pageHero(c, { en: 'PROJECTS', eb: '시공사례', title: ['직접 지은', '건물들'], lede: '이레산업개발이 시공한 공장, 창고, 근린생활시설을 소개합니다.', crumb: '시공사례' }) + body + ctaBand(c)
+    body: pageHero(c, { en: 'PROJECTS', eb: '시공사례', title: ['직접 지은', '건물들'], lede: '이레산업개발이 시공한 공장, 창고, 근린생활시설을 소개합니다.', crumb: '시공사례', img: 'hero-projects.webp' }) + body + ctaBand(c)
   });
 }
 
@@ -213,13 +236,13 @@ export function guide(c) {
       <button type="button" aria-pressed="true" data-f="all">전체 <span>${POSTS.length}</span></button>
       ${Object.entries(CATS).map(([k, v]) => `<button type="button" aria-pressed="false" data-f="${k}">${v} <span>${count(k)}</span></button>`).join('')}
     </div>
-    <p class="guide-note">${icon('blog')}글을 누르면 네이버 블로그로 이동합니다. 목록은 2026년 11월 9일 기준입니다.</p>
+    <p class="guide-note">${icon('blog')}글을 누르면 네이버 블로그로 이동합니다. 목록은 2026년 11월 9일 기준이고, 받은 글 5개는 그 글로, 나머지는 블로그 첫 화면으로 연결됩니다.</p>
     <ul class="post-list post-list-full" data-post-list>${POSTS.map(postRow).join('')}</ul>
   </div>
 </section>`;
   return page(c, {
     title: '건축 가이드', desc: META.guide, bodyClass: 'p-guide',
-    body: pageHero(c, { en: 'GUIDE', eb: '건축 가이드', title: ['건축주가', '자주 묻는 것들'], lede: '공장, 창고, 근린생활시설을 지을 때 알아 두면 좋은 내용을 블로그에 정리하고 있습니다.', crumb: '건축 가이드' }) + body + ctaBand(c)
+    body: pageHero(c, { en: 'GUIDE', eb: '건축 가이드', title: ['건축주가', '자주 묻는 것들'], lede: '공장, 창고, 근린생활시설을 지을 때 알아 두면 좋은 내용을 블로그에 정리하고 있습니다.', crumb: '건축 가이드', img: 'hero-guide.webp' }) + body + ctaBand(c)
   });
 }
 
@@ -248,12 +271,13 @@ export function contact(c) {
   <button class="btn btn-primary btn-lg" type="submit"><span>견적문의 보내기</span>${icon('arrow')}</button>
 </form>`;
   const aside = `<aside class="contact-aside">
-  <div class="ca-phone"><p>바로 통화하면 가장 빠릅니다</p><a href="${CO.phoneHref}">${icon('phone')}${CO.phone}</a><a class="ca-mail" href="mailto:${CO.email}">${icon('mail')}${CO.email}</a></div>
+  <div class="ca-phone"><p>바로 통화하면 가장 빠릅니다</p><a href="${CO.phoneHref}">${icon('phone')}${CO.phone}</a><a class="ca-mail" href="mailto:${CO.email}">${icon('mail')}${CO.email}</a><p class="ca-addr">${icon('pin')}<span>${CO.address}<br><small>전화 및 방문 상담 환영</small></span></p></div>
+  <div class="ca-card"><h2>상담 때 알려 주시면 좋은 것</h2><ul class="ca-tell">${CONTACT.tellUs.map(x => `<li>${icon('check')}<span>${x}</span></li>`).join('')}</ul></div>
   <div class="ca-card"><h2>상담 전에 알면 좋은 것</h2><ul class="ca-list">${LAND.map(x => `<li>${icon('check')}<span><b>${x.title}</b> ${x.text}</span></li>`).join('')}</ul></div>
 </aside>`;
   return page(c, {
     title: '견적문의', desc: META.contact, bodyClass: 'p-contact',
-    body: pageHero(c, { en: 'CONTACT', eb: '견적문의', title: CONTACT.heroTitle, lede: CONTACT.heroLede, crumb: '견적문의' }) + `<section class="contact"><div class="wrap contact-in">${form}${aside}</div></section>`
+    body: pageHero(c, { en: 'CONTACT', eb: '견적문의', title: CONTACT.heroTitle, lede: CONTACT.heroLede, crumb: '견적문의', img: 'hero-contact.webp' }) + `<section class="contact"><div class="wrap contact-in">${form}${aside}</div></section>`
   });
 }
 

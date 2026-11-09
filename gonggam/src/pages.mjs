@@ -1,15 +1,22 @@
 /* 페이지 본문: 홈, 사무소 소개, 업무 분야, 칼럼, 상담 신청, 없는 주소 */
-import { OFFICE, SERVICES, PROCESS, CATS, POSTS, HOME, ABOUT, CONTACT, META } from './content.mjs';
+import { OFFICE, SERVICES, OTHER, PROCESS, CATS, POSTS, FAQ_LINKS, HOME, ABOUT, CONTACT, META } from './content.mjs';
 import { icon, seal, doc } from './art.mjs';
 import { page, pageHero, urgentBand, btn, phoneBtn, lines, eyebrow, secHead, esc } from './layout.mjs';
 
 const pad2 = n => String(n).padStart(2, '0');
 const inkWords = text => text.split(' ').map((w, i, a) => `<span class="w">${w}${i < a.length - 1 ? ' ' : ''}</span>`).join('');
-const postRow = (p, i = 0) => `<li data-cat="${p.cat}"><a href="${OFFICE.blog}" target="_blank" rel="noopener">
+const postRow = (p, i = 0) => `<li data-cat="${p.cat}"><a href="${p.url || OFFICE.blog}" target="_blank" rel="noopener">
   <span class="col-meta"><span class="col-cat cat-${p.cat}">${CATS[p.cat]}</span><time datetime="${p.date}">${p.date.replace(/-/g, '.')}</time></span>
   <b>${p.title}</b>${icon('external')}
 </a></li>`;
 const ph = txt => `<span class="ph">${txt || OFFICE.placeholder}</span>`;
+/* 블로그 표지가 있는 글은 카드로 보여 줍니다 (표지에 제목이 들어 있어 이미지는 장식으로 둠) */
+const colCard = (c, p, i) => `<li data-reveal style="--d:${i * 0.07}s"><a class="col-card" href="${p.url}" target="_blank" rel="noopener">
+  <span class="cc-img"><img src="${c.asset('img/' + p.cover)}" width="640" height="480" alt="" loading="lazy" decoding="async"></span>
+  <span class="col-meta"><span class="col-cat cat-${p.cat}">${CATS[p.cat]}</span><time datetime="${p.date}">${p.date.replace(/-/g, '.')}</time></span>
+  <b>${p.title}</b>
+</a></li>`;
+const repFig = (c, cls = '') => `<figure class="rep-fig ${cls}"><img src="${c.asset('img/rep.webp')}" width="366" height="457" alt="${OFFICE.repTitle} ${OFFICE.rep}" loading="lazy" decoding="async"></figure>`;
 
 /* ================= 홈 ================= */
 export function home(c) {
@@ -41,6 +48,7 @@ export function home(c) {
       <ul>${s.faq.slice(0, 3).map(q => `<li>${q}</li>`).join('')}</ul>
       <span class="issue-more">자세히 보기${icon('arrow')}</span>
     </a>`).join('')}</div>
+    <p class="issue-other" data-reveal>${icon('scale')}<span>그 밖에 공무원·교원 행정심판, 음주운전·영업정지 구제, 내용증명, 요양보호시설 등록, 법인 설립 같은 행정 업무도 맡습니다.</span><a href="${c.url('services/')}#other">그 밖의 업무 보기${icon('arrow')}</a></p>
   </div>
 </section>`;
 
@@ -55,7 +63,7 @@ export function home(c) {
   const rep = `<section class="rep" data-dark>
   <div class="wrap rep-in">
     <div class="rep-photo" data-reveal>
-      <div class="photo-frame">${icon('user', 'ic ph-user')}<span>대표 사진 자리</span></div>
+      ${repFig(c)}
       <p class="rep-name"><small>${OFFICE.repTitle}</small>${OFFICE.rep}</p>
     </div>
     <div class="rep-body">
@@ -81,7 +89,7 @@ export function home(c) {
       ${secHead({ eb: '칼럼', title: HOME.columnTitle, sub: HOME.columnSub })}
       <div class="columns-btns">${btn(c.url('column/'), '칼럼 전체 보기', { variant: 'outline' })}${btn(OFFICE.blog, '블로그', { variant: 'outline', ext: true })}</div>
     </div>
-    <ul class="col-list">${POSTS.slice(0, 6).map(postRow).join('')}</ul>
+    <ul class="col-cards">${POSTS.filter(p => p.cover).slice(0, 4).map((p, i) => colCard(c, p, i)).join('')}</ul>
   </div>
 </section>`;
 
@@ -96,7 +104,7 @@ export function about(c) {
       ${eyebrow('인사말')}
       <h2 class="sec-title" data-reveal>${ABOUT.greetTitle}</h2>
       <p class="draft-badge">${icon('doc')}${ABOUT.draft}</p>
-      <div class="photo-frame photo-frame-light" data-reveal>${icon('user', 'ic ph-user')}<span>대표 사진 자리</span></div>
+      <div data-reveal>${repFig(c, 'rep-fig-light')}</div>
     </div>
     <div class="greet-body" data-reveal style="--d:.08s">
       ${ABOUT.greeting.map(p => `<p>${p}</p>`).join('')}
@@ -109,14 +117,17 @@ export function about(c) {
     ['대표 행정사', OFFICE.rep],
     ['출입국', OFFICE.creds[0].title],
     ['교육', OFFICE.creds[1].title + ' (학교폭력 전문 행정사)'],
-    ['주요 업무', SERVICES.map(s => s.name).join(', ')],
-    ['행정사 등록', ph()],
-    ['학력·기타 경력', ph()]
+    ['학력', OFFICE.degrees],
+    ['소속', OFFICE.member],
+    ['주요 업무', SERVICES.map(s => s.name).join(', ') + ', 행정심판·민원행정'],
+    ['행정사 등록', ph()]
   ];
   const officeRows = [
     ['상호', OFFICE.name],
     ['대표', `${OFFICE.repTitle} ${OFFICE.rep}`],
     ['전화', `<a href="${OFFICE.phoneHref}">${OFFICE.phone}</a>`],
+    ['이메일', `<a href="mailto:${OFFICE.email}">${OFFICE.email}</a><br><a href="mailto:${OFFICE.email2}">${OFFICE.email2}</a>`],
+    ['찾아오시는 길', OFFICE.station],
     ['주소', ph()],
     ['상담 시간', ph()],
     ['블로그', `<a href="${OFFICE.blog}" target="_blank" rel="noopener">${OFFICE.blogName}${icon('external')}</a>`]
@@ -132,7 +143,7 @@ export function about(c) {
   const map = `<section class="map-sec" id="location">
   <div class="wrap">
     ${secHead({ eb: '위치', title: ABOUT.mapTitle })}
-    <div class="map-ph" data-reveal>${icon('pin')}<b>${ABOUT.mapNote}</b><span>블로그에 등록된 사무소 위치를 받아 지도와 길 안내를 넣습니다.</span></div>
+    <div class="map-ph" data-reveal>${icon('pin')}<b>${OFFICE.station}</b><span>${ABOUT.mapNote}입니다.</span><a class="map-link" href="https://map.naver.com/p/search/${encodeURIComponent('동대문역사문화공원역')}" target="_blank" rel="noopener">네이버 지도에서 역 위치 보기${icon('external')}</a></div>
   </div>
 </section>`;
 
@@ -144,10 +155,13 @@ export function about(c) {
 
 /* ================= 업무 분야 ================= */
 export function services(c) {
-  const chips = `<nav class="pnav" data-pnav aria-label="업무 분야 바로가기"><div class="wrap"><ul>${SERVICES.map((s, i) => `<li><a href="#${s.id}" data-spy-link="${s.id}"><span>${pad2(i + 1)}</span>${s.name}</a></li>`).join('')}</ul></div></nav>`;
+  const chips = `<nav class="pnav" data-pnav aria-label="업무 분야 바로가기"><div class="wrap"><ul>${SERVICES.map((s, i) => `<li><a href="#${s.id}" data-spy-link="${s.id}"><span>${pad2(i + 1)}</span>${s.name}</a></li>`).join('')}<li><a href="#other" data-spy-link="other"><span>+</span>그 밖의 업무</a></li></ul></div></nav>`;
   const secs = SERVICES.map((s, i) => `<section class="svc${i % 2 ? ' rev' : ''}" id="${s.id}">
   <div class="wrap svc-in">
-    <div class="svc-art" data-reveal><div class="svc-doc">${doc(s.doc)}</div></div>
+    <div class="svc-art" data-reveal>
+      <figure class="svc-photo"><img src="${c.asset('img/' + s.photo.src)}" width="${s.photo.w}" height="${s.photo.h}" alt="${s.photo.alt}" loading="lazy" decoding="async"></figure>
+      <div class="svc-doc">${doc(s.doc)}</div>
+    </div>
     <div class="svc-body">
       <p class="svc-n">${pad2(i + 1)} <span>/ ${pad2(SERVICES.length)}</span></p>
       <h2 class="svc-title" data-reveal>${s.name}</h2>
@@ -160,7 +174,7 @@ export function services(c) {
       </div>
       <div class="svc-faq" data-reveal style="--d:.14s">
         <h3>자주 받는 질문</h3>
-        <ul>${s.faq.map(q => `<li><a href="${OFFICE.blog}" target="_blank" rel="noopener"><span>${q}</span>${icon('external')}</a></li>`).join('')}</ul>
+        <ul>${s.faq.map(q => `<li><a href="${FAQ_LINKS[q] || OFFICE.blog}" target="_blank" rel="noopener"><span>${q}</span>${icon('external')}</a></li>`).join('')}</ul>
         <p class="svc-note">질문을 누르면 관련 글이 있는 블로그로 이동합니다.</p>
       </div>
       <div class="svc-cta" data-reveal style="--d:.16s">${btn(c.url('contact/') + '?area=' + s.id, '이 분야 상담 신청')}${phoneBtn('outline-phone')}</div>
@@ -168,9 +182,19 @@ export function services(c) {
   </div>
 </section>`).join('');
 
+  const other = `<section class="other" id="other">
+  <div class="wrap other-in">
+    ${secHead({ eb: '그 밖의 업무', title: OTHER.title, sub: OTHER.sub })}
+    <div>
+      <div class="other-grid">${OTHER.groups.map((g, i) => `<div class="other-card" data-reveal style="--d:${i * 0.08}s"><span class="other-ic">${icon(g.icon)}</span><h3>${g.name}</h3><ul>${g.items.map(t => `<li>${t}</li>`).join('')}</ul></div>`).join('')}</div>
+      <div class="other-cta" data-reveal>${btn(c.url('contact/') + '?area=etc', '기타 행정 상담 신청')}${phoneBtn('outline-phone')}</div>
+    </div>
+  </div>
+</section>`;
+
   return page(c, {
     title: '업무 분야', desc: META.services, bodyClass: 'p-services',
-    body: pageHero(c, { eb: '업무 분야', title: ['네 가지 분야,', '사정에 맞춰 돕습니다'], lede: '출입국·비자, 출입국 사범심사·구제, 학교폭력·행정심판, 공장등록·인허가 업무를 맡습니다.', crumb: '업무 분야' }) + chips + secs + urgentBand(c)
+    body: pageHero(c, { eb: '업무 분야', title: ['네 가지 분야,', '사정에 맞춰 돕습니다'], lede: '출입국·비자, 출입국 사범심사·구제, 학교폭력·행정심판, 공장등록·인허가 업무를 맡고, 그 밖의 행정심판과 민원행정도 돕습니다.', crumb: '업무 분야' }) + chips + secs + other + urgentBand(c)
   });
 }
 
@@ -232,7 +256,10 @@ export function contact(c) {
   </div>
   <div class="ca-card">
     <h2>사무소</h2>
+    <p class="ca-line"><b>찾아오시는 길</b>${OFFICE.station}</p>
     <p class="ca-line"><b>주소</b>${ph()}</p>
+    <p class="ca-line"><b>이메일</b><a href="mailto:${OFFICE.email}">${OFFICE.email}</a></p>
+    <p class="ca-visit">${icon('route')}<span>${CONTACT.visit}</span></p>
     <a class="ca-link" href="${OFFICE.blog}" target="_blank" rel="noopener">${icon('blog')}${OFFICE.blogName}${icon('external')}</a>
   </div>
 </aside>`;

@@ -191,7 +191,8 @@ export function heroBuilding() {
 }
 
 /* ---------- 로고 ---------- */
-export const logoMark = (cls = 'logo-mark') => `<svg class="${cls}" viewBox="0 0 36 36" aria-hidden="true" focusable="false"><path d="M4 31V15.5L18 6l14 9.5V31" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M11 31V20h14v11" fill="#E8591A"/><path d="M2 31h32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`;
+/* 회사 로고 표시: 블로그 이미지에서 딴 모양(assets/img/logo-mark.png)을 글자색으로 칠합니다 (CSS mask) */
+export const logoMark = (cls = 'logo-mark') => `<span class="${cls}" aria-hidden="true"></span>`;
 
 /* ---------- 아이콘 ---------- */
 const I = {

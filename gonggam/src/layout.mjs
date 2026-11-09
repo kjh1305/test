@@ -64,12 +64,13 @@ function footer(c) {
       <nav class="f-nav" aria-label="바닥 메뉴"><ul><li><a href="${c.url('')}">홈</a></li>${NAV.map(([s, l]) => `<li><a href="${c.url(s)}">${l}</a></li>`).join('')}</ul></nav>
       <div class="f-contact">
         <a class="f-phone" href="${OFFICE.phoneHref}"><small>전화 상담</small>${OFFICE.phone}</a>
+        <a href="mailto:${OFFICE.email}">${icon('mail')}${OFFICE.email}</a>
         <a href="${OFFICE.blog}" target="_blank" rel="noopener">${icon('blog')}${OFFICE.blogName}</a>
       </div>
     </div>
     <div class="f-info">
-      <p><b>${OFFICE.name}</b><span>${OFFICE.repTitle} ${OFFICE.rep}</span><span>전화 ${OFFICE.phone}</span></p>
-      <p><span>주소: <em class="ph-inline">${OFFICE.placeholder}</em></span><span>사업자등록번호: <em class="ph-inline">${OFFICE.placeholder}</em></span></p>
+      <p><b>${OFFICE.name}</b><span>${OFFICE.repTitle} ${OFFICE.rep}</span><span>전화 ${OFFICE.phone}</span><span>${OFFICE.email}</span></p>
+      <p><span>주소: <em class="ph-inline">${OFFICE.placeholder}</em> (${OFFICE.station})</span><span>사업자등록번호: <em class="ph-inline">${OFFICE.placeholder}</em></span></p>
     </div>
     <div class="f-bottom">
       <p class="f-note">이 사이트는 홈페이지 제작 시안입니다. 실제 사무소 사이트가 아니며, 표시한 자리와 일부 문구는 실제 자료로 바꿀 예정입니다.</p>
