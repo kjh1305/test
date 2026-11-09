@@ -480,8 +480,8 @@ function notFound() {
     </div>
   </div>
 </section>`;
-  // 코리아트레이 시안(/test/koreatray/) 아래의 없는 주소는 그쪽 안내 페이지로 보냅니다
-  const ktRedirect = `<script>(function(){var m=location.pathname.match(/^\\/test\\/koreatray\\/(?:(en|ja|vi|th)\\/)?/);if(m)location.replace('/test/koreatray/'+(m[1]?m[1]+'/':'')+'404.html');})();</script>`;
+  // 다른 시안 폴더(/test/koreatray/, /test/gonggam/) 아래의 없는 주소는 각 시안의 안내 페이지로 보냅니다
+  const ktRedirect = `<script>(function(){var p=location.pathname,m=p.match(/^\\/test\\/koreatray\\/(?:(en|ja|vi|th)\\/)?/);if(m){location.replace('/test/koreatray/'+(m[1]?m[1]+'/':'')+'404.html');return;}if(p.indexOf('/test/gonggam/')===0)location.replace('/test/gonggam/404.html');})();</script>`;
   write('404.html', page({ path: '404.html', title: '페이지를 찾을 수 없어요', main, rootOverride: R }).replace('<head>', `<head>\n${ktRedirect}`));
 }
 

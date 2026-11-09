@@ -37,4 +37,5 @@
 ## 같은 저장소의 다른 시안
 
 - `koreatray/`: 글로벌 코리아트레이 홈페이지 시안 (한국어, 영어, 일본어, 베트남어, 태국어). 자세한 내용은 `koreatray/README.md`를 보세요.
-- `/test/koreatray/` 아래의 없는 주소는 `404.html`이 코리아트레이 쪽 안내 페이지로 보냅니다.
+- `gonggam/`: 공감 행정사사무소 홈페이지 시안. 자세한 내용은 `gonggam/README.md`를 보세요.
+- `/test/koreatray/`, `/test/gonggam/` 아래의 없는 주소는 `404.html`이 각 시안의 안내 페이지로 보냅니다.
