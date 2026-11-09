@@ -1,26 +1,44 @@
 /* 페이지 본문: 홈, 기능, 요금, 사용 방법, 고객지원, 도입 문의, 없는 주소 */
-import { BRAND, HOME, FEATURES, FLOW, UNATTENDED, USES, PLANS, FAQ, CATS, POSTS, CONTACT, META } from './content.mjs';
-import { icon, remoteMock, featureUI } from './art.mjs';
-import { page, pageHero, ctaBand, btn, lines, eyebrow, secHead, esc } from './layout.mjs';
+import { BRAND, LINKS, HOME, HOME_FEATS, FLOW, UNATTENDED, INVITE_WAYS, PANEL_TOOLS, SECURITY, OS_LIST, FNAV, FSECS, USES, PRICE, PLANS, FAQ, FAQ_SUPPORT, FAQ_PRICING, CATS, POSTS, CONTACT, META } from './content.mjs';
+import { IMG } from './images.mjs';
+import { icon, remoteMock } from './art.mjs';
+import { page, pageHero, ctaBand, btn, lines, eyebrow, secHead, shot, esc } from './layout.mjs';
 
+const ext = ' target="_blank" rel="noopener"';
 const pad2 = n => String(n).padStart(2, '0');
 const ph = txt => `<span class="ph">${txt || BRAND.placeholder}</span>`;
-const postRow = p => `<li data-cat="${p.cat}"><a href="${BRAND.blog}" target="_blank" rel="noopener">
-  <span class="post-meta"><span class="post-cat cat-${p.cat}">${CATS[p.cat]}</span><time datetime="${p.date}">${p.date.replace(/-/g, '.')}</time></span>
-  <b>${p.title}</b>${icon('external')}
-</a></li>`;
-const faqList = items => `<div class="faq">${items.map(([q, a], i) => `<details class="faq-item"${i === 0 ? ' open' : ''}><summary><span class="faq-q">Q</span><b>${q}</b><i class="faq-x" aria-hidden="true"></i></summary><p>${a}</p></details>`).join('')}</div>`;
+const phItem = it => (it.includes('채울 자리') ? `${it.split(':')[0]}: ${ph()}` : it);
+const ALT = Object.fromEntries([...FSECS, ...FLOW].map(s => [s.img, s.alt]));
+const CAT_ICON = { compare: 'layers', usecase: 'factory', ops: 'shield' };
+
+/* 블로그 글: 받은 5편은 표지와 글 주소, 나머지는 분류 아이콘과 블로그 첫 화면 */
+const thumb = (c, p, sizes) => p.id
+  ? `<img class="post-thumb" src="${c.asset(`img/cover-${p.id}-160.webp`)}" srcset="${c.asset(`img/cover-${p.id}-160.webp`)} 160w, ${c.asset(`img/cover-${p.id}-400.webp`)} 400w" sizes="${sizes}" width="160" height="160" alt="" loading="lazy" decoding="async">`
+  : `<span class="post-thumb post-thumb-ph" aria-hidden="true">${icon(CAT_ICON[p.cat])}</span>`;
+const postMeta = p => `<span class="post-meta"><span class="post-cat cat-${p.cat}">${CATS[p.cat]}</span><time datetime="${p.date}">${p.date.replace(/-/g, '.')}</time></span>`;
+const postRow = c => p => `<li data-cat="${p.cat}"><a href="${p.href}"${ext}>${thumb(c, p, '72px')}<span class="post-body">${postMeta(p)}<b>${p.title}</b></span>${icon('external')}</a></li>`;
+const postCard = c => p => `<li><a href="${p.href}"${ext}>${thumb(c, p, '(min-width: 1025px) 216px, (min-width: 761px) 30vw, 88px')}<span class="post-body">${postMeta(p)}<b>${p.title}</b></span></a></li>`;
+
+const faqList = keys => `<div class="faq">${keys.map((k, i) => `<details class="faq-item"${i === 0 ? ' open' : ''}><summary><span class="faq-q">Q</span><b>${FAQ[k][0]}</b><i class="faq-x" aria-hidden="true"></i></summary><p>${FAQ[k][1]}</p></details>`).join('')}</div>`;
 const osStrip = () => `<ul class="os-list">${BRAND.oses.map(o => `<li>${o}</li>`).join('')}</ul>`;
+const checkList = (arr, cls = 'fsec-list') => `<ul class="${cls}">${arr.map(d => `<li>${icon('check')}<span>${phItem(d)}</span></li>`).join('')}</ul>`;
+const waysList = () => `<ul class="ways">${INVITE_WAYS.map(w => `<li>${icon(w.icon)}<span>${w.text}</span></li>`).join('')}</ul>`;
 
 function planCards(c) {
-  return `<div class="plans">${PLANS.map(p => `<article class="plan${p.best ? ' best' : ''}${p.ph ? ' plan-ph' : ''}" data-reveal>
+  return `<div class="plans">${PLANS.map(p => {
+    const cta = p.id === 'free'
+      ? btn(BRAND.free, p.cta, { variant: 'outline', ext: true, cls: 'btn-block' })
+      : btn(c.url('contact/') + `?plan=${p.id}`, p.cta, { variant: p.best ? 'primary' : 'outline', cls: 'btn-block' });
+    return `<article class="plan${p.best ? ' best' : ''}" data-reveal>
     ${p.best ? '<span class="plan-badge">한국총판 대표 요금제</span>' : ''}
     <h3>${p.name}</h3>
-    <p class="plan-price">${p.price === '채울 자리' ? `<b class="plan-ph-price">${BRAND.placeholder}</b>` : `<b>${p.price}</b>`}${p.unit ? `<span>${p.unit}</span>` : ''}</p>
+    <p class="plan-price"><b>${p.price}</b>${p.unit ? `<span>${p.unit}</span>` : ''}</p>
     <p class="plan-desc">${p.desc}</p>
-    <ul>${p.items.map(it => `<li>${icon('check')}<span>${it.includes('채울 자리') ? `${it.split(':')[0]}: ${ph()}` : it}</span></li>`).join('')}</ul>
-    ${p.id === 'free' ? btn(BRAND.site, p.cta, { variant: 'outline', ext: true, cls: 'btn-block' }) : btn(c.url('contact/') + (p.id === 'advanced' ? '?plan=advanced' : '?type=quote'), p.cta, { variant: p.best ? 'primary' : 'outline', cls: 'btn-block' })}
-  </article>`).join('')}</div>`;
+    <ul>${p.items.map(it => `<li>${icon('check')}<span>${phItem(it)}</span></li>`).join('')}</ul>
+    ${p.foot ? `<p class="plan-foot">${icon('kiosk')}<span>${p.foot}</span></p>` : ''}
+    ${cta}
+  </article>`;
+  }).join('')}</div>`;
 }
 
 /* ================= 홈 ================= */
@@ -33,7 +51,8 @@ export function home(c) {
       <h1 class="hero-title" data-reveal>${lines(HOME.heroTitle)}</h1>
       <p class="hero-lede" data-reveal style="--d:.1s">${HOME.heroLede}</p>
       <ul class="hero-points" data-reveal style="--d:.16s">${HOME.heroPoints.map(p => `<li>${icon('check')}${p}</li>`).join('')}</ul>
-      <div class="hero-btns" data-reveal style="--d:.22s">${btn(BRAND.site, HOME.start, { variant: 'primary', ext: true, cls: 'btn-lg' })}${btn(c.url('contact/'), HOME.demo, { variant: 'outline', cls: 'btn-lg' })}</div>
+      <div class="hero-btns" data-reveal style="--d:.22s">${btn(BRAND.free, HOME.start, { variant: 'primary', ext: true, cls: 'btn-lg' })}${btn(c.url('contact/'), HOME.demo, { variant: 'outline', cls: 'btn-lg' })}</div>
+      <p class="hero-join" data-reveal style="--d:.28s">${HOME.heroJoin} <a href="${BRAND.join}"${ext}>원격지원 받기 <small>363.co.kr</small>${icon('arrow')}</a></p>
     </div>
     <div class="hero-art">${remoteMock()}</div>
   </div>
@@ -42,9 +61,12 @@ export function home(c) {
 
   const feats = `<section class="feats">
   <div class="wrap">
-    ${secHead({ eb: '핵심 기능', title: HOME.featTitle, sub: HOME.featSub })}
-    <div class="feat-grid">${FEATURES.map((f, i) => `<a class="feat" href="${c.url('features/')}#${f.id}" data-reveal style="--d:${(i % 3) * 0.06}s">
-      <span class="feat-ic">${icon(f.icon)}</span><h3>${f.title}</h3><p>${f.text}</p><span class="feat-more">자세히${icon('arrow')}</span>
+    <div class="sec-row">${secHead({ eb: '핵심 기능', title: HOME.featTitle, sub: HOME.featSub })}<div>${btn(c.url('features/'), HOME.featMore, { variant: 'outline' })}</div></div>
+    <div class="feat-grid">${HOME_FEATS.map((f, i) => `<a class="feat" href="${c.url('features/')}#${f.to}" data-reveal style="--d:${(i % 3) * 0.06}s">
+      ${f.img
+        ? `<span class="feat-shot" style="--bg:${IMG[f.img].bg}"><img src="${c.asset(`img/${f.img}.webp`)}" width="${IMG[f.img].w}" height="${IMG[f.img].h}" alt="${esc(ALT[f.img])}" loading="lazy" decoding="async"></span>`
+        : `<span class="feat-shot feat-chips">${icon('lock', 'ic chips-ic')}${f.chips.map(ch => `<span>${icon('check')}${ch}</span>`).join('')}</span>`}
+      <h3>${f.title}</h3><p>${f.text}</p><span class="feat-more">자세히${icon('arrow')}</span>
     </a>`).join('')}</div>
   </div>
 </section>`;
@@ -52,24 +74,25 @@ export function home(c) {
   const flow = `<section class="flow">
   <div class="wrap">
     ${secHead({ eb: '연결 방법', title: HOME.flowTitle, sub: HOME.flowSub })}
-    <ol class="flow-steps" data-reveal>${FLOW.map((s, i) => `<li style="--i:${i}"><span class="flow-n">${pad2(i + 1)}</span><span class="flow-who ${s.who === '고객' ? 'cust' : ''}">${s.who}</span><h3>${s.title}</h3><p>${s.text}</p></li>`).join('')}</ol>
+    <ol class="flow-steps" data-reveal>${FLOW.map((s, i) => `<li style="--i:${i}">${shot(c, s.img, s.alt, { cls: 'flow-shot' })}<div class="flow-txt"><span class="flow-n">${pad2(i + 1)}</span><span class="flow-who ${s.who === '고객' ? 'cust' : ''}">${s.who}</span><h3>${s.title}</h3><p>${s.text}</p></div></li>`).join('')}</ol>
     <div class="sec-foot">${btn(c.url('guide/'), '사용 방법 자세히 보기', { variant: 'outline' })}</div>
   </div>
 </section>`;
 
+  const adv = PLANS[1];
   const price = `<section class="price-teaser">
   <div class="wrap pt-in">
     <div>
       ${eyebrow('요금')}
       <h2 class="sec-title" data-reveal>${lines(HOME.priceTitle)}</h2>
       <p class="sec-sub" data-reveal style="--d:.08s">${HOME.priceSub}</p>
-      <div class="pt-btns" data-reveal style="--d:.12s">${btn(c.url('pricing/'), '요금 자세히 보기', { variant: 'primary' })}${btn(BRAND.site, 'FREE 버전으로 시작', { variant: 'outline', ext: true })}</div>
+      <div class="pt-btns" data-reveal style="--d:.12s">${btn(c.url('pricing/'), '요금 자세히 보기', { variant: 'primary' })}${btn(BRAND.free, 'FREE·체험판 시작', { variant: 'outline', ext: true })}</div>
     </div>
     <div class="pt-card" data-reveal style="--d:.1s">
-      <p class="pt-name">Advanced</p>
-      <p class="pt-price"><b data-count="30">30</b><span>만원</span><small>/ 연</small></p>
-      <ul>${PLANS[1].items.map(it => `<li>${icon('check')}${it}</li>`).join('')}</ul>
-      <p class="pt-note">부가세 별도</p>
+      <p class="pt-name">${adv.name}</p>
+      <p class="pt-price"><b>30</b><span>만원</span><small>${adv.unit}</small></p>
+      <ul>${adv.items.map(it => `<li>${icon('check')}${it}</li>`).join('')}</ul>
+      <p class="pt-note">부가세 별도 · ${adv.foot}(장치 100대 연 30만원)</p>
     </div>
   </div>
 </section>`;
@@ -83,8 +106,8 @@ export function home(c) {
 
   const blog = `<section class="blog">
   <div class="wrap">
-    <div class="blog-head">${secHead({ eb: '블로그', title: HOME.blogTitle, sub: HOME.blogSub })}<div>${btn(c.url('support/') + '#guides', '가이드 전체 보기', { variant: 'outline' })}</div></div>
-    <ul class="post-list">${POSTS.slice(0, 5).map(postRow).join('')}</ul>
+    <div class="sec-row">${secHead({ eb: '블로그', title: HOME.blogTitle, sub: HOME.blogSub })}<div>${btn(c.url('support/') + '#guides', '가이드 전체 보기', { variant: 'outline' })}</div></div>
+    <ul class="post-cards" data-reveal>${POSTS.filter(p => p.id).slice(0, 5).map(postCard(c)).join('')}</ul>
   </div>
 </section>`;
 
@@ -92,97 +115,113 @@ export function home(c) {
 }
 
 /* ================= 기능 ================= */
-export function features(c) {
-  const secs = FEATURES.map((f, i) => `<section class="fsec${i % 2 ? ' rev' : ''}" id="${f.id}">
-  <div class="wrap fsec-in">
-    <div class="fsec-ui" data-reveal>${featureUI[f.id]()}</div>
-    <div class="fsec-body">
-      <span class="feat-ic">${icon(f.icon)}</span>
-      <h2 data-reveal>${f.title}</h2>
-      <p class="fsec-text" data-reveal style="--d:.06s">${f.text}</p>
-      <ul class="fsec-list" data-reveal style="--d:.1s">${f.detail.map(d => `<li>${icon('check')}${d}</li>`).join('')}</ul>
-    </div>
-  </div>
-</section>`).join('');
-  const os = `<section class="os-table-sec">
+function fsec(c, s, i) {
+  const head = `${s.eb ? eyebrow(s.eb) : ''}<h2 data-reveal>${s.title}</h2><p class="fsec-text" data-reveal style="--d:.06s">${s.text}</p>`;
+  if (s.tools) {
+    return `<section class="fsec fsec-wide${i % 2 ? ' alt' : ''}" id="${s.id}">
   <div class="wrap">
-    ${secHead({ eb: '지원 환경', title: '지원하는 운영체제' })}
-    <div class="os-table" data-reveal>${BRAND.oses.map(o => `<div><b>${o}</b><span>${icon('check')}지원</span></div>`).join('')}</div>
-    <p class="note"><span>운영체제와 요금제에 따라 세부 기능의 제공 범위가 다를 수 있습니다. 운영체제별 상세 기능표는 ${ph()}입니다.</span></p>
-    <div class="ph-card" data-reveal>${icon('shield')}<div><b>보안·접속 기록 기능</b><p>접속 승인, 접속 기록, 권한 관리 등 보안 기능 상세는 ${BRAND.placeholder}입니다.</p></div></div>
+    <div class="fsec-head">${head}</div>
+    <div data-reveal>${shot(c, s.img, s.alt, { cls: 'shot-bar' })}</div>
+    <ul class="tools">${PANEL_TOOLS.map((t, k) => `<li data-reveal style="--d:${(k % 5) * 0.04}s">${icon(t.icon)}<b>${t.title}</b><span>${t.text}</span></li>`).join('')}</ul>
   </div>
 </section>`;
+  }
+  let extra = '';
+  if (s.ways) extra = `<p class="fsec-sub">초대를 보내는 다섯 가지 방법</p>${waysList()}`;
+  if (s.list) extra = checkList(s.list);
+  if (s.os) extra = `<dl class="os-ver">${OS_LIST.map(([n, v]) => `<div><dt>${n}</dt><dd>${v}</dd></div>`).join('')}</dl><p class="note"><span>공식 소개에는 iOS 지원도 안내되어 있습니다. iOS에서 쓸 수 있는 기능 범위는 ${ph()}입니다.</span></p>`;
+  if (s.security) extra = `<ul class="sec-list">${SECURITY.map(x => `<li>${icon(x.icon === 'shield' ? 'shieldok' : x.icon)}<div><b>${x.title}</b><span>${x.text}</span></div></li>`).join('')}</ul>`;
+  return `<section class="fsec${i % 2 ? ' rev alt' : ''}" id="${s.id}">
+  <div class="wrap fsec-in">
+    <div class="fsec-ui" data-reveal>${shot(c, s.img, s.alt)}</div>
+    <div class="fsec-body">${head}<div data-reveal style="--d:.1s">${extra}</div></div>
+  </div>
+</section>`;
+}
+
+export function features(c) {
+  const fnav = `<nav class="fnav" aria-label="기능 바로가기" data-fnav><div class="wrap"><ul>${FNAV.map(([id, l]) => `<li><a href="#${id}">${l}</a></li>`).join('')}</ul></div></nav>`;
   return page(c, {
     title: '기능', desc: META.features, bodyClass: 'p-features',
-    body: pageHero(c, { eb: '기능', title: ['고객 PC 지원부터', '무인기기 관리까지'], lede: '상담원은 웹 브라우저 하나로 고객을 지원하고, 등록한 기기에는 언제든 접속합니다.', crumb: '기능' }) + secs + os + ctaBand(c)
+    body: pageHero(c, { eb: '기능', title: ['고객 PC 지원부터', '무인기기 관리까지'], lede: '상담원은 웹 브라우저 하나로 고객을 지원하고, 등록한 기기에는 언제든 접속합니다.', crumb: '기능' }) + fnav + FSECS.map((s, i) => fsec(c, s, i)).join('') + ctaBand(c)
   });
 }
 
 /* ================= 요금 ================= */
 export function pricing(c) {
+  const ex = PRICE.example;
   const body = `<section class="pricing">
   <div class="wrap">
     ${planCards(c)}
-    <p class="note center">가격은 2026년 10월 13일 국내 가격표 기준이며 부가세 별도입니다. FREE 버전의 제공 범위와 다른 요금제는 ${BRAND.placeholder}입니다.</p>
+    <div class="price-ex" data-reveal>
+      <p class="pe-label">${ex.label}</p>
+      <p class="pe-what">${ex.what}</p>
+      <p class="pe-calc"><span>${ex.calc}</span><b>${ex.total}</b></p>
+      <p class="pe-note">${ex.note}</p>
+    </div>
+    <p class="note center"><span>${PRICE.basis}. ${PRICE.more}: ${ph()}</span></p>
   </div>
 </section>
 <section class="pricing-faq">
   <div class="wrap narrow">
     ${secHead({ eb: '요금 문의', title: '요금에 대해 자주 묻는 질문', center: true })}
-    ${faqList([FAQ[2], FAQ[3], FAQ[4]])}
+    ${faqList(FAQ_PRICING)}
   </div>
 </section>`;
   return page(c, {
     title: '요금', desc: META.pricing, bodyClass: 'p-pricing',
-    body: pageHero(c, { eb: '요금', title: ['상담원 3명,', '1년 30만원'], lede: '상담원 수를 기준으로 요금이 정해집니다. 무료(FREE) 버전으로 먼저 써 볼 수 있습니다.', crumb: '요금' }) + body + ctaBand(c)
+    body: pageHero(c, { eb: '요금', title: ['상담원 3명,', '1년 30만원'], lede: '요금은 상담원 수로 정해지고, 무인기기 상시접속에 쓰는 장치 라이선스는 따로 계산합니다. FREE 버전과 체험판으로 먼저 써 볼 수 있습니다.', crumb: '요금' }) + body + ctaBand(c)
   });
 }
 
 /* ================= 사용 방법 ================= */
 export function guide(c) {
-  const steps = (arr, cls) => `<ol class="g-steps ${cls}">${arr.map((s, i) => `<li data-reveal style="--d:${i * 0.07}s"><span class="g-n">${pad2(i + 1)}</span><div>${s.who ? `<span class="flow-who ${s.who === '고객' ? 'cust' : ''}">${s.who}</span>` : ''}<h3>${s.title}</h3><p>${s.text}</p></div></li>`).join('')}</ol>`;
+  const steps = arr => `<ol class="g-steps">${arr.map((s, i) => `<li data-reveal style="--d:${i * 0.07}s"><span class="g-n">${pad2(i + 1)}</span><div>${s.who ? `<span class="flow-who ${s.who === '고객' ? 'cust' : ''}">${s.who}</span>` : ''}<h3>${s.title}</h3><p>${s.text}</p></div></li>`).join('')}</ol>`;
   const body = `<section class="gsec" id="quick">
   <div class="wrap gsec-in">
-    <div class="gsec-head">${eyebrow('빠른 지원')}<h2 class="sec-title" data-reveal>고객 PC에 1:1로 연결하기</h2><p class="sec-sub">상담원은 브라우저에서 시작하고, 고객은 접속용 파일만 실행합니다.</p><div class="gsec-ui">${featureUI.web()}</div></div>
-    ${steps(FLOW, '')}
+    <div class="gsec-head">${eyebrow('빠른 지원')}<h2 class="sec-title" data-reveal>고객 PC에 1:1로 연결하기</h2><p class="sec-sub">상담원은 브라우저에서 초대를 보내고, 고객은 링크나 코드로 접속해 접속용 파일만 실행합니다.</p>${shot(c, 'ui-invite', ALT['ui-invite'], { cls: 'gsec-ui' })}</div>
+    <div>${steps(FLOW)}<div class="ways-box" data-reveal><p class="fsec-sub">초대를 보내는 다섯 가지 방법</p>${waysList()}</div></div>
   </div>
 </section>
 <section class="gsec alt" id="unattended">
   <div class="wrap gsec-in">
-    <div class="gsec-head">${eyebrow('무인 접속')}<h2 class="sec-title" data-reveal>키오스크·공장 PC에 상시 접속하기</h2><p class="sec-sub">접속을 승인해 줄 사람이 없는 기기는 장애가 나기 전에 미리 준비해 둡니다.</p><div class="gsec-ui">${featureUI.unattended()}</div></div>
-    ${steps(UNATTENDED, '')}
+    <div class="gsec-head">${eyebrow('무인 접속')}<h2 class="sec-title" data-reveal>키오스크·공장 PC에 상시 접속하기</h2><p class="sec-sub">접속을 승인해 줄 사람이 없는 기기는 장애가 나기 전에 미리 준비해 둡니다.</p>${shot(c, 'ui-device-card', ALT['ui-device-card'], { cls: 'gsec-ui' })}</div>
+    ${steps(UNATTENDED)}
   </div>
 </section>
-<section class="gsec" id="download">
+<section class="gsec" id="links">
   <div class="wrap">
-    ${secHead({ eb: '다운로드', title: '에이전트와 설치형 대시보드' })}
+    ${secHead({ eb: '바로가기', title: '접속 주소와 내려받기', sub: '고객과 상담원이 들어가는 주소가 다릅니다. 고객에게는 고객용 주소를 안내해 주세요.' })}
+    <div class="link-grid">${LINKS.map((l, i) => `<a class="link-card" href="${l.href}"${ext} data-reveal style="--d:${i * 0.06}s">${icon(l.icon)}<small>${l.who}</small><b>${l.title}</b><span>${l.text}</span><em>${l.host}${icon('external')}</em></a>`).join('')}</div>
     <div class="dl-grid">
-      <div class="dl-card" data-reveal>${icon('kiosk')}<b>기기용 에이전트</b><p>무인 접속할 기기에 설치합니다.</p>${ph('다운로드 링크: ' + BRAND.placeholder)}</div>
-      <div class="dl-card" data-reveal style="--d:.06s">${icon('app')}<b>설치형 대시보드</b><p>브라우저 대신 설치형으로 쓰고 싶은 상담원용입니다.</p>${ph('다운로드 링크: ' + BRAND.placeholder)}</div>
+      <div class="dl-card" data-reveal>${icon('kiosk')}<b>기기용 에이전트</b><p>무인 접속할 기기에 설치합니다.</p>${ph('내려받기 링크: ' + BRAND.placeholder)}</div>
+      <div class="dl-card" data-reveal style="--d:.06s">${icon('app')}<b>설치형 대시보드</b><p>브라우저 대신 데스크톱 앱으로 쓰고 싶은 상담원용입니다.</p>${ph('내려받기 링크: ' + BRAND.placeholder)}</div>
       <div class="dl-card" data-reveal style="--d:.12s">${icon('doc')}<b>사용 설명서</b><p>처음 쓰는 상담원을 위한 안내서입니다.</p>${ph('설명서 파일: ' + BRAND.placeholder)}</div>
     </div>
   </div>
 </section>`;
   return page(c, {
     title: '사용 방법', desc: META.guide, bodyClass: 'p-guide',
-    body: pageHero(c, { eb: '사용 방법', title: ['처음 쓰는 날부터', '바로 지원합니다'], lede: '고객 PC 1:1 지원과 무인기기 상시접속, 두 가지 방법을 안내합니다.', crumb: '사용 방법' }) + body + ctaBand(c)
+    body: pageHero(c, { eb: '사용 방법', title: ['처음 쓰는 날부터', '바로 지원합니다'], lede: '고객 PC 1:1 지원과 무인기기 상시접속, 두 가지 방법과 접속 주소를 안내합니다.', crumb: '사용 방법' }) + body + ctaBand(c)
   });
 }
 
 /* ================= 고객지원 ================= */
 export function support(c) {
   const count = k => POSTS.filter(p => p.cat === k).length;
+  const join = LINKS[0];
   const body = `<section class="channels">
   <div class="wrap ch-grid">
-    <a class="ch" href="${BRAND.phoneHref}" data-reveal>${icon('phone')}<b>전화 상담</b><span>${BRAND.phone}</span><small>운영 시간: ${BRAND.placeholder}</small></a>
-    <a class="ch" href="${BRAND.kakao}" target="_blank" rel="noopener" data-reveal style="--d:.06s">${icon('chat')}<b>카카오톡 상담</b><span>채널에서 바로 문의</span><small>카카오톡 채널로 연결됩니다</small></a>
-    <a class="ch" href="mailto:${BRAND.email}" data-reveal style="--d:.12s">${icon('mail')}<b>이메일</b><span>${BRAND.email}</span><small>도입·사용 문의</small></a>
+    <a class="ch ch-join" href="${join.href}"${ext} data-reveal>${icon(join.icon)}<b>${join.title}</b><span>${join.host}</span><small>상담원이 안내한 코드나 링크로 연결</small></a>
+    <a class="ch" href="${BRAND.phoneHref}" data-reveal style="--d:.05s">${icon('phone')}<b>전화 상담</b><span>${BRAND.phone}</span><small>운영 시간: ${BRAND.placeholder}</small></a>
+    <a class="ch" href="${BRAND.kakao}"${ext} data-reveal style="--d:.1s">${icon('chat')}<b>카카오톡 상담</b><span>채널에서 바로 문의</span><small>카카오톡 채널로 연결됩니다</small></a>
+    <a class="ch" href="mailto:${BRAND.email}" data-reveal style="--d:.15s">${icon('mail')}<b>이메일</b><span>${BRAND.email}</span><small>도입·사용 문의</small></a>
   </div>
 </section>
 <section class="support-faq" id="faq">
   <div class="wrap narrow">
     ${secHead({ eb: '자주 묻는 질문', title: '궁금한 점을 먼저 확인하세요', center: true })}
-    ${faqList(FAQ)}
+    ${faqList(FAQ_SUPPORT)}
   </div>
 </section>
 <section class="guides" id="guides">
@@ -192,13 +231,13 @@ export function support(c) {
       <button type="button" aria-pressed="true" data-f="all">전체 <span>${POSTS.length}</span></button>
       ${Object.entries(CATS).map(([k, v]) => `<button type="button" aria-pressed="false" data-f="${k}">${v} <span>${count(k)}</span></button>`).join('')}
     </div>
-    <p class="note">${icon('doc')}글을 누르면 공식 블로그로 이동합니다(글별 주소는 자료를 받으면 연결). 목록은 2026년 11월 9일 기준입니다.</p>
-    <ul class="post-list" data-post-list>${POSTS.map(postRow).join('')}</ul>
+    <p class="note">${icon('doc')}<span>글을 누르면 공식 블로그로 이동합니다. 표지가 있는 최근 글 5편은 해당 글로, 나머지는 글별 주소를 받기 전이라 블로그 첫 화면으로 연결합니다. 목록은 2026년 11월 9일 기준입니다.</span></p>
+    <ul class="post-list" data-post-list>${POSTS.map(postRow(c)).join('')}</ul>
   </div>
 </section>`;
   return page(c, {
     title: '고객지원', desc: META.support, bodyClass: 'p-support',
-    body: pageHero(c, { eb: '고객지원', title: ['막히는 부분은', '바로 물어보세요'], lede: '전화, 카카오톡, 이메일로 도입과 사용 문의를 받습니다.', crumb: '고객지원' }) + body
+    body: pageHero(c, { eb: '고객지원', title: ['막히는 부분은', '바로 물어보세요'], lede: '원격지원 접속, 전화, 카카오톡, 이메일로 도입과 사용 문의를 받습니다.', crumb: '고객지원' }) + body
   });
 }
 
@@ -229,9 +268,9 @@ export function contact(c) {
 </form>`;
   const aside = `<aside class="contact-aside">
   <div class="ca-card ca-main"><p>전화 상담</p><a href="${BRAND.phoneHref}">${icon('phone')}${BRAND.phone}</a><span>운영 시간: ${BRAND.placeholder}</span></div>
-  <a class="ca-card ca-kakao" href="${BRAND.kakao}" target="_blank" rel="noopener">${icon('chat')}<div><b>카카오톡 상담</b><span>채널에서 바로 문의하기</span></div>${icon('external')}</a>
+  <a class="ca-card ca-kakao" href="${BRAND.kakao}"${ext}>${icon('chat')}<div><b>카카오톡 상담</b><span>채널에서 바로 문의하기</span></div>${icon('external')}</a>
   <a class="ca-card ca-mail" href="mailto:${BRAND.email}">${icon('mail')}<div><b>이메일</b><span>${BRAND.email}</span></div></a>
-  <div class="ca-card ca-free"><b>먼저 써 보고 싶다면</b><p>FREE 버전으로 바로 시작할 수 있습니다.</p>${btn(BRAND.site, HOME.start, { variant: 'outline', ext: true, cls: 'btn-sm' })}</div>
+  <div class="ca-card ca-free"><b>먼저 써 보고 싶다면</b><p>FREE 버전으로 바로 시작하거나, 14일 무료 사용·최대 1개월 체험판으로 모든 기능을 써 볼 수 있습니다.</p>${btn(BRAND.free, HOME.start, { variant: 'outline', ext: true, cls: 'btn-sm' })}</div>
 </aside>`;
   return page(c, {
     title: '도입 문의', desc: META.contact, bodyClass: 'p-contact',

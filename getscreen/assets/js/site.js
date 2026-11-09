@@ -60,6 +60,22 @@
   if (document.fonts && document.fonts.ready) Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 900); })]).then(start, start);
   else start();
 
+  /* 기능 페이지: 지금 보는 단락을 바로가기에 표시 */
+  var fnav = $('[data-fnav]');
+  if (fnav && 'IntersectionObserver' in window) {
+    var flinks = $$('a', fnav), fmap = {};
+    flinks.forEach(function (a) { var t = document.getElementById(a.getAttribute('href').slice(1)); if (t) fmap[t.id] = a; });
+    var setCur = function (id) {
+      flinks.forEach(function (a) { if (fmap[id] === a) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
+      var a = fmap[id], ul = a && a.parentNode.parentNode;
+      if (a && ul.scrollWidth > ul.clientWidth) ul.scrollTo({ left: a.offsetLeft - 20, behavior: reduce ? 'auto' : 'smooth' });
+    };
+    var fio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) setCur(e.target.id); });
+    }, { rootMargin: '-35% 0px -60% 0px' });
+    Object.keys(fmap).forEach(function (id) { fio.observe(document.getElementById(id)); });
+  }
+
   /* 블로그 글 분류 */
   var filter = $('[data-filter]'), list = $('[data-post-list]');
   if (filter && list) {
@@ -127,8 +143,12 @@
     /* ?plan=advanced, ?type=quote 처럼 넘어오면 미리 채웁니다 */
     var q = new URLSearchParams(window.location.search);
     var plan = q.get('plan'), type = q.get('type');
-    if (plan === 'advanced') {
-      F.message.value = 'Advanced 요금제(상담원 3명, 연 30만원) 도입을 문의합니다.\n';
+    var PLAN_MSG = {
+      advanced: 'Advanced 요금제(상담원 3명, 연 30만원) 도입을 문의합니다.\n',
+      device: '상시 접속 장치 라이선스(장치 100대 팩, 연 30만원) 견적을 문의합니다.\n등록할 기기 수: \n'
+    };
+    if (PLAN_MSG.hasOwnProperty(plan)) {
+      F.message.value = PLAN_MSG[plan];
       type = type || 'quote';
       var n = document.createElement('p');
       n.className = 'prefill-note'; n.innerHTML = CHECK_SVG;

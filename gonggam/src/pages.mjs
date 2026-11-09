@@ -30,6 +30,8 @@ export function home(c) {
       <div class="hero-btns" data-reveal style="--d:.2s">${phoneBtn('seal')}${btn(c.url('contact/'), '상담 신청', { variant: 'ghost-light' })}</div>
     </div>
     <div class="hero-art">
+      <figure class="hero-fig"><img src="${c.asset('img/rep-hero.webp')}" width="542" height="795" alt="${OFFICE.repTitle} ${OFFICE.rep}" decoding="async" fetchpriority="high"></figure>
+      <p class="hero-name"><small>${OFFICE.repTitle}</small><b>${OFFICE.rep}</b><span>${OFFICE.creds.map(x => x.title.replace('서울특별시교육청', '서울시교육청')).join('<br>')}</span></p>
       <div class="docs" data-docs aria-hidden="true">
         <div class="docs-stack">${SERVICES.map((s, i) => doc(s.doc, { k: i })).join('')}</div>
         <ul class="docs-tabs">${SERVICES.map((s, i) => `<li${i === 0 ? ' class="on"' : ''}>${s.tab}</li>`).join('')}</ul>
@@ -62,9 +64,15 @@ export function home(c) {
 
   const rep = `<section class="rep" data-dark>
   <div class="wrap rep-in">
-    <div class="rep-photo" data-reveal>
-      ${repFig(c)}
+    <div class="rep-card" data-reveal>
+      ${seal('seal rep-seal')}
       <p class="rep-name"><small>${OFFICE.repTitle}</small>${OFFICE.rep}</p>
+      <ul class="rep-facts">
+        <li><span>학력</span>${OFFICE.degrees}</li>
+        <li><span>소속</span>${OFFICE.member}</li>
+        <li><span>상담</span><a href="${OFFICE.phoneHref}">${OFFICE.phone}</a></li>
+        <li><span>이메일</span><a href="mailto:${OFFICE.email}">${OFFICE.email}</a></li>
+      </ul>
     </div>
     <div class="rep-body">
       ${eyebrow('대표 행정사', 'on-dark')}

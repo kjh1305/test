@@ -1,6 +1,4 @@
 /* 아이콘, 원격지원 화면 목업 */
-import { BRAND } from './content.mjs';
-
 const I = {
   browser: '<rect x="3" y="4.5" width="18" height="15" rx="2"/><path d="M3 9h18M6.5 6.8h.01M9 6.8h.01"/><path d="M9.5 13.5l2 2 3.5-3.8"/>',
   kiosk: '<rect x="6" y="2.5" width="12" height="13" rx="1.5"/><path d="M9 6.5h6M9 9.5h4M10 15.5v3h4v-3M7.5 21.5h9"/>',
@@ -27,11 +25,24 @@ const I = {
   user: '<circle cx="12" cy="8.5" r="4"/><path d="M4.5 20.5c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5"/>',
   doc: '<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 15.5h6"/>',
   close: '<path d="M6 6l12 12M18 6L6 18"/>',
-  cursor: '<path d="M5 3.5l13 7-5.6 1.6L10 18z" fill="currentColor"/>'
+  cursor: '<path d="M5 3.5l13 7-5.6 1.6L10 18z" fill="currentColor"/>',
+  hash: '<path d="M9.5 4L7.5 20M16.5 4l-2 16M4.5 9h15.5M4 15h15.5"/>',
+  widget: '<rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><path d="M17 13.5v7M13.5 17h7"/>',
+  share: '<circle cx="18" cy="5.5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="18.5" r="2.5"/><path d="M8.3 10.8l7.4-4M8.3 13.2l7.4 4"/>',
+  record: '<rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10.2l5-3v9.6l-5-3"/><circle cx="9.5" cy="12" r="2.2" fill="currentColor" stroke="none"/>',
+  reboot: '<path d="M20 12a8 8 0 11-2.35-5.65"/><path d="M20.2 4.2v4.3h-4.3"/>',
+  monitors: '<rect x="2" y="5" width="9" height="7.5" rx="1.2"/><rect x="13" y="5" width="9" height="7.5" rx="1.2"/><path d="M6.5 12.5v3.5M17.5 12.5v3.5M4.5 16h4M15.5 16h4"/>',
+  clipboard: '<rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 3h6v3.2H9z"/><path d="M8.5 11h7M8.5 14.5h7M8.5 18h4"/>',
+  keyboard: '<rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M7 14h10"/>',
+  translate: '<path d="M3.5 5.5h9M8 3.5v2M5.5 5.5c.7 3.2 2.7 5.5 5.5 7M10.5 5.5c-.8 3.5-3.2 6.2-7 7.8"/><path d="M12.5 20.5l3.7-9 3.8 9M13.8 17.5h4.8"/>',
+  cpu: '<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9.5" y="9.5" width="5" height="5" rx=".8"/><path d="M9.5 3v3M14.5 3v3M9.5 18v3M14.5 18v3M3 9.5h3M3 14.5h3M18 9.5h3M18 14.5h3"/>',
+  history: '<path d="M4 12a8 8 0 102.4-5.7"/><path d="M4 3.8v4.6h4.6"/><path d="M12 8v4.4l3 1.9"/>',
+  box: '<path d="M12 2.8l8.5 4.6v9.2L12 21.2l-8.5-4.6V7.4z"/><path d="M3.5 7.4L12 12l8.5-4.6M12 12v9.2"/>',
+  wall: '<rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 9.7h18M3 14.3h18M10 5v4.7M15 9.7v4.6M8 14.3V19M16 14.3V19"/>',
+  shieldok: '<path d="M12 3l7 3v5.5c0 4.3-3 7.8-7 9.5-4-1.7-7-5.2-7-9.5V6z"/><path d="M8.8 12l2.3 2.3 4.2-4.3"/>',
+  headset: '<path d="M4.5 14v-2a7.5 7.5 0 0115 0v2"/><rect x="3" y="13" width="4" height="6.5" rx="1.5"/><rect x="17" y="13" width="4" height="6.5" rx="1.5"/><path d="M19 19.5c0 1.1-1.6 2-4 2h-2"/>'
 };
 export const icon = (name, cls = 'ic') => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${I[name]}</svg>`;
-
-export const mark = (cls = 'mark') => `<span class="${cls}" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14.5" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9.5 21h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10.2 7.2l6.3 3.4-2.8.8-1.1 2.8z" fill="currentColor"/></svg></span>`;
 
 /* 원격지원 화면: 상담원 브라우저 안에 고객 화면이 열리고, 커서가 오류를 해결 */
 export function remoteMock() {
@@ -85,13 +96,3 @@ export function remoteMock() {
   </div>
 </div>`;
 }
-
-/* 기능 카드용 작은 화면 */
-export const featureUI = {
-  web: () => `<div class="fui fui-web"><div class="fui-bar"><i></i><i></i><i></i><span>빠른 지원</span></div><div class="fui-in"><p>초대 링크</p><div class="fui-field"><span>getscreen.me/…</span><b>복사</b></div><p>접속 번호</p><div class="fui-code">482 913</div></div></div>`,
-  unattended: () => `<div class="fui fui-list">${[['매장 키오스크 01', 1], ['매장 키오스크 02', 1], ['공장 PC (라인 2)', 1], ['사무실 POS', 0]].map(([n, on]) => `<div class="fui-dev"><i class="${on ? 'on' : ''}"></i><span>${n}</span><b>${on ? '온라인' : '꺼짐'}</b></div>`).join('')}</div>`,
-  group: () => `<div class="fui fui-tree"><div class="fui-g">${icon('folders')}<b>A사 사무실</b><span>4대</span></div><div class="fui-g sub"><i></i>회계팀 PC</div><div class="fui-g sub"><i></i>영업팀 PC</div><div class="fui-g">${icon('folders')}<b>B사 매장</b><span>2대</span></div><div class="fui-g sub"><i></i>키오스크</div></div>`,
-  os: () => `<div class="fui fui-os">${BRAND.oses.map(o => `<span>${o}</span>`).join('')}</div>`,
-  sessions: () => `<div class="fui fui-tabs"><div class="fui-tab on">세션 1</div><div class="fui-tab">세션 2</div><div class="fui-tab">세션 3</div><div class="fui-tab more">+</div><div class="fui-pane"><i></i><i></i><i></i></div></div>`,
-  dash: () => `<div class="fui fui-choice"><div class="fui-opt on">${icon('browser')}<b>웹 브라우저</b><span>기본</span></div><div class="fui-opt">${icon('app')}<b>설치형 대시보드</b><span>선택</span></div></div>`
-};

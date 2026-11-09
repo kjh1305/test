@@ -57,43 +57,63 @@
   </div>
 </section><section class="pj-page">
   <div class="wrap">
-    <p class="pj-note"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>현장 사진과 공사 정보를 받으면 채울 자리입니다. 사진, 위치, 규모, 공사 종류를 카드마다 넣습니다.</span></p>
-    <ul class="pj-grid pj-grid-full"><li class="pj pj-named" data-reveal style="--d:0s">
-  <div class="pj-ph"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>현장 사진 자리</span></div>
-  <p class="pj-tag">서울 문래동 복합건축<small>블로그 글에 소개된 현장</small></p>
+    <div class="filter" role="group" aria-label="종류별로 보기" data-filter>
+      <button type="button" aria-pressed="true" data-f="all">전체 <span>13</span></button>
+      <button type="button" aria-pressed="false" data-f="factory">공장 <span>5</span></button><button type="button" aria-pressed="false" data-f="warehouse">창고 <span>5</span></button><button type="button" aria-pressed="false" data-f="commercial">근린생활시설 <span>2</span></button><button type="button" aria-pressed="false" data-f="site">시공 현장 <span>1</span></button>
+    </div>
+    <p class="pj-note"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>사진은 블로그 이미지입니다. 위치, 규모, 공사 내용을 받으면 카드마다 채웁니다.</span></p>
+    <ul class="pj-grid pj-grid-full" data-post-list><li class="pj" data-cat="warehouse" data-reveal style="--d:0s">
+  <div class="pj-img"><img src="../assets/img/pj-wonju.webp" width="351" height="263" alt="원주 창고" loading="lazy" decoding="async"><span class="pj-cat">창고</span></div>
+  <p class="pj-tag">원주 창고</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd>원주</dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj" data-cat="commercial" data-reveal style="--d:0.07s">
+  <div class="pj-img"><img src="../assets/img/pj-cheonan.webp" width="319" height="239" alt="천안 근린생활시설" loading="lazy" decoding="async"><span class="pj-cat">근린생활시설</span></div>
+  <p class="pj-tag">천안 근린생활시설</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd>천안</dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj" data-cat="factory" data-reveal style="--d:0.14s">
+  <div class="pj-img"><img src="../assets/img/pj-icheon.webp" width="316" height="237" alt="이천 공장" loading="lazy" decoding="async"><span class="pj-cat">공장</span></div>
+  <p class="pj-tag">이천 공장</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd>이천</dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj" data-cat="warehouse" data-reveal style="--d:0s">
+  <div class="pj-img"><img src="../assets/img/pj-warehouse-white.webp" width="708" height="531" alt="판넬 창고" loading="lazy" decoding="async"><span class="pj-cat">창고</span></div>
+  <p class="pj-tag">판넬 창고</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj" data-cat="site" data-reveal style="--d:0.07s">
+  <div class="pj-img"><img src="../assets/img/pj-site.webp" width="673" height="505" alt="철골·판넬 시공 현장" loading="lazy" decoding="async"><span class="pj-cat">시공 현장</span></div>
+  <p class="pj-tag">철골·판넬 시공 현장</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj" data-cat="factory" data-reveal style="--d:0.14s">
+  <div class="pj-img"><img src="../assets/img/pj-factory-cable.webp" width="720" height="540" alt="생산 공장 내부" loading="lazy" decoding="async"><span class="pj-cat">공장</span></div>
+  <p class="pj-tag">생산 공장 내부</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj" data-cat="warehouse" data-reveal style="--d:0s">
+  <div class="pj-img"><img src="../assets/img/pj-warehouse-yellow.webp" width="683" height="512" alt="물류창고" loading="lazy" decoding="async"><span class="pj-cat">창고</span></div>
+  <p class="pj-tag">물류창고</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj" data-cat="warehouse" data-reveal style="--d:0.07s">
+  <div class="pj-img"><img src="../assets/img/pj-logistics.webp" width="701" height="526" alt="물류창고 내부" loading="lazy" decoding="async"><span class="pj-cat">창고</span></div>
+  <p class="pj-tag">물류창고 내부</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj" data-cat="warehouse" data-reveal style="--d:0.14s">
+  <div class="pj-img"><img src="../assets/img/pj-warehouse-in.webp" width="664" height="498" alt="창고 내부" loading="lazy" decoding="async"><span class="pj-cat">창고</span></div>
+  <p class="pj-tag">창고 내부</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj" data-cat="factory" data-reveal style="--d:0s">
+  <div class="pj-img"><img src="../assets/img/pj-factory-clean.webp" width="687" height="515" alt="공장 설비" loading="lazy" decoding="async"><span class="pj-cat">공장</span></div>
+  <p class="pj-tag">공장 설비</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj" data-cat="factory" data-reveal style="--d:0.07s">
+  <div class="pj-img"><img src="../assets/img/pj-factory-aerial.webp" width="720" height="540" alt="공장 전경" loading="lazy" decoding="async"><span class="pj-cat">공장</span></div>
+  <p class="pj-tag">공장 전경</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj" data-cat="factory" data-reveal style="--d:0.14s">
+  <div class="pj-img"><img src="../assets/img/pj-silo.webp" width="679" height="509" alt="저장 설비" loading="lazy" decoding="async"><span class="pj-cat">공장</span></div>
+  <p class="pj-tag">저장 설비</p>
+  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+</li><li class="pj pj-noimg" data-cat="commercial" data-reveal style="--d:0s">
+  <div class="pj-img"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>현장 사진 자리</span><span class="pj-cat">근린생활시설</span></div>
+  <p class="pj-tag">서울 문래동 복합건축<small>블로그 글에 소개된 현장 · 사진 채울 자리</small></p>
   <dl class="pj-meta"><div><dt>위치</dt><dd>서울 문래동</dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
-</li><li class="pj" data-reveal style="--d:0.07s">
-  <div class="pj-ph"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>현장 사진 자리</span></div>
-  <p class="pj-tag">공장</p>
-  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
-</li><li class="pj" data-reveal style="--d:0.14s">
-  <div class="pj-ph"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>현장 사진 자리</span></div>
-  <p class="pj-tag">창고·물류시설</p>
-  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
-</li><li class="pj" data-reveal style="--d:0s">
-  <div class="pj-ph"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>현장 사진 자리</span></div>
-  <p class="pj-tag">근린생활시설</p>
-  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
-</li><li class="pj" data-reveal style="--d:0.07s">
-  <div class="pj-ph"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>현장 사진 자리</span></div>
-  <p class="pj-tag">상가주택·주택</p>
-  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
-</li><li class="pj" data-reveal style="--d:0.14s">
-  <div class="pj-ph"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>현장 사진 자리</span></div>
-  <p class="pj-tag">빌딩·수익형 건물</p>
-  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
-</li><li class="pj" data-reveal style="--d:0s">
-  <div class="pj-ph"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>현장 사진 자리</span></div>
-  <p class="pj-tag">증축·대수선</p>
-  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
-</li><li class="pj" data-reveal style="--d:0.07s">
-  <div class="pj-ph"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>현장 사진 자리</span></div>
-  <p class="pj-tag">공장</p>
-  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
-</li><li class="pj" data-reveal style="--d:0.14s">
-  <div class="pj-ph"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5h3.5L9 5h6l1.5 2.5H20a1 1 0 011 1V19a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5a1 1 0 011-1z"/><circle cx="12" cy="13.5" r="3.8"/></svg><span>현장 사진 자리</span></div>
-  <p class="pj-tag">창고·물류시설</p>
-  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
 </li></ul>
   </div>
 </section><section class="cta" data-dark>

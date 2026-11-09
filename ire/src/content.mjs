@@ -148,17 +148,23 @@ export const POSTS = [
   ['2026-05-06', 'guide', '신축하면 수익 2배 나는 설계 구조']
 ].map(([date, cat, title, url, cover]) => ({ date, cat, title, url, cover }));
 
-/* 홈 사진 띠 (블로그 이미지, 워터마크 부분은 잘라 냄) */
-export const BAND = [
-  { src: 'band-warehouse.webp', w: 708, h: 531, alt: '흰색 판넬로 지은 창고 외관' },
-  { src: 'band-factory.webp', w: 720, h: 540, alt: '설비가 늘어선 공장 내부' },
-  { src: 'band-build.webp', w: 673, h: 505, alt: '철골과 판넬로 짓고 있는 건물' },
-  { src: 'band-interior.webp', w: 664, h: 498, alt: '기둥 없이 넓게 트인 창고 내부' }
-];
-
-/* 시공사례: 블로그 글에 이름이 나온 현장만 적고, 나머지는 채울 자리 */
+/* 시공사례: 블로그 사진 (워터마크·표지 글자는 잘라 냄). 위치·규모·공사 내용은 받으면 채울 자리.
+   지역 이름은 그 사진이 실린 블로그 글 제목에 지역이 있는 것만 붙였습니다. */
+export const PJ_CATS = { factory: '공장', warehouse: '창고', commercial: '근린생활시설', site: '시공 현장' };
 export const PROJECTS = [
-  { name: '서울 문래동 복합건축', where: '서울 문래동', note: '블로그 글에 소개된 현장' }
+  { img: 'pj-wonju.webp', w: 351, h: 263, cat: 'warehouse', name: '원주 창고', where: '원주' },
+  { img: 'pj-cheonan.webp', w: 319, h: 239, cat: 'commercial', name: '천안 근린생활시설', where: '천안' },
+  { img: 'pj-icheon.webp', w: 316, h: 237, cat: 'factory', name: '이천 공장', where: '이천' },
+  { img: 'pj-warehouse-white.webp', w: 708, h: 531, cat: 'warehouse', name: '판넬 창고' },
+  { img: 'pj-site.webp', w: 673, h: 505, cat: 'site', name: '철골·판넬 시공 현장' },
+  { img: 'pj-factory-cable.webp', w: 720, h: 540, cat: 'factory', name: '생산 공장 내부' },
+  { img: 'pj-warehouse-yellow.webp', w: 683, h: 512, cat: 'warehouse', name: '물류창고' },
+  { img: 'pj-logistics.webp', w: 701, h: 526, cat: 'warehouse', name: '물류창고 내부' },
+  { img: 'pj-warehouse-in.webp', w: 664, h: 498, cat: 'warehouse', name: '창고 내부' },
+  { img: 'pj-factory-clean.webp', w: 687, h: 515, cat: 'factory', name: '공장 설비' },
+  { img: 'pj-factory-aerial.webp', w: 720, h: 540, cat: 'factory', name: '공장 전경' },
+  { img: 'pj-silo.webp', w: 679, h: 509, cat: 'factory', name: '저장 설비' },
+  { cat: 'commercial', name: '서울 문래동 복합건축', where: '서울 문래동', note: '블로그 글에 소개된 현장 · 사진 채울 자리' }
 ];
 
 export const HOME = {
@@ -174,8 +180,8 @@ export const HOME = {
   costTitle: ['평당 단가보다', '총예산이 먼저입니다'],
   costSub: '평당 가격만 비교하면 예산에서 놓치는 부분이 생깁니다. 견적은 총액보다 포함 항목부터 확인하세요.',
   landTitle: ['땅을 계약하기 전에', '이것부터 확인하세요'],
-  projectsTitle: ['시공 사례'],
-  projectsSub: '현장 사진과 공사 정보를 받으면 채울 자리입니다.',
+  projectsTitle: ['직접 지은', '건물들'],
+  projectsSub: '공장, 창고, 근린생활시설까지. 이레산업개발이 시공한 현장입니다.',
   guideTitle: ['건축 가이드'],
   guideSub: '건축주가 자주 묻는 질문을 블로그에 정리하고 있습니다.',
   regionsTitle: '주요 상담 지역',

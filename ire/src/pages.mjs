@@ -1,5 +1,5 @@
 /* 페이지 본문: 홈, 회사소개, 사업분야, 시공사례, 건축 가이드, 견적문의, 없는 주소 */
-import { CO, SCOPE, TYPES, STRENGTHS, PROCESS, COSTS, LAND, REGIONS, CATS, POSTS, BAND, PROJECTS, HOME, ABOUT, CONTACT, META } from './content.mjs';
+import { CO, SCOPE, TYPES, STRENGTHS, PROCESS, COSTS, LAND, REGIONS, CATS, POSTS, PJ_CATS, PROJECTS, HOME, ABOUT, CONTACT, META } from './content.mjs';
 import { icon, typeArt, heroBuilding } from './art.mjs';
 import { page, pageHero, ctaBand, btn, phoneBtn, lines, eyebrow, secHead, esc } from './layout.mjs';
 
@@ -11,16 +11,11 @@ const postRow = p => `<li data-cat="${p.cat}"><a href="${p.url || CO.blog}" targ
   <span class="post-meta"><span class="post-cat">${CATS[p.cat]}</span><time datetime="${p.date}">${p.date.replace(/-/g, '.')}</time></span>
   <b>${p.title}</b>${icon('external')}
 </a></li>`;
-const projectCard = (t, i) => `<li class="pj" data-reveal style="--d:${(i % 3) * 0.07}s">
-  <div class="pj-ph">${icon('camera')}<span>현장 사진 자리</span></div>
-  <p class="pj-tag">${t.name}</p>
-  <dl class="pj-meta"><div><dt>위치</dt><dd><i></i></dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
-</li>`;
-/* 블로그 글에 이름이 나온 현장: 이름과 위치만 쓰고 나머지는 채울 자리 */
-const namedProject = (pj, i) => `<li class="pj pj-named" data-reveal style="--d:${(i % 3) * 0.07}s">
-  <div class="pj-ph">${icon('camera')}<span>현장 사진 자리</span></div>
-  <p class="pj-tag">${pj.name}<small>${pj.note}</small></p>
-  <dl class="pj-meta"><div><dt>위치</dt><dd>${pj.where}</dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>
+/* 시공사례 카드: 사진(블로그 이미지)과 종류, 이름. 위치·규모·공사는 아는 것만 쓰고 나머지는 채울 자리 */
+const pjCard = (c, pj, i, meta = true) => `<li class="pj${pj.img ? '' : ' pj-noimg'}" data-cat="${pj.cat}" data-reveal style="--d:${(i % 3) * 0.07}s">
+  <div class="pj-img">${pj.img ? `<img src="${c.asset('img/' + pj.img)}" width="${pj.w}" height="${pj.h}" alt="${pj.name}" loading="lazy" decoding="async">` : `${icon('camera')}<span>현장 사진 자리</span>`}<span class="pj-cat">${PJ_CATS[pj.cat]}</span></div>
+  <p class="pj-tag">${pj.name}${pj.note ? `<small>${pj.note}</small>` : ''}</p>
+  ${meta ? `<dl class="pj-meta"><div><dt>위치</dt><dd>${pj.where || '<i></i>'}</dd></div><div><dt>규모</dt><dd><i></i></dd></div><div><dt>공사</dt><dd><i></i></dd></div></dl>` : ''}
 </li>`;
 /* 블로그 표지가 있는 글은 카드로 (표지에 제목이 들어 있어 이미지는 장식으로 둠) */
 const postCard = (c, p, i) => `<li data-reveal style="--d:${i * 0.07}s"><a class="pcard" href="${p.url}" target="_blank" rel="noopener">
@@ -54,10 +49,6 @@ export function home(c) {
     <blockquote class="statement-q"><p>${inkWords(CO.intro)}</p></blockquote>
     <p class="statement-sub" data-reveal>${HOME.statementSub}</p>
   </div>
-</section>`;
-
-  const band = `<section class="band" aria-label="현장 사진">
-  <ul class="band-grid">${BAND.map((b, i) => `<li data-reveal style="--d:${i * 0.06}s"><img src="${c.asset('img/' + b.src)}" width="${b.w}" height="${b.h}" alt="${b.alt}" loading="lazy" decoding="async"></li>`).join('')}</ul>
 </section>`;
 
   const types = `<section class="types">
@@ -105,8 +96,8 @@ export function home(c) {
 
   const projects = `<section class="projects-home">
   <div class="wrap">
-    <div class="sec-row">${secHead({ en: 'PROJECTS', title: HOME.projectsTitle, sub: HOME.projectsSub })}${btn(c.url('projects/'), '시공사례 보기', { variant: 'outline' })}</div>
-    <ul class="pj-grid">${PROJECTS.map(namedProject).join('')}${TYPES.slice(0, 3 - PROJECTS.length).map((t, i) => projectCard(t, i + PROJECTS.length)).join('')}</ul>
+    <div class="sec-row">${secHead({ en: 'PROJECTS', title: HOME.projectsTitle, sub: HOME.projectsSub })}${btn(c.url('projects/'), '시공사례 전체 보기', { variant: 'outline' })}</div>
+    <ul class="pj-grid pj-grid-home">${PROJECTS.filter(p => p.img).slice(0, 6).map((p, i) => pjCard(c, p, i, false)).join('')}</ul>
   </div>
 </section>`;
 
@@ -124,7 +115,7 @@ export function home(c) {
   </div>
 </section>`;
 
-  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + statement + band + types + direct + process + budget + projects + guide + regions + ctaBand(c) });
+  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + projects + statement + types + direct + process + budget + guide + regions + ctaBand(c) });
 }
 
 /* ================= 회사소개 ================= */
@@ -217,8 +208,12 @@ export function business(c) {
 export function projects(c) {
   const body = `<section class="pj-page">
   <div class="wrap">
-    <p class="pj-note">${icon('camera')}<span>${HOME.projectsSub} 사진, 위치, 규모, 공사 종류를 카드마다 넣습니다.</span></p>
-    <ul class="pj-grid pj-grid-full">${PROJECTS.map(namedProject).join('')}${[...TYPES, ...TYPES.slice(0, 3 - PROJECTS.length)].map((t, i) => projectCard(t, i + PROJECTS.length)).join('')}</ul>
+    <div class="filter" role="group" aria-label="종류별로 보기" data-filter>
+      <button type="button" aria-pressed="true" data-f="all">전체 <span>${PROJECTS.length}</span></button>
+      ${Object.entries(PJ_CATS).map(([k, v]) => `<button type="button" aria-pressed="false" data-f="${k}">${v} <span>${PROJECTS.filter(p => p.cat === k).length}</span></button>`).join('')}
+    </div>
+    <p class="pj-note">${icon('camera')}<span>사진은 블로그 이미지입니다. 위치, 규모, 공사 내용을 받으면 카드마다 채웁니다.</span></p>
+    <ul class="pj-grid pj-grid-full" data-post-list>${PROJECTS.map((p, i) => pjCard(c, p, i)).join('')}</ul>
   </div>
 </section>`;
   return page(c, {
