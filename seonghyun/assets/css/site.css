@@ -799,9 +799,9 @@ body.menu-open { overflow: hidden; }
   .stats-list li:nth-child(-n+2) { border-top: 0; }
   .stats-list li:nth-child(2n) { border-left: 1px solid var(--line); }
   .stats-list li:nth-child(2n+1) { padding-left: 0; }
-  .hero2-in { grid-template-columns: 1fr; gap: 48px; }
-  .hero2-media { justify-self: start; max-width: 440px; margin-left: 40px; }
-  .hero2::before { width: 100%; }
+  /* 태블릿 폭(761~1020px)에서도 두 칸 유지: 한 칸으로 내리면 사진이 왼쪽에 붙고 오른쪽이 비어 보임 */
+  .hero2-in { grid-template-columns: 1.15fr .85fr; gap: 40px; }
+  .hm-card { left: -28px; bottom: -36px; width: 248px; padding: 16px 18px; }
   .lineup a { grid-template-columns: 48px minmax(0, 1fr) auto 20px; }
   .lu-spec { display: none; }
   .lu-ic { width: 48px; height: 48px; }
@@ -900,7 +900,9 @@ body.menu-open { overflow: hidden; }
   .fh-steps { grid-template-columns: 1fr; }
   .fh-steps li, .fh-steps li + li { padding: 20px 0; border-left: 0; border-bottom: 1px solid var(--line); }
   .hero2 { padding: 40px 0 72px; }
-  .hero2-media { margin-left: 0; max-width: none; }
+  .hero2-in { grid-template-columns: 1fr; gap: 40px; }
+  .hero2::before { width: 100%; }
+  .hero2-media { justify-self: stretch; margin-left: 0; max-width: none; }
   .hm-card { position: relative; left: auto; bottom: auto; width: auto; margin: -64px 16px 0; }
   .hm-since { right: 12px; top: 12px; padding: 10px 14px; }
   .hm-since b { font-size: 24px; }
