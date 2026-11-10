@@ -17,12 +17,12 @@
   --sand: #F7F5F2; --sand-2: #EFEBE5; --sand-3: #E7E1D8;
   --char: #24201C; --char-2: #1A1714; --char-3: #3A332C; --char-text: #BDB3A7;
   --ok: #2F6B3A;
-  --shadow: 0 24px 50px -36px rgba(34, 30, 26, .45);
+  --shadow: 0 18px 40px -30px rgba(34, 30, 26, .38);
   --sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --ease: cubic-bezier(.22, .7, .2, 1);
   --header-h: 84px;
   --gutter: 40px;
-  --r: 6px; --r-lg: 16px;
+  --r: 4px; --r-lg: 10px;   /* 업종 참고 사이트처럼 거의 각지게 (DESIGN.md 4) */
 }
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
@@ -57,7 +57,7 @@ main:focus { outline: none; }
 .slot img { width: 100%; height: 100%; object-fit: cover; }
 .slot.is-empty { display: flex; align-items: center; justify-content: center; border: 1.5px dashed var(--line-2); background: repeating-linear-gradient(-45deg, var(--sand) 0 14px, #fff 14px 28px); color: var(--muted); text-align: center; --pi-bg: var(--sand); }
 .slot-pic { position: absolute; left: 0; right: 0; top: 0; bottom: 18%; margin: auto; width: 48%; height: 56%; color: #D5CCBF; stroke-width: 1.2; }
-.has-pic .slot-txt { position: absolute; left: 50%; bottom: 10px; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0 6px; width: max-content; max-width: calc(100% - 20px); padding: 4px 12px; border-radius: 999px; transform: translateX(-50%); }
+.has-pic .slot-txt { position: absolute; left: 50%; bottom: 10px; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 0 6px; width: max-content; max-width: calc(100% - 20px); padding: 4px 12px; border-radius: var(--r); transform: translateX(-50%); }
 .has-pic .slot-txt .ic { width: 16px; height: 16px; margin: 0; align-self: center; }
 .has-pic .slot-txt b { font-size: 12.5px; }
 .has-pic .slot-txt span { font-size: 12px; }
@@ -76,7 +76,7 @@ main:focus { outline: none; }
 .slot-txt span { font-size: 12.5px; }
 
 /* ---------- 버튼 ---------- */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 24px; border: 1.5px solid transparent; border-radius: 999px; font-size: 16px; font-weight: 700; line-height: 1.25; white-space: nowrap; cursor: pointer; transition: background-color .2s, border-color .2s, color .2s, transform .2s var(--ease); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; padding: 0 24px; border: 1.5px solid transparent; border-radius: var(--r); font-size: 16px; font-weight: 700; line-height: 1.25; white-space: nowrap; cursor: pointer; transition: background-color .2s, border-color .2s, color .2s, transform .2s var(--ease); }
 .btn .ic { width: 18px; height: 18px; }
 .btn-sm { min-height: 44px; padding: 0 20px; font-size: 15px; }
 .btn-lg { min-height: 58px; padding: 0 32px; font-size: 17px; }
@@ -206,6 +206,8 @@ body.menu-open { overflow: hidden; }
 .hero2 .hero-kicker { color: var(--amber-ink); }
 .hero2 .hero-kicker::before { background: var(--amber); }
 .hero2 .hero-title { color: var(--ink); font-size: clamp(36px, 4.6vw, 60px); }
+.hero2 .hero-title .ln:first-child { font-weight: 300; }
+.hero2 .hero-title .ln:last-child { font-weight: 800; }
 .hero2 .hero-lede { max-width: 560px; color: var(--ink-2); }
 .hero2 .hero-lede .ln { display: inline; }
 .hero2 .hero-lede .ln + .ln::before { content: ' '; }
@@ -304,7 +306,7 @@ body.menu-open { overflow: hidden; }
 .composite-note a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 
 /* 상태 배지 */
-.badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px 3px 8px; border: 1px solid transparent; border-radius: 999px; font-size: 12.5px; font-weight: 650; line-height: 1.5; white-space: nowrap; }
+.badge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px 3px 8px; border: 1px solid transparent; border-radius: var(--r); font-size: 12.5px; font-weight: 650; line-height: 1.5; white-space: nowrap; }
 .badge .ic { width: 14px; height: 14px; stroke-width: 2; }
 .badge-cert { background: var(--ok); color: #fff; }
 .badge-pending { background: var(--amber-50); border-color: #EDC48D; color: #7E4000; }
@@ -356,7 +358,7 @@ body.menu-open { overflow: hidden; }
 .panel-text { margin-top: 14px; font-size: 16.5px; color: rgba(255, 255, 255, .86); }
 .panel-list { display: grid; gap: 10px; width: 100%; margin: 28px 0 0; }
 .panel-list li { display: flex; align-items: baseline; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(255, 255, 255, .14); font-size: 15.5px; }
-.pl-cat { flex: none; min-width: 44px; padding: 1px 8px; border: 1px solid rgba(255, 255, 255, .4); border-radius: 999px; font-size: 12.5px; font-weight: 650; text-align: center; }
+.pl-cat { flex: none; min-width: 44px; padding: 1px 8px; border: 1px solid rgba(255, 255, 255, .4); border-radius: var(--r); font-size: 12.5px; font-weight: 650; text-align: center; }
 .panel-list-ic li { align-items: flex-start; }
 .panel-list-ic .ic { margin-top: 3px; color: var(--amber-light); }
 .panel-list-ic b { font-weight: 700; }
@@ -381,7 +383,7 @@ body.menu-open { overflow: hidden; }
 .pnav { position: sticky; top: var(--header-h); z-index: 40; background: #fff; border-bottom: 1px solid var(--line); }
 .pnav ul { display: flex; gap: 6px; overflow-x: auto; padding: 12px 0; scrollbar-width: none; }
 .pnav ul::-webkit-scrollbar { display: none; }
-.pnav a { display: block; padding: 8px 16px; border-radius: 999px; font-size: 14.5px; font-weight: 600; white-space: nowrap; color: var(--ink-2); }
+.pnav a { display: block; padding: 8px 16px; border-radius: var(--r); font-size: 14.5px; font-weight: 600; white-space: nowrap; color: var(--ink-2); }
 .pnav a:hover { background: var(--sand-2); color: var(--ink); }
 
 /* ---------- 제품 페이지 ---------- */
@@ -407,7 +409,7 @@ body.menu-open { overflow: hidden; }
 .spec dd { font-weight: 600; }
 .uses { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 20px; font-size: 14.5px; }
 .uses b { margin-right: 4px; color: var(--muted); font-weight: 600; }
-.uses span { padding: 2px 12px; border-radius: 999px; background: var(--sand-2); }
+.uses span { padding: 2px 12px; border-radius: var(--r); background: var(--sand-2); }
 .prod-btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
 .composite { padding: 48px; border: 1.5px dashed var(--line-2); border-radius: var(--r-lg); background: var(--sand); }
 .composite-head h2 { font-size: clamp(24px, 2.4vw, 30px); font-weight: 700; letter-spacing: -.02em; }
@@ -442,7 +444,7 @@ body.menu-open { overflow: hidden; }
 .rec-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
 .rec .slot { border-radius: var(--r-lg); }
 .rec-body { padding: 18px 4px 0; }
-.rec-cat { display: inline-block; padding: 1px 10px; border-radius: 999px; background: var(--amber-50); color: var(--amber-ink); font-size: 12.5px; font-weight: 700; }
+.rec-cat { display: inline-block; padding: 1px 10px; border-radius: var(--r); background: var(--amber-50); color: var(--amber-ink); font-size: 12.5px; font-weight: 700; }
 .rec h3 { margin-top: 10px; font-size: 19px; font-weight: 700; }
 .rec-where { display: flex; align-items: center; gap: 4px; margin-top: 4px; font-size: 14.5px; color: var(--muted); }
 .rec-where .ic { width: 16px; height: 16px; }
@@ -591,7 +593,7 @@ body.menu-open { overflow: hidden; }
 .seg { display: flex; flex-wrap: wrap; gap: 8px; }
 .seg label { position: relative; cursor: pointer; }
 .seg input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-.seg span { display: block; padding: 9px 16px; border: 1.5px solid var(--line); border-radius: 999px; font-size: 14.5px; font-weight: 600; line-height: 1.45; transition: border-color .15s, background-color .15s; }
+.seg span { display: block; padding: 9px 16px; border: 1.5px solid var(--line); border-radius: var(--r); font-size: 14.5px; font-weight: 600; line-height: 1.45; transition: border-color .15s, background-color .15s; }
 .seg input:hover + span { border-color: var(--line-2); }
 .seg input:checked + span { border-color: var(--amber-btn); background: var(--amber-50); color: #7E4000; }
 .seg input:focus-visible + span { outline: 3px solid var(--amber-btn); outline-offset: 2px; }
