@@ -41,6 +41,29 @@ const inquiryBand = (c, { home = false } = {}) => `<section class="inq${home ? '
 </section>`;
 
 /* 제품 카드 (홈, 제품 페이지 위쪽) */
+/* 홈 제품 목록: 카드 대신 한 줄씩 (제품 · 핵심 규격 · 상태) */
+const keySpec = p => {
+  const pick = p.specs.filter(([k]) => k === '내화' || k === '최대 개구부').map(([, v]) => v);
+  return pick.length ? pick.join(' · ') : p.uses.join(' · ');
+};
+const lineupRow = (c, p) => `<li><a href="${c.url('products/')}#${p.id}">
+  <span class="lu-ic">${productIcon(p.icon)}</span>
+  <span class="lu-name"><b>${p.name}</b><small>${/^SH-/.test(p.model) ? p.model : p.short}</small></span>
+  <span class="lu-spec">${keySpec(p)}</span>
+  <span class="lu-badge">${badge(p)}</span>
+  <span class="lu-go">${icon('chevron')}</span>
+</a></li>`;
+
+/* 제품 페이지: 사진이 없을 때 그림 카드 대신 규격 판 */
+const specBoard = p => {
+  const ORDER = ['내화', '최대 개구부', '최대 크기', '내풍압', '열관류율', '종류', '품목'];
+  const big = ORDER.map(k => p.specs.find(([kk]) => kk === k)).filter(Boolean).slice(0, 2);
+  return `<div class="spec-board" role="img" aria-label="${esc(p.name)} 주요 규격">
+  <div class="sb-top"><span class="sb-ic">${productIcon(p.icon)}</span><span class="sb-model">${/^SH-/.test(p.model) ? p.model : p.name}</span></div>
+  <dl>${(big.length ? big : [['특징', p.short]]).map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
+</div>`;
+};
+
 const productCard = (c, p) => `<li class="pcard"><a href="${c.url('products/')}#${p.id}">
   <span class="pcard-img">${photo(c, p, { label: p.name, pic: p.icon })}</span>
   <span class="pcard-body">${badge(p)}<b class="pcard-name">${p.name}</b><span class="pcard-model">${/^SH-/.test(p.model) ? p.model : p.short}</span></span>
@@ -65,34 +88,29 @@ const logEntry = (c, g) => `<article class="log" id="log-${g.id}" aria-labelledb
     ${g.text.map(t => `<p class="log-p">${t}</p>`).join('')}
     <a class="more" href="${g.url}" target="_blank" rel="noopener">블로그 원문 보기${icon('external')}</a>
   </div>
-  <ul class="log-ph n${g.photos.length}" data-reveal>${g.photos.map(p => `<li><figure>${photo(c, p, { label: p.cap, ratio: p.ratio })}<figcaption>${p.cap}</figcaption></figure></li>`).join('')}</ul>
+  <ul class="log-ph n${g.photos.length}" data-reveal>${g.photos.map(p => `<li><figure>${photo(c, p, { label: p.cap, ratio: p.ratio, sizes: '(max-width: 760px) 50vw, 360px' })}<figcaption>${p.cap}</figcaption></figure></li>`).join('')}</ul>
 </article>`;
 
 /* ================= 홈 ================= */
 export function home(c) {
-  const n = HERO.slides.length;
-  const hero = `<section class="hero" aria-roledescription="carousel" aria-label="성현 첫 화면" data-slider>
-  <div class="hero-slides" aria-live="off" data-stage>${HERO.slides.map((s, i) => `<div class="hero-slide${i === 0 ? ' is-on' : ''}" role="group" aria-roledescription="slide" aria-label="${i + 1} / ${n}: ${esc(s.cap)}${s.img ? '' : ' (그림)'}"${i ? ' aria-hidden="true"' : ''} data-cap="${esc(s.cap)}${s.img ? '' : ' · 그림'}">
-    ${backdrop(c, s, s.art, 'h' + i, { eager: i === 0 })}
-  </div>`).join('')}</div>
-  <div class="hero-shade" aria-hidden="true"></div>
-  <div class="wrap hero-in">
-    <p class="hero-kicker">${HERO.kicker}</p>
-    <h1 class="hero-title">${lines(HERO.title)}</h1>
-    <p class="hero-lede">${lines(HERO.lede)}</p>
-    <div class="hero-actions">
-      <a class="hero-call" href="${tel()}"><span class="hc-ic">${icon('phone')}</span><span><small>대표전화 · ${CO.hours}</small><b>${CO.phone}</b></span></a>
-      ${btn(c.url('contact/'), '견적문의', { variant: 'outline-light' })}
+  const hero = `<section class="hero2" aria-labelledby="hero-t">
+  <div class="wrap hero2-in">
+    <div class="hero2-text">
+      <p class="hero-kicker">${HERO.kicker}</p>
+      <h1 class="hero-title" id="hero-t">${lines(HERO.title)}</h1>
+      <p class="hero-lede">${lines(HERO.lede)}</p>
+      <div class="hero-actions">
+        <a class="hero-call" href="${tel()}"><span class="hc-ic">${icon('phone')}</span><span><small>대표전화 · ${CO.hours}</small><b>${CO.phone}</b></span></a>
+        ${btn(c.url('contact/'), '견적문의', { variant: 'amber' })}
+      </div>
     </div>
-  </div>
-  <div class="wrap hero-ctrl">
-    <p class="hero-count" aria-hidden="true"><b data-cur>01</b><span>/</span>${pad(n)}</p>
-    <div class="hero-nav">
-      <button type="button" class="hn-btn" data-prev aria-label="이전 화면">${icon('prev')}</button>
-      <button type="button" class="hn-btn hn-pause" data-pause aria-label="자동 넘김 멈춤" aria-pressed="false">${icon('pause', 'ic i-pause')}${icon('play', 'ic i-play')}</button>
-      <button type="button" class="hn-btn" data-next aria-label="다음 화면">${icon('next')}</button>
+    <div class="hero2-media">
+      ${photo(c, HERO.photo, { label: '공장', ratio: '4 / 5', eager: true, sizes: '(max-width: 760px) 100vw, 480px' })}
+      <div class="hm-card">
+        <p class="hm-title">${icon('shield')}<b>KICT 품질인정 2종</b></p>
+        <ul>${CERTS.map(r => `<li><span>${r.product}</span><b>${r.model} · ${r.time}</b></li>`).join('')}</ul>
+      </div>
     </div>
-    <p class="hero-cap" aria-hidden="true" data-cap-out>${HERO.slides[0].cap}${HERO.slides[0].img ? '' : ' · 그림'}</p>
   </div>
 </section>`;
 
@@ -110,9 +128,9 @@ export function home(c) {
         <a class="more" href="${c.url('about/')}">회사소개 더보기${icon('chevron')}</a>
       </div>
     </div>
-    <div class="company-media" data-reveal>
-      <span class="offset-block" aria-hidden="true"></span>
-      ${photo(c, COMPANY.img, { label: '공장', ratio: '4 / 3', pic: 'steel' })}
+    <div class="company-steps" data-reveal>
+      <p class="cs-head">한 공장 안에서 끝나는 네 단계</p>
+      <ol>${FACTORY.steps.map((f, i) => `<li><span class="fs-no">${pad(i + 1)}</span><div><b>${f.title}</b><p>${f.text}</p></div></li>`).join('')}</ol>
     </div>
   </div>
 </section>`;
@@ -121,9 +139,7 @@ export function home(c) {
   ${waves('waves')}
   <div class="wrap">
     ${secHead({ en: 'PRODUCTS', title: '제품소개', sub: '공장에서 직접 만드는 방화셔터와 셔터 제품입니다. 방화셔터는 품질인정 상태를 함께 표시했습니다.', center: true, id: 'prod-title' })}
-    <div class="pgrid-scroll" tabindex="0" role="region" aria-label="제품 목록 (옆으로 넘겨 보기)">
-      <ul class="pgrid">${PRODUCTS.map(p => productCard(c, p)).join('')}</ul>
-    </div>
+    <ol class="lineup" data-reveal>${PRODUCTS.map(p => lineupRow(c, p)).join('')}</ol>
     <p class="composite-note" data-reveal>${icon('info')}<span>복합방화셔터(셔터 + 내화문 일체형)는 품질인정을 진행하고 있으며, 인정을 마치기 전까지 판매하지 않습니다. <a href="${c.url('products/')}#composite">자세히</a></span></p>
     <p class="center-btn">${btn(c.url('products/'), '제품 전체 보기', { variant: 'line' })}</p>
   </div>
@@ -156,7 +172,6 @@ export function home(c) {
   <div class="panel">
     <div class="panel-bg" aria-hidden="true">${backdrop(c, null, 'slatsDark', 'pn1')}</div>
     <div class="panel-in" data-reveal>
-      <p class="eyebrow">RECORDS</p>
       <h2 class="panel-title">납품실적</h2>
       <p class="panel-text">${RECORDS_SUMMARY}. 물류센터부터 이차전지 소재 공장까지 들어갔습니다.</p>
       <ul class="panel-list">${RECORDS.map(r => `<li><span class="pl-cat">${r.cat}</span><span>${r.where} · ${r.site}</span></li>`).join('')}</ul>
@@ -167,7 +182,6 @@ export function home(c) {
   <div class="panel">
     <div class="panel-bg" aria-hidden="true">${backdrop(c, null, 'opening', 'pn2')}</div>
     <div class="panel-in" data-reveal>
-      <p class="eyebrow">SUPPLY</p>
       <h2 class="panel-title">공급 방식 · 직영 시공</h2>
       <p class="panel-text">제품만 보내는 납품부터 시공팀 연결, LS셔터 직접 시공까지 현장에 맞춰 고릅니다.</p>
       <ul class="panel-list panel-list-ic">${SUPPLY.map(s => `<li>${icon(s.icon)}<span><b>${s.title}</b> ${s.text}</span></li>`).join('')}</ul>
@@ -306,7 +320,7 @@ export function products(c) {
 
   const secs = PRODUCTS.map((p, i) => `<section class="sec prod${i % 2 ? ' rev' : ''}" id="${p.id}" aria-labelledby="${p.id}-t">
   <div class="wrap prod-in">
-    <div class="prod-media" data-reveal>${photo(c, p, { label: p.name, pic: p.icon, mark: MARK[p.id] || p.model })}</div>
+    <div class="prod-media" data-reveal>${p.img ? photo(c, p, { label: p.name }) : specBoard(p)}</div>
     <div class="prod-text" data-reveal>
       ${badge(p)}
       <h2 class="prod-name" id="${p.id}-t">${fullName(p)}</h2>
@@ -404,7 +418,7 @@ export function certification(c) {
   const reg = `<section class="sec" id="registration">
   <div class="wrap">
     ${secHead({ en: 'REGISTRATION', title: '등록 현황' })}
-    <ul class="regs">${REGISTRATION.map(r => `<li data-reveal><div class="reg-head"><span class="doc-ic">${icon(r.icon)}</span><div><p class="eyebrow">${r.en}</p><h3>${r.title}</h3></div></div><dl>${r.rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl></li>`).join('')}</ul>
+    <ul class="regs">${REGISTRATION.map(r => `<li data-reveal><div class="reg-head"><span class="doc-ic">${icon(r.icon)}</span><h3>${r.title}</h3></div><dl>${r.rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl></li>`).join('')}</ul>
   </div>
 </section>`;
 
@@ -425,8 +439,8 @@ export function records(c) {
       <li><p class="st-num">4<small>개 분야</small></p><p class="st-label">물류 · 업무 · 주거 · 산업</p></li>
     </ul>
     ${secHead({ en: 'MAJOR RECORDS', title: '주요 납품 현장' })}
-    <ul class="rec-grid">${RECORDS.map(r => `<li class="rec" data-reveal>
-      ${photo(c, r, { label: `${r.where} ${r.site}`, pic: r.pic })}
+    <ul class="rec-grid">${RECORDS.map(r => `<li class="rec rec-t" data-reveal>
+      ${r.img ? photo(c, r, { label: `${r.where} ${r.site}` }) : `<span class="rec-ic">${productIcon(r.pic)}</span>`}
       <div class="rec-body"><span class="rec-cat">${r.cat}</span><h3>${r.site}</h3><p class="rec-where">${icon('pin')}${r.where}</p><p class="rec-prod">${r.product}</p></div>
     </li>`).join('')}</ul>
     <p class="builders" data-reveal><b>주요 납품 현장 시공사</b><span>${BUILDERS}</span></p>

@@ -37,9 +37,11 @@ export const phLink = (label, cls = 'more') => `<a class="${cls} is-ph-link" rol
 /* ---------- 사진 자리 ----------
    slot = { img: null }               → 사진 대신 제품 선 그림 카드 (pic 이름, 없으면 'steel'). 점선 '채울 자리'는 쓰지 않습니다.
    slot = { img: 'x.webp', w, h, alt } → assets/img/x.webp */
-export function photo(c, slot, { label = '사진', ratio = '4 / 3', cls = '', pic = '', eager = false, mark = '' } = {}) {
+export function photo(c, slot, { label = '사진', ratio = '4 / 3', cls = '', pic = '', eager = false, mark = '', sizes = '(max-width: 760px) 100vw, 560px' } = {}) {
   if (slot && slot.img) {
-    return `<div class="slot has-img ${cls}" style="--ar:${ratio}"><img src="${c.asset('img/' + slot.img)}" width="${slot.w}" height="${slot.h}" alt="${esc(slot.alt || '')}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"></div>`;
+    /* 블로그 사진(log-*)은 640px 작은 판이 있어 화면에 맞는 크기를 받습니다 */
+    const set = /^log-/.test(slot.img) ? ` srcset="${c.asset('img/' + slot.img.replace('.webp', '-640.webp'))} 640w, ${c.asset('img/' + slot.img)} ${slot.w}w" sizes="${sizes}"` : '';
+    return `<div class="slot has-img ${cls}" style="--ar:${ratio}"><img src="${c.asset('img/' + slot.img)}"${set} width="${slot.w}" height="${slot.h}" alt="${esc(slot.alt || '')}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"></div>`;
   }
   return `<div class="slot is-art ${cls}" style="--ar:${ratio}" role="img" aria-label="${esc(label)} 그림">
     <span class="art-grid" aria-hidden="true"></span>
@@ -68,7 +70,6 @@ export function badge(p) {
 /* ---------- 섹션 제목: 영문 작은 글자 + 한글 제목 ---------- */
 export function secHead({ en, title, sub, center = false, light = false, id = '' }) {
   return `<div class="sec-head${center ? ' is-center' : ''}${light ? ' is-light' : ''}" data-reveal>
-    ${en ? `<p class="eyebrow">${en}</p>` : ''}
     <h2 class="sec-title"${id ? ` id="${id}"` : ''}>${lines(title)}</h2>
     ${sub ? `<p class="sec-sub">${sub}</p>` : ''}
   </div>`;
@@ -188,7 +189,6 @@ export function pageHead(c, { en, title, lede, crumb, uid = 'ph', tabs = null })
   <div class="page-head-art" aria-hidden="true">${heroArt('slatsWarm', uid)}</div>
   <div class="wrap page-head-in">
     <nav class="crumbs" aria-label="현재 위치"><a href="${c.url('')}">${icon('home')}<span class="sr">홈</span></a>${icon('chevron')}<span aria-current="page">${crumb}</span></nav>
-    <p class="eyebrow">${en}</p>
     <h1 class="page-title">${lines(title)}</h1>
     ${lede ? `<p class="page-lede">${lede}</p>` : ''}
   </div>

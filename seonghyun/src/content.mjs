@@ -62,9 +62,11 @@ export const NAV = [
    slides: 사진을 받기 전까지는 art(그림)로 채웁니다. img 에 사진을 넣으면 그림 대신 사진이 나옵니다.
    art 는 src/art.mjs 의 heroArt 이름: 'slats'(철재 슬랫), 'screen'(스크린 직물), 'opening'(반쯤 내린 셔터) */
 export const HERO = {
-  kicker: '방화셔터 제조 · SINCE 2006',
-  title: ['셔터의 처음과 끝,', '한 공장에서 만듭니다'],
-  lede: ['설계와 제작, 품질인정 서류, 납품과 시공까지', '경기도 광주 자체 공장에서 직접 책임집니다.'],
+  kicker: '방화셔터 제조 · 1997년부터',
+  title: ['인정받은 방화셔터를', '공장에서 바로 만듭니다'],
+  lede: ['경기도 광주 자체 공장에서 강판을 자르고 접어 슬랫까지 직접 만듭니다.', 'KICT 품질인정 제품과 자재승인 · 준공서류까지 함께 챙깁니다.'],
+  /* 첫 화면 오른쪽 사진 (사진 한 장, 화면 전체 배경이 아님) */
+  photo: { img: 'log-parts-ready.webp', w: 966, h: 1288, alt: '공장에 쌓아 둔 셔터 자재와 납품 준비를 마친 슬랫 · T바(하장)' },
   slides: [
     { art: 'slats', img: null, w: 0, h: 0, alt: '', cap: '철재 방화셔터 슬랫' },
     { art: 'screen', img: null, w: 0, h: 0, alt: '', cap: '실리카 직물 스크린 방화셔터' },
@@ -92,7 +94,7 @@ export const POPUPS = [
 /* ---------- 숫자 줄 ---------- */
 export const STATS = [
   { num: '1997', unit: '~', label: '셔터 한 길', note: '2006년 주식회사 성현 설립' },
-  { num: 'KICT', unit: '2종', label: '품질인정', note: '철재 SH-F01 · 스크린 SH-S01' },
+  { num: '8 × 4', unit: 'm', label: '인정 제품 최대 개구부', note: '철재 SH-F01 · 스크린 SH-S01' },
   { num: '300', unit: '여 현장', label: '최근 3년 납품', note: '물류·업무·주거·산업 시설' },
   { num: '전국', unit: '', label: '납품 · 시공', note: '출장 시공과 자재 납품' }
 ];

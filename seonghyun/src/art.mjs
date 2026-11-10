@@ -66,13 +66,13 @@ function slatPattern(id, gid, h = 56) {
   return `<pattern id="${id}" width="1600" height="${h}" patternUnits="userSpaceOnUse">
     <rect width="1600" height="${h}" fill="url(#${gid})"/>
     <rect y="1" width="1600" height="1.2" fill="#fff" opacity=".32"/>
-    <rect y="${h - 3}" width="1600" height="3" fill="#20262E" opacity=".55"/>
+    <rect y="${h - 3}" width="1600" height="3" fill="#24201C" opacity=".55"/>
   </pattern>`;
 }
 
 const TONES = {
   steel: ['#7E8791', '#C9CED4', '#A4ACB5', '#7D8690', '#5A626C', '#3C434C'],
-  dark: ['#2C333C', '#56606B', '#3E4651', '#2E353E', '#22282F', '#151A20'],
+  dark: ['#332D27', '#5E554C', '#463E36', '#352F29', '#28231F', '#181512'],
   warm: ['#8A8279', '#CFC8BE', '#ACA49A', '#878076', '#655E56', '#463F39']
 };
 
@@ -85,12 +85,12 @@ function slats(uid, tone = 'steel') {
     ${slatGrad(`g${uid}`, t)}${slatPattern(`p${uid}`, `g${uid}`)}
     <radialGradient id="l${uid}" cx="72%" cy="22%" r="62%"><stop offset="0" stop-color="#fff" stop-opacity="${dark ? '.16' : '.42'}"/><stop offset=".55" stop-color="#fff" stop-opacity="${dark ? '.04' : '.1'}"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
     <linearGradient id="s${uid}" x1="0" y1="0" x2="1" y2="0"><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset=".62" stop-color="#fff" stop-opacity="${dark ? '.05' : '.16'}"/><stop offset=".8" stop-color="#fff" stop-opacity="0"/></linearGradient>
-    <radialGradient id="v${uid}" cx="50%" cy="50%" r="75%"><stop offset=".55" stop-color="#0B1220" stop-opacity="0"/><stop offset="1" stop-color="#0B1220" stop-opacity=".55"/></radialGradient>
+    <radialGradient id="v${uid}" cx="50%" cy="50%" r="75%"><stop offset=".55" stop-color="#1A1714" stop-opacity="0"/><stop offset="1" stop-color="#1A1714" stop-opacity=".55"/></radialGradient>
   </defs>
   <rect width="1600" height="900" fill="url(#p${uid})"/>
   <rect width="1600" height="900" fill="url(#s${uid})"/>
   <rect width="1600" height="900" fill="url(#l${uid})"/>
-  ${dark ? '' : '<rect x="1270" width="10" height="900" fill="#1C2129" opacity=".18"/><rect x="1280" width="3" height="900" fill="#fff" opacity=".18"/>'}
+  ${dark ? '' : '<rect x="1270" width="10" height="900" fill="#221E1A" opacity=".18"/><rect x="1280" width="3" height="900" fill="#fff" opacity=".18"/>'}
   <rect width="1600" height="900" fill="url(#v${uid})"/>
 </svg>`;
 }
@@ -105,9 +105,9 @@ function screen(uid) {
     <pattern id="fold${uid}" width="260" height="900" patternUnits="userSpaceOnUse"><rect width="260" height="900" fill="url(#f${uid})"/></pattern>
     <pattern id="w${uid}" width="7" height="7" patternUnits="userSpaceOnUse"><path d="M0 3.5h7M3.5 0v7" stroke="#5E564C" stroke-width=".6" opacity=".22"/></pattern>
     <linearGradient id="b${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5E6670"/><stop offset=".5" stop-color="#8C949D"/><stop offset="1" stop-color="#454C55"/></linearGradient>
-    <linearGradient id="sh${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B2028" stop-opacity=".45"/><stop offset="1" stop-color="#1B2028" stop-opacity="0"/></linearGradient>
+    <linearGradient id="sh${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#221E1A" stop-opacity=".45"/><stop offset="1" stop-color="#221E1A" stop-opacity="0"/></linearGradient>
     <radialGradient id="l${uid}" cx="70%" cy="35%" r="60%"><stop offset="0" stop-color="#FFF6E8" stop-opacity=".5"/><stop offset="1" stop-color="#FFF6E8" stop-opacity="0"/></radialGradient>
-    <radialGradient id="v${uid}" cx="50%" cy="50%" r="75%"><stop offset=".5" stop-color="#0B1220" stop-opacity="0"/><stop offset="1" stop-color="#0B1220" stop-opacity=".5"/></radialGradient>
+    <radialGradient id="v${uid}" cx="50%" cy="50%" r="75%"><stop offset=".5" stop-color="#1A1714" stop-opacity="0"/><stop offset="1" stop-color="#1A1714" stop-opacity=".5"/></radialGradient>
   </defs>
   <rect width="1600" height="900" fill="url(#fold${uid})"/>
   <rect width="1600" height="900" fill="url(#w${uid})"/>
@@ -131,7 +131,7 @@ function opening(uid) {
     <linearGradient id="bar${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D5DAE0"/><stop offset=".45" stop-color="#9AA2AB"/><stop offset="1" stop-color="#4C535C"/></linearGradient>
     <linearGradient id="rail${uid}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2B3139"/><stop offset=".5" stop-color="#6B737C"/><stop offset="1" stop-color="#2B3139"/></linearGradient>
     <radialGradient id="l${uid}" cx="68%" cy="20%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
-    <linearGradient id="d${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0B1220" stop-opacity=".35"/><stop offset=".4" stop-color="#0B1220" stop-opacity="0"/></linearGradient>
+    <linearGradient id="d${uid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1A1714" stop-opacity=".35"/><stop offset=".4" stop-color="#1A1714" stop-opacity="0"/></linearGradient>
   </defs>
   <rect width="1600" height="900" fill="#1B1F26"/>
   <rect y="660" width="1600" height="240" fill="url(#fl${uid})"/>
