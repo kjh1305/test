@@ -1,6 +1,6 @@
 /* 페이지 본문: 홈, 회사소개, 사업분야, 시공사례, 견적문의, 없는 주소 */
-import { CO, PH, SERVICES, VALUES, PROCESS, RESTORE_CHECK, PROJECTS, FAQ, HERO_IMG, HOME, ABOUT, CONTACT, META } from './content.mjs';
-import { icon } from './art.mjs';
+import { CO, PH, SERVICES, VALUES, PROCESS, RESTORE_CHECK, PROJECTS, FAQ, HERO_IMG, POPUPS, QUICK, BLOCKS, HOME, ABOUT, CONTACT, META } from './content.mjs';
+import { icon, lineIcon } from './art.mjs';
 import { page, pageHead, ctaBand, btn, secHead, photo, ph, val, telHref, br, esc } from './layout.mjs';
 
 const SVC = Object.fromEntries(SERVICES.map(s => [s.id, s]));
@@ -21,46 +21,65 @@ const valuesList = () => `<ul class="values">${VALUES.map(v => `<li><h3>${v.titl
 
 /* ================= 홈 ================= */
 export function home(c) {
-  const hero = `<section class="hero">
-  <div class="wrap">
+  const hero = `<section class="hero" aria-label="대경기업 소개">
+  <div class="hero-bg">${HERO_IMG.img ? `<img src="${c.asset('img/' + HERO_IMG.img)}" width="${HERO_IMG.w}" height="${HERO_IMG.h}" alt="${esc(HERO_IMG.alt)}" fetchpriority="high" decoding="async">` : ''}</div>
+  <div class="wrap hero-in">
     <p class="hero-field">${CO.field}</p>
     <h1 class="hero-title">${br(HOME.heroTitle)}</h1>
-    <div class="hero-row">
-      <p class="hero-lede">${HOME.heroLede}</p>
-      <div class="hero-btns">${btn(c.url('contact/'), '견적문의')}${btn(c.url('business/'), '사업분야 보기', { variant: 'line' })}</div>
+    <p class="hero-lede">${HOME.heroLede}</p>
+    ${CO.phone ? `<a class="hero-phone" href="${telHref(CO.phone)}">${icon('phone')}<span>${esc(CO.phone)}</span></a>` : ''}
+    <div class="hero-pills">${HOME.heroBtns.map(([s, l]) => `<a class="pill" href="${c.url(s)}">${l}${icon('chevron')}</a>`).join('')}</div>
+  </div>
+</section>`;
+
+  const quick = `<nav class="quick" aria-label="${HOME.quickLabel}">
+  <ul class="wrap quick-in">${QUICK.map(q => `<li><a href="${c.url('business/')}#${q.id}">${lineIcon(q.icon)}<span>${q.label.replace(/·/g, '·<wbr>')}</span></a></li>`).join('')}</ul>
+</nav>`;
+
+  const aboutBlk = `<section class="sec about-blk">
+  <div class="wrap about-in">
+    <div class="about-photo" data-reveal>${photo(c, HOME.aboutImg, { label: '현장 사진' })}</div>
+    <div class="about-text" data-reveal>
+      <p class="label-en">ABOUT <b>${CO.name}</b></p>
+      <h2 class="sec-title">${HOME.aboutTitle}</h2>
+      <p>${HOME.aboutText}</p>
+      <a class="pill pill-line" href="${c.url('about/')}">더 보기${icon('chevron')}</a>
     </div>
-    <div class="hero-photo">${photo(c, HERO_IMG, { label: HERO_IMG.label, ratio: '16 / 7', eager: true })}</div>
   </div>
 </section>`;
 
-  const services = `<section class="sec">
-  <div class="wrap split">
-    ${secHead({ title: HOME.servicesTitle, sub: HOME.servicesSub })}
-    <ul class="svc-list" data-reveal>${SERVICES.map(s => `<li><a href="${c.url('business/')}#${s.id}"><b>${s.name}</b><span>${s.short}</span>${icon('chevron')}</a></li>`).join('')}</ul>
-  </div>
+  const blocks = `<section class="blocks" aria-label="${HOME.blocksTitle}">
+  <h2 class="sr">${HOME.blocksTitle}</h2>
+  <ul class="blocks-in">${BLOCKS.map(b => `<li class="blk blk-${b.tone}"><a href="${c.url('business/')}#${b.id}">
+    <span class="blk-en">${b.en}</span>
+    <h3 class="blk-title">${b.title}</h3>
+    <p class="blk-text">${b.text}</p>
+    <span class="blk-go">${icon('arrowUpRight')}</span>
+    ${lineIcon(b.icon, 'blk-mark')}
+  </a></li>`).join('')}</ul>
 </section>`;
 
-  const cases = `<section class="sec sec-tint">
+  const cases = `<section class="sec">
   <div class="wrap">
     <div class="sec-row">${secHead({ title: HOME.projectsTitle, sub: HOME.projectsSub })}${btn(c.url('projects/'), '시공사례 전체', { variant: 'line' })}</div>
     <ul class="case-grid" data-reveal>${PROJECTS.slice(0, 3).map(p => caseCard(c, p)).join('')}</ul>
   </div>
 </section>`;
 
-  const how = `<section class="sec">
-  <div class="wrap">
-    <div class="split">
-      ${secHead({ title: HOME.valuesTitle })}
-      <div data-reveal>${valuesList()}</div>
+  /* 알림 팝업: hidden 으로 넣어 두고 JS가 열어 줌 (JS가 없으면 보이지 않음) */
+  const pops = POPUPS.filter(p => p.on);
+  const popups = pops.length ? `<div class="pop-layer" data-popups hidden>
+  <div class="pop-dim" data-pop-dim></div>
+  <div class="pop-wrap">${pops.map(p => `<section class="pop" role="dialog" aria-modal="false" aria-label="${esc(p.label)}" data-pop="${p.id}" hidden>
+    <a class="pop-img" href="${c.url(p.href)}"${p.tel ? ` data-tel="${p.tel}"` : ''}><img src="${c.asset('img/' + p.img)}" width="${p.w}" height="${p.h}" alt="${esc(p.alt)}" decoding="async"></a>
+    <div class="pop-foot">
+      <label class="pop-today"><input type="checkbox" data-pop-today><span>오늘 하루 열지 않기</span></label>
+      <button type="button" class="pop-close" data-pop-close>닫기</button>
     </div>
-    <div class="process-block" data-reveal>
-      <h2 class="sub-title">${HOME.processTitle}</h2>
-      ${processList()}
-    </div>
-  </div>
-</section>`;
+  </section>`).join('')}</div>
+</div>` : '';
 
-  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + services + cases + how + ctaBand(c) });
+  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + quick + aboutBlk + blocks + cases + ctaBand(c) + popups });
 }
 
 /* ================= 회사소개 ================= */

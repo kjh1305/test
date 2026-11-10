@@ -36,8 +36,41 @@ export const NAV = [
   ['contact/', '견적문의']
 ];
 
-/* 첫 화면 사진 (성남 현장, 16:7로 자름) */
-export const HERO_IMG = { img: 'hero.webp', w: 966, h: 423, alt: '석고보드 천장과 기둥을 마감하는 작업자들', label: '대표 현장 사진' };
+/* 첫 화면 배경 사진 (성남 현장). 어두운 덮개 아래 화면 너비에 맞춰 잘려 보입니다.
+   img를 null로 두면 사진 없이 짙은 남색 바탕만 나옵니다. */
+export const HERO_IMG = { img: 'hero-bg.webp', w: 966, h: 725, alt: '석고보드 천장과 기둥을 마감하는 작업자들' };
+
+/* ---------- 홈 알림 팝업 ----------
+   홈 첫 화면 위에 뜨는 레이어 팝업입니다. 넓은 화면에서는 첫 화면 왼쪽 위에, 모바일에서는 화면 가운데에 뜹니다.
+   - on: false 로 두면 그 팝업은 나오지 않습니다 (모두 false 면 팝업 없음).
+   - id 는 '오늘 하루 열지 않기' 저장에 쓰므로 팝업마다 달라야 합니다. 내용을 바꾸면 id 도 바꿔 주세요.
+   - href: 그림을 누르면 가는 곳 (사이트 안 주소는 'contact/'처럼 씀), tel: 모바일에서 누르면 걸 전화
+   - 그림은 업체 블로그의 홍보 배너를 WebP로 바꾼 것입니다 (오른쪽 아래 생성 도구 표시는 덮음). */
+export const POPUPS = [
+  {
+    id: 'banner-2026-11', on: true,
+    img: 'popup-banner.webp', w: 966, h: 539,
+    alt: '대경기업. 각종 칸막이공사, 천정공사, 원상복구공사, 철거공사, 인테리어 전문업체. 상담 010-5478-4364',
+    label: '대경기업 안내',
+    href: 'contact/', tel: 'tel:01054784364'
+  }
+];
+
+/* 홈 아이콘 줄: 사업분야 바로가기 (icon은 src/art.mjs의 lineIcon 이름) */
+export const QUICK = [
+  { id: 'frame', label: '경량철골', icon: 'frame' },
+  { id: 'partition', label: '칸막이·가벽', icon: 'partition' },
+  { id: 'ceiling', label: '천장·텍스', icon: 'ceiling' },
+  { id: 'restore', label: '철거·원상복구', icon: 'restore' },
+  { id: 'wood', label: '목공·인테리어', icon: 'wood' }
+];
+
+/* 홈 큰 사업분야 블록 3개 (같은 파란 계열 세 단계) */
+export const BLOCKS = [
+  { id: 'partition', en: 'Partition & Light Steel', title: '칸막이·경량철골', text: '경량철골 골조부터 석고보드·래핑 가벽까지', icon: 'partition', tone: 'navy' },
+  { id: 'ceiling', en: 'Ceiling', title: '천장공사', text: '천장틀, 텍스 마감, 손상된 천장 보수', icon: 'ceiling', tone: 'blue' },
+  { id: 'restore', en: 'Demolition & Restoration', title: '철거·원상복구', text: '빌린 공간을 계약 전 상태로 되돌립니다', icon: 'restore', tone: 'slate' }
+];
 
 /* 사업분야. id는 견적문의 폼의 ?service= 값으로도 쓰입니다.
    업체 소개, 블로그 본문·해시태그, 블로그 배너(각종 칸막이공사 / 천정공사 / 원상복구공사 / 철거공사 / 인테리어)를 모두 담았습니다.
@@ -197,9 +230,13 @@ export const FAQ = [
 export const HOME = {
   title: '30년 전통 경량철골·인테리어 전문',
   heroTitle: ['튼튼하게 세우고,', '말끔하게 마감합니다'],
-  heroLede: '대경기업은 30년 전통의 경량철골공사·인테리어 전문 업체입니다. 상가건물 천장공사와 칸막이, 바닥공사부터 리모델링, 철거, 원상복구까지 서울과 경기 수도권 현장을 맡습니다.',
-  servicesTitle: '하는 일',
-  servicesSub: '경량철골과 칸막이, 천장공사를 중심으로 실내 공사에 필요한 공정을 한 곳에서 맡습니다.',
+  heroLede: '상가건물 천장·칸막이·바닥공사부터 철거와 원상복구까지, 서울과 경기 수도권 현장을 맡습니다.',
+  heroBtns: [['business/', '사업분야 바로가기'], ['projects/', '시공사례 바로가기'], ['contact/', '견적문의 바로가기']],
+  quickLabel: '사업분야 바로가기',
+  aboutImg: { img: 'jj-09.webp', w: 800, h: 600, alt: '텍스 마감을 마친 천장과 창가' },
+  aboutTitle: '30년 전통의 경량철골·인테리어 전문 업체입니다',
+  aboutText: '대경기업은 상가건물의 천장공사와 칸막이공사, 바닥공사를 주로 하고 철거와 원상복구, 인테리어까지 맡습니다. 공정마다 분야별 전문 인력이 일하고, 하자 없이 말끔하게 끝날 때까지 꼼꼼하게 확인합니다. 서울과 경기 수도권 현장을 다닙니다.',
+  blocksTitle: '주요 사업분야',
   projectsTitle: '시공사례',
   projectsSub: '블로그에 올린 현장 가운데 일부입니다.',
   valuesTitle: '일하는 방식',

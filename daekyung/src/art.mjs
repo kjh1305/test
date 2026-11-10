@@ -10,6 +10,23 @@ const I = {
   blog: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12.5h8M8 16h5"/>',
   user: '<circle cx="12" cy="8.5" r="3.5"/><path d="M5 20a7 7 0 0114 0"/>',
   chevron: '<path d="M9 6l6 6-6 6"/>',
-  close: '<path d="M6 6l12 12M18 6L6 18"/>'
+  close: '<path d="M6 6l12 12M18 6L6 18"/>',
+  arrowUpRight: '<path d="M7 17L17 7M8 7h9v9"/>',
+  up: '<path d="M12 19V5M6 11l6-6 6 6"/>'
 };
 export const icon = (name, cls = 'ic') => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${I[name]}</svg>`;
+
+/* 공종 선 아이콘 (64×64, 가는 선). 홈 아이콘 줄과 큰 블록의 바탕 그림에 씁니다. */
+const L = {
+  /* 경량철골: 위아래 러너와 스터드 */
+  frame: '<rect x="6" y="8" width="52" height="5" rx="1"/><rect x="6" y="51" width="52" height="5" rx="1"/><path d="M14 13v38M26 13v38M38 13v38M50 13v38"/><path d="M14 27h12M38 37h12"/>',
+  /* 칸막이·가벽: 판넬 벽과 문 */
+  partition: '<path d="M6 56V10h52v46"/><path d="M4 56h56"/><path d="M19 10v46M45 10v46"/><rect x="26" y="24" width="12" height="32"/><circle cx="35" cy="41" r="1.2"/>',
+  /* 천장·텍스: 천장 격자와 텍스 무늬 */
+  ceiling: '<path d="M4 12h56L50 34H14z"/><path d="M22 12l-4 22M32 12v22M42 12l4 22M9 23h46"/><path d="M32 34v8"/><path d="M26 48a6 6 0 0112 0z"/><path d="M14 18h.01M26 18h.01M37 18h.01M49 18h.01M18 29h.01M29 29h.01M36 29h.01M46 29h.01"/>',
+  /* 철거·원상복구: 되돌리는 화살표와 벽 */
+  restore: '<path d="M14 22a22 22 0 1 1-4 14"/><path d="M6 14l4 9 9-3"/><rect x="24" y="26" width="18" height="16"/><path d="M24 34h18M33 26v8M29 34v8M37 34v8"/>',
+  /* 목공·인테리어: 나무 판재와 직각자 */
+  wood: '<rect x="6" y="18" width="40" height="16" rx="1.5"/><path d="M11 23c6 2 12 2 18 0s10-2 14 0M11 29c5-2 10-2 15 0s9 2 15 0"/><path d="M40 40h18v18H52V46H40z"/><path d="M44 46v-2M48 46v-3M52 50h2M52 54h3"/>'
+};
+export const lineIcon = (name, cls = 'lic') => `<svg class="${cls}" viewBox="0 0 64 64" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${L[name]}</svg>`;

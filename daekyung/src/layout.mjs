@@ -94,6 +94,14 @@ function quickbar(c) {
   return `<div class="quickbar" data-quickbar>${call}<a class="qb-form" href="${c.url('contact/')}">${icon('doc')}<span>견적문의</span></a></div>`;
 }
 
+/* 떠 있는 버튼: 넓은 화면의 '상담'(전화)과 맨 위로 */
+function floaters() {
+  return `<div class="floaters" data-floaters>
+  ${CO.phone ? `<a class="fl-call" href="${telHref(CO.phone)}" aria-label="전화 상담 ${esc(CO.phone)}">${icon('phone')}<span>상담</span></a>` : ''}
+  <a class="fl-top" href="#main" data-top aria-label="맨 위로">${icon('up')}<span>TOP</span></a>
+</div>`;
+}
+
 export function page(c, { title, desc, body, bodyClass = '' }) {
   const full = title ? `${title} | ${CO.name}` : `${CO.name} | ${HOME.title}`;
   return `<!doctype html>
@@ -130,6 +138,7 @@ ${body}
 </main>
 ${footer(c)}
 ${quickbar(c)}
+${floaters()}
 <div class="toast" role="status" aria-live="polite" data-toast></div>
 </body>
 </html>

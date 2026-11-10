@@ -10,7 +10,11 @@
 
   /* 헤더: 스크롤하면 밑줄 */
   var header = $('[data-header]');
-  var onScroll = function () { header.classList.toggle('is-scrolled', window.scrollY > 8); };
+  var floaters = $('[data-floaters]');
+  var onScroll = function () {
+    header.classList.toggle('is-scrolled', window.scrollY > 8);
+    if (floaters) floaters.classList.toggle('is-top-on', window.scrollY > 600);
+  };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
@@ -38,6 +42,53 @@
   else {
     var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; e.target.classList.add('is-in'); io.unobserve(e.target); }); }, { threshold: 0.08, rootMargin: '0px 0px -4% 0px' });
     els.forEach(function (el) { io.observe(el); });
+  }
+
+  /* 맨 위로 */
+  var top = $('[data-top]');
+  if (top) top.addEventListener('click', function (e) {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    var m = document.getElementById('main'); if (m) { m.setAttribute('tabindex', '-1'); m.focus({ preventScroll: true }); }
+  });
+
+  /* 홈 알림 팝업
+     '오늘 하루 열지 않기'를 고르고 닫으면 오늘 자정까지 localStorage 에 기록.
+     저장이 막힌 브라우저에서는 기록하지 못해도 팝업은 그대로 열림. JS가 없으면 팝업은 보이지 않음. */
+  var layer = $('[data-popups]');
+  if (layer) {
+    var KEY = 'daekyung-pop-', mobile = window.matchMedia('(max-width: 640px)');
+    var pops = $$('[data-pop]', layer);
+    pops.forEach(function (p) {
+      var hide = false;
+      try { hide = Number(localStorage.getItem(KEY + p.getAttribute('data-pop'))) > Date.now(); } catch (e) { hide = false; }
+      p.hidden = hide;
+    });
+    var openPops = function () { return pops.filter(function (p) { return !p.hidden; }); };
+    var closePop = function (p) {
+      var today = $('[data-pop-today]', p);
+      if (today && today.checked) {
+        var midnight = new Date(); midnight.setHours(24, 0, 0, 0);
+        try { localStorage.setItem(KEY + p.getAttribute('data-pop'), String(midnight.getTime())); } catch (e) { /* 저장 못 해도 닫기는 됨 */ }
+      }
+      p.hidden = true;
+      var rest = openPops();
+      if (rest.length) $('[data-pop-close]', rest[0]).focus();
+      else { layer.hidden = true; var m = document.getElementById('main'); if (m) { m.setAttribute('tabindex', '-1'); m.focus({ preventScroll: true }); } }
+    };
+    pops.forEach(function (p) {
+      $('[data-pop-close]', p).addEventListener('click', function () { closePop(p); });
+      var link = $('.pop-img', p), tel = link.getAttribute('data-tel');
+      link.addEventListener('click', function (e) { if (tel && mobile.matches) { e.preventDefault(); window.location.href = tel; } });
+    });
+    $('[data-pop-dim]', layer).addEventListener('click', function () { openPops().forEach(closePop); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !layer.hidden && !body.classList.contains('menu-open')) openPops().forEach(closePop);
+    });
+    if (openPops().length) {
+      layer.hidden = false;
+      $('[data-pop-close]', openPops()[0]).focus({ preventScroll: true });
+    }
   }
 
   /* 시공사례 사진 크게 보기 (JS가 없으면 링크로 사진 파일이 열림) */
