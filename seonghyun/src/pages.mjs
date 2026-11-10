@@ -1,9 +1,9 @@
 /* 페이지 본문: 홈, 회사소개, 제품, 품질인정, 납품실적, 견적문의, 없는 주소 */
 import {
   CO, PH, HERO, POPUPS, STATS, COMPANY, STATUS, PRODUCTS, COMPOSITE, CATALOG, CERTS, CERT_META, CERT_STEPS, CERT_PROGRESS, REGISTRATION, DOCS,
-  RECORDS, BUILDERS, RECORDS_SUMMARY, FIELD_LOGS, FIELD_NOTE, FINDER, QUOTE_STEPS, SUPPLY, STANDARDS, HISTORY, FACTORY, CTA, CONTACT, PRODUCT_OPTS, META
+  RECORDS, BUILDERS, RECORDS_SUMMARY, FIELD_LOGS, FIELD_NOTE, FINDER, QUOTE_STEPS, GALLERY, SUPPLY, STANDARDS, HISTORY, FACTORY, CTA, CONTACT, PRODUCT_OPTS, META
 } from './content.mjs';
-import { icon, productIcon, waves } from './art.mjs';
+import { icon, productIcon, waves, shutterDrawing } from './art.mjs';
 import { page, pageHead, subTabs, btn, callBtn, smsBtn, kakaoBtn, phLink, lines, secHead, esc, ph, val, photo, backdrop, badge, tel, sms } from './layout.mjs';
 
 const pad = n => String(n).padStart(2, '0');
@@ -93,23 +93,24 @@ const logEntry = (c, g) => `<article class="log" id="log-${g.id}" aria-labelledb
 
 /* ================= 홈 ================= */
 export function home(c) {
-  const hero = `<section class="hero2" aria-labelledby="hero-t">
-  <div class="wrap hero2-in">
-    <div class="hero2-text">
-      <p class="hero-kicker">${HERO.kicker}</p>
-      <h1 class="hero-title" id="hero-t">${lines(HERO.title)}</h1>
-      <p class="hero-lede">${lines(HERO.lede)}</p>
-      <div class="hero-actions">
-        <a class="hero-call" href="${tel()}"><span class="hc-ic">${icon('phone')}</span><span><small>대표전화 · ${CO.hours}</small><b>${CO.phone}</b></span></a>
-        ${btn(c.url('contact/'), '견적문의', { variant: 'amber' })}
+  /* 첫 화면 (A+C: 도면 · 사양서) */
+  const hero = `<section class="hero-a grid-bg" aria-labelledby="hero-t">
+  <div class="wrap ha-in">
+    <div class="ha-l">
+      <div>
+        <p class="ha-tag mono">${HERO.kicker}</p>
+        <h1 class="ha-title" id="hero-t">${HERO.title.join('<br>')}</h1>
+        <p class="ha-lede">${HERO.lede.join(' ')}</p>
+        <div class="ha-cta">
+          ${btn(c.url('contact/'), '도면 · 사진으로 견적 요청', { variant: 'amber' })}
+          <a class="ha-tel" href="${tel()}"><small>대표전화 · ${CO.hours}</small><b class="mono">${CO.phone}</b></a>
+        </div>
       </div>
+      <dl class="title-block">${HERO.titleBlock.map(([k, v, m]) => `<div><dt>${k}</dt><dd${m ? ' class="mono"' : ''}>${v}</dd></div>`).join('')}</dl>
     </div>
-    <div class="hero2-media">
-      ${photo(c, HERO.photo, { label: '공장', ratio: '4 / 5', eager: true, sizes: '(max-width: 760px) 100vw, 480px' })}
-      <div class="hm-card">
-        <p class="hm-title">${icon('shield')}<b>KICT 품질인정 2종</b></p>
-        <ul>${CERTS.map(r => `<li><span>${r.product}</span><b>${r.model} · ${r.time}</b></li>`).join('')}</ul>
-      </div>
+    <div class="ha-r">
+      ${shutterDrawing()}
+      <figure class="ha-inset">${photo(c, HERO.photo, { label: '공장', ratio: '3 / 2', eager: true, sizes: '220px' })}<figcaption><b class="mono">PHOTO</b>납품 준비를 마친 슬랫 · T바</figcaption></figure>
     </div>
   </div>
 </section>`;
@@ -138,8 +139,25 @@ export function home(c) {
   const products = `<section class="sec products" aria-labelledby="prod-title">
   ${waves('waves')}
   <div class="wrap">
-    ${secHead({ en: 'PRODUCTS', title: '제품소개', sub: '공장에서 직접 만드는 방화셔터와 셔터 제품입니다. 방화셔터는 품질인정 상태를 함께 표시했습니다.', center: true, id: 'prod-title' })}
-    <ol class="lineup" data-reveal>${PRODUCTS.map(p => lineupRow(c, p)).join('')}</ol>
+    <div class="sheet-hd">
+      ${secHead({ title: '제품 사양서', sub: '설계 도면에 바로 옮길 수 있게 내화 시간, 최대 개구부, 인정 상태를 한 표에 모았습니다.', id: 'prod-title' })}
+    </div>
+    <table class="sheet" data-reveal>
+      <caption class="sr">방화셔터 제품별 내화 시간, 최대 개구부, 인정번호, 인정 상태</caption>
+      <thead><tr><th scope="col">제품</th><th scope="col">내화</th><th scope="col">최대 개구부 (mm)</th><th scope="col">인정번호</th><th scope="col">상태</th><th scope="col"><span class="sr">자세히</span></th></tr></thead>
+      <tbody>${PRODUCTS.filter(p => /^SH-/.test(p.model)).map(p => { const sp = k => (p.specs.find(([kk]) => kk === k) || [, '—'])[1]; const no = /^FDS/.test(sp('인정번호')) ? sp('인정번호') : '—'; return `<tr>
+        <th scope="row"><b>${p.name}</b><small class="mono">${p.model}</small></th>
+        <td class="mono" data-k="내화">${sp('내화')}</td>
+        <td class="mono" data-k="최대">${sp('최대 개구부').replace('mm', '')}</td>
+        <td class="mono" data-k="인정">${no}</td>
+        <td class="sh-st">${badge(p)}</td>
+        <td class="sh-go"><a href="${c.url('products/')}#${p.id}">사양 →</a></td>
+      </tr>`; }).join('')}</tbody>
+    </table>
+    <div class="sheet-others" data-reveal>
+      <p class="so-h">그 밖의 셔터 · 자재</p>
+      <ul>${PRODUCTS.filter(p => !/^SH-/.test(p.model)).map(p => `<li><a href="${c.url('products/')}#${p.id}"><span class="so-ic">${productIcon(p.icon)}</span><span><b>${p.name}</b><small>${p.short}</small></span></a></li>`).join('')}</ul>
+    </div>
     <p class="composite-note" data-reveal>${icon('info')}<span>복합방화셔터(셔터 + 내화문 일체형)는 품질인정을 진행하고 있으며, 인정을 마치기 전까지 판매하지 않습니다. <a href="${c.url('products/')}#composite">자세히</a></span></p>
     <p class="center-btn">${btn(c.url('products/'), '제품 전체 보기', { variant: 'line' })}</p>
   </div>
@@ -158,13 +176,19 @@ export function home(c) {
   </div>
 </section>`;
 
-  const logs = `<section class="sec sec-sand logs-home" aria-labelledby="logs-title">
+  /* 직영 현장 기록 (A+C: 어두운 사진 갤러리) */
+  const gal = GALLERY.map(([id, k, kind, title]) => { const g = FIELD_LOGS.find(x => x.id === id); return { g, p: g.photos[k], kind, title }; });
+  const logs = `<section class="gallery-sec" aria-labelledby="logs-title">
   <div class="wrap">
-    <div class="logs-head">
-      ${secHead({ en: 'FIELD LOG', title: '직영 현장 기록', sub: '설치, 철거, 자재 납품까지 LS셔터 시공팀이 직접 한 실제 현장입니다.', id: 'logs-title' })}
-      <p class="logs-links" data-reveal><a class="more" href="${c.url('records/')}#field">현장 기록 전체${icon('chevron')}</a><a class="more" href="${CO.blog}" target="_blank" rel="noopener">LS셔터 블로그${icon('external')}</a></p>
+    <div class="gs-hd">
+      <div><p class="gs-tag">직영 현장 기록</p><h2 class="sec-title" id="logs-title">최근 다녀온 현장</h2></div>
+      <p>설치, 철거, 자재 납품까지. ${FIELD_NOTE}</p>
     </div>
-    <ul class="lgrid is-feature">${FIELD_LOGS.map(g => logCard(c, g)).join('')}</ul>
+    <div class="gal">${gal.map(({ g, p, kind, title }, n) => `<a class="gcard${n === 0 ? ' big' : ''}" href="${c.url('records/')}#log-${g.id}" data-reveal>
+      ${photo(c, p, { label: p.alt, ratio: n === 0 ? '4 / 3' : '4 / 3', sizes: n === 0 ? '(max-width: 760px) 100vw, 640px' : '(max-width: 760px) 100vw, 400px' })}
+      <span class="gcap"><span class="gk">${kind}</span><b class="gt">${title}</b><span class="gw">${g.where}${n === 0 ? ' · ' + g.spec : ''}</span></span>
+    </a>`).join('')}</div>
+    <p class="gs-links"><a class="more more-light" href="${c.url('records/')}#field">현장 기록 전체${icon('chevron')}</a><a class="more more-light" href="${CO.blog}" target="_blank" rel="noopener">LS셔터 블로그${icon('external')}</a></p>
   </div>
 </section>`;
 
@@ -333,7 +357,7 @@ export function about(c) {
 
   return page(c, {
     title: '회사소개', desc: META.about, bodyClass: 'p-about',
-    body: pageHead(c, { en: 'COMPANY', title: ['셔터의 처음과 끝,', '한 공장에서 만듭니다'], lede: `${CO.since} 셔터 일을 시작해 ${CO.founded} ${CO.company}을 세웠습니다. LS셔터는 그 공장이 직접 운영하는 브랜드입니다.`, crumb: '회사소개', tabs: [['#intro', '회사 개요'], ['#standard', '만드는 방식'], ['#factory', '공장 · 직접 절곡'], ['#supply', '공급 방식'], ['#history', '걸어온 길'], ['#location', '오시는 길']] })
+    body: pageHead(c, { en: 'COMPANY', title: ['강판 한 장부터 준공서류까지,', '한 공장이 책임집니다'], lede: `${CO.since} 셔터 일을 시작해 ${CO.founded} ${CO.company}을 세웠습니다. LS셔터는 그 공장이 직접 운영하는 브랜드입니다.`, crumb: '회사소개', tabs: [['#intro', '회사 개요'], ['#standard', '만드는 방식'], ['#factory', '공장 · 직접 절곡'], ['#supply', '공급 방식'], ['#history', '걸어온 길'], ['#location', '오시는 길']] })
       + intro + standards + factory + supply + history + info + inquiryBand(c)
   });
 }

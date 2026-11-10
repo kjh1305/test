@@ -159,3 +159,27 @@ export function waves(cls = 'waves') {
   }
   return `<svg class="${cls}" viewBox="0 0 1600 420" preserveAspectRatio="none" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1">${lines.join('')}</svg>`;
 }
+
+/* 셔터 정면도 (A+C 방향 첫 화면): 셔터박스 · 가이드레일 · 슬랫 · T바(하장)와 치수선. 색은 CSS(.drawing)에서 */
+export function shutterDrawing() {
+  const slats = Array.from({ length: 15 }, (_, i) => `<line x1="106" y1="${112 + i * 16}" x2="454" y2="${112 + i * 16}"/>`).join('');
+  const hatch = [40, 70, 100, 440, 470, 500].map(x => `<line x1="${x}" y1="406" x2="${x + 16}" y2="420"/>`).join('');
+  return `<svg class="drawing" viewBox="0 0 560 470" role="img" aria-label="방화셔터 정면도: 셔터박스, 가이드레일, 슬랫, T바(하장)와 인정 제품 최대 개구부 8,000 × 4,000mm 치수">
+  <g fill="none" stroke="currentColor" stroke-width="1.6">
+    <rect x="80" y="40" width="400" height="56"/><line x1="80" y1="68" x2="480" y2="68" stroke-dasharray="4 4" stroke-width="1"/>
+    <rect x="88" y="96" width="18" height="310"/><rect x="454" y="96" width="18" height="310"/>
+    <g stroke-width="1" class="slats">${slats}</g>
+    <rect x="106" y="350" width="348" height="14" stroke-width="2"/>
+    <line x1="40" y1="406" x2="520" y2="406" stroke-width="2.2"/><g stroke-width=".8">${hatch}</g>
+  </g>
+  <g class="dim" fill="none" stroke-width="1.2">
+    <line x1="106" y1="440" x2="454" y2="440"/><line x1="106" y1="432" x2="106" y2="448"/><line x1="454" y1="432" x2="454" y2="448"/>
+    <line x1="530" y1="96" x2="530" y2="406"/><line x1="522" y1="96" x2="538" y2="96"/><line x1="522" y1="406" x2="538" y2="406"/>
+  </g>
+  <text class="dimt" x="280" y="462" text-anchor="middle">W 8,000</text>
+  <text class="dimt" x="546" y="251" transform="rotate(90 546 251)" text-anchor="middle">H 4,000</text>
+  <g fill="none" stroke="currentColor" stroke-width="1"><line x1="300" y1="54" x2="330" y2="20"/><line x1="97" y1="230" x2="44" y2="230"/><line x1="280" y1="200" x2="300" y2="200"/><line x1="200" y1="357" x2="170" y2="384"/></g>
+  <text x="334" y="18">① 셔터박스</text><text x="4" y="222">② 가이드</text><text x="20" y="238">레일</text>
+  <text x="304" y="204">③ 슬랫</text><text x="96" y="398">④ T바(하장)</text>
+</svg>`;
+}

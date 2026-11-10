@@ -170,6 +170,8 @@ export function page(c, { title, desc, body, bodyClass = '' }) {
 <link rel="icon" href="${c.asset('favicon.png')}" type="image/png">
 <link rel="apple-touch-icon" href="${c.asset('apple-touch-icon.png')}">
 <link rel="stylesheet" href="${c.asset('fonts/pretendard/pretendardvariable-dynamic-subset.css')}">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="${c.asset('css/site.css')}?v=${VER.css}">
 <script>document.documentElement.classList.replace('no-js','js');setTimeout(function(){if(!window.__ls)document.documentElement.classList.add('no-motion-fallback')},2500)</script>
 <script src="${c.asset('js/site.js')}?v=${VER.js}" defer></script>
