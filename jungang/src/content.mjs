@@ -58,8 +58,48 @@ export const HERO = {
   lede: '중앙설비산업은 공장과 산업단지의 산업용 보일러·열교환기·소각로를 세관하고 수리하며, 계속사용안전검사 같은 법정검사를 대행합니다.',
   img: 'hero-crew.webp', w: 966, h: 543,
   alt: '중앙설비 조끼와 안전모를 착용한 작업자가 보일러 안전밸브를 정비하는 모습',
-  caption: '법정검사를 앞두고 안전밸브를 정비하는 중앙설비산업 작업자'
+  caption: '법정검사를 앞두고 안전밸브를 정비하는 중앙설비산업 작업자',
+  /* 첫 화면 슬라이드: 사진은 원본이 작아(600~966px) 어둡게 덮고 살짝 흐리게 씁니다. 바꾸려면 여기만 고칩니다. */
+  slides: [
+    { img: 'hero-crew.webp', w: 966, h: 543, alt: '보일러 안전밸브를 정비하는 중앙설비산업 작업자', cap: '법정검사 전 안전밸브 분해·정비', pos: '60% 40%' },
+    { img: 'sb-boiler.webp', w: 600, h: 284, alt: '공장 보일러실의 수관식 산업용 보일러', cap: '수관식 산업용 보일러 (30톤/시) 소다 보일링 현장', pos: '50% 50%' },
+    { img: 'sb-after-tubes.webp', w: 966, h: 457, alt: '고압세척 후 깨끗해진 보일러 드럼 내부', cap: '고압세척 후 깨끗해진 드럼 내부', pos: '50% 50%' }
+  ]
 };
+
+/* 첫 화면 아래 바로가기 (QUICK ZONE 네모 타일) */
+export const SLOGAN = '40년 이상의 노하우로 산업용 보일러를 세관하고 정비합니다.';
+export const CREDS = ['40년 이상의 노하우', '조선소·선박 보일러 경험', '계속사용안전검사 대행'];
+export const QUICK = [
+  { icon: 'doc', label: '상담문의', text: '설비와 일정을 남겨 주세요', href: 'contact/' },
+  { icon: 'camera', label: '작업사례', text: '소다 보일링, 안전밸브 정비', href: 'works/' },
+  { icon: 'shield', label: '법정검사 대행', text: '계속사용안전검사 준비', href: 'services/#inspection' },
+  { icon: 'pin', label: '오시는 길', text: '울산 · 영남 지역 출장', href: 'about/#location' }
+];
+
+/* ---------- 홈 알림 팝업 ----------
+   홈 첫 화면 위에 뜨는 레이어 팝업입니다. 여러 개를 넣으면 넓은 화면에서는 나란히, 모바일에서는 위아래로 쌓입니다.
+   - on: false 로 두면 그 팝업은 나오지 않습니다 (모두 false 면 팝업 없음).
+   - id 는 '오늘 하루 열지 않기' 저장에 쓰므로 팝업마다 달라야 합니다. 내용을 바꾸면 id 도 바꿔 주세요.
+   - href: 그림을 누르면 가는 곳 (사이트 안 주소는 'contact/'처럼 씀), tel: 모바일에서 누르면 걸 전화 (없으면 href 로 감)
+   - 그림은 업체 홍보 배너(업체 자료)를 WebP로 바꾼 것입니다. */
+export const POPUPS = [
+  {
+    id: 'promo-2026-11', on: true,
+    img: 'popup-banner.webp', w: 700, h: 500,
+    alt: '보일러세관.com 중앙설비산업 010-8888-2104 언제든지 연락주세요!! 산업용 보일러, 열교환기 세관·수리·법정검사. 소각로, 폐열보일러 세관 청소 수리. 열병합보일러 선박(해상)보일러 탱크 크리닝작업. 보일러 소각로 튜브교체 및 축로(내화물)공사. 검사대상기기 압력용기 계속사용안전검사 대행.',
+    label: '중앙설비산업 안내',
+    href: 'contact/', tel: 'tel:01088882104'
+  }
+];
+
+/* PROJECT 띠: 실제 사례 2개 + 채울 자리. 고객사 이름은 받기 전에는 쓰지 않습니다. */
+export const PROJECTS = [
+  { title: '신설 수관식 보일러 소다 보일링', meta: '경북 산업단지 · 30톤/시', href: 'works/#soda' },
+  { title: '보일러 안전밸브 분해·정비', meta: '법정검사 준비', href: 'works/#safety' },
+  { title: null, meta: null, href: null },
+  { title: null, meta: null, href: null }
+];
 
 export const FACTS = [
   { icon: 'clock', title: '40년 이상의 노하우', text: '보일러 세관 한길을 걸어온 경험' },
@@ -110,9 +150,12 @@ export const SERVICES = [
 
 /* 그 밖의 작업 (블로그 해시태그와 글 기준) */
 export const EXTRA = [
-  { id: 'soda', name: '신설 보일러 소다 보일링', sub: 'Soda Boiling · Alkali Boiling', text: '새로 설치한 보일러나 튜브를 크게 교체한 보일러 안에 남은 기름 성분과 분진을 알칼리 약품 순환으로 제거합니다.' },
-  { id: 'chemical', name: '보일러 화학세관', sub: '약품 세관', text: '약품을 순환시켜 보일러 내부의 스케일을 녹여 내는 세관입니다.' },
-  { id: 'thermal', name: '열매보일러 세관', sub: '열매체 보일러', text: '열매체유를 쓰는 보일러의 세관과 청소를 합니다.' }
+  { id: 'soda', name: '신설 보일러 소다 보일링', sub: 'Soda Boiling · Alkali Boiling', text: '새로 설치한 보일러나 튜브를 크게 교체한 보일러 안에 남은 기름 성분과 분진을 알칼리 약품 순환으로 제거합니다.',
+    img: 'sb-after-tubes.webp', w: 966, h: 457, alt: '소다 보일링과 고압세척 후 깨끗해진 보일러 드럼 내부' },
+  { id: 'chemical', name: '보일러 화학세관', sub: '약품 세관', text: '약품을 순환시켜 보일러 내부의 스케일을 녹여 내는 세관입니다.',
+    img: 'sb-pump.webp', w: 720, h: 341, alt: '약품 순환에 쓰는 펌프와 약품 탱크 (소다 보일링 현장 사진)' },
+  { id: 'thermal', name: '열매보일러 세관', sub: '열매체 보일러', text: '열매체유를 쓰는 보일러의 세관과 청소를 합니다.',
+    img: null, w: 0, h: 0, alt: '' }
 ];
 
 /* 상담 폼의 작업 종류 (?service= 값) */
@@ -203,6 +246,20 @@ export const TIPS = [
   }
 ];
 
+/* ---------- 작업 소식 (블로그 글) ---------- 날짜는 글에 적힌 것만 씁니다. */
+export const POSTS = [
+  { title: '보일러 세관 공사 중 겪은 일들 - 4', sub: '안전밸브는 소모품입니다', url: POST_SAFETY, date: '2026-10-30', img: 'sv-spring-water.webp', w: 800, h: 600, alt: '물이 고여 부식된 안전밸브 스프링' },
+  { title: '신설 산업용 보일러 소다 보일링(Soda Boiling) 작업', sub: '경북 산업단지 수관식 보일러 30톤/시', url: POST_SODA, date: null, img: 'sb-before.webp', w: 966, h: 457, alt: '세척 전 보일러 상부 드럼 내부' }
+];
+
+/* 서브 페이지 첫 화면 띠 사진 */
+export const BANNERS = {
+  about: { img: 'hero-crew.webp', w: 966, h: 543, pos: '60% 35%' },
+  services: { img: 'sb-boiler.webp', w: 600, h: 284, pos: '50% 45%' },
+  works: { img: 'sb-flange.webp', w: 720, h: 341, pos: '50% 50%' },
+  contact: { img: 'sb-valves.webp', w: 720, h: 341, pos: '50% 40%' }
+};
+
 /* ---------- 작업 진행 순서 (일반적인 흐름) ---------- */
 export const PROCESS = [
   { icon: 'phone', title: '상담', text: '설비 종류와 용량, 증상, 원하는 일정(정기 보수 기간 등)을 듣습니다.' },
@@ -224,6 +281,8 @@ export const MORE_WORKS = [
 /* ---------- 페이지 문구 ---------- */
 export const HOME = {
   servicesTitle: ['사업분야'],
+  caseTeaser: '경북 산업단지 대형 공장의 새 수관식 보일러(30톤/시)를 운전 전에 알칼리 약품으로 순환 세정하고 고압세척으로 마무리했습니다.',
+  tipsTeaser: '안전밸브는 소모품이라 3~5년 주기로 교체하는 것이 정석입니다. 몸체에 물이 고이면 스프링이 부식되니 15mm 배출구에 물 빠짐 배관을 다세요.',
   servicesSub: '산업용 보일러와 열교환기, 소각로, 선박 보일러까지. 세관과 수리, 법정검사를 맡습니다.',
   caseTitle: ['신설 보일러 소다 보일링'],
   caseSub: '경북 산업단지 대형 공장, 수관식 보일러 30톤/시. 새 보일러를 운전하기 전에 드럼과 튜브 안의 기름 성분과 분진을 걷어 냈습니다.',

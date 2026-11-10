@@ -22,6 +22,12 @@ const I = {
   truck: '<path d="M3 6.5h11v10H3zM14 9.5h4l3 3.5v3.5h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>',
   mail: '<rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="M4 6.5l8 6 8-6"/>',
   globe: '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.5 2.6 3.5 5.4 3.5 8.5s-1 5.9-3.5 8.5c-2.5-2.6-3.5-5.4-3.5-8.5s1-5.9 3.5-8.5z"/>',
+  up: '<path d="M12 19V5M6 11l6-6 6 6"/>',
+  prev: '<path d="M14.5 5.5L8 12l6.5 6.5"/>',
+  next: '<path d="M9.5 5.5L16 12l-6.5 6.5"/>',
+  pause: '<path d="M9 5.5v13M15 5.5v13"/>',
+  play: '<path d="M8 5.5v13l11-6.5z"/>',
+  home: '<path d="M4 11l8-6.5 8 6.5M6 9.5V20h12V9.5"/>',
   office: '<path d="M4 20.5V6l8-3v17.5M12 9h8v11.5M2.5 20.5h19"/><path d="M7 9h2M7 12.5h2M7 16h2M15 13h2M15 16.5h2"/>'
 };
 export const icon = (name, cls = 'ic') => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${I[name]}</svg>`;
