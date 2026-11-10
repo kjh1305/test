@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>콘셉트 B · 큰 글자 편집 | 주식회사 성현 시안</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="../assets/fonts/pretendard/pretendardvariable-dynamic-subset.css">
+<style>
+/* 콘셉트 B — 큰 글자 편집
+   잡지처럼: 화면을 채우는 굵은 제목, 흑백 대비, 호박색 면 한 가지, 세로로 길게 자른 사진.
+   장식 없이 글자 크기와 여백만으로 인상을 만든다 */
+:root {
+  --ink: #111110; --ink-2: #3F3D3A; --muted: #6A6762; --bg: #FFFFFF; --soft: #F4F2EE;
+  --amber: #F08A1C; --amber-ink: #A85400; --line: #E2DED8;
+  --sans: 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; font-family: var(--sans); color: var(--ink); background: var(--bg); line-height: 1.65; word-break: keep-all; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+a:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+.wrap { max-width: 1360px; margin: 0 auto; padding: 0 48px; }
+
+.hd-in { display: flex; align-items: center; justify-content: space-between; height: 84px; }
+.logo { font-size: 20px; font-weight: 900; letter-spacing: -.03em; }
+.logo i { color: var(--amber); font-style: normal; }
+.nav { display: flex; gap: 36px; font-size: 15px; font-weight: 600; }
+.nav a:hover { color: var(--amber-ink); }
+.hd-cta { padding: 12px 22px; background: var(--ink); color: #fff; font-weight: 700; font-size: 15px; }
+.hd-cta:hover { background: var(--amber-ink); }
+
+/* 첫 화면 */
+.hero { padding: 24px 0 0; }
+.kicker { display: flex; justify-content: space-between; gap: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--ink); font-size: 14px; font-weight: 700; }
+.kicker span:last-child { color: var(--muted); font-weight: 500; }
+.mega { margin: 28px 0 0; font-size: clamp(64px, 13.5vw, 196px); line-height: .92; font-weight: 900; letter-spacing: -.06em; }
+.mega .amber { color: var(--amber); }
+.hero-row { display: grid; grid-template-columns: 1fr 1.6fr; gap: 48px; margin-top: 40px; align-items: end; }
+.hero-copy p { margin: 0 0 24px; font-size: 19px; line-height: 1.7; color: var(--ink-2); }
+.hero-copy .tel { display: block; font-size: clamp(30px, 3vw, 40px); font-weight: 900; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.hero-copy .tel small { display: block; font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: 0; }
+.hero-copy .links { display: flex; gap: 20px; margin-top: 20px; font-weight: 700; }
+.hero-copy .links a { border-bottom: 3px solid var(--amber); padding-bottom: 2px; }
+.strips { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 12px; }
+.strips figure { margin: 0; }
+.strips img { display: block; width: 100%; height: 420px; object-fit: cover; filter: grayscale(.15) contrast(1.05); }
+.strips figure:first-child img { height: 480px; }
+.strips figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); }
+.strips figcaption b { color: var(--ink); margin-right: 6px; }
+.band { margin-top: 64px; background: var(--amber); }
+.band-in { display: grid; grid-template-columns: repeat(4, 1fr); }
+.band-in div { padding: 28px 24px 30px; border-left: 2px solid rgba(17, 17, 16, .18); }
+.band-in div:first-child { border-left: 0; padding-left: 0; }
+.band-in b { display: block; font-size: clamp(34px, 3.6vw, 52px); font-weight: 900; letter-spacing: -.04em; line-height: 1.05; }
+.band-in span { font-size: 15px; font-weight: 600; }
+
+/* 현장 종류로 찾기: 큰 번호 목록 */
+.sec { padding: 120px 0; }
+.sec-hd { display: grid; grid-template-columns: 1fr 1.6fr; gap: 48px; margin-bottom: 40px; align-items: end; }
+h2 { margin: 0; font-size: clamp(40px, 5vw, 72px); line-height: 1.05; font-weight: 900; letter-spacing: -.05em; }
+.sec-hd p { margin: 0; font-size: 18px; color: var(--ink-2); }
+.find { border-top: 2px solid var(--ink); }
+.find a { display: grid; grid-template-columns: 120px 1.1fr 1.4fr 40px; gap: 24px; align-items: center; padding: 26px 0; border-bottom: 1px solid var(--line); transition: background-color .2s, padding .2s; }
+.find a:hover { background: var(--soft); padding-left: 16px; padding-right: 16px; }
+.find .no { font-size: 56px; font-weight: 900; letter-spacing: -.05em; color: var(--line); line-height: 1; transition: color .2s; }
+.find a:hover .no { color: var(--amber); }
+.find .t { font-size: clamp(22px, 2.2vw, 30px); font-weight: 800; letter-spacing: -.03em; }
+.find .d { font-size: 15.5px; color: var(--ink-2); }
+.find .d b { display: block; margin-top: 4px; font-size: 14px; color: var(--amber-ink); }
+.find .ar { font-size: 26px; font-weight: 300; }
+.ft { padding: 28px 0 40px; border-top: 2px solid var(--ink); font-size: 13px; color: var(--muted); }
+.ft a { border-bottom: 1px solid currentColor; }
+
+@media (max-width: 1020px) {
+  .nav { display: none; }
+  .hero-row, .sec-hd { grid-template-columns: 1fr; gap: 32px; }
+  .strips img, .strips figure:first-child img { height: 320px; }
+  .band-in { grid-template-columns: 1fr 1fr; }
+  .band-in div:nth-child(3) { border-left: 0; padding-left: 0; }
+  .find a { grid-template-columns: 80px 1fr 32px; }
+  .find .d { grid-column: 2; grid-row: 2; }
+  .find .ar { grid-row: 1 / span 2; grid-column: 3; }
+  .find .no { grid-row: 1 / span 2; font-size: 44px; }
+}
+@media (max-width: 760px) {
+  .wrap { padding: 0 20px; }
+  .hd-in { height: 64px; }
+  .hd-cta { padding: 10px 14px; font-size: 14px; }
+  .kicker span:last-child { display: none; }
+  .mega { margin-top: 20px; }
+  .hero-copy p { font-size: 16.5px; }
+  .strips { grid-template-columns: 1fr 1fr; }
+  .strips figure:first-child { grid-column: 1 / -1; }
+  .strips img { height: 200px; }
+  .strips figure:first-child img { height: 240px; }
+  .band { margin-top: 40px; }
+  .band-in div { padding: 20px 14px 22px; }
+  .sec { padding: 72px 0; }
+  .find a { grid-template-columns: 52px 1fr 20px; gap: 4px 14px; padding: 20px 0; }
+  .find .no { font-size: 32px; }
+  .find .d { font-size: 14.5px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap hd-in">
+    <a class="logo" href="./">주식회사 성현<i>.</i></a>
+    <nav class="nav" aria-label="주 메뉴"><a href="../about/">회사소개</a><a href="../products/">제품</a><a href="../certification/">품질인정</a><a href="../records/">납품실적</a></nav>
+    <a class="hd-cta" href="../contact/">견적문의</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="t">
+  <div class="wrap">
+    <p class="kicker"><span>방화셔터 제조 · 경기도 광주 자체 공장</span><span>1997년부터 셔터 한 길</span></p>
+    <h1 class="mega" id="t">불길은<br>막고,<br><span class="amber">현장</span>엔 맞게.</h1>
+    <div class="hero-row">
+      <div class="hero-copy">
+        <p>강판을 자르고 접어 슬랫까지 한 공장에서 만듭니다. KICT 품질인정 방화셔터부터 상가 셔터, 슬랫 몇 장 자재 납품까지.</p>
+        <a class="tel" href="tel:031-764-9573"><small>대표전화 · 영업일 08:00~17:00</small>031-764-9573</a>
+        <div class="links"><a href="../contact/">사진으로 견적</a><a href="../products/">제품 보기</a></div>
+      </div>
+      <div class="strips">
+        <figure><img src="../assets/img/log-parts-ready-640.webp" alt="공장에 쌓아 둔 셔터 자재와 납품 준비를 마친 슬랫" width="640" height="853"><figcaption><b>공장</b>납품 준비를 마친 슬랫 · T바</figcaption></figure>
+        <figure><img src="../assets/img/log-majang-work-640.webp" alt="상가 개구부 앞 사다리 위에서 슬랫을 다는 모습" width="640" height="480"><figcaption><b>시공</b>서울 마장동 상가</figcaption></figure>
+        <figure><img src="../assets/img/log-majang-closed-640.webp" alt="설치를 마치고 내린 수동 알루미늄 셔터" width="640" height="480"><figcaption><b>완료</b>수동 알루미늄 셔터</figcaption></figure>
+      </div>
+    </div>
+  </div>
+  <div class="band">
+    <div class="wrap band-in">
+      <div><b>1997</b><span>셔터 한 길</span></div>
+      <div><b>KICT 2종</b><span>방화셔터 품질인정</span></div>
+      <div><b>300여</b><span>최근 3년 현장</span></div>
+      <div><b>전국</b><span>납품 · 시공</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" aria-labelledby="s1">
+  <div class="wrap">
+    <div class="sec-hd"><h2 id="s1">어떤<br>현장인가요?</h2><p>제품 이름을 몰라도 괜찮습니다. 현장 종류를 고르면 맞는 제품부터 안내합니다.</p></div>
+    <nav class="find" aria-label="현장 종류로 찾기">
+      <a href="../products/#f01"><span class="no">01</span><span class="t">주차장 · 물류창고</span><span class="d">차량과 지게차가 드나드는 곳. 충격에 강한 철재 슬랫.<b>철재 방화셔터 SH-F01</b></span><span class="ar" aria-hidden="true">→</span></a>
+      <a href="../products/#ts"><span class="no">02</span><span class="t">공장 · 넓은 출입구</span><span class="d">폭 8m가 넘는 개구부, 90분 내화 구획. 시험 통과 · 인정서 발급 대기.<b>초대형 스크린 SH-TS01 · TS02</b></span><span class="ar" aria-hidden="true">→</span></a>
+      <a href="../products/#s01"><span class="no">03</span><span class="t">사무실 · 주거 실내</span><span class="d">셔터박스가 작고 가벼운 실리카 직물 스크린.<b>스크린 방화셔터 SH-S01</b></span><span class="ar" aria-hidden="true">→</span></a>
+      <a href="../products/#security"><span class="no">04</span><span class="t">상가 · 매장 전면</span><span class="d">알루미늄 · 파이프 · 투시형 방범 셔터, 수동 · 전동.<b>방범 셔터</b></span><span class="ar" aria-hidden="true">→</span></a>
+      <a href="../contact/?product=unknown"><span class="no">05</span><span class="t">고장 · 수리 · 철거</span><span class="d">움직이지 않는 셔터 철거부터 재시공까지 직영 LS셔터가 직접.<b>직영 LS셔터</b></span><span class="ar" aria-hidden="true">→</span></a>
+      <a href="../products/#parts"><span class="no">06</span><span class="t">셔터 시공 · 수리업체</span><span class="d">슬랫 몇 장도 납품. T바(하장)는 레일 홈 깊이에 맞춰.<b>자재 · 부속 납품</b></span><span class="ar" aria-hidden="true">→</span></a>
+    </nav>
+  </div>
+</section>
+</main>
+
+<footer class="ft"><div class="wrap">콘셉트 B · 큰 글자 편집 — 홈페이지 제작 시안입니다. <a href="./">콘셉트 비교로</a> · <a href="../">지금 시안 보기</a></div></footer>
+</body>
+</html>
