@@ -1,3 +1,8 @@
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+/* CSS · JS 주소 뒤에 내용 해시를 붙여, 고친 뒤 휴대폰에 예전 파일이 남아 화면이 깨지는 일을 막습니다 */
+const hashOf = f => createHash('md5').update(readFileSync(new URL('../assets/' + f, import.meta.url))).digest('hex').slice(0, 8);
+const VER = { css: hashOf('css/site.css'), js: hashOf('js/site.js') };
 /* 공통 레이아웃: <head>, 헤더, 모바일 메뉴, 푸터, 모바일 하단 상담 바, TOP 버튼, 사진 자리, 상태 배지 */
 import { BASE_URL, PH, CO, NAV, STATUS } from './content.mjs';
 import { icon, productIcon, heroArt } from './art.mjs';
@@ -165,9 +170,9 @@ export function page(c, { title, desc, body, bodyClass = '' }) {
 <link rel="icon" href="${c.asset('favicon.png')}" type="image/png">
 <link rel="apple-touch-icon" href="${c.asset('apple-touch-icon.png')}">
 <link rel="stylesheet" href="${c.asset('fonts/pretendard/pretendardvariable-dynamic-subset.css')}">
-<link rel="stylesheet" href="${c.asset('css/site.css')}">
+<link rel="stylesheet" href="${c.asset('css/site.css')}?v=${VER.css}">
 <script>document.documentElement.classList.replace('no-js','js');setTimeout(function(){if(!window.__ls)document.documentElement.classList.add('no-motion-fallback')},2500)</script>
-<script src="${c.asset('js/site.js')}" defer></script>
+<script src="${c.asset('js/site.js')}?v=${VER.js}" defer></script>
 </head>
 <body class="${bodyClass}">
 ${header(c)}
