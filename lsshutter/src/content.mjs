@@ -39,7 +39,7 @@ export const CO = {
   sms: '010-4081-9573',
   hours: '영업일 08:00~17:00',
   /* 카카오톡 채널: 이름만 알고 주소를 몰라 버튼은 '채울 자리'로 나옵니다. 주소를 받으면 url 에 넣으세요. */
-  kakao: { name: '성현셔터', url: null },
+  kakao: { name: '성현셔터', url: 'https://pf.kakao.com/_pQTWX/chat' },
   fax: null,
   email: null,
   blog: 'https://blog.naver.com/lsshutter',
@@ -199,22 +199,43 @@ export const CATALOG = null;
 
 /* ---------- 품질인정 ---------- */
 export const CERTS = [
-  { kind: '수직 비차열 방화셔터 (NVS)', product: '철재 방화셔터', model: 'SH-F01', time: '60분', no: 'FDS-NVS23-0925-3', status: 'cert' },
-  { kind: '기타 방화셔터 (OTS)', product: '스크린 방화셔터', model: 'SH-S01', time: '60분', no: 'FDS-OTS23-0925-4', status: 'cert' }
+  { kind: '수직 비차열 방화셔터 (NVS)', product: '철재 방화셔터', model: 'SH-F01', time: '60분', no: 'FDS-NVS23-0925-3', status: 'cert', pdf: 'https://seonghyun.co.kr/docs/SH-F01-certificate.pdf' },
+  { kind: '기타 방화셔터 (OTS)', product: '스크린 방화셔터', model: 'SH-S01', time: '60분', no: 'FDS-OTS23-0925-4', status: 'cert', pdf: 'https://seonghyun.co.kr/docs/SH-S01-certificate.pdf' }
 ];
 export const CERT_META = {
   holder: '㈜성현',
   date: '2023년 9월 25일',
   until: '2028년 9월 24일',
   factory: '경기도 광주시 진토길 69-7',
-  /* 한국건설기술연구원(KICT) 인정 공고 주소를 받으면 넣으세요. null 이면 '링크 자리'로 나옵니다. */
-  noticeUrl: null,
-  /* 인정서 사본 이미지 자리 */
-  scans: [
-    { img: null, w: 0, h: 0, alt: '철재 방화셔터 SH-F01 품질인정서', cap: '철재 SH-F01 인정서' },
-    { img: null, w: 0, h: 0, alt: '스크린 방화셔터 SH-S01 품질인정서', cap: '스크린 SH-S01 인정서' }
-  ]
+  /* 한국건설기술연구원(KICT) 인정 공고 ('성현'으로 검색한 목록). 성현 홈페이지가 거는 주소와 같습니다. */
+  noticeUrl: 'https://www.kict.re.kr/governmentWeb/getGovernmentContentList.es?mid=a10602050000&pid=84&keyField=&keyWord=%EC%84%B1%ED%98%84'
 };
+
+/* 품질인정 절차 (「건축자재등 품질인정 및 관리기준」을 쉽게 줄인 것, 성현 홈페이지와 같은 6단계) */
+export const CERT_STEPS = [
+  { title: '인정 신청', text: '구성 재료 · 시방서 · 품질관리 서류 제출' },
+  { title: '서류 검토', text: '신청 자격과 제출 서류 확인' },
+  { title: '공장 확인', text: '제조 현장 품질관리 점검, 시험용 시료 채취' },
+  { title: '품질시험', text: '지정 시험기관에서 내화 · 차연 등 성능 시험' },
+  { title: '인정 심사', text: '시험 결과 · 제조 품질관리 · 시공 적정성 심사' },
+  { title: '인정서 발급', text: '인정서 발급과 인정기관 홈페이지 공고' }
+];
+/* 제품별 진행 (2026년 10월 기준, 성현 홈페이지 표시 그대로)
+   done: 마친 단계 수, 그다음 단계가 '진행 중'으로 그려집니다. 6 이면 모두 마침. */
+export const CERT_PROGRESS = [
+  { model: 'SH-F01', name: '철재 · 60분', done: 6, status: 'cert', note: '2028.9.24까지' },
+  { model: 'SH-S01', name: '스크린 · 60분', done: 6, status: 'cert', note: '2028.9.24까지' },
+  { model: 'SH-F02', name: '철재 · 90분', done: 4, status: 'pending' },
+  { model: 'SH-TS01', name: '초대형 스크린 · 60분', done: 4, status: 'pending' },
+  { model: 'SH-TS02', name: '초대형 스크린 · 90분', done: 4, status: 'pending' },
+  { model: 'SH-CF01', name: '복합 · 철재 + 내화문', done: 2, status: 'notsale' },
+  { model: 'SH-CS01', name: '복합 · 스크린 + 내화문', done: 2, status: 'notsale' }
+];
+/* 등록 현황 */
+export const REGISTRATION = [
+  { icon: 'pin', en: 'FACTORY', title: '공장 등록', rows: [['소재지', '경기도 광주시 진토길 69-7'], ['업종', '금속 문, 창, 셔터 및 관련제품 제조업 (25111)'], ['등록일', '2022년 1월 4일']] },
+  { icon: 'file', en: 'BUSINESS', title: '법인 사업자', rows: [['상호', '주식회사 성현'], ['사업자등록번호', '505-81-87461'], ['업태 · 종목', '제조업 / 금속 문, 창, 셔터 및 관련제품 제조업']] }
+];
 /* 인정 진행 중 (2026년 10월 기준) */
 export const CERT_PENDING = [
   { product: '철재 방화셔터 90분', model: 'SH-F02', time: '90분', status: 'pending' },
@@ -231,10 +252,10 @@ export const DOCS = [
 
 /* ---------- 납품실적 ---------- */
 export const RECORDS = [
-  { cat: '물류', where: '경기 부천', site: '대형 물류센터', product: '스크린 방화셔터', img: null, w: 0, h: 0, alt: '' },
-  { cat: '업무', where: '서울 구로', site: '지식산업센터', product: '철재 · 스크린 방화셔터', img: null, w: 0, h: 0, alt: '' },
-  { cat: '주거', where: '서울 서초', site: '역세권 청년주택', product: '철재 방화셔터', img: null, w: 0, h: 0, alt: '' },
-  { cat: '산업', where: '전남 광양', site: '이차전지 소재 공장', product: '방화셔터', img: null, w: 0, h: 0, alt: '' }
+  { cat: '물류', where: '경기 부천', site: '대형 물류센터', product: '스크린 방화셔터', pic: 'screen', img: null, w: 0, h: 0, alt: '' },
+  { cat: '업무', where: '서울 구로', site: '지식산업센터', product: '철재 · 스크린 방화셔터', pic: 'jumbo', img: null, w: 0, h: 0, alt: '' },
+  { cat: '주거', where: '서울 서초', site: '역세권 청년주택', product: '철재 방화셔터', pic: 'steel', img: null, w: 0, h: 0, alt: '' },
+  { cat: '산업', where: '전남 광양', site: '이차전지 소재 공장', product: '방화셔터', pic: 'steel90', img: null, w: 0, h: 0, alt: '' }
 ];
 /* ---------- 직영 현장 기록 (LS셔터 블로그) ----------
    블로그 글을 줄여 새로 쓴 것입니다. 글이 늘면 같은 모양으로 위에 추가하세요(최신 글이 위).
@@ -315,12 +336,16 @@ export const HISTORY = [
   { year: '현재', text: '90분 철재 · 초대형 스크린 국가시험 통과, 인정서 발급 대기 (2026년 10월 기준)' }
 ];
 
-/* 회사소개 공장 사진 자리 */
-export const FACTORY_PHOTOS = [
-  { img: 'log-parts-mimi.webp', w: 966, h: 1288, alt: '납품 준비를 마친 슬랫 위에 올려 둔 방화미미 봉지', cap: '납품 준비 · 방화미미' },
-  { img: null, w: 0, h: 0, alt: '', cap: '절곡 작업' },
-  { img: null, w: 0, h: 0, alt: '', cap: '슬랫 성형' }
-];
+/* 회사소개 공장: 사진 한 장 + 공정 4단계 (공장 사진을 더 받으면 photo 를 바꾸거나 늘리세요) */
+export const FACTORY = {
+  photo: { img: 'log-parts-mimi.webp', w: 966, h: 1288, alt: '납품 준비를 마친 슬랫 위에 올려 둔 방화미미 봉지', cap: '납품 준비를 마친 슬랫과 방화미미' },
+  steps: [
+    { title: '절단', text: '강판을 현장 치수에 맞춰 자릅니다.' },
+    { title: '절곡', text: '가이드레일, 셔터박스, 각종 부재를 공장에서 직접 접습니다.' },
+    { title: '슬랫 성형', text: '슬랫을 만들어 개구부 폭에 맞게 길이를 맞춥니다.' },
+    { title: '출하', text: '인정 제품은 로트번호를 붙여 어느 현장에 들어갔는지 기록합니다.' }
+  ]
+};
 
 /* ---------- 홈 문의 띠 ---------- */
 export const CTA = {

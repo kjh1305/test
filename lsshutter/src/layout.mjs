@@ -35,15 +35,15 @@ export const kakaoBtn = (cls = '') => CO.kakao.url
 export const phLink = (label, cls = 'more') => `<a class="${cls} is-ph-link" role="link" aria-disabled="true" title="링크 주소: ${PH}">${label}<span class="ph-tag">링크 자리</span></a>`;
 
 /* ---------- 사진 자리 ----------
-   slot = { img: null }               → 점선 상자 ('사진 자리 · 자료를 받으면 채울 자리'), pic 이 있으면 제품 선 그림을 흐리게
+   slot = { img: null }               → 사진 대신 제품 선 그림 카드 (pic 이름, 없으면 'steel'). 점선 '채울 자리'는 쓰지 않습니다.
    slot = { img: 'x.webp', w, h, alt } → assets/img/x.webp */
-export function photo(c, slot, { label = '사진', ratio = '4 / 3', cls = '', pic = '', eager = false } = {}) {
+export function photo(c, slot, { label = '사진', ratio = '4 / 3', cls = '', pic = '', eager = false, mark = '' } = {}) {
   if (slot && slot.img) {
     return `<div class="slot has-img ${cls}" style="--ar:${ratio}"><img src="${c.asset('img/' + slot.img)}" width="${slot.w}" height="${slot.h}" alt="${esc(slot.alt || '')}"${eager ? ' fetchpriority="high"' : ' loading="lazy"'} decoding="async"></div>`;
   }
-  return `<div class="slot is-empty${pic ? ' has-pic' : ''} ${cls}" style="--ar:${ratio}" role="img" aria-label="${esc(label)} 사진 자리: ${PH}">
-    ${pic ? productIcon(pic, 'pic slot-pic') : ''}
-    <span class="slot-txt">${icon('camera')}<b>사진 자리</b><span>${PH}</span></span>
+  return `<div class="slot is-art ${cls}" style="--ar:${ratio}" role="img" aria-label="${esc(label)} 그림">
+    <span class="art-grid" aria-hidden="true"></span>
+    ${productIcon(pic || 'steel', 'pic slot-pic')}${mark ? `<span class="art-mark" aria-hidden="true">${mark}</span>` : ''}
   </div>`;
 }
 
@@ -110,13 +110,12 @@ function footer(c) {
       <nav class="f-links" aria-label="바닥 메뉴"><ul>
         <li><a href="${c.url('about/')}">회사소개</a></li>
         <li><a href="${c.url('contact/')}#privacy"><b>개인정보처리방침</b></a></li>
-        <li><a role="link" aria-disabled="true" title="이용약관: ${PH}">이용약관 <span class="ph-tag">자리</span></a></li>
         <li><a href="${c.url('about/')}#location">오시는 길</a></li>
         <li><a href="${CO.blog}" target="_blank" rel="noopener">블로그</a></li>
       </ul></nav>
       <p class="f-line"><span>상호 ${CO.company} (${CO.companyEn})</span><span>대표 ${CO.ceo}</span><span>사업자등록번호 ${CO.bizNo}</span></p>
       <p class="f-line"><span>공장 ${CO.factory}</span><span>설립 ${CO.founded}</span><span>직영 ${CO.brand}</span></p>
-      <p class="f-line"><span>TEL <a href="${tel()}">${CO.phone}</a></span><span>문자·사진 <a href="${sms()}">${CO.sms}</a></span><span>FAX ${val(CO.fax)}</span><span>E-mail ${val(CO.email)}</span></p>
+      <p class="f-line"><span>TEL <a href="${tel()}">${CO.phone}</a></span><span>문자·사진 <a href="${sms()}">${CO.sms}</a></span>${CO.fax ? `<span>FAX ${CO.fax}</span>` : ''}${CO.email ? `<span>E-mail ${CO.email}</span>` : ''}</p>
     </div>
     <div class="f-call">
       <p class="f-call-label">대표전화</p>
@@ -125,7 +124,7 @@ function footer(c) {
     </div>
   </div>
   <div class="wrap f-bottom">
-    <p class="f-note">이 사이트는 홈페이지 제작 시안입니다. 주식회사 성현이 의뢰한 것이 아니며, 성현 홈페이지(seonghyun.co.kr)에 공개된 내용을 바탕으로 만들었습니다. 점선으로 표시한 곳은 자료를 받으면 채울 자리입니다.</p>
+    <p class="f-note">이 사이트는 홈페이지 제작 시안입니다. 주식회사 성현이 의뢰한 것이 아니며, 성현 홈페이지(seonghyun.co.kr)와 LS셔터 블로그에 공개된 내용을 바탕으로 만들었습니다. 사진이 없는 곳은 그림으로 대신했습니다.</p>
     <p class="f-copy">© 2026 ${CO.company}. All rights reserved.</p>
   </div>
 </footer>`;
@@ -184,7 +183,7 @@ ${quickbar(c)}
 }
 
 /* 하위 페이지 머리: 따뜻한 회색 띠 + 오른쪽에 흐린 슬랫 그림 */
-export function pageHead(c, { en, title, lede, crumb, uid = 'ph' }) {
+export function pageHead(c, { en, title, lede, crumb, uid = 'ph', tabs = null }) {
   return `<section class="page-head">
   <div class="page-head-art" aria-hidden="true">${heroArt('slatsWarm', uid)}</div>
   <div class="wrap page-head-in">
@@ -193,5 +192,10 @@ export function pageHead(c, { en, title, lede, crumb, uid = 'ph' }) {
     <h1 class="page-title">${lines(title)}</h1>
     ${lede ? `<p class="page-lede">${lede}</p>` : ''}
   </div>
-</section>`;
+</section>${tabs ? subTabs(tabs) : ''}`;
+}
+
+/* 하위 페이지 안 바로가기 탭 (헤더 아래 붙어 따라옴). tabs: [['#id', '이름'], …] */
+export function subTabs(tabs, label = '이 페이지 바로가기') {
+  return `<nav class="pnav" aria-label="${label}"><div class="wrap"><ul>${tabs.map(([h, t]) => `<li><a href="${h}">${t}</a></li>`).join('')}</ul></div></nav>`;
 }

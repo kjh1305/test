@@ -1,10 +1,10 @@
 /* 페이지 본문: 홈, 회사소개, 제품, 품질인정, 납품실적, 견적문의, 없는 주소 */
 import {
-  CO, PH, HERO, POPUPS, STATS, COMPANY, STATUS, PRODUCTS, COMPOSITE, CATALOG, CERTS, CERT_META, CERT_PENDING, DOCS,
-  RECORDS, BUILDERS, RECORDS_SUMMARY, FIELD_LOGS, FIELD_NOTE, SUPPLY, STANDARDS, HISTORY, FACTORY_PHOTOS, CTA, CONTACT, PRODUCT_OPTS, META
+  CO, PH, HERO, POPUPS, STATS, COMPANY, STATUS, PRODUCTS, COMPOSITE, CATALOG, CERTS, CERT_META, CERT_STEPS, CERT_PROGRESS, REGISTRATION, DOCS,
+  RECORDS, BUILDERS, RECORDS_SUMMARY, FIELD_LOGS, FIELD_NOTE, SUPPLY, STANDARDS, HISTORY, FACTORY, CTA, CONTACT, PRODUCT_OPTS, META
 } from './content.mjs';
 import { icon, productIcon, waves } from './art.mjs';
-import { page, pageHead, btn, callBtn, smsBtn, kakaoBtn, phLink, lines, secHead, esc, ph, val, photo, backdrop, badge, tel, sms } from './layout.mjs';
+import { page, pageHead, subTabs, btn, callBtn, smsBtn, kakaoBtn, phLink, lines, secHead, esc, ph, val, photo, backdrop, badge, tel, sms } from './layout.mjs';
 
 const pad = n => String(n).padStart(2, '0');
 const quoteFor = (c, id) => c.url('contact/') + `?product=${id}`;
@@ -196,7 +196,7 @@ export function home(c) {
 
 /* ================= 회사소개 ================= */
 export function about(c) {
-  const intro = `<section class="sec company">
+  const intro = `<section class="sec company" id="intro">
   <div class="wrap company-in">
     <div class="company-text">
       ${secHead({ en: 'ABOUT', title: COMPANY.title })}
@@ -220,9 +220,12 @@ export function about(c) {
 </section>`;
 
   const factory = `<section class="sec" id="factory">
-  <div class="wrap">
-    ${secHead({ en: 'FACTORY', title: '공장 · 직접 절곡', sub: `${CO.factory}. 강판을 자르고 접어 슬랫과 부재를 만드는 곳입니다.` })}
-    <ul class="fac-grid">${FACTORY_PHOTOS.map(f => `<li data-reveal>${photo(c, f, { label: f.cap })}<p>${f.cap}</p></li>`).join('')}</ul>
+  <div class="wrap fac-in">
+    <figure class="fac-photo" data-reveal>${photo(c, FACTORY.photo, { label: FACTORY.photo.cap, ratio: '4 / 5' })}<figcaption>${FACTORY.photo.cap}</figcaption></figure>
+    <div>
+      ${secHead({ en: 'FACTORY', title: '공장 · 직접 절곡', sub: `${CO.factory}. 강판을 자르고 접어 슬랫과 부재를 만드는 곳입니다. 외주 없이 한 공장 안에서 끝냅니다.` })}
+      <ol class="fac-steps">${FACTORY.steps.map((f, i) => `<li data-reveal><span class="fs-no">${pad(i + 1)}</span><div><h3>${f.title}</h3><p>${f.text}</p></div></li>`).join('')}</ol>
+    </div>
   </div>
 </section>`;
 
@@ -249,8 +252,9 @@ export function about(c) {
     ['공장', CO.factory],
     ['대표전화', `<a href="${tel()}">${CO.phone}</a> (${CO.hours})`],
     ['문자 · 사진 상담', `<a href="${sms()}">${CO.sms}</a>`],
-    ['카카오톡 채널', `${CO.kakao.name} ${CO.kakao.url ? '' : ph('채널 주소 · ' + PH)}`],
-    ['팩스 · 이메일', `${val(CO.fax)} ${val(CO.email)}`],
+    ['카카오톡 채널', CO.kakao.url ? `<a href="${CO.kakao.url}" target="_blank" rel="noopener">${CO.kakao.name}${icon('external')}</a>` : CO.kakao.name],
+    ...(CO.fax ? [['팩스', CO.fax]] : []),
+    ...(CO.email ? [['이메일', CO.email]] : []),
     ['블로그', `<a href="${CO.blog}" target="_blank" rel="noopener">${CO.blogName}${icon('external')}</a>`],
     ['본사 홈페이지', `<a href="${CO.hq}" target="_blank" rel="noopener">seonghyun.co.kr${icon('external')}</a>`]
   ];
@@ -258,7 +262,16 @@ export function about(c) {
   <div class="wrap info-in">
     <div>
       ${secHead({ en: 'INFORMATION', title: '회사 정보 · 오시는 길' })}
-      <div class="map-ph" data-reveal>${icon('pin')}<b>지도 자리</b><span>${PH}</span><small>${CO.factory}</small></div>
+      <div class="loc-card" data-reveal>
+        <span class="loc-art" aria-hidden="true">${icon('pin')}</span>
+        <p class="loc-label">공장 · 본사</p>
+        <p class="loc-addr">${CO.factory}</p>
+        <p class="loc-hours">${icon('clock')}${CO.hours}</p>
+        <div class="loc-btns">
+          ${btn('https://map.naver.com/p/search/' + encodeURIComponent(CO.factory), '네이버 지도', { variant: 'line', ext: true })}
+          ${btn('https://map.kakao.com/?q=' + encodeURIComponent(CO.factory), '카카오맵', { variant: 'line', ext: true })}
+        </div>
+      </div>
     </div>
     <dl class="info-table" data-reveal>${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
   </div>
@@ -266,12 +279,13 @@ export function about(c) {
 
   return page(c, {
     title: '회사소개', desc: META.about, bodyClass: 'p-about',
-    body: pageHead(c, { en: 'COMPANY', title: ['셔터의 처음과 끝,', '한 공장에서 만듭니다'], lede: `${CO.since} 셔터 일을 시작해 ${CO.founded} ${CO.company}을 세웠습니다. LS셔터는 그 공장이 직접 운영하는 브랜드입니다.`, crumb: '회사소개' })
+    body: pageHead(c, { en: 'COMPANY', title: ['셔터의 처음과 끝,', '한 공장에서 만듭니다'], lede: `${CO.since} 셔터 일을 시작해 ${CO.founded} ${CO.company}을 세웠습니다. LS셔터는 그 공장이 직접 운영하는 브랜드입니다.`, crumb: '회사소개', tabs: [['#intro', '회사 개요'], ['#standard', '만드는 방식'], ['#factory', '공장 · 직접 절곡'], ['#supply', '공급 방식'], ['#history', '걸어온 길'], ['#location', '오시는 길']] })
       + intro + standards + factory + supply + history + info + inquiryBand(c)
   });
 }
 
 /* ================= 제품 ================= */
+const MARK = { al: 'ALUMINIUM', security: 'SECURITY', parts: 'PARTS', etc: 'DOORS' };
 export function products(c) {
   const chips = `<nav class="pnav" aria-label="제품 바로가기"><div class="wrap"><ul>${PRODUCTS.map(p => `<li><a href="#${p.id}">${p.nav || p.name}</a></li>`).join('')}<li><a href="#composite">복합방화셔터</a></li></ul></div></nav>`;
 
@@ -286,15 +300,13 @@ export function products(c) {
       </ul>
       <p class="legend-note">${COMPOSITE.asOf} 방화셔터가 아닌 제품은 회색 표시로 종류만 적었습니다.</p>
     </div>
-    <div class="catalog" data-reveal>
-      ${CATALOG ? btn(c.url(CATALOG), '카탈로그 PDF 받기', { variant: 'line', ic: 'doc' }) : `<span class="btn btn-line is-ph" role="link" aria-disabled="true">${icon('doc')}<span>카탈로그 PDF</span><span class="ph-tag">파일 자리</span></span>`}
-    </div>
+    ${CATALOG ? `<div class="catalog" data-reveal>${btn(c.url(CATALOG), '카탈로그 PDF 받기', { variant: 'line', ic: 'doc' })}</div>` : ''}
   </div>
 </section>`;
 
   const secs = PRODUCTS.map((p, i) => `<section class="sec prod${i % 2 ? ' rev' : ''}" id="${p.id}" aria-labelledby="${p.id}-t">
   <div class="wrap prod-in">
-    <div class="prod-media" data-reveal>${photo(c, p, { label: p.name, pic: p.icon })}</div>
+    <div class="prod-media" data-reveal>${photo(c, p, { label: p.name, pic: p.icon, mark: MARK[p.id] || p.model })}</div>
     <div class="prod-text" data-reveal>
       ${badge(p)}
       <h2 class="prod-name" id="${p.id}-t">${fullName(p)}</h2>
@@ -331,57 +343,81 @@ export function products(c) {
 }
 
 /* ================= 품질인정 ================= */
+/* 제품별 진행 막대: 6칸, 마친 단계는 채움, 그다음은 '진행 중' 줄무늬 */
+const progressRow = r => `<tr>
+  <th scope="row"><b>${r.model}</b><small>${r.name}</small></th>
+  <td class="pg-cell"><span class="pg" role="img" aria-label="${CERT_STEPS.length}단계 중 ${r.done}단계 마침${r.done < CERT_STEPS.length ? `, ${CERT_STEPS[r.done].title} 진행 중` : ''}">${CERT_STEPS.map((_, k) => `<i class="${k < r.done ? 'is-done' : k === r.done ? 'is-now' : ''}"></i>`).join('')}</span></td>
+  <td class="pg-state">${badge(r)}${r.note ? `<small>${r.note}</small>` : ''}</td>
+</tr>`;
+
 export function certification(c) {
-  const main = `<section class="sec">
+  const main = `<section class="sec" id="kict">
   <div class="wrap">
     ${secHead({ en: 'KICT', title: ['한국건설기술연구원', '품질인정 2종'], sub: `${CERT_META.holder} 명의의 인정입니다. 인정번호는 인정 공고에서 누구나 확인할 수 있습니다.` })}
-    <div data-reveal>${certTable(CERTS)}</div>
-    <div class="cert-row" data-reveal>
-      ${certMeta()}
-      <div class="cert-check">
-        <p>${icon('shield')}<span>인정번호를 직접 확인해 보세요.</span></p>
-        ${noticeLink('btn btn-line')}
-      </div>
+    <ul class="cdocs">${CERTS.map(r => `<li class="cdoc" data-reveal>
+      <div class="cdoc-top"><span class="cdoc-ic">${productIcon(r.model === 'SH-F01' ? 'steel' : 'screen')}</span>${badge(r)}</div>
+      <p class="cdoc-kind">${r.kind}</p>
+      <h3 class="cdoc-name">${r.product} <span class="model">${r.model}</span></h3>
+      <dl class="cdoc-dl">
+        <div><dt>인정번호</dt><dd class="mono">${r.no}</dd></div>
+        <div><dt>내화</dt><dd>${r.time}</dd></div>
+        <div><dt>인정일</dt><dd>${CERT_META.date}</dd></div>
+        <div><dt>유효기간</dt><dd>${CERT_META.until}까지</dd></div>
+      </dl>
+      ${r.pdf ? btn(r.pdf, '인정서 · 세부인정내용 PDF', { variant: 'line', ext: true, cls: 'cdoc-btn' }) : ''}
+    </li>`).join('')}</ul>
+    <div class="cert-check cert-bar" data-reveal>
+      <p>${icon('shield')}<span>인정 명의 ${CERT_META.holder} · 공장소재지 ${CERT_META.factory}. 인정번호는 한국건설기술연구원 공고에서 직접 확인할 수 있습니다.</span></p>
+      ${noticeLink('btn btn-line')}
     </div>
   </div>
 </section>`;
 
-  const scans = `<section class="sec sec-sand">
+  const process = `<section class="sec sec-sand" id="process">
   <div class="wrap">
-    ${secHead({ en: 'CERTIFICATE', title: '인정서', sub: '인정서 사본을 받으면 이 자리에 넣습니다.' })}
-    <ul class="scan-grid">${CERT_META.scans.map(s => `<li data-reveal>${photo(c, s, { label: s.cap, ratio: '210 / 297' })}<p>${s.cap}</p></li>`).join('')}</ul>
+    ${secHead({ en: 'CERTIFICATION PROCESS', title: '품질인정, 이렇게 받습니다', sub: '방화셔터는 「건축법」에 따라 품질인정을 받은 제품만 쓸 수 있습니다. 인정기관인 한국건설기술연구원이 아래 6단계로 심사합니다.' })}
+    <ol class="steps6" data-reveal>${CERT_STEPS.map((x, i) => `<li><span class="s6-no">${pad(i + 1)}</span><h3>${x.title}</h3><p>${x.text}</p></li>`).join('')}</ol>
+    <p class="after-note" data-reveal><b>인정 후에도</b>인정 표시 관리, 정기 품질관리 점검, 판매실적 신고가 이어지고, 유효기간이 끝나면 연장 심사를 받습니다.</p>
   </div>
 </section>`;
 
-  const pending = `<section class="sec" id="pending">
+  const progress = `<section class="sec" id="pending">
   <div class="wrap">
-    ${secHead({ en: 'IN PROGRESS', title: '인정 진행 중인 제품', sub: COMPOSITE.asOf })}
-    <div class="tbl-wrap" data-reveal><table class="tbl">
-      <caption class="sr">품질인정 진행 중인 제품</caption>
-      <thead><tr><th scope="col">제품</th><th scope="col">내화</th><th scope="col">상태</th></tr></thead>
-      <tbody>${CERT_PENDING.map(r => `<tr><th scope="row" data-th="제품">${r.product} <span class="model">${r.model}</span></th><td data-th="내화">${r.time}</td><td data-th="상태">${badge(r)}</td></tr>`).join('')}</tbody>
+    ${secHead({ en: 'PROGRESS', title: '성현 제품은 여기까지 왔습니다', sub: COMPOSITE.asOf })}
+    <div class="pg-wrap" data-reveal><table class="pg-tbl">
+      <caption class="sr">제품별 품질인정 진행 단계</caption>
+      <thead><tr><th scope="col">제품</th><th scope="col"><span class="pg-heads">${CERT_STEPS.map(x => `<span>${x.title.replace('인정 ', '').replace(' 발급', '')}</span>`).join('')}</span></th><th scope="col">현재</th></tr></thead>
+      <tbody>${CERT_PROGRESS.map(progressRow).join('')}</tbody>
     </table></div>
-    <p class="tbl-note" data-reveal>${icon('info')}복합방화셔터(SH-CF01, SH-CS01)는 인정을 마치기 전까지 판매하거나 유통하지 않습니다.</p>
+    <p class="pg-legend" data-reveal><span><i class="is-done"></i>마친 단계</span><span><i class="is-now"></i>진행 중</span><span><i></i>남은 단계</span></p>
+    <p class="tbl-note" data-reveal>${icon('info')}복합방화셔터(SH-CF01, SH-CS01)는 원재료 채취와 제품 제작을 마치고 완제품 확인을 기다리는 단계입니다. 인정을 마치기 전까지 판매하거나 유통하지 않습니다.</p>
   </div>
 </section>`;
 
   const docs = `<section class="sec sec-sand" id="docs">
   <div class="wrap">
-    ${secHead({ en: 'DOCUMENTS', title: '서류 지원', sub: '인정 제품을 납품할 때 필요한 서류를 함께 챙깁니다.', center: true })}
+    ${secHead({ en: 'DOCUMENTS', title: '설계 · 감리 · 시공사를 위한 서류 지원', sub: '방화셔터는 서류까지 갖춰야 준공이 끝납니다. 인정 제품을 납품할 때 필요한 서류를 함께 챙깁니다.', center: true })}
     <ul class="docs">${DOCS.map(d => `<li data-reveal><span class="doc-ic">${icon(d.icon)}</span><h3>${d.title}</h3><p>${d.text}</p></li>`).join('')}</ul>
+  </div>
+</section>`;
+
+  const reg = `<section class="sec" id="registration">
+  <div class="wrap">
+    ${secHead({ en: 'REGISTRATION', title: '등록 현황' })}
+    <ul class="regs">${REGISTRATION.map(r => `<li data-reveal><div class="reg-head"><span class="doc-ic">${icon(r.icon)}</span><div><p class="eyebrow">${r.en}</p><h3>${r.title}</h3></div></div><dl>${r.rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl></li>`).join('')}</ul>
   </div>
 </section>`;
 
   return page(c, {
     title: '품질인정', desc: META.certification, bodyClass: 'p-cert',
-    body: pageHead(c, { en: 'CERTIFICATION', title: '품질인정', lede: '인정번호와 유효기간, 인정을 진행하고 있는 제품의 현황을 알려 드립니다.', crumb: '품질인정' })
-      + main + scans + pending + docs + inquiryBand(c)
+    body: pageHead(c, { en: 'CERTIFICATION', title: '품질인정 · 등록', lede: 'KICT 품질인정과 인정 진행 현황, 서류 지원, 공장 등록 현황입니다.', crumb: '품질인정', tabs: [['#kict', 'KICT 품질인정'], ['#process', '인정 절차'], ['#pending', '진행 현황'], ['#docs', '서류 지원'], ['#registration', '등록 현황']] })
+      + main + process + progress + docs + reg + inquiryBand(c)
   });
 }
 
 /* ================= 납품실적 ================= */
 export function records(c) {
-  const sum = `<section class="sec">
+  const sum = `<section class="sec" id="major">
   <div class="wrap">
     <ul class="rec-sum" data-reveal>
       <li><p class="st-num">300<small>여 현장</small></p><p class="st-label">최근 3년 납품</p></li>
@@ -390,7 +426,7 @@ export function records(c) {
     </ul>
     ${secHead({ en: 'MAJOR RECORDS', title: '주요 납품 현장' })}
     <ul class="rec-grid">${RECORDS.map(r => `<li class="rec" data-reveal>
-      ${photo(c, r, { label: `${r.where} ${r.site}`, pic: 'steel' })}
+      ${photo(c, r, { label: `${r.where} ${r.site}`, pic: r.pic })}
       <div class="rec-body"><span class="rec-cat">${r.cat}</span><h3>${r.site}</h3><p class="rec-where">${icon('pin')}${r.where}</p><p class="rec-prod">${r.product}</p></div>
     </li>`).join('')}</ul>
     <p class="builders" data-reveal><b>주요 납품 현장 시공사</b><span>${BUILDERS}</span></p>
@@ -416,7 +452,7 @@ export function records(c) {
 
   return page(c, {
     title: '납품실적', desc: META.records, bodyClass: 'p-records',
-    body: pageHead(c, { en: 'PERFORMANCE', title: '납품실적', lede: `${RECORDS_SUMMARY}. 물류센터, 지식산업센터, 청년주택, 공장까지 들어갔습니다.`, crumb: '납품실적' })
+    body: pageHead(c, { en: 'PERFORMANCE', title: '납품실적', lede: `${RECORDS_SUMMARY}. 물류센터, 지식산업센터, 청년주택, 공장까지 들어갔습니다.`, crumb: '납품실적', tabs: [['#major', '주요 납품 현장'], ['#field', '직영 현장 기록']] })
       + sum + field + more + inquiryBand(c)
   });
 }
