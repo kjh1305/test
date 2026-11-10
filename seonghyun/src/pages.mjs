@@ -71,7 +71,7 @@ const logEntry = (c, g) => `<article class="log" id="log-${g.id}" aria-labelledb
 /* ================= 홈 ================= */
 export function home(c) {
   const n = HERO.slides.length;
-  const hero = `<section class="hero" aria-roledescription="carousel" aria-label="LS셔터 첫 화면" data-slider>
+  const hero = `<section class="hero" aria-roledescription="carousel" aria-label="성현 첫 화면" data-slider>
   <div class="hero-slides" aria-live="off" data-stage>${HERO.slides.map((s, i) => `<div class="hero-slide${i === 0 ? ' is-on' : ''}" role="group" aria-roledescription="slide" aria-label="${i + 1} / ${n}: ${esc(s.cap)}${s.img ? '' : ' (그림)'}"${i ? ' aria-hidden="true"' : ''} data-cap="${esc(s.cap)}${s.img ? '' : ' · 그림'}">
     ${backdrop(c, s, s.art, 'h' + i, { eager: i === 0 })}
   </div>`).join('')}</div>
@@ -96,7 +96,7 @@ export function home(c) {
   </div>
 </section>`;
 
-  const stats = `<section class="stats" aria-label="숫자로 보는 LS셔터">
+  const stats = `<section class="stats" aria-label="숫자로 보는 성현">
   <div class="wrap"><ul class="stats-list">${STATS.map(s => `<li data-reveal><p class="st-num">${s.num}<small>${s.unit}</small></p><p class="st-label">${s.label}</p><p class="st-note">${s.note}</p></li>`).join('')}</ul></div>
 </section>`;
 
@@ -245,7 +245,7 @@ export function about(c) {
 
   const rows = [
     ['상호', `${CO.company} (${CO.companyEn})`],
-    ['직영 브랜드', `${CO.brand} (${CO.sub})`],
+    ['직영 브랜드', `${CO.ls} (시공 · 수리 · 철거)`],
     ['대표자', CO.ceo],
     ['사업자등록번호', CO.bizNo],
     ['설립', `${CO.founded} (셔터 일은 ${CO.since}부터)`],

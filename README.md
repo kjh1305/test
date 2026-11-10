@@ -42,5 +42,5 @@
 - `getscreen/`: 겟스크린미 한국총판 홈페이지 시안. 자세한 내용은 `getscreen/README.md`를 보세요.
 - `daekyung/`: 대경기업 홈페이지 시안. 자세한 내용은 `daekyung/README.md`를 보세요.
 - `jungang/`: 중앙설비산업 홈페이지 시안. 자세한 내용은 `jungang/README.md`를 보세요.
-- `lsshutter/`: 방화셔터 LS셔터(주식회사 성현 직영) 홈페이지 시안. 자세한 내용은 `lsshutter/README.md`를 보세요.
-- `/test/koreatray/`, `/test/gonggam/`, `/test/ire/`, `/test/getscreen/`, `/test/daekyung/`, `/test/jungang/`, `/test/lsshutter/` 아래의 없는 주소는 `404.html`이 각 시안의 안내 페이지로 보냅니다.
+- `seonghyun/`: 방화셔터 제조사 주식회사 성현(직영 시공 LS셔터) 홈페이지 시안. 예전 주소 `/test/lsshutter/`는 404 페이지가 새 주소로 보냅니다. 자세한 내용은 `seonghyun/README.md`를 보세요.
+- `/test/koreatray/`, `/test/gonggam/`, `/test/ire/`, `/test/getscreen/`, `/test/daekyung/`, `/test/jungang/`, `/test/seonghyun/` 아래의 없는 주소는 `404.html`이 각 시안의 안내 페이지로 보냅니다.

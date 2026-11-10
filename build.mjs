@@ -480,9 +480,10 @@ function notFound() {
     </div>
   </div>
 </section>`;
-  // 다른 시안 폴더(/test/koreatray/, /test/gonggam/, /test/ire/, /test/getscreen/, /test/daekyung/, /test/jungang/, /test/lsshutter/) 아래의 없는 주소는 각 시안의 안내 페이지로 보냅니다
+  // 다른 시안 폴더(/test/koreatray/, /test/gonggam/, /test/ire/, /test/getscreen/, /test/daekyung/, /test/jungang/, /test/seonghyun/) 아래의 없는 주소는 각 시안의 안내 페이지로 보냅니다
+  // 옛 주소 /test/lsshutter/… 는 /test/seonghyun/… 같은 자리로 옮겨 보냅니다
   // 안내 페이지 자체가 없을 때 같은 주소로 계속 돌지 않도록, 지금 주소가 목적지와 같으면 보내지 않습니다
-  const ktRedirect = `<script>(function(){var p=location.pathname,t=null,m=p.match(/^\\/test\\/koreatray\\/(?:(en|ja|vi|th)\\/)?/);if(m){t='/test/koreatray/'+(m[1]?m[1]+'/':'')+'404.html';}else{var d=['gonggam','ire','getscreen','daekyung','jungang','lsshutter'];for(var i=0;i<d.length;i++){if(p.indexOf('/test/'+d[i]+'/')===0){t='/test/'+d[i]+'/404.html';break;}}}if(t&&t!==p)location.replace(t);})();</script>`;
+  const ktRedirect = `<script>(function(){var p=location.pathname,t=null;if(p.indexOf('/test/lsshutter/')===0){location.replace('/test/seonghyun/'+p.slice(16)+location.hash);return;}var m=p.match(/^\\/test\\/koreatray\\/(?:(en|ja|vi|th)\\/)?/);if(m){t='/test/koreatray/'+(m[1]?m[1]+'/':'')+'404.html';}else{var d=['gonggam','ire','getscreen','daekyung','jungang','seonghyun'];for(var i=0;i<d.length;i++){if(p.indexOf('/test/'+d[i]+'/')===0){t='/test/'+d[i]+'/404.html';break;}}}if(t&&t!==p)location.replace(t);})();</script>`;
   write('404.html', page({ path: '404.html', title: '페이지를 찾을 수 없어요', main, rootOverride: R }).replace('<head>', `<head>\n${ktRedirect}`));
 }
 

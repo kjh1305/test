@@ -1,4 +1,4 @@
-/* LS셔터 — 화면 동작: 헤더, 모바일 메뉴, 나타나는 효과, 맨 위로, 첫 화면 슬라이드, 알림 팝업, 견적문의 폼 */
+/* 주식회사 성현 — 화면 동작: 헤더, 모바일 메뉴, 나타나는 효과, 맨 위로, 첫 화면 슬라이드, 알림 팝업, 견적문의 폼 */
 (function () {
   'use strict';
   window.__ls = true;
@@ -100,7 +100,7 @@
      저장이 막힌 브라우저에서는 기록하지 못해도 팝업은 그대로 열림. */
   var layer = $('[data-popups]');
   if (layer) {
-    var KEY = 'lsshutter-pop-', mobile = window.matchMedia('(max-width: 760px)');
+    var KEY = 'seonghyun-pop-', mobile = window.matchMedia('(max-width: 760px)');
     var pops = $$('[data-pop]', layer);
     pops.forEach(function (p) {
       var hide = false;

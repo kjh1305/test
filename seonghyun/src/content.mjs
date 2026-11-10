@@ -1,5 +1,5 @@
 /* =========================================================
-   LS셔터 (주식회사 성현 직영) — 사이트 문구와 데이터
+   주식회사 성현 (성현셔터, 직영 시공 LS셔터) — 사이트 문구와 데이터
    방화셔터 제조 · 경기도 광주 자체 공장 · 전국 납품·시공
 
    바탕 자료
@@ -16,15 +16,18 @@
    - img: 'x.webp', w, h, alt    → assets/img/x.webp 를 보여 줌 (w, h 는 파일의 실제 픽셀 크기)
    ========================================================= */
 
-export const BASE_URL = 'https://kjh1305.github.io/test/lsshutter/';
+export const BASE_URL = 'https://kjh1305.github.io/test/seonghyun/';
 
 /* 아직 모르는 값은 null 로 둡니다. null 이면 화면에 '채울 자리'가 나옵니다. */
 export const PH = '자료를 받으면 채울 자리';
 
 export const CO = {
-  brand: 'LS셔터',
-  sub: '주식회사 성현 직영',
-  field: '방화셔터 공장 직영',
+  /* 로고 · 페이지 제목에 쓰는 이름 */
+  brand: '주식회사 성현',
+  sub: 'SEONGHYUN CO., LTD.',
+  field: '방화셔터 제조',
+  /* 직영 시공 · 수리 브랜드 */
+  ls: 'LS셔터',
   company: '주식회사 성현',
   companyEn: 'SEONGHYUN CO., LTD.',
   alias: '성현셔터',
@@ -59,7 +62,7 @@ export const NAV = [
    slides: 사진을 받기 전까지는 art(그림)로 채웁니다. img 에 사진을 넣으면 그림 대신 사진이 나옵니다.
    art 는 src/art.mjs 의 heroArt 이름: 'slats'(철재 슬랫), 'screen'(스크린 직물), 'opening'(반쯤 내린 셔터) */
 export const HERO = {
-  kicker: '방화셔터 공장 직영',
+  kicker: '방화셔터 제조 · SINCE 2006',
   title: ['셔터의 처음과 끝,', '한 공장에서 만듭니다'],
   lede: ['설계와 제작, 품질인정 서류, 납품과 시공까지', '경기도 광주 자체 공장에서 직접 책임집니다.'],
   slides: [
@@ -79,8 +82,8 @@ export const POPUPS = [
   {
     id: 'notice-2026-11', on: false,
     img: null, w: 0, h: 0, alt: '',
-    label: 'LS셔터 안내',
-    title: 'LS셔터 안내',
+    label: '성현 안내',
+    title: '성현 안내',
     text: '현장 규격과 사진만 보내 주시면 바로 견적을 드립니다.',
     href: 'contact/', tel: 'tel:0317649573'
   }
@@ -194,7 +197,7 @@ export const COMPOSITE = {
   ]
 };
 
-/* 카탈로그 PDF: 파일을 받으면 assets/ 아래 넣고 경로를 적으세요 (예: 'assets/lsshutter-catalog.pdf') */
+/* 카탈로그 PDF: 파일을 받으면 assets/ 아래 넣고 경로를 적으세요 (예: 'assets/seonghyun-catalog.pdf') */
 export const CATALOG = null;
 
 /* ---------- 품질인정 ---------- */
@@ -385,7 +388,7 @@ export const PRODUCT_OPTS = [
 ];
 
 export const META = {
-  home: 'LS셔터는 주식회사 성현이 직접 운영하는 방화셔터 공장 직영 브랜드입니다. 경기도 광주 자체 공장에서 철재·스크린 방화셔터를 만들어 전국에 납품·시공합니다.',
+  home: '주식회사 성현은 경기도 광주 자체 공장에서 철재·스크린 방화셔터를 만들어 전국에 납품하는 방화셔터 제조사입니다. 시공과 수리는 직영 LS셔터가 맡습니다.',
   about: '1997년 셔터 일을 시작해 2006년 설립한 주식회사 성현의 공장, 만드는 방식, 공급 방식과 회사 정보.',
   products: '철재·스크린 방화셔터, 초대형 스크린, A/L 내풍압·단열 셔터, 방범 셔터, 셔터 자재·부속 납품. 제품별 규격과 품질인정 상태.',
   certification: '㈜성현 명의 KICT 품질인정 2종(철재 SH-F01, 스크린 SH-S01)의 인정번호와 유효기간, 인정 진행 중 제품 현황.',

@@ -104,7 +104,7 @@ function footer(c) {
   <div class="wrap f-in">
     <div class="f-brand">
       ${logo(c, 'logo-footer')}
-      <p>${CO.field} · ${CO.alias}</p>
+      <p>${CO.field} · ${CO.alias} · 직영 ${CO.ls}</p>
     </div>
     <div class="f-mid">
       <nav class="f-links" aria-label="바닥 메뉴"><ul>
@@ -114,7 +114,7 @@ function footer(c) {
         <li><a href="${CO.blog}" target="_blank" rel="noopener">블로그</a></li>
       </ul></nav>
       <p class="f-line"><span>상호 ${CO.company} (${CO.companyEn})</span><span>대표 ${CO.ceo}</span><span>사업자등록번호 ${CO.bizNo}</span></p>
-      <p class="f-line"><span>공장 ${CO.factory}</span><span>설립 ${CO.founded}</span><span>직영 ${CO.brand}</span></p>
+      <p class="f-line"><span>공장 ${CO.factory}</span><span>설립 ${CO.founded}</span><span>직영 ${CO.ls}</span></p>
       <p class="f-line"><span>TEL <a href="${tel()}">${CO.phone}</a></span><span>문자·사진 <a href="${sms()}">${CO.sms}</a></span>${CO.fax ? `<span>FAX ${CO.fax}</span>` : ''}${CO.email ? `<span>E-mail ${CO.email}</span>` : ''}</p>
     </div>
     <div class="f-call">
@@ -124,7 +124,7 @@ function footer(c) {
     </div>
   </div>
   <div class="wrap f-bottom">
-    <p class="f-note">이 사이트는 홈페이지 제작 시안입니다. 주식회사 성현이 의뢰한 것이 아니며, 성현 홈페이지(seonghyun.co.kr)와 LS셔터 블로그에 공개된 내용을 바탕으로 만들었습니다. 사진이 없는 곳은 그림으로 대신했습니다.</p>
+    <p class="f-note">이 사이트는 홈페이지 제작 시안입니다. 성현 홈페이지(seonghyun.co.kr)와 LS셔터 블로그에 공개된 내용을 바탕으로 만들었습니다. 사진이 없는 곳은 그림으로 대신했습니다.</p>
     <p class="f-copy">© 2026 ${CO.company}. All rights reserved.</p>
   </div>
 </footer>`;
@@ -140,7 +140,7 @@ function quickbar(c) {
 }
 
 export function page(c, { title, desc, body, bodyClass = '' }) {
-  const full = title ? `${title} | ${CO.brand}` : `${CO.brand} | 방화셔터 공장 직영 · ${CO.company}`;
+  const full = title ? `${title} | ${CO.brand}` : `${CO.brand} | 방화셔터 제조 · ${CO.alias}`;
   return `<!doctype html>
 <html lang="ko" class="no-js">
 <head>
