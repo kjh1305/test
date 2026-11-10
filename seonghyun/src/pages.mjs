@@ -1,7 +1,7 @@
 /* 페이지 본문: 홈, 회사소개, 제품, 품질인정, 납품실적, 견적문의, 없는 주소 */
 import {
   CO, PH, HERO, POPUPS, STATS, COMPANY, STATUS, PRODUCTS, COMPOSITE, CATALOG, CERTS, CERT_META, CERT_STEPS, CERT_PROGRESS, REGISTRATION, DOCS,
-  RECORDS, BUILDERS, RECORDS_SUMMARY, FIELD_LOGS, FIELD_NOTE, SUPPLY, STANDARDS, HISTORY, FACTORY, CTA, CONTACT, PRODUCT_OPTS, META
+  RECORDS, BUILDERS, RECORDS_SUMMARY, FIELD_LOGS, FIELD_NOTE, FINDER, QUOTE_STEPS, SUPPLY, STANDARDS, HISTORY, FACTORY, CTA, CONTACT, PRODUCT_OPTS, META
 } from './content.mjs';
 import { icon, productIcon, waves } from './art.mjs';
 import { page, pageHead, subTabs, btn, callBtn, smsBtn, kakaoBtn, phLink, lines, secHead, esc, ph, val, photo, backdrop, badge, tel, sms } from './layout.mjs';
@@ -73,8 +73,8 @@ const productCard = (c, p) => `<li class="pcard"><a href="${c.url('products/')}#
 const logCard = (c, g) => {
   const p = g.photos[g.cover] || g.photos[0];
   return `<li class="lcard" data-reveal><a href="${c.url('records/')}#log-${g.id}">
-  ${photo(c, p, { label: g.title, ratio: '4 / 3' })}
-  <span class="lcard-body"><span class="rec-cat">${g.kind}</span><b class="lcard-title">${g.title}</b><span class="rec-where">${icon('pin')}${g.where}</span></span>
+  ${photo(c, p, { label: g.title, ratio: '4 / 3', sizes: '(max-width: 760px) 100vw, 640px' })}
+  <span class="lcard-body"><span class="rec-cat">${g.kind}</span><b class="lcard-title">${g.title}</b><span class="rec-where">${icon('pin')}${g.where}</span><span class="lcard-spec">${g.spec}</span></span>
 </a></li>`;
 };
 
@@ -162,9 +162,9 @@ export function home(c) {
   <div class="wrap">
     <div class="logs-head">
       ${secHead({ en: 'FIELD LOG', title: '직영 현장 기록', sub: '설치, 철거, 자재 납품까지 LS셔터 시공팀이 직접 한 실제 현장입니다.', id: 'logs-title' })}
-      <a class="more" href="${c.url('records/')}#field" data-reveal>현장 기록 전체${icon('chevron')}</a>
+      <p class="logs-links" data-reveal><a class="more" href="${c.url('records/')}#field">현장 기록 전체${icon('chevron')}</a><a class="more" href="${CO.blog}" target="_blank" rel="noopener">LS셔터 블로그${icon('external')}</a></p>
     </div>
-    <ul class="lgrid">${FIELD_LOGS.map(g => logCard(c, g)).join('')}</ul>
+    <ul class="lgrid is-feature">${FIELD_LOGS.map(g => logCard(c, g)).join('')}</ul>
   </div>
 </section>`;
 
@@ -205,7 +205,47 @@ export function home(c) {
   </section>`).join('')}</div>
 </div>` : '';
 
-  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + stats + company + products + cert + logs + inquiryBand(c, { home: true }) + panels + popups });
+  /* 현장 종류로 찾기 */
+  /* 휴대폰에서는 모델명만 (pk-n 숨김) */
+  const pname = id => { const p = PRODUCTS.find(x => x.id === id); return p ? (/^SH-/.test(p.model) ? `<i class="pk-n">${p.nav || p.name} </i>${p.model}` : (p.nav || p.name)) : id; };
+  const finder = `<section class="sec finder" aria-labelledby="finder-title">
+  <div class="wrap">
+    ${secHead({ title: '어떤 현장인가요?', sub: '제품 이름을 몰라도 괜찮습니다. 현장에 맞는 제품부터 안내합니다.', id: 'finder-title' })}
+    <ul class="fdgrid">${FINDER.map(f => `<li data-reveal><a href="${c.url(f.href)}">
+      <span class="fd-ic">${f.icon === 'wrench' ? icon('wrench', 'ic pic') : productIcon(f.icon)}</span>
+      <b class="fd-title">${f.title}</b>
+      <span class="fd-text">${f.text}</span>
+      <span class="fd-picks">${f.picks.map(id => `<span>${pname(id)}</span>`).join('')}</span>
+      <span class="fd-go">${icon('chevron')}</span>
+    </a></li>`).join('')}</ul>
+  </div>
+</section>`;
+
+  /* 사진 한 장으로 견적 받기 */
+  const quote = `<section class="quote" aria-labelledby="quote-title">
+  <div class="wrap quote-in">
+    <div class="quote-head" data-reveal>
+      <h2 class="sec-title" id="quote-title">사진 한 장이면<br>견적이 시작됩니다</h2>
+      <p class="sec-sub">긴 문의 양식을 채우지 않아도 됩니다. 휴대폰으로 찍어 바로 보내 주세요.</p>
+      <div class="quote-btns">${smsBtn()}${kakaoBtn()}${callBtn()}</div>
+      <a class="more more-light" href="${c.url('contact/')}">문의 양식으로 보내기${icon('chevron')}</a>
+    </div>
+    <ol class="qsteps" data-reveal>${QUOTE_STEPS.map((q, i) => `<li><span class="qs-no">${i + 1}</span><div><h3>${q.title}</h3><p>${q.text}</p></div></li>`).join('')}</ol>
+  </div>
+</section>`;
+
+  /* 공장 (홈 맨 아래, 짧게) */
+  const factory = `<section class="sec factory-home" aria-labelledby="fh-title">
+  <div class="wrap">
+    <div class="fh-head">
+      ${secHead({ title: COMPANY.title, sub: COMPANY.text[0], id: 'fh-title' })}
+      <a class="more" href="${c.url('about/')}" data-reveal>회사소개${icon('chevron')}</a>
+    </div>
+    <ol class="fh-steps" data-reveal>${FACTORY.steps.map((f, i) => `<li><span class="fs-no">${pad(i + 1)}</span><b>${f.title}</b><p>${f.text}</p></li>`).join('')}</ol>
+  </div>
+</section>`;
+
+  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + finder + stats + products + cert + logs + quote + factory + popups });
 }
 
 /* ================= 회사소개 ================= */

@@ -358,6 +358,25 @@ export const CTA = {
   text: '제품명이나 부품명을 몰라도 괜찮습니다. 지역, 대략적인 크기, 현장 사진부터 보내 주세요.'
 };
 
+/* ---------- 홈: 현장 종류로 찾기 ----------
+   고객은 제품명보다 '어떤 현장인지'로 찾습니다(성현 지금 사이트에도 "제품명을 몰라도 괜찮습니다"라고 적혀 있음).
+   href: 사이트 안 주소, picks: 이 현장에 맞는 제품(제품 id 또는 글자), icon: 그림 이름 */
+export const FINDER = [
+  { title: '주차장 · 물류창고', text: '차량과 지게차가 드나드는 곳. 충격에 강한 철재 슬랫 방화셔터.', href: 'products/#f01', icon: 'steel', picks: ['f01'] },
+  { title: '공장 · 넓은 출입구', text: '폭 8m가 넘는 개구부, 90분 내화가 필요한 구획. 두 제품 모두 시험 통과 · 인정서 발급 대기입니다.', href: 'products/#ts', icon: 'jumbo', picks: ['ts', 'f02'] },
+  { title: '사무실 · 주거 실내 구획', text: '셔터박스가 작고 가벼운 실리카 직물 스크린. 천장 속 공간이 좁은 실내에 맞습니다.', href: 'products/#s01', icon: 'screen', picks: ['s01'] },
+  { title: '상가 · 매장 전면', text: '알루미늄 · 파이프 · 투시형 방범 셔터를 수동이나 전동으로. 단열 · 내풍압 셔터도 있습니다.', href: 'products/#security', icon: 'security', picks: ['security', 'al'] },
+  { title: '고장 · 수리 · 철거', text: '움직이지 않는 셔터의 수리와 철거, 철거 뒤 새 셔터 재시공까지 직영 LS셔터가 직접 합니다.', href: 'contact/?product=unknown', icon: 'wrench', picks: ['직영 LS셔터 시공 · 수리'] },
+  { title: '셔터 시공 · 수리업체', text: '슬랫 몇 장, 부품 몇 개도 납품합니다. T바(하장)는 가이드레일 홈 깊이에 맞춰 만듭니다.', href: 'products/#parts', icon: 'parts', picks: ['parts'] }
+];
+
+/* ---------- 홈: 사진 한 장으로 견적 받기 (LS셔터 블로그 상담 안내를 3단계로 정리) ---------- */
+export const QUOTE_STEPS = [
+  { title: '현장 사진 찍기', text: '셔터나 개구부 정면이 다 보이게 찍어 주세요. 위쪽 공간과 양옆 벽이 함께 나오면 더 좋습니다.' },
+  { title: '문자 · 카톡으로 보내기', text: '현장 지역과 대략적인 가로 · 세로 크기를 같이 적어 주세요. 제품명은 몰라도 됩니다.' },
+  { title: '확인 후 연락', text: '담당자가 사진을 보고 필요한 작업 범위와 제품을 안내합니다. 영업일 08:00~17:00.' }
+];
+
 /* ---------- 견적문의 ---------- */
 export const CONTACT = {
   errors: {
