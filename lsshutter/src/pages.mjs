@@ -1,7 +1,7 @@
 /* 페이지 본문: 홈, 회사소개, 제품, 품질인정, 납품실적, 견적문의, 없는 주소 */
 import {
   CO, PH, HERO, POPUPS, STATS, COMPANY, STATUS, PRODUCTS, COMPOSITE, CATALOG, CERTS, CERT_META, CERT_PENDING, DOCS,
-  RECORDS, BUILDERS, RECORDS_SUMMARY, SUPPLY, STANDARDS, HISTORY, FACTORY_PHOTOS, CTA, CONTACT, PRODUCT_OPTS, META
+  RECORDS, BUILDERS, RECORDS_SUMMARY, FIELD_LOGS, FIELD_NOTE, SUPPLY, STANDARDS, HISTORY, FACTORY_PHOTOS, CTA, CONTACT, PRODUCT_OPTS, META
 } from './content.mjs';
 import { icon, productIcon, waves } from './art.mjs';
 import { page, pageHead, btn, callBtn, smsBtn, kakaoBtn, phLink, lines, secHead, esc, ph, val, photo, backdrop, badge, tel, sms } from './layout.mjs';
@@ -45,6 +45,28 @@ const productCard = (c, p) => `<li class="pcard"><a href="${c.url('products/')}#
   <span class="pcard-img">${photo(c, p, { label: p.name, pic: p.icon })}</span>
   <span class="pcard-body">${badge(p)}<b class="pcard-name">${p.name}</b><span class="pcard-model">${/^SH-/.test(p.model) ? p.model : p.short}</span></span>
 </a></li>`;
+
+/* 직영 현장 기록: 홈 카드 */
+const logCard = (c, g) => {
+  const p = g.photos[g.cover] || g.photos[0];
+  return `<li class="lcard" data-reveal><a href="${c.url('records/')}#log-${g.id}">
+  ${photo(c, p, { label: g.title, ratio: '4 / 3' })}
+  <span class="lcard-body"><span class="rec-cat">${g.kind}</span><b class="lcard-title">${g.title}</b><span class="rec-where">${icon('pin')}${g.where}</span></span>
+</a></li>`;
+};
+
+/* 직영 현장 기록: 납품실적 페이지 한 건 */
+const logEntry = (c, g) => `<article class="log" id="log-${g.id}" aria-labelledby="log-${g.id}-t">
+  <div class="log-text" data-reveal>
+    <span class="rec-cat">${g.kind}</span>
+    <h3 class="log-title" id="log-${g.id}-t">${g.title}</h3>
+    <p class="rec-where">${icon('pin')}${g.where}</p>
+    <p class="log-spec">${g.spec}</p>
+    ${g.text.map(t => `<p class="log-p">${t}</p>`).join('')}
+    <a class="more" href="${g.url}" target="_blank" rel="noopener">블로그 원문 보기${icon('external')}</a>
+  </div>
+  <ul class="log-ph n${g.photos.length}" data-reveal>${g.photos.map(p => `<li><figure>${photo(c, p, { label: p.cap, ratio: p.ratio })}<figcaption>${p.cap}</figcaption></figure></li>`).join('')}</ul>
+</article>`;
 
 /* ================= 홈 ================= */
 export function home(c) {
@@ -120,6 +142,16 @@ export function home(c) {
   </div>
 </section>`;
 
+  const logs = `<section class="sec sec-sand logs-home" aria-labelledby="logs-title">
+  <div class="wrap">
+    <div class="logs-head">
+      ${secHead({ en: 'FIELD LOG', title: '직영 현장 기록', sub: '설치, 철거, 자재 납품까지 LS셔터 시공팀이 직접 한 실제 현장입니다.', id: 'logs-title' })}
+      <a class="more" href="${c.url('records/')}#field" data-reveal>현장 기록 전체${icon('chevron')}</a>
+    </div>
+    <ul class="lgrid">${FIELD_LOGS.map(g => logCard(c, g)).join('')}</ul>
+  </div>
+</section>`;
+
   const panels = `<section class="panels" aria-label="납품실적과 공급 방식">
   <div class="panel">
     <div class="panel-bg" aria-hidden="true">${backdrop(c, null, 'slatsDark', 'pn1')}</div>
@@ -159,7 +191,7 @@ export function home(c) {
   </section>`).join('')}</div>
 </div>` : '';
 
-  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + stats + company + products + cert + inquiryBand(c, { home: true }) + panels + popups });
+  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + stats + company + products + cert + logs + inquiryBand(c, { home: true }) + panels + popups });
 }
 
 /* ================= 회사소개 ================= */
@@ -365,11 +397,18 @@ export function records(c) {
   </div>
 </section>`;
 
-  const more = `<section class="sec sec-sand">
+  const field = `<section class="sec sec-sand" id="field">
+  <div class="wrap">
+    ${secHead({ en: 'FIELD LOG', title: 'LS셔터 직영 현장 기록', sub: `직영 LS셔터가 직접 설치하고 철거하고 납품한 현장입니다. ${FIELD_NOTE}` })}
+    <div class="logs">${FIELD_LOGS.map(g => logEntry(c, g)).join('')}</div>
+  </div>
+</section>`;
+
+  const more = `<section class="sec">
   <div class="wrap more-rec" data-reveal>
     <div>
       <h2 class="sec-title">더 많은 현장은 블로그에서</h2>
-      <p class="sec-sub">실적 목록과 현장 사진을 더 받으면 이 페이지에 채웁니다. ${ph()}</p>
+      <p class="sec-sub">시공 · 수리 · 철거 · 자재 납품 현장을 LS셔터 블로그에 계속 올립니다.</p>
     </div>
     ${btn(CO.blog, CO.blogName, { variant: 'line', ext: true })}
   </div>
@@ -378,7 +417,7 @@ export function records(c) {
   return page(c, {
     title: '납품실적', desc: META.records, bodyClass: 'p-records',
     body: pageHead(c, { en: 'PERFORMANCE', title: '납품실적', lede: `${RECORDS_SUMMARY}. 물류센터, 지식산업센터, 청년주택, 공장까지 들어갔습니다.`, crumb: '납품실적' })
-      + sum + more + inquiryBand(c)
+      + sum + field + more + inquiryBand(c)
   });
 }
 
