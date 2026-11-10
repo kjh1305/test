@@ -669,8 +669,8 @@ body.menu-open { overflow: hidden; }
 .f-call-hours { margin-top: 6px; }
 .f-bottom { padding-bottom: 40px; }
 .f-bottom::before { content: ''; display: block; height: 1px; margin-bottom: 24px; background: rgba(255, 255, 255, .1); }
-.f-note { font-size: 13px; color: #8D97A6; }
-.f-copy { margin-top: 6px; font-size: 13px; color: #8D97A6; }
+.f-note { font-size: 13px; color: #A0968A; }
+.f-copy { margin-top: 6px; font-size: 13px; color: #A0968A; }
 
 /* ---------- 모바일 하단 상담 바, TOP ---------- */
 .quickbar { display: none; }
