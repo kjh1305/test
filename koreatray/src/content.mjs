@@ -25,16 +25,16 @@ export const CO = {
   brand: L('글로벌 코리아트레이', 'Global Korea Tray', 'Global Korea Tray', 'Global Korea Tray', 'Global Korea Tray'),
   legal: L('(주)코리아트레이', 'Korea Tray Co., Ltd.', '株式会社コリアトレイ', 'Korea Tray Co., Ltd.', 'Korea Tray Co., Ltd.'),
   short: L('코리아트레이', 'Korea Tray', 'コリアトレイ', 'Korea Tray', 'Korea Tray'),
-  ceo: L('이대우', 'Lee Dae-woo', 'イ・デウ', 'Lee Dae-woo', 'Lee Dae-woo'),
+  ceo: L('○○○', '○○○', '○○○', '○○○', '○○○'),
   factoryKo: '경기도 광주시 곤지암읍 새재길226번길 8',
   seoulKo: '서울특별시 중구 삼일대로 363, 장교빌딩 810호',
   factory: L('경기도 광주시 곤지암읍 새재길226번길 8', EN_FACTORY, EN_FACTORY, EN_FACTORY, EN_FACTORY),
   seoul: L('서울특별시 중구 삼일대로 363, 장교빌딩 810호', EN_SEOUL, EN_SEOUL, EN_SEOUL, EN_SEOUL),
   tel: L('031-764-0810', '+82-31-764-0810', '+82-31-764-0810', '+82-31-764-0810', '+82-31-764-0810'),
   telHref: 'tel:+82317640810',
-  mobile: L('010-5235-8011', '+82-10-5235-8011', '+82-10-5235-8011', '+82-10-5235-8011', '+82-10-5235-8011'),
-  mobileHref: 'tel:+821052358011',
-  email: 'papermarket@naver.com',
+  mobile: L('010-0000-0000', '+82-10-0000-0000', '+82-10-0000-0000', '+82-10-0000-0000', '+82-10-0000-0000'),
+  mobileHref: 'tel:+821000000000',
+  email: 'example@example.com',
   blog: 'https://blog.naver.com/papermarket',
   blogName: L('데이 드리머, (주)코리아 트레이', 'Korea Tray blog (in Korean)', 'コリアトレイ公式ブログ（韓国語）', 'Blog Korea Tray (tiếng Hàn)', 'บล็อก Korea Tray (ภาษาเกาหลี)')
 };
@@ -545,7 +545,7 @@ export const ABOUT = {
       'เราเริ่มจากถาดใส่ไก่ให้ BBQ และ BHC และผลิตถาดกระดาษให้แบรนด์อาหารมากมาย ถาดต้องรักษารูปทรงของอาหารไว้จนถึงวินาทีที่ส่งถึงมือลูกค้า เราจึงคิดเรื่องโครงสร้างก่อนดีไซน์ และทำให้ถาดใบแรกกับใบสุดท้ายเหมือนกัน',
       'เราเชื่อว่าแม้ภาชนะใส่อาหารชิ้นเดียวก็ควรเป็นมิตรต่อสิ่งแวดล้อมและใช้งานสะดวก และหวังว่าจะได้ร่วมงานกับลูกค้าทั้งในเกาหลีและต่างประเทศ']
   ),
-  signature: L('(주)코리아트레이 대표이사 이대우', 'Lee Dae-woo, CEO, Korea Tray Co., Ltd.', '株式会社コリアトレイ 代表取締役 イ・デウ', 'Lee Dae-woo, Giám đốc, Korea Tray Co., Ltd.', 'Lee Dae-woo ประธานบริษัท Korea Tray Co., Ltd.'),
+  signature: L('(주)코리아트레이 대표이사 ○○○', '○○○, CEO, Korea Tray Co., Ltd.', '株式会社コリアトレイ 代表取締役 ○○○', '○○○, Giám đốc, Korea Tray Co., Ltd.', '○○○ ประธานบริษัท Korea Tray Co., Ltd.'),
   overviewTitle: L('회사 개요', 'Company overview', '会社概要', 'Tổng quan công ty', 'ข้อมูลบริษัท'),
   historyTitle: L('연혁', 'History', '沿革', 'Lịch sử', 'ประวัติบริษัท'),
   historyNote: L(
@@ -718,11 +718,11 @@ export const CONTACT = {
     privacy: L('개인정보 수집과 이용에 동의해 주세요.', 'Agree to the privacy terms to continue.', '個人情報の取り扱いに同意してください。', 'Vui lòng đồng ý với điều khoản thông tin cá nhân.', 'กรุณายินยอมเรื่องข้อมูลส่วนบุคคล')
   },
   sent: L(
-    '문의 내용을 확인했어요. 시안이라 실제로 전송되지는 않고, 실제 사이트에서는 papermarket@naver.com으로 전달됩니다.',
-    'Your inquiry looks good. This is a draft, so nothing was sent. On the live site it will go to papermarket@naver.com.',
-    '入力内容を確認しました。試作版のため送信はされません。公開サイトでは papermarket@naver.com に届きます。',
-    'Đã kiểm tra nội dung. Đây là bản thử nên chưa gửi đi; trên trang chính thức, yêu cầu sẽ được gửi đến papermarket@naver.com.',
-    'ตรวจสอบข้อมูลแล้ว นี่เป็นแบบร่างจึงยังไม่ได้ส่งจริง ในเว็บไซต์จริงข้อความจะถูกส่งไปที่ papermarket@naver.com'
+    '문의 내용을 확인했어요. 시안이라 실제로 전송되지는 않고, 실제 사이트에서는 example@example.com으로 전달됩니다.',
+    'Your inquiry looks good. This is a draft, so nothing was sent. On the live site it will go to example@example.com.',
+    '入力内容を確認しました。試作版のため送信はされません。公開サイトでは example@example.com に届きます。',
+    'Đã kiểm tra nội dung. Đây là bản thử nên chưa gửi đi; trên trang chính thức, yêu cầu sẽ được gửi đến example@example.com.',
+    'ตรวจสอบข้อมูลแล้ว นี่เป็นแบบร่างจึงยังไม่ได้ส่งจริง ในเว็บไซต์จริงข้อความจะถูกส่งไปที่ example@example.com'
   ),
   prefilled: L(
     '선택하신 제품을 미리 골라 뒀어요.',
