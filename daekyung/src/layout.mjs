@@ -103,9 +103,10 @@ function quickbar(c) {
   return `<div class="quickbar" data-quickbar>${call}<a class="qb-form" href="${c.url('contact/')}">${icon('doc')}<span>견적문의</span></a></div>`;
 }
 
-/* 떠 있는 버튼: 견적문의(어느 화면에서나 보임)와 맨 위로. 모바일은 하단 바가 견적문의를 맡음 */
+/* 떠 있는 버튼: 블로그, 견적문의(어느 화면에서나 보임), 맨 위로. 모바일은 하단 바가 견적문의를 맡음 */
 function floaters(c) {
   return `<div class="floaters" data-floaters>
+  <a class="fl-blog" href="${CO.blog}" target="_blank" rel="noopener" aria-label="${CO.blogName} (새 창)"><span class="fl-dot" aria-hidden="true"></span><span>블로그</span></a>
   ${c.slug === 'contact/' ? '' : `<a class="fl-quote" href="${c.url('contact/')}"><span>견적</span><span>문의</span></a>`}
   <a class="fl-top" href="#main" data-top aria-label="맨 위로">${icon('up')}</a>
 </div>`;
