@@ -1,5 +1,10 @@
-/* 공통 레이아웃: <head>, 헤더, 모바일 메뉴, 푸터, 고정 전화·문의 바, 사진 자리 */
-import { BASE_URL, PH, CO, NAV, HOME } from './content.mjs';
+import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+/* CSS · JS 주소 뒤에 내용 해시를 붙여, 고친 뒤 휴대폰에 예전 파일이 남아 화면이 깨지는 일을 막습니다 */
+const hashOf = f => createHash('md5').update(readFileSync(new URL('../assets/' + f, import.meta.url))).digest('hex').slice(0, 8);
+const VER = { css: hashOf('css/site.css'), js: hashOf('js/site.js') };
+/* 공통 레이아웃: <head>, 헤더(사업분야 펼침 메뉴), 모바일 메뉴, 푸터, 떠 있는 견적문의 버튼, 모바일 하단 바, 사진 자리 */
+import { BASE_URL, PH, CO, NAV, HOME, SERVICES } from './content.mjs';
 import { icon } from './art.mjs';
 
 export const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -34,14 +39,16 @@ export const phoneBtn = (cls = '') => CO.phone
   ? `<a class="btn btn-line btn-phone ${cls}" href="${telHref(CO.phone)}">${icon('phone')}${esc(CO.phone)}</a>`
   : `<span class="btn btn-line btn-phone is-ph ${cls}">${icon('phone')}<span>전화번호<small>${PH}</small></span></span>`;
 
-export function secHead({ title, sub, cls = '' }) {
+export function secHead({ title, sub, cls = '', label = '' }) {
   return `<div class="sec-head ${cls}" data-reveal>
+    ${label ? `<p class="sec-label">${label}</p>` : ''}
     <h2 class="sec-title">${br(title)}</h2>
     ${sub ? `<p class="sec-sub">${sub}</p>` : ''}
   </div>`;
 }
 
-const logo = (c, cls = '') => `<a class="logo ${cls}" href="${c.url('')}" aria-label="${CO.name} 홈">${CO.name}</a>`;
+/* 로고: 업체 로고 이미지를 받기 전이라 상호를 글자로 씀 */
+const logo = (c, cls = '') => `<a class="logo ${cls}" href="${c.url('')}" aria-label="${CO.name} 홈"><span class="logo-mark" aria-hidden="true"></span>${CO.name}</a>`;
 
 function header(c) {
   const item = ([s, label]) => `<li><a href="${c.url(s)}"${c.slug === s ? ' aria-current="page"' : ''}>${label}</a></li>`;
@@ -49,7 +56,9 @@ function header(c) {
 <header class="site-header" data-header>
   <div class="wrap header-in">
     ${logo(c)}
-    <nav class="gnav" aria-label="주 메뉴"><ul>${NAV.filter(n => n[0] !== 'contact/').map(item).join('')}</ul></nav>
+    <nav class="gnav" aria-label="주 메뉴"><ul>${NAV.filter(n => n[0] !== 'contact/').map(n => n[0] === 'business/'
+      ? `<li class="has-sub"><a href="${c.url(n[0])}"${c.slug === n[0] ? ' aria-current="page"' : ''}>${n[1]}</a><ul class="sub">${SERVICES.map(sv => `<li><a href="${c.url('business/')}#${sv.id}">${sv.name}</a></li>`).join('')}</ul></li>`
+      : item(n)).join('')}</ul></nav>
     <div class="header-tools">
       ${CO.phone ? `<a class="header-phone" href="${telHref(CO.phone)}">${icon('phone')}<span>${esc(CO.phone)}</span></a>` : ''}
       <a class="btn btn-primary btn-sm header-cta" href="${c.url('contact/')}"${c.slug === 'contact/' ? ' aria-current="page"' : ''}>견적문의</a>
@@ -59,8 +68,8 @@ function header(c) {
 </header>
 <div class="mnav" id="mnav" data-mnav hidden>
   <div class="wrap mnav-in">
-    <nav aria-label="모바일 메뉴"><ul class="mnav-links">${item(['', '홈'])}${NAV.map(item).join('')}</ul></nav>
-    <div class="mnav-contact">${phoneBtn('btn-block')}${btn(CO.blog, CO.blogName, { variant: 'line', cls: 'btn-block', ext: true })}</div>
+    <nav aria-label="모바일 메뉴"><ul class="mnav-links">${item(['', '홈'])}${NAV.map(n => n[0] === 'business/' ? item(n).replace('</li>', `<ul class="mnav-sub">${SERVICES.map(sv => `<li><a href="${c.url('business/')}#${sv.id}">${sv.name}</a></li>`).join('')}</ul></li>`) : item(n)).join('')}</ul></nav>
+    <div class="mnav-contact">${btn(c.url('contact/'), '견적문의', { cls: 'btn-block' })}${phoneBtn('btn-block')}</div>
   </div>
 </div>`;
 }
@@ -69,7 +78,7 @@ function footer(c) {
   return `<footer class="site-footer">
   <div class="wrap">
     <div class="f-top">
-      <div class="f-brand">${logo(c, 'logo-footer')}<p>${CO.field}</p></div>
+      <div class="f-brand">${logo(c, 'logo-footer')}<p>${CO.field} · ${CO.area}</p></div>
       <nav class="f-nav" aria-label="바닥 메뉴"><ul><li><a href="${c.url('')}">홈</a></li>${NAV.map(([s, l]) => `<li><a href="${c.url(s)}">${l}</a></li>`).join('')}<li><a href="${CO.blog}" target="_blank" rel="noopener">${CO.blogName}</a></li></ul></nav>
     </div>
     <dl class="f-info">
@@ -94,11 +103,11 @@ function quickbar(c) {
   return `<div class="quickbar" data-quickbar>${call}<a class="qb-form" href="${c.url('contact/')}">${icon('doc')}<span>견적문의</span></a></div>`;
 }
 
-/* 떠 있는 버튼: 넓은 화면의 '상담'(전화)과 맨 위로 */
-function floaters() {
+/* 떠 있는 버튼: 견적문의(어느 화면에서나 보임)와 맨 위로. 모바일은 하단 바가 견적문의를 맡음 */
+function floaters(c) {
   return `<div class="floaters" data-floaters>
-  ${CO.phone ? `<a class="fl-call" href="${telHref(CO.phone)}" aria-label="전화 상담 ${esc(CO.phone)}">${icon('phone')}<span>상담</span></a>` : ''}
-  <a class="fl-top" href="#main" data-top aria-label="맨 위로">${icon('up')}<span>TOP</span></a>
+  ${c.slug === 'contact/' ? '' : `<a class="fl-quote" href="${c.url('contact/')}"><span>견적</span><span>문의</span></a>`}
+  <a class="fl-top" href="#main" data-top aria-label="맨 위로">${icon('up')}</a>
 </div>`;
 }
 
@@ -127,9 +136,9 @@ export function page(c, { title, desc, body, bodyClass = '' }) {
 <link rel="icon" href="${c.asset('favicon.png')}" type="image/png">
 <link rel="apple-touch-icon" href="${c.asset('apple-touch-icon.png')}">
 <link rel="stylesheet" href="${c.asset('fonts/pretendard/pretendardvariable-dynamic-subset.css')}">
-<link rel="stylesheet" href="${c.asset('css/site.css')}">
+<link rel="stylesheet" href="${c.asset('css/site.css')}?v=${VER.css}">
 <script>document.documentElement.classList.replace('no-js','js');setTimeout(function(){if(!window.__dk)document.documentElement.classList.add('no-motion-fallback')},2500)</script>
-<script src="${c.asset('js/site.js')}" defer></script>
+<script src="${c.asset('js/site.js')}?v=${VER.js}" defer></script>
 </head>
 <body class="${bodyClass}">
 ${header(c)}
@@ -138,7 +147,7 @@ ${body}
 </main>
 ${footer(c)}
 ${quickbar(c)}
-${floaters()}
+${floaters(c)}
 <div class="toast" role="status" aria-live="polite" data-toast></div>
 </body>
 </html>
@@ -148,7 +157,7 @@ ${floaters()}
 /* 하위 페이지 머리 */
 export function pageHead(c, { title, lede, crumb }) {
   return `<section class="page-head">
-  <div class="wrap">
+  <div class="wrap page-head-in">
     <nav class="crumbs" aria-label="현재 위치"><a href="${c.url('')}">홈</a>${icon('chevron')}<span aria-current="page">${crumb}</span></nav>
     <h1 class="page-title" data-reveal>${br(title)}</h1>
     ${lede ? `<p class="page-lede" data-reveal>${lede}</p>` : ''}
@@ -163,7 +172,7 @@ export function ctaBand(c) {
       <h2 class="cta-title">${HOME.ctaTitle}</h2>
       <p class="cta-text">${HOME.ctaText}</p>
     </div>
-    <div class="cta-btns">${btn(c.url('contact/'), '견적문의 남기기')}${phoneBtn()}</div>
+    <div class="cta-btns">${btn(c.url('contact/'), '견적문의 · 방문 예약', { variant: 'white' })}${CO.phone ? `<a class="btn btn-ghost" href="${telHref(CO.phone)}">${icon('phone')}${esc(CO.phone)}</a>` : ''}</div>
   </div>
 </section>`;
 }
