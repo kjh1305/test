@@ -47,8 +47,17 @@ export function secHead({ title, sub, cls = '', label = '' }) {
   </div>`;
 }
 
-/* 로고: 업체 로고 이미지를 받기 전이라 상호를 글자로 씀 */
-const logo = (c, cls = '') => `<a class="logo ${cls}" href="${c.url('')}" aria-label="${CO.name} 홈"><span class="logo-mark" aria-hidden="true"></span>${CO.name}</a>`;
+/* 로고: 명함의 'Dae Kyeong DIVERSE' 로고를 같은 모양으로 다시 그린 것 (업체 원본 파일을 받으면 바꿈).
+   글자 색은 currentColor라 어두운 푸터에서는 밝게 나옵니다. 옆에 한글 상호를 함께 씀 */
+const LOGO_SVG = `<svg class="logo-svg" viewBox="85 20 850 400" aria-hidden="true" focusable="false">
+<path d="M92 166H452V410H92Z" class="logo-sheet"/>
+<path d="M132 122L442 26L524 334L462 412L222 412Z" fill="#165C96"/>
+<path d="M524 334L462 412L452 332Z" fill="#0E3F6B"/>
+<text x="250" y="238" font-size="96" font-weight="500" fill="#161616" letter-spacing="-1">Dae</text>
+<text x="540" y="250" font-size="104" font-weight="500" fill="currentColor" letter-spacing="-1">Kyeong</text>
+<text x="543" y="336" font-size="60" font-weight="500" fill="currentColor">DIVERSE</text>
+</svg>`;
+const logo = (c, cls = '') => `<a class="logo ${cls}" href="${c.url('')}" aria-label="${CO.name} (Dae Kyeong DIVERSE) 홈">${LOGO_SVG}<span class="logo-ko">${CO.name}</span></a>`;
 
 function header(c) {
   const item = ([s, label]) => `<li><a href="${c.url(s)}"${c.slug === s ? ' aria-current="page"' : ''}>${label}</a></li>`;
