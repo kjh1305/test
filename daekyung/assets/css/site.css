@@ -511,3 +511,8 @@ p.ca-phone { font-size: 16px; font-weight: 600; letter-spacing: 0; }
   .svc-list a { grid-template-columns: 30px minmax(0, 1fr) 72px; }
 }
 .hero-media img { filter: saturate(.85); }
+/* 사업분야 사진 묶음 (누르면 크게 보기) */
+.biz-gal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: -8px 0 32px; }
+.biz-gal a { display: block; overflow: hidden; aspect-ratio: 4 / 3; border-radius: var(--r); background: var(--stone); cursor: zoom-in; }
+.biz-gal img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+.biz-gal a:hover img { transform: scale(1.05); }

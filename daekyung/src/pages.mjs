@@ -179,6 +179,7 @@ export function business(c) {
         <h3 class="biz-sub">주로 하는 일</h3>
         <ul class="biz-points">${s.points.map(p => `<li>${icon('check')}<span>${p}</span></li>`).join('')}</ul>
         ${related(s)}
+        ${s.gallery ? `<ul class="biz-gal">${s.gallery.map(x => `<li><a href="${c.asset('img/' + x.img)}" data-lb data-cap="${esc(x.alt)}"><img src="${c.asset('img/' + x.img)}" width="${x.w}" height="${x.h}" alt="${esc(x.alt)}" loading="lazy" decoding="async"></a></li>`).join('')}</ul>` : ''}
         ${btn(c.url('contact/') + '?service=' + s.id, '이 공사로 견적문의')}
       </div>
     </div>
@@ -193,7 +194,7 @@ export function business(c) {
 </section>`;
   return page(c, {
     title: '사업분야', desc: META.business, bodyClass: 'p-business',
-    body: pageHead(c, { title: '사업분야', lede: '칸막이·천정공사, 원상복구, 인테리어, 공장보수공사, 수장공사. 각 분야의 기술진이 직접 시공합니다.', crumb: '사업분야' }) + chips + secs + process + ctaBand(c)
+    body: pageHead(c, { title: '사업분야', lede: '칸막이·천정공사, 원상복구, 인테리어, 공장보수공사, 수장공사. 각 분야의 기술진이 직접 시공합니다.', crumb: '사업분야' }) + chips + secs + process + lightbox() + ctaBand(c)
   });
 }
 
@@ -221,17 +222,17 @@ export function projects(c) {
   const more = `<section class="sec sec-top-line"><div class="wrap more-in" data-reveal>
     <p>더 많은 현장은 블로그에 올리고 있습니다.</p>${btn(CO.blog, '블로그에서 더 보기', { variant: 'line', ext: true })}
   </div></section>`;
-  const lb = `<dialog class="lb" data-lb-dialog aria-label="사진 크게 보기">
+  return page(c, {
+    title: '시공사례', desc: META.projects, bodyClass: 'p-projects',
+    body: pageHead(c, { title: '시공사례', lede: '블로그에 올린 현장을 공사 과정 사진과 함께 소개합니다. 사진을 누르면 크게 볼 수 있습니다.', crumb: '시공사례' }) + chips + PROJECTS.map(block).join('') + more + lightbox() + ctaBand(c)
+  });
+}
+const lightbox = () => `<dialog class="lb" data-lb-dialog aria-label="사진 크게 보기">
   <figure><img alt="" data-lb-img><figcaption data-lb-cap></figcaption></figure>
   <button type="button" class="lb-btn lb-prev" data-lb-prev aria-label="이전 사진">${icon('chevron')}</button>
   <button type="button" class="lb-btn lb-next" data-lb-next aria-label="다음 사진">${icon('chevron')}</button>
   <button type="button" class="lb-close" data-lb-close aria-label="닫기" autofocus>${icon('close')}</button>
 </dialog>`;
-  return page(c, {
-    title: '시공사례', desc: META.projects, bodyClass: 'p-projects',
-    body: pageHead(c, { title: '시공사례', lede: '블로그에 올린 현장을 공사 과정 사진과 함께 소개합니다. 사진을 누르면 크게 볼 수 있습니다.', crumb: '시공사례' }) + chips + PROJECTS.map(block).join('') + more + lb + ctaBand(c)
-  });
-}
 
 /* ================= 견적문의 ================= */
 export function contact(c) {
