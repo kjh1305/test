@@ -41,7 +41,7 @@ export const NAV = [
 /* 홈 알림 팝업: 블로그 홍보 배너. on: false 로 두면 나오지 않습니다. 그림을 바꾸면 id도 바꿔야 '오늘 하루 열지 않기'를 누른 사람에게도 다시 뜹니다. */
 export const POPUPS = [
   {
-    id: 'banner-2026-11', on: true,
+    id: 'banner-2026-11', on: false,
     img: 'popup-banner.webp', w: 966, h: 539,
     alt: '대경기업. 각종 칸막이공사, 천정공사, 원상복구공사, 철거공사, 인테리어 전문업체. 상담 010-0000-0000',
     label: '대경기업 안내',
