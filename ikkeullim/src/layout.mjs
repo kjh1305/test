@@ -33,7 +33,8 @@ const I = {
   pin: '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
   close: '<path d="M6 6l12 12M18 6 6 18"/>',
   chevron: '<path d="m9 6 6 6-6 6"/>',
-  up: '<path d="m6 15 6-6 6 6"/>'
+  up: '<path d="m6 15 6-6 6 6"/>',
+  chat: '<path d="M12 4C7 4 3 7.1 3 11c0 2.5 1.6 4.6 4 5.9L6.2 20l3.7-2.3c.7.1 1.4.2 2.1.2 5 0 9-3.1 9-7s-4-7-9-7z"/>'
 };
 export const icon = (n, cls = '') => `<svg class="ic ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${I[n]}</svg>`;
 
@@ -46,6 +47,11 @@ export const mark = (cls = '') => {
 
 export const btn = (href, label, { variant = 'primary', cls = '', ext = false, ic = 'arrow' } = {}) =>
   `<a class="btn btn-${variant} ${cls}" href="${href}"${ext ? ' target="_blank" rel="noopener"' : ''}><span>${label}</span>${ic ? icon(ic) : ''}</a>`;
+
+/* 상담 버튼: 카카오톡 주소가 있으면 새 창으로 채팅, 없으면 상담 안내 페이지 */
+export const kakaoHref = c => CO.kakao || c.url('contact/');
+export const kakaoBtn = (c, label = '카카오톡 상담', { variant = 'primary', cls = '' } = {}) =>
+  `<a class="btn btn-${variant} ${cls}" href="${kakaoHref(c)}"${CO.kakao ? ' target="_blank" rel="noopener"' : ''}>${icon('chat', 'ic-chat')}<span>${label}</span></a>`;
 
 export function secHead({ no, title, sub, cls = '', id = '' }) {
   return `<div class="sec-head ${cls}" data-reveal>
@@ -65,7 +71,7 @@ function header(c) {
     ${logo(c)}
     <nav class="gnav" aria-label="주 메뉴"><ul>${NAV.filter(n => n[0] !== 'contact/').map(item).join('')}</ul></nav>
     <div class="header-tools">
-      ${btn(c.url('contact/'), '무료 상담', { cls: 'btn-sm header-cta', ic: null })}
+      ${kakaoBtn(c, '카카오톡 상담', { cls: 'btn-sm header-cta' })}
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav" data-menu-btn><span></span><b class="sr">메뉴 열기</b></button>
     </div>
   </div>
@@ -73,7 +79,7 @@ function header(c) {
 <div class="mnav" id="mnav" data-mnav hidden>
   <div class="wrap mnav-in">
     <ul class="mnav-links">${[['', '홈'], ...NAV].map(item).join('')}</ul>
-    <div class="mnav-foot">${btn(c.url('contact/'), '무료 상담 신청', { cls: 'btn-block' })}</div>
+    <div class="mnav-foot">${kakaoBtn(c, '카카오톡으로 상담하기', { cls: 'btn-block' })}</div>
   </div>
 </div>`;
 }
@@ -92,11 +98,11 @@ function footer(c) {
 </footer>`;
 }
 
+/* 모바일 하단 바와 PC 오른쪽 아래 떠 있는 버튼: 둘 다 카카오톡 상담 */
 function quickbar(c) {
-  return `<div class="quickbar">
-  ${CO.phone ? `<a class="qb-phone" href="${telHref(CO.phone)}">${icon('phone')}전화 상담</a>` : `<span class="qb-phone is-ph">${icon('phone')}<span>전화번호<small>${PH}</small></span></span>`}
-  <a class="qb-form" href="${c.url('contact/')}">무료 상담 신청${icon('arrow')}</a>
-</div>`;
+  const ext = CO.kakao ? ' target="_blank" rel="noopener"' : '';
+  return `<a class="quickbar" href="${kakaoHref(c)}"${ext}>${icon('chat')}카카오톡으로 상담하기</a>
+<a class="fl-kakao" href="${kakaoHref(c)}"${ext} aria-label="카카오톡 상담">${icon('chat')}<span>상담</span></a>`;
 }
 
 export function page(c, { title, desc, body, bodyClass = '' }) {
@@ -155,8 +161,8 @@ export function ctaBand(c) {
   <div class="wrap cta-in" data-reveal>
     ${mark('cta-mark')}
     <h2 class="cta-title" id="cta-title">${br(['끌리는 브랜드는', '검색에서 시작됩니다'])}</h2>
-    <p class="cta-text">지금 블로그와 홈페이지 상태를 무료로 진단하고, 업종에 맞는 시작점을 안내해 드립니다.</p>
-    <div class="cta-btns">${btn(c.url('contact/'), '무료 상담 신청')}${btn(c.url('pricing/'), '상품 보기', { variant: 'ghost' })}</div>
+    <p class="cta-text">카카오톡으로 블로그나 홈페이지 주소를 보내 주세요. 지금 상태를 무료로 진단하고, 업종에 맞는 시작점을 안내해 드립니다.</p>
+    <div class="cta-btns">${kakaoBtn(c, '카카오톡으로 무료 상담')}${btn(c.url('pricing/'), '상품 보기', { variant: 'ghost' })}</div>
   </div>
 </section>`;
 }

@@ -1,6 +1,6 @@
 /* 페이지: 홈, 회사소개, 서비스, 포트폴리오, 상품 안내, 고객후기, FAQ, 상담신청, 404 */
 import { CO, PH, SERVICES, WHY, PROCESS, RESULTS, REVIEWS, REVIEW_SLOTS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
-import { esc, br, ph, val, telHref, pad, icon, mark, btn, secHead, page, pageHead, ctaBand } from './layout.mjs';
+import { esc, br, ph, val, telHref, pad, icon, mark, btn, kakaoBtn, kakaoHref, secHead, page, pageHead, ctaBand } from './layout.mjs';
 
 const svc = id => SERVICES.find(s => s.id === id);
 
@@ -76,8 +76,8 @@ export function home(c) {
       <p class="hero-kicker"><span class="serif">${CO.en}</span><span class="dot" aria-hidden="true"></span>블로그 · 홈페이지 마케팅</p>
       <h1 class="hero-title" id="hero-title"><span class="ln">마음을 끌고,</span><span class="ln"><em class="grad">성과</em>를 만듭니다</span></h1>
       <p class="hero-lede">검색에서 우리 가게를 찾은 고객이 블로그를 읽고, 홈페이지에서 문의를 남기기까지. 이끌림은 그 흐름을 설계하고 매달 숫자로 보여드립니다.</p>
-      <div class="hero-btns">${btn(c.url('contact/'), '무료 상담 신청', { cls: 'btn-lg' })}${btn(c.url('pricing/'), '상품 보기', { variant: 'ghost', cls: 'btn-lg' })}</div>
-      <ul class="hero-notes"><li>${icon('check')}무료 블로그 진단</li><li>${icon('check')}1:1 전담 담당자</li><li>${icon('check')}월간 성과 리포트</li></ul>
+      <div class="hero-btns">${kakaoBtn(c, '카카오톡으로 무료 상담', { cls: 'btn-lg' })}${btn(c.url('pricing/'), '상품 보기', { variant: 'ghost', cls: 'btn-lg' })}</div>
+      <ul class="hero-notes"><li>${icon('check')}카카오톡으로 편하게 상담</li><li>${icon('check')}무료 블로그 진단</li><li>${icon('check')}1:1 전담 담당자</li><li>${icon('check')}월간 성과 리포트</li></ul>
     </div>
     ${field()}
   </div>
@@ -173,7 +173,7 @@ export function services(c) {
       <p>${s.text}</p>
       <ul class="srv-points">${s.points.map(p => `<li>${icon('check')}${p}</li>`).join('')}</ul>
       <div class="srv-detail">${ph('세부 작업 내용 · 성과 (이미지 분석 후 채움)')}</div>
-      ${btn(c.url('contact/') + '?service=' + s.id, '이 서비스로 상담 신청', { variant: i === 0 ? 'primary' : 'ghost' })}
+      ${kakaoBtn(c, '이 서비스 카카오톡 상담', { variant: i === 0 ? 'primary' : 'ghost' })}
     </div>
   </div>
 </section>`).join('');
@@ -208,8 +208,8 @@ export function pricing(c) {
         <p class="flag-tag">${flagship.tag}</p>
         <h2 class="flag-title">${flagship.name}</h2>
         <p class="flag-text">${flagship.text}</p>
-        <div class="flag-price"><b>가격 상담 문의</b><span>무료 상담에서 견적을 안내합니다</span></div>
-        ${btn(c.url('contact/') + '?service=total', '이 상품으로 상담 신청')}
+        <div class="flag-price"><b>가격 상담 문의</b><span>카카오톡 상담에서 견적을 안내합니다</span></div>
+        ${kakaoBtn(c, '이 상품 카카오톡 상담')}
       </div>
       <ul class="flag-points">${flagship.points.map(p => `<li>${icon('check')}${p}</li>`).join('')}</ul>
     </article>
@@ -224,7 +224,7 @@ export function pricing(c) {
       <p class="price-short">${s.short}</p>
       <ul>${s.points.map(p => `<li>${icon('check')}${p}</li>`).join('')}</ul>
       <p class="price-val">가격 상담 문의</p>
-      ${btn(c.url('contact/') + '?service=' + s.id, '상담 신청', { variant: 'ghost', cls: 'btn-block' })}
+      ${kakaoBtn(c, '카카오톡 상담', { variant: 'ghost', cls: 'btn-block' })}
     </li>`).join('')}</ul>
   </div>
 </section>`).join('');
@@ -250,40 +250,40 @@ export function faq(c) {
   const body = `<section class="sec sec-first">
   <div class="wrap faq-in">
     ${cats.map(cat => `<div class="faq-grp" data-reveal><h2 class="faq-cat">${cat}</h2>${faqList(FAQ.filter(f => f.cat === cat))}</div>`).join('')}
-    <p class="faq-more">원하는 답이 없다면 무료 상담으로 물어보세요. <a class="text-link" href="${c.url('contact/')}">상담 신청${icon('arrow')}</a></p>
+    <p class="faq-more">원하는 답이 없다면 카카오톡으로 물어보세요. <a class="text-link" href="${kakaoHref(c)}">카카오톡 상담${icon('arrow')}</a></p>
   </div>
 </section>`;
   return page(c, { title: 'FAQ', desc: META.faq, bodyClass: 'p-faq', body: pageHead(c, { kicker: 'FAQ', title: '자주 묻는 질문', lede: '상담 전에 가장 많이 묻는 질문을 모았습니다. (답변은 예시, 업체 확인 필요)' }) + body + ctaBand(c) });
 }
 
-/* ================= 상담신청 ================= */
+/* ================= 상담 안내 (카카오톡) ================= */
 export function contact(c) {
-  const chk = (name, [v, l]) => `<label><input type="checkbox" name="${name}" value="${v}"><span>${l}</span></label>`;
-  const form = `<form class="qform" novalidate data-form>
-    <div class="fgrid">
-      <div class="field"><label for="f-company">상호 / 회사명<i class="req" aria-hidden="true">*</i></label><input id="f-company" name="company" type="text" autocomplete="organization" required></div>
-      <div class="field"><label for="f-ind">업종</label><select id="f-ind" name="industry"><option value="">선택</option>${CONTACT.industries.map(i => `<option>${i}</option>`).join('')}</select></div>
+  const main = `<section class="sec sec-first">
+  <div class="wrap kakao-in">
+    <div class="kakao-card" data-reveal>
+      <div class="kakao-glow" aria-hidden="true"></div>
+      <span class="kakao-ic">${icon('chat')}</span>
+      <h2 class="kakao-title">${br(['상담은', '카카오톡으로 받습니다'])}</h2>
+      <p class="kakao-text">전화나 폼 없이, 카카오톡 채팅으로 편하게 물어보세요. 담당자가 확인하고 답변드립니다.</p>
+      ${kakaoBtn(c, '카카오톡으로 상담 시작하기', { variant: 'kakao', cls: 'btn-lg' })}
+      ${CO.kakao ? '' : `<p class="kakao-ph">${ph('카카오톡 채널 주소 (받으면 연결)')}</p>`}
     </div>
-    <fieldset class="fset" data-svcset><legend>필요한 서비스 <small>여러 개 고를 수 있어요</small></legend><div class="chipset">${CONTACT.services.map(s => chk('service', s)).join('')}</div></fieldset>
-    <div class="fgrid">
-      <div class="field"><label for="f-name">담당자 성함<i class="req" aria-hidden="true">*</i></label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
-      <div class="field"><label for="f-phone">연락처<i class="req" aria-hidden="true">*</i></label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="010-0000-0000" required></div>
-      <div class="field"><label for="f-email">이메일</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
-      <div class="field"><label for="f-url">블로그 · 홈페이지 주소</label><input id="f-url" name="url" type="text" placeholder="진단에 쓰여요 (선택)"></div>
-      <div class="field span2"><label for="f-msg">문의 내용</label><textarea id="f-msg" name="message" rows="5" placeholder="지금 고민이나 원하는 결과를 편하게 적어 주세요"></textarea></div>
+    <div class="kakao-side">
+      <div class="ks-block" data-reveal>
+        <h2>이렇게 보내 주시면 더 빨리 답해 드려요</h2>
+        <ol class="ks-send">${CONTACT.send.map(([t, d], i) => `<li><span class="ks-no">${pad(i + 1)}</span><div><b>${t}</b><p>${d}</p></div></li>`).join('')}</ol>
+      </div>
+      <div class="ks-block" data-reveal>
+        <h2>상담은 이렇게 진행돼요</h2>
+        <ol class="ca-steps">${CONTACT.steps.map(t => `<li>${t}</li>`).join('')}</ol>
+      </div>
+      <dl class="ks-info" data-reveal><div><dt>운영시간</dt><dd>${val(CO.hours)}</dd></div><div><dt>이메일</dt><dd>${val(CO.email)}</dd></div></dl>
     </div>
-    <div class="field"><label class="check"><input type="checkbox" name="privacy" required><span class="box">${icon('check')}</span><span>개인정보 수집과 이용에 동의합니다<i class="req" aria-hidden="true">*</i></span></label>
-      <details class="privacy-more"><summary>자세히 보기</summary><p>${CONTACT.privacyText}</p></details></div>
-    <button class="btn btn-primary btn-lg" type="submit"><span>무료 상담 신청하기</span>${icon('arrow')}</button>
-  </form>`;
-  const aside = `<aside class="contact-aside">
-    <div class="ca-card"><h2>전화가 편하시면</h2>${CO.phone ? `<a class="ca-phone" href="${telHref(CO.phone)}">${esc(CO.phone)}</a>` : `<p class="ca-phone">${ph('대표 전화')}</p>`}
-      <dl class="ca-dl"><div><dt>운영시간</dt><dd>${val(CO.hours)}</dd></div><div><dt>이메일</dt><dd>${val(CO.email)}</dd></div><div><dt>주소</dt><dd>${val(CO.address)}</dd></div></dl></div>
-    <div class="ca-card"><h2>상담은 이렇게 진행돼요</h2><ol class="ca-steps"><li>남겨 주신 내용 확인</li><li>담당자가 전화로 연락</li><li>블로그·홈페이지 무료 진단</li><li>업종에 맞는 상품 제안</li></ol></div>
-  </aside>`;
-  return page(c, { title: '상담신청', desc: META.contact, bodyClass: 'p-contact', body: pageHead(c, { kicker: '상담신청', title: ['무료 상담 ·', '블로그 진단 신청'], lede: '간단히 남겨 주시면 담당자가 연락드립니다. 상담은 무료이고 계약을 강요하지 않습니다.' }) + `<section class="sec sec-first"><div class="wrap contact-in">${form}${aside}</div></section>` });
+  </div>
+</section>`;
+  return page(c, { title: '상담 안내', desc: META.contact, bodyClass: 'p-contact', body: pageHead(c, { kicker: '상담 안내', title: ['카카오톡으로', '편하게 물어보세요'], lede: '상담은 무료이고 계약을 강요하지 않습니다. 블로그·홈페이지 무료 진단도 카카오톡으로 신청하시면 됩니다.' }) + main });
 }
 
 export function notFound(c) {
-  return page(c, { title: '페이지를 찾을 수 없습니다', desc: META.home, bodyClass: 'p-404', body: `<section class="page-head nf"><div class="page-glow" aria-hidden="true"></div><div class="wrap"><p class="page-kicker serif">404</p><h1 class="page-title">페이지를 찾을 수 없습니다</h1><p class="page-lede">주소가 바뀌었거나 없는 페이지입니다.</p><div class="hero-btns">${btn(c.url(''), '홈으로')}${btn(c.url('contact/'), '상담 신청', { variant: 'ghost' })}</div></div></section>` });
+  return page(c, { title: '페이지를 찾을 수 없습니다', desc: META.home, bodyClass: 'p-404', body: `<section class="page-head nf"><div class="page-glow" aria-hidden="true"></div><div class="wrap"><p class="page-kicker serif">404</p><h1 class="page-title">페이지를 찾을 수 없습니다</h1><p class="page-lede">주소가 바뀌었거나 없는 페이지입니다.</p><div class="hero-btns">${btn(c.url(''), '홈으로')}${kakaoBtn(c, '카카오톡 상담', { variant: 'ghost' })}</div></div></section>` });
 }
