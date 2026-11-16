@@ -122,6 +122,52 @@ export const RESULTS = [
   { industry: '바닥 시공', keyword: '시공 사례 포스팅', result: '블로그 개선 전후 비교 · 공감 댓글 활성화', quote: null, img: 'r064.webp' }
 ];
 
+/* 후기 사례 (모자이크 없이): 검색어·순위·글 제목은 글자로 다시 쓰고, 실제 이미지는 글 썸네일과 카톡 말풍선만 잘라 씀.
+   업체명·사람 이름은 옮기지 않음. size: xl / md, focus: quote(사장님 말 크게) / stat(결과 크게)
+   chat: 글자 말풍선(who: me = 이끌림, them = 사장님), chatImgs: 실제 카톡 말풍선을 잘라낸 이미지 (비교용) */
+export const CASES = [
+  { id: 'demolish', size: 'xl', focus: 'quote', industry: '철거', keyword: '화성시 철거', rank: '인기글 노출', rankRow: 1,
+    title: '화성시 철거 전문, 팔탄·양감면 현장 시공 완료', thumb: null,
+    quote: '6개월 동안 통 전화 없다가 들어오는 이 느낌, 너무 좋아요', stat: null,
+    chat: [['me', '대표님 오늘 포스팅 완료돼서 올렸어요! 그전에 같은 내용 포스팅은 지울게요'], ['them', '문의 전화 조금씩 들어오는 거 같군요'], ['me', '벌써요? 너무 좋은데요 대표님 ㅎㅎ'], ['them', '식당 철거한 건 재회수거 2건'], ['them', '6개월 동안 통 전화 없다가 들어오는 이 느낌 너무 좋아요']],
+    chatImgs: [['c093-0.webp', 178, 28], ['c093-1.webp', 187, 70]] },
+  { id: 'film', size: 'md', focus: 'quote', industry: '인테리어 필름', keyword: '경기도 인테리어 필름시공', rank: '블로그 5번째', rankRow: 5,
+    title: '경기도 남양주 별내 리슈빌 아파트 인테리어필름 시공 전 & 후', thumb: null,
+    quote: '블로그 보고 바로 연락 와서 시공한 거예요', stat: null,
+    chat: [['them', '블로그 보고 바로 웹집에서 연락 와서 시공한 거예요'], ['me', '너무 좋네요!! 앞으로도 많이 들어오시면 좋겠어요'], ['them', '또 있으면 연결해 드릴게요 ㅋ']],
+    chatImgs: [['c089-0.webp', 244, 55]] },
+  { id: 'detector', size: 'md', focus: 'stat', industry: '식품 설비', keyword: '금속 검출기', rank: '블로그 4번째', rankRow: 4,
+    title: '식품 공정에서 필수 설비, 금속 검출기가 필요한 이유?', thumb: ['t092.webp', 395, 69],
+    quote: '효과가 있네요', stat: ['4번째', '검색하자마자 블로그 노출'],
+    chat: [['me', '대표님 금속 검출기만 검색했는데'], ['me', '상위노출 4번째에 바로 되는 중이에요!!'], ['them', '네 감사합니다. 효과가 있네요']],
+    chatImgs: [['c092-0.webp', 232, 68], ['c092-1.webp', 184, 32]] },
+  { id: 'mat', size: 'md', focus: 'quote', industry: null, keyword: null, rank: null,
+    title: null, thumb: null,
+    quote: '덕분에 문의가 조금 늘어서 바쁘게 보내고 있어요', stat: null,
+    chat: [['them', '안녕하세요. 이용 후 효과 조금씩 나오네요'], ['me', '오오~!! 아직 오래되지도 않았는데 너무 다행이네요!!'], ['them', '네네 엄청 핫한 건 아니라도 전화로 블로그 보고 연락드렸어요 하시거나 톡톡으로 문의하시더라구요'], ['them', '덕분에 문의가 조금 늘어서 바쁘게 보내고 있습니당 ㅎㅎ 항상 감사해요~']],
+    chatImgs: [['c065-1.webp', 312, 94], ['c065-0.webp', 256, 142]] },
+  { id: 'hood', size: 'md', focus: 'stat', industry: '주방 후드', keyword: '오래된 후드 위험한가요', rank: '블로그 1번째', rankRow: 1,
+    title: '동대문 주방후드 교체, 하츠 테라 DTR-90S 설치', thumb: ['t096.webp', 282, 53],
+    quote: '노출이 되는 거 같아요, 만족하고 있습니다', stat: ['1번째', '검색 결과 맨 위'],
+    chat: [['me', '대표님 어제 올라간 포스팅은 좀 어떠신가요~?'], ['them', '노출이 되는 거 같아요 만족하고 있습니다'], ['them', '제가 작업 중이어서 이제야 답해드려요']],
+    chatImgs: [['c096-0.webp', 254, 48], ['c096-1.webp', 238, 46], ['c096-2.webp', 222, 32]] },
+  { id: 'academy', size: 'md', focus: 'stat', industry: '학원', keyword: '수원 망포동 수학학원', rank: '블로그 3번째', rankRow: 3,
+    title: '수원 망포동 수학학원 | 수학 징크스를 바꾸는 수업 이야기', thumb: ['t077.webp', 514, 86],
+    quote: '플레이스도 1등 올라갔어요, 감사 감사~', stat: ['1등', '플레이스까지'],
+    chat: [['them', 'ㅎㅎ 힘찬 fighting으로 출발하자구요~~ Thank you!!'], ['them', '플레이스도 1등 올라갔어요 ㅎ 감사 감사~~'], ['me', '진짜요?'], ['them', '그러게요 ~~~짱']],
+    chatImgs: [['c077-0.webp', 150, 70], ['c077-1.webp', 124, 34]] },
+  { id: 'car', size: 'md', focus: 'quote', industry: '자동차 딜러', keyword: '26년식 미니쿠퍼', rank: '블로그 5번째', rankRow: 5,
+    title: '미니쿠퍼 26년식 3도어 클래식, 달라진 포인트 완벽 정리', thumb: ['t063.webp', 62, 64],
+    quote: '오 좋네요 ㅎㅎ 감사합니다!', stat: null,
+    chat: [['me', '저희 지금 26년식 미니쿠퍼로 검색하면'], ['me', '메인페이지에 노출되는 중이에요!!'], ['them', '오 좋네요ㅎㅎ 감사합니다!']],
+    chatImgs: [['c063-0.webp', 230, 68], ['c063-1.webp', 164, 32]] },
+  { id: 'lunch', size: 'md', focus: 'quote', industry: '도시락', keyword: '프리미엄 수제 도시락', rank: '블로그 1번째', rankRow: 1,
+    title: '프리미엄 수제 도시락으로 완성한 회의의 품격', thumb: ['t062.webp', 147, 60],
+    quote: '블로그 보는 재미를 느끼고 있어요', stat: null,
+    chat: [['me', '말씀 주신 부분 수정해서 발행했습니다!'], ['them', '추가가 되는 거 같아요~ 지금 관리하는 내용은 어떤 건지 몇 가지 남겨주시면 감사해요~'], ['them', '블로그 보는 재미를 느끼고 있어요~ 오늘 좋은 느낌이에요']],
+    chatImgs: [['c062-0.webp', 216, 74], ['c062-1.webp', 216, 62]] }
+];
+
 /* 숏폼 제작 사례 (2026-11-16 받은 영상, 업체명·전화번호 모자이크) */
 export const SHORTS = [
   { file: 'short-air.mp4', poster: 'short-air.jpg', title: '천장형 공기청정기 제품 소개', meta: '제품 홍보 숏폼 · 1분 37초' },

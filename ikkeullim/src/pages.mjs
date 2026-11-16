@@ -1,5 +1,5 @@
 /* 페이지: 홈, 회사소개, 서비스, 포트폴리오, 상품 안내, 고객후기, FAQ, 상담신청, 404 */
-import { CO, PH, SERVICES, WHY, PROCESS, RESULTS, SHORTS, REVIEWS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
+import { CO, PH, SERVICES, WHY, PROCESS, RESULTS, SHORTS, CASES, REVIEWS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
 import { esc, br, ph, val, telHref, pad, icon, mark, btn, kakaoBtn, kakaoHref, secHead, page, pageHead, ctaBand } from './layout.mjs';
 
 const svc = id => SERVICES.find(s => s.id === id);
@@ -61,6 +61,46 @@ const resultCard = (c, r, { quoteFirst = false } = {}) => `<li class="res-card${
   </div>
 </li>`;
 
+/* ---------- 후기 사례 카드 (슬라이드: 검색 → 상위노출 글 → 사장님 대화) ---------- */
+const caseSlides = (c, k) => {
+  const sl = [];
+  if (k.keyword) {
+    const rows = k.size === 'xl' ? 6 : Math.max(3, Math.min(5, k.rankRow || 3));
+    sl.push(['검색', `<div class="cs-search">
+      <div class="mock-bar"><span class="mock-n">N</span><span class="mock-kw">${esc(k.keyword)}</span>${icon('search')}</div>
+      <ol class="cs-rows">${Array.from({ length: rows }, (_, i) => `<li${i + 1 === (k.rankRow || 1) ? ' class="hit"' : ''}><span class="cs-no">${i + 1}</span><span class="cs-line"></span>${i + 1 === (k.rankRow || 1) ? `<b>${esc(k.rank)}</b>` : ''}</li>`).join('')}</ol>
+    </div>`]);
+  }
+  if (k.title) sl.push(['상위노출 글', `<div class="cs-post">
+      <p class="cs-post-tag">${icon('star')}이끌림이 쓴 글 · ${esc(k.rank)}</p>
+      <p class="cs-post-title">${esc(k.title)}</p>
+      <p class="cs-post-lines"><span></span><span></span></p>
+      ${k.thumb ? `<img class="cs-thumb" src="${c.asset('img/cases/' + k.thumb[0])}" width="${k.thumb[1]}" height="${k.thumb[2]}" alt="글에 실린 현장 사진" loading="lazy" decoding="async">` : ''}
+    </div>`]);
+  sl.push(['사장님 대화', `<div class="cs-chat">
+      <div class="cs-chat-text">${k.chat.map(([w, t]) => `<p class="bub bub-${w}">${esc(t)}</p>`).join('')}</div>
+      <div class="cs-chat-img" hidden>${k.chatImgs.map(([f, w, h]) => `<img src="${c.asset('img/cases/' + f)}" width="${w}" height="${h}" alt="실제 카카오톡 대화 일부" loading="lazy" decoding="async">`).join('')}</div>
+    </div>`]);
+  return sl;
+};
+const caseCard = (c, k) => {
+  const sl = caseSlides(c, k);
+  return `<li class="cs cs-${k.size} f-${k.focus}" data-reveal>
+  <div class="cs-head">
+    <p class="cs-ind">${k.industry ? esc(k.industry) : '업종 비공개'}${k.keyword ? `<span>‘${esc(k.keyword)}’</span>` : ''}</p>
+    ${k.focus === 'stat' && k.stat ? `<p class="cs-stat"><b>${esc(k.stat[0])}</b><span>${esc(k.stat[1])}</span></p><p class="cs-quote-sm">“${esc(k.quote)}”</p>` : `<p class="cs-quote">${esc(k.quote)}</p>`}
+  </div>
+  <div class="cs-slider" data-slider>
+    <div class="cs-track">${sl.map(([t, h], i) => `<div class="cs-slide${i === 0 ? ' is-on' : ''}" role="group" aria-roledescription="슬라이드" aria-label="${i + 1} / ${sl.length} ${t}"${i ? ' aria-hidden="true"' : ''}>${h}</div>`).join('')}</div>
+    ${sl.length > 1 ? `<div class="cs-nav"><div class="cs-tabs">${sl.map(([t], i) => `<button type="button" class="cs-tab${i === 0 ? ' is-on' : ''}" data-go="${i}"${i === 0 ? ' aria-current="true"' : ''}><span>${pad(i + 1)}</span>${t}</button>`).join('')}</div></div>` : ''}
+  </div>
+</li>`;
+};
+const caseGrid = (c, list, toggle = false) => `${toggle ? `<div class="cs-toggle" role="group" aria-label="사장님 대화 보기 방식 (시안 비교용)"><span>사장님 대화 보기 (시안 비교)</span><button type="button" data-chatmode="text" aria-pressed="true">글자 말풍선</button><button type="button" data-chatmode="img" aria-pressed="false">실제 캡처 조각</button></div>` : ''}
+<ul class="cs-grid">${list.map(k => caseCard(c, k)).join('')}</ul>`;
+const resultList = list => `<ul class="res-list">${list.map(r => `<li data-reveal><span class="rl-ind">${r.industry ? esc(r.industry) : '업종 비공개'}</span><span class="rl-kw">${r.keyword ? '‘' + esc(r.keyword) + '’' : ''}</span><span class="rl-out">${esc(r.result)}</span></li>`).join('')}</ul>`;
+const CASE_KW = () => ({ has: kw => CASES.some(k => k.keyword === kw) }), CASE_IND = new Set(CASES.map(k => k.industry));
+
 const reviewTile = (c, r) => `<li class="rv-tile"><a href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc(r.alt)}"><img src="${c.asset('img/reviews/' + r.img)}" width="${r.w}" height="${r.h}" alt="${esc(r.alt)}" loading="lazy" decoding="async"></a></li>`;
 const reviewTiles = (c, n, group) => {
   const list = REVIEWS.filter(r => !group || r.group === group);
@@ -116,8 +156,8 @@ export function home(c) {
 
   const results = `<section class="sec" aria-labelledby="res-title">
   <div class="wrap">
-    <div class="sec-row">${secHead({ no: 3, title: ['함께하면,', '이렇게 달라집니다'], sub: '업종별 실제 검색 화면과 사장님들이 보내 주신 대화입니다. 업체명은 가렸습니다.', id: 'res-title' })}${btn(c.url('portfolio/'), '포트폴리오 보기', { variant: 'ghost' })}</div>
-    <ul class="res-grid">${RESULTS.slice(0, 3).map(r => resultCard(c, r)).join('')}</ul>
+    <div class="sec-row">${secHead({ no: 3, title: ['함께하면,', '이렇게 달라집니다'], sub: '어떤 검색어로, 몇 번째에 올라갔고, 사장님이 뭐라고 하셨는지. 카드를 넘겨 보세요.', id: 'res-title' })}${btn(c.url('portfolio/'), '포트폴리오 보기', { variant: 'ghost' })}</div>
+    ${caseGrid(c, CASES.slice(0, 2))}
   </div>
 </section>`;
 
@@ -132,7 +172,7 @@ export function home(c) {
   <div class="wrap">
     <div class="sec-row">${secHead({ no: 5, title: ['먼저 맡겨 본', '사장님들의 이야기'], sub: '사장님들이 보내 주신 말을 그대로 옮겼습니다. 실제 화면도 함께 확인하실 수 있습니다.', id: 'rv-title' })}${btn(c.url('reviews/'), '고객후기 전체 보기', { variant: 'ghost' })}</div>
   </div>
-  <div class="wrap"><ul class="quote-grid">${RESULTS.filter(r => r.quote).slice(3, 6).map(r => resultCard(c, r, { quoteFirst: true })).join('')}</ul></div>
+  <div class="wrap">${caseGrid(c, CASES.slice(3, 6))}</div>
 </section>`;
 
   return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + marquee + why + services + results + process + reviews + lightbox() + ctaBand(c) });
@@ -195,10 +235,13 @@ export function services(c) {
 
 /* ================= 포트폴리오 ================= */
 export function portfolio(c) {
+  const others = RESULTS.filter(r => r.keyword && !CASE_KW().has(r.keyword) && !CASE_IND.has(r.industry));
   const results = `<section class="sec sec-first">
   <div class="wrap">
-    ${secHead({ title: '함께한 결과', sub: `${RESULTS.length}개 업종의 목표 키워드와 실제 검색 화면, 사장님 반응입니다. 이미지를 누르면 크게 볼 수 있습니다.` })}
-    <ul class="res-grid">${RESULTS.map(r => resultCard(c, r)).join('')}</ul>
+    ${secHead({ title: '함께한 결과', sub: '검색어, 노출 순위, 사장님 반응까지 사례별로 넘겨 보세요.' })}
+    ${caseGrid(c, CASES)}
+    <h3 class="res-list-title">그 밖의 상위노출 사례</h3>
+    ${resultList(others)}
   </div>
 </section>`;
   const shorts = `<section class="sec sec-alt">
@@ -253,27 +296,20 @@ export function pricing(c) {
 
 /* ================= 고객후기 ================= */
 export function reviews(c) {
-  const quotes = RESULTS.filter(r => r.quote);
-  const picks = REVIEW_PICKS.map(f => REVIEWS.find(r => r.img === f)).filter(Boolean);
-  const rest = REVIEWS.filter(r => !REVIEW_PICKS.includes(r.img));
-  const tile = r => `<li class="shot"><a href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc(r.alt)}"><img src="${c.asset('img/reviews/' + r.img)}" width="${r.w}" height="${r.h}" alt="${esc(r.alt)}" loading="lazy" decoding="async"></a></li>`;
+  const others = RESULTS.filter(r => r.keyword && !CASE_KW().has(r.keyword) && !CASE_IND.has(r.industry));
   const body = `<section class="sec sec-first">
   <div class="wrap">
-    ${secHead({ title: '사장님들이 보내 주신 말', sub: `${quotes.length}곳의 이야기를 그대로 옮겼습니다. '실제 화면 보기'로 원래 캡처를 확인할 수 있습니다.` })}
-    <ul class="quote-grid">${quotes.map(r => resultCard(c, r, { quoteFirst: true })).join('')}</ul>
+    ${secHead({ title: '사장님들이 보내 주신 말', sub: '검색 화면, 이끌림이 쓴 글, 사장님과 나눈 대화를 카드마다 넘겨 볼 수 있습니다.' })}
+    ${caseGrid(c, CASES, true)}
   </div>
 </section>
 <section class="sec sec-alt">
   <div class="wrap">
-    ${secHead({ title: '검색 첫 화면에 올라간 글', sub: '목표 키워드를 검색했을 때의 실제 화면입니다. 빨간 테두리가 이끌림이 작업한 글이고, 업체명과 다른 글은 가렸습니다.' })}
-    <ul class="shot-grid">${picks.map(tile).join('')}</ul>
-    <details class="more-shots">
-      <summary>원본 캡처 전체 보기 <span>${REVIEWS.length}장</span>${icon('plus')}</summary>
-      <ul class="shot-grid">${rest.map(tile).join('')}</ul>
-    </details>
+    ${secHead({ title: '그 밖의 상위노출 사례', sub: '업종과 목표 검색어, 결과만 정리했습니다.' })}
+    ${resultList(others)}
   </div>
 </section>`;
-  return page(c, { title: '고객후기', desc: META.reviews, bodyClass: 'p-reviews', body: pageHead(c, { kicker: '고객후기', title: ['먼저 맡겨 본', '사장님들의 이야기'], lede: '검색 상위노출 결과와 그 뒤에 들어온 문의, 사장님들의 반응을 모았습니다.' }) + body + lightbox() + ctaBand(c) });
+  return page(c, { title: '고객후기', desc: META.reviews, bodyClass: 'p-reviews', body: pageHead(c, { kicker: '고객후기', title: ['먼저 맡겨 본', '사장님들의 이야기'], lede: '검색 상위노출 결과와 그 뒤에 들어온 문의, 사장님들의 반응을 모았습니다.' }) + body + ctaBand(c) });
 }
 
 /* ================= FAQ ================= */
