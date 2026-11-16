@@ -6,6 +6,27 @@
   var $ = function (s, el) { return (el || document).querySelector(s); };
   var $$ = function (s, el) { return Array.prototype.slice.call((el || document).querySelectorAll(s)); };
 
+  /* 밝은 화면 / 어두운 화면 바꾸기 (선택은 이 브라우저에 기억) */
+  var root = document.documentElement, meta = document.querySelector('meta[name="theme-color"]');
+  var syncTheme = function () {
+    var light = root.getAttribute('data-theme') === 'light';
+    $$('[data-theme-btn]').forEach(function (b) {
+      b.setAttribute('aria-label', light ? '어두운 화면으로 보기' : '밝은 화면으로 보기');
+      var l = b.querySelector('[data-theme-label]'); if (l) l.textContent = light ? '어두운 화면으로 보기' : '밝은 화면으로 보기';
+    });
+    if (meta) meta.setAttribute('content', light ? '#F5F6F8' : '#060709');
+  };
+  $$('[data-theme-btn]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var light = root.getAttribute('data-theme') !== 'light';
+      if (!reduce) { root.classList.add('theme-anim'); setTimeout(function () { root.classList.remove('theme-anim'); }, 350); }
+      if (light) root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme');
+      try { localStorage.setItem('ik-theme', light ? 'light' : 'dark'); } catch (e) {}
+      syncTheme();
+    });
+  });
+  syncTheme();
+
   /* 헤더: 내리면 바탕이 생김 */
   var header = $('[data-header]');
   var onScroll = function () { if (header) header.classList.toggle('is-scrolled', window.scrollY > 8); };

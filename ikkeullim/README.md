@@ -34,6 +34,11 @@
 
 글꼴: Pretendard(본문·제목) + Instrument Serif(영문 'Attract Marketing'과 큰 번호, Google Fonts).
 
+## 밝은 화면 전환
+
+- 헤더 오른쪽 해/달 버튼(모바일은 메뉴 안 버튼)으로 어두운 화면 ↔ 밝은 화면. 기본은 어두운 화면이고, 고른 쪽을 브라우저에 기억함(`localStorage` 'ik-theme')
+- 색은 `assets/css/site.css` 맨 위 `:root`(어두운)와 `:root[data-theme="light"]`(밝은)에서만 바꿈. 로고 A의 은색도 밝은 화면에서는 진한 쇠색으로 바뀜(`--mk1~3`)
+
 ## 페이지
 
 | 주소 | 내용 |

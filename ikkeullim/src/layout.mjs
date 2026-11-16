@@ -33,6 +33,8 @@ const I = {
   pin: '<path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/>',
   close: '<path d="M6 6l12 12M18 6 6 18"/>',
   search: '<circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/>',
+  moon: '<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
   chevron: '<path d="m9 6 6 6-6 6"/>',
   up: '<path d="m6 15 6-6 6 6"/>',
   chat: '<path d="M12 4C7 4 3 7.1 3 11c0 2.5 1.6 4.6 4 5.9L6.2 20l3.7-2.3c.7.1 1.4.2 2.1.2 5 0 9-3.1 9-7s-4-7-9-7z"/>'
@@ -43,7 +45,7 @@ export const icon = (n, cls = '') => `<svg class="ic ${cls}" viewBox="0 0 24 24"
 let markN = 0;
 export const mark = (cls = '') => {
   const k = 'm' + (markN++);
-  return `<svg class="mark ${cls}" viewBox="0 0 132 112" aria-hidden="true" focusable="false"><defs><linearGradient id="${k}a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F4F6F8"/><stop offset=".55" stop-color="#B9C0C8"/><stop offset="1" stop-color="#7E8792"/></linearGradient><linearGradient id="${k}s" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#5E97D6"/><stop offset=".6" stop-color="#9CC8F2"/><stop offset="1" stop-color="#CFE6FF"/></linearGradient></defs><path d="M12 104 52 8h8l38 96H80L56 44 33 92Z" fill="url(#${k}a)"/><path d="M6 106c30-8 54-32 94-46l-3-8 24-5-14 21-3-5c-37 14-59 37-79 43Z" fill="url(#${k}s)"/><path d="m118 6 2.5 9 8.5 2.5-8.5 2.5-2.5 9-2.5-9-8.5-2.5 8.5-2.5Z" fill="#A9D2FA"/></svg>`;
+  return `<svg class="mark ${cls}" viewBox="0 0 132 112" aria-hidden="true" focusable="false"><defs><linearGradient id="${k}a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--mk1,#F4F6F8)"/><stop offset=".55" style="stop-color:var(--mk2,#B9C0C8)"/><stop offset="1" style="stop-color:var(--mk3,#7E8792)"/></linearGradient><linearGradient id="${k}s" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#5E97D6"/><stop offset=".6" stop-color="#9CC8F2"/><stop offset="1" stop-color="#CFE6FF"/></linearGradient></defs><path d="M12 104 52 8h8l38 96H80L56 44 33 92Z" fill="url(#${k}a)"/><path d="M6 106c30-8 54-32 94-46l-3-8 24-5-14 21-3-5c-37 14-59 37-79 43Z" fill="url(#${k}s)"/><path d="m118 6 2.5 9 8.5 2.5-8.5 2.5-2.5 9-2.5-9-8.5-2.5 8.5-2.5Z" fill="#A9D2FA"/></svg>`;
 };
 
 export const btn = (href, label, { variant = 'primary', cls = '', ext = false, ic = 'arrow' } = {}) =>
@@ -72,6 +74,7 @@ function header(c) {
     ${logo(c)}
     <nav class="gnav" aria-label="주 메뉴"><ul>${NAV.filter(n => n[0] !== 'contact/').map(item).join('')}</ul></nav>
     <div class="header-tools">
+      <button type="button" class="theme-btn" data-theme-btn aria-label="밝은 화면으로 보기">${icon('moon', 'ic-moon')}${icon('sun', 'ic-sun')}</button>
       ${kakaoBtn(c, '카카오톡 상담', { cls: 'btn-sm header-cta' })}
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mnav" data-menu-btn><span></span><b class="sr">메뉴 열기</b></button>
     </div>
@@ -80,7 +83,7 @@ function header(c) {
 <div class="mnav" id="mnav" data-mnav hidden>
   <div class="wrap mnav-in">
     <ul class="mnav-links">${[['', '홈'], ...NAV].map(item).join('')}</ul>
-    <div class="mnav-foot">${kakaoBtn(c, '카카오톡으로 상담하기', { cls: 'btn-block' })}</div>
+    <div class="mnav-foot">${kakaoBtn(c, '카카오톡으로 상담하기', { cls: 'btn-block' })}<button type="button" class="mnav-theme" data-theme-btn>${icon('sun')}<span data-theme-label>밝은 화면으로 보기</span></button></div>
   </div>
 </div>`;
 }
@@ -142,7 +145,7 @@ export function page(c, { title, desc, body, bodyClass = '' }) {
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
 <link rel="stylesheet" href="${c.asset('css/site.css')}?v=${VER.css}">
-<script>document.documentElement.classList.add('js')</script>
+<script>(function(d){d.classList.add('js');try{if(localStorage.getItem('ik-theme')==='light')d.setAttribute('data-theme','light')}catch(e){}})(document.documentElement)</script>
 <script src="${c.asset('js/site.js')}?v=${VER.js}" defer></script>
 </head>
 <body class="${bodyClass}">
