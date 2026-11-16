@@ -308,7 +308,7 @@ a.res-shot:hover img { transform: scale(1.03); }
 .flag-price span { font-size: 14.5px; color: var(--muted); }
 .flag-points { align-self: center; display: grid; border-top: 1px solid var(--line-2); }
 .flag-points li { padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 17px; color: var(--text); }
-.price-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
 .price { display: flex; flex-direction: column; padding: 30px; border: 1px solid var(--line); border-radius: var(--r); background: var(--card); }
 .price-tag { font-size: 13px; font-weight: 600; color: var(--sky); }
 .price h3 { margin-top: 10px; font-size: 22px; font-weight: 700; letter-spacing: -.03em; }

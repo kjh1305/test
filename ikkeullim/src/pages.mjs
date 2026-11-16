@@ -149,7 +149,7 @@ export function home(c) {
   const services = `<section class="sec sec-alt" aria-labelledby="svc-title">
   <div class="wrap">
     <div class="sec-row">${secHead({ no: 2, title: ['필요한 만큼,', '한 팀이 맡습니다'], sub: '블로그와 홈페이지를 따로 또 같이. 단품부터 관리대행까지 고를 수 있습니다.', id: 'svc-title' })}${btn(c.url('services/'), '서비스 전체 보기', { variant: 'ghost' })}</div>
-    <ul class="bento">${serviceCard(svc('total'), c, true)}${['blog', 'web', 'webcare', 'posting', 'extra'].map(id => serviceCard(svc(id), c)).join('')}</ul>
+    <ul class="bento">${serviceCard(svc('total'), c, true)}${['blog', 'web', 'posting', 'blogdesign', 'extra'].map(id => serviceCard(svc(id), c)).join('')}</ul>
   </div>
 </section>`;
 
