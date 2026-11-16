@@ -1,5 +1,5 @@
 /* 페이지: 홈, 회사소개, 서비스, 포트폴리오, 상품 안내, 고객후기, FAQ, 상담신청, 404 */
-import { CO, PH, SERVICES, WHY, PROCESS, RESULTS, SHORTS, STORIES, VOICES, REVIEWS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
+import { CO, PH, SERVICES, WHY, METHOD, NAVER, PROCESS, ROLE, RESULTS, SHORTS, STORIES, VOICES, REVIEWS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
 import { esc, br, ph, val, telHref, pad, icon, mark, btn, kakaoBtn, kakaoHref, secHead, page, pageHead, ctaBand } from './layout.mjs';
 
 const svc = id => SERVICES.find(s => s.id === id);
@@ -108,6 +108,12 @@ const reviewTiles = (c, n, group) => {
   return Array.from({ length: n }, (_, i) => `<li class="rv-tile is-ph" style="--h:${hs[i % hs.length]}px"><span>${icon('image')}후기 이미지 ${pad(i + 1)}</span></li>`).join('');
 };
 
+/* 번호 + 꼬리표가 붙은 3단 목록. cycle이면 칸 사이에 화살표, 아래에 '순환' 띠 */
+const whyList = (list, { cycle = false } = {}) => `<ol class="why${cycle ? ' is-cycle' : ''}">${list.map((w, i) => `<li data-reveal style="--d:${i}">${cycle && i ? `<span class="why-arrow" aria-hidden="true">${icon('arrow')}</span>` : ''}<div class="why-top"><span class="why-no serif">${pad(i + 1)}</span>${w.tag ? `<span class="why-tag">${w.tag}</span>` : ''}</div><h3>${w.title}</h3><p>${w.text}</p></li>`).join('')}</ol>`;
+const roleNote = () => `<p class="role-note" data-reveal><b>사장님이 하실 일</b><span>${ROLE}</span></p>`;
+const forLine = (s, cls) => s.for ? `<p class="${cls}"><span>이런 분께</span>${s.for}</p>` : '';
+const comboLine = s => s.combo ? `<p class="combo">${s.combo.map(x => `<span>${x}</span>`).join('<i aria-hidden="true">+</i>')}</p>` : '';
+
 const processList = () => `<ol class="steps">${PROCESS.map((p, i) => `<li data-reveal style="--d:${i}"><span class="step-no">${pad(i + 1)}</span><h3>${p.title}</h3><p>${p.text}</p></li>`).join('')}</ol>`;
 
 const faqList = items => `<div class="faq">${items.map(f => `<details><summary><span>${f.q}</span>${icon('plus')}</summary><p>${f.a}</p></details>`).join('')}</div>`;
@@ -129,7 +135,7 @@ export function home(c) {
       <h1 class="hero-title" id="hero-title"><span class="ln">마음을 끌고,</span><span class="ln"><em class="grad">성과</em>를 만듭니다</span></h1>
       <p class="hero-lede">검색에서 우리 가게를 찾은 고객이 블로그를 읽고, 홈페이지에서 문의를 남기기까지. 이끌림은 그 흐름을 설계하고 매달 숫자로 보여드립니다.</p>
       <div class="hero-btns">${kakaoBtn(c, '카카오톡으로 무료 상담', { cls: 'btn-lg' })}${btn(c.url('pricing/'), '상품 보기', { variant: 'ghost', cls: 'btn-lg' })}</div>
-      <ul class="hero-notes"><li>${icon('check')}카카오톡으로 편하게 상담</li><li>${icon('check')}무료 블로그 진단</li><li>${icon('check')}1:1 전담 담당자</li><li>${icon('check')}월간 성과 리포트</li></ul>
+      <ul class="hero-notes"><li>${icon('check')}카카오톡으로 편하게 상담</li><li>${icon('check')}무료 블로그 진단</li><li>${icon('check')}전문 작가 원고</li><li>${icon('check')}월간 성과 리포트</li></ul>
     </div>
     ${field()}
   </div>
@@ -141,15 +147,16 @@ export function home(c) {
 
   const why = `<section class="sec" aria-labelledby="why-title">
   <div class="wrap">
-    ${secHead({ no: 1, title: ['검색 첫 화면에서', '고객의 마음을 끕니다'], sub: '고객은 결정하기 전에 검색합니다. 그 첫 화면에 무엇이 보이느냐가 문의를 가릅니다.', id: 'why-title' })}
-    <ol class="why">${WHY.map((w, i) => `<li data-reveal style="--d:${i}"><span class="why-no serif">${pad(i + 1)}</span><h3>${w.title}</h3><p>${w.text}</p></li>`).join('')}</ol>
+    <div class="sec-row">${secHead({ no: 1, title: METHOD.title, sub: METHOD.sub, id: 'why-title' })}${btn(c.url('services/') + '#naver', '네이버가 글을 고르는 방식', { variant: 'ghost' })}</div>
+    ${whyList(METHOD.steps, { cycle: true })}
+    <p class="why-loop" data-reveal>${icon('loop')}${METHOD.loop}</p>
   </div>
 </section>`;
 
   const services = `<section class="sec sec-alt" aria-labelledby="svc-title">
   <div class="wrap">
-    <div class="sec-row">${secHead({ no: 2, title: ['필요한 만큼,', '한 팀이 맡습니다'], sub: '블로그와 홈페이지를 따로 또 같이. 단품부터 관리대행까지 고를 수 있습니다.', id: 'svc-title' })}${btn(c.url('services/'), '서비스 전체 보기', { variant: 'ghost' })}</div>
-    <ul class="bento">${serviceCard(svc('total'), c, true)}${['blog', 'web', 'posting', 'blogdesign', 'extra'].map(id => serviceCard(svc(id), c)).join('')}</ul>
+    <div class="sec-row">${secHead({ no: 2, title: ['필요한 만큼,', '한 팀이 맡습니다'], sub: '블로그 포스팅 한 건부터 블로그와 홈페이지를 함께 맡기는 통합 패키지까지 고를 수 있습니다.', id: 'svc-title' })}${btn(c.url('services/'), '서비스 전체 보기', { variant: 'ghost' })}</div>
+    <ul class="bento">${serviceCard(svc('total'), c, true)}${['posting', 'blog', 'web', 'blogdesign', 'video'].map(id => serviceCard(svc(id), c)).join('')}</ul>
   </div>
 </section>`;
 
@@ -162,8 +169,9 @@ export function home(c) {
 
   const process = `<section class="sec sec-alt" aria-labelledby="pr-title">
   <div class="wrap">
-    ${secHead({ no: 4, title: ['상담부터 리포트까지', '다섯 단계'], sub: '진단 없이 제안하지 않고, 리포트 없이 넘어가지 않습니다.', id: 'pr-title' })}
+    ${secHead({ no: 4, title: ['상담부터 리포트까지', '여섯 단계'], sub: '진단 없이 제안하지 않고, 리포트 없이 넘어가지 않습니다.', id: 'pr-title' })}
     ${processList()}
+    ${roleNote()}
   </div>
 </section>`;
 
@@ -181,7 +189,7 @@ export function home(c) {
 export function about(c) {
   const intro = `<section class="sec sec-first">
   <div class="wrap split">
-    ${secHead({ title: ['결과로 말하는', '마케팅 파트너'] })}
+    ${secHead({ title: ['검색되는 브랜드가', '선택받는 브랜드입니다'] })}
     <div class="prose" data-reveal>
       <p class="lead">고객이 상호나 업종을 검색했을 때 브랜드가 어떻게 보이는지 설계하고, 그 노출이 방문과 문의로 이어지게 만듭니다.</p>
       <p>이끌림이라는 이름처럼, 억지로 붙잡는 광고가 아니라 고객이 스스로 끌려오는 검색 결과를 만드는 것이 저희 일입니다. 무료 진단부터 매달 리포트까지, 모든 과정을 숫자로 공유합니다.</p>
@@ -191,14 +199,15 @@ export function about(c) {
 </section>`;
   const why = `<section class="sec sec-alt">
   <div class="wrap">
-    ${secHead({ title: '이끌림이 일하는 원칙' })}
-    <ol class="why">${WHY.map((w, i) => `<li data-reveal style="--d:${i}"><span class="why-no serif">${pad(i + 1)}</span><h3>${w.title}</h3><p>${w.text}</p></li>`).join('')}</ol>
+    ${secHead({ title: '이끌림이 다른 점' })}
+    ${whyList(WHY)}
   </div>
 </section>`;
   const process = `<section class="sec">
   <div class="wrap">
-    ${secHead({ title: '일하는 방식은 다섯 단계', sub: '어떤 상품이든 같은 원칙으로 진행합니다.' })}
+    ${secHead({ title: '일하는 방식은 여섯 단계', sub: '어떤 상품이든 같은 순서로 진행합니다.' })}
     ${processList()}
+    ${roleNote()}
   </div>
 </section>`;
   const rows = [['상호', CO.full], ['영문', CO.en], ['대표', val(CO.ceo)], ['전화', val(CO.phone, p => `<a href="${telHref(p)}">${esc(p)}</a>`)], ['이메일', val(CO.email)], ['운영시간', val(CO.hours)], ['주소', val(CO.address)], ['사업자등록번호', val(CO.bizNo)]];
@@ -213,6 +222,18 @@ export function about(c) {
 
 /* ================= 서비스 ================= */
 export function services(c) {
+  const naver = `<section class="sec sec-first" id="naver" aria-labelledby="nv-title">
+  <div class="wrap">
+    ${secHead({ title: NAVER.title, sub: NAVER.sub, id: 'nv-title' })}
+    <ol class="nv-flow" aria-label="네이버 검색이 글을 다루는 순서">${NAVER.flow.map(([t, d], i) => `<li data-reveal style="--d:${i}">${i ? `<span class="nv-arrow" aria-hidden="true">${icon('chevron')}</span>` : ''}<span class="nv-step">${pad(i + 1)}</span><b>${t}</b><span class="nv-desc">${d}</span></li>`).join('')}</ol>
+    <ul class="nv-grid">${NAVER.signals.map(g => `<li class="nv-card" data-reveal>
+      <h3 class="nv-name">${g.name}</h3>
+      <p class="nv-role">${g.role}</p>
+      <dl class="nv-items">${g.items.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
+      <p class="nv-ours"><b>이끌림은</b>${g.ours}</p>
+    </li>`).join('')}</ul>
+  </div>
+</section>`;
   const chips = `<nav class="chips" aria-label="서비스 바로가기"><div class="wrap"><ul>${SERVICES.map(s => `<li><a href="#${s.id}">${s.name}</a></li>`).join('')}</ul></div></nav>`;
   const secs = SERVICES.map((s, i) => `<section class="srv${i === 0 ? ' is-main' : ''}" id="${s.id}" aria-labelledby="srv-${s.id}">
   <div class="wrap srv-in">
@@ -220,6 +241,8 @@ export function services(c) {
       <p class="srv-no"><span class="serif">${pad(i + 1)}</span>${s.tag}</p>
       <h2 class="srv-title" id="srv-${s.id}">${s.name}</h2>
       <p class="srv-short">${s.short}</p>
+      ${forLine(s, 'srv-for')}
+      ${comboLine(s)}
     </div>
     <div class="srv-body" data-reveal>
       <p>${s.text}</p>
@@ -229,7 +252,7 @@ export function services(c) {
     </div>
   </div>
 </section>`).join('');
-  return page(c, { title: '서비스', desc: META.services, bodyClass: 'p-services', body: pageHead(c, { kicker: '서비스', title: ['블로그와 홈페이지,', '따로 또 같이'], lede: '검색에서 보이고, 읽히고, 문의로 이어지는 데 필요한 일을 맡습니다.' }) + chips + secs + ctaBand(c) });
+  return page(c, { title: '서비스', desc: META.services, bodyClass: 'p-services', body: pageHead(c, { kicker: '서비스', title: ['블로그와 홈페이지,', '따로 또 같이'], lede: '검색에서 보이고, 읽히고, 문의로 이어지는 데 필요한 일을 맡습니다.' }) + naver + chips + secs + ctaBand(c) });
 }
 
 /* ================= 포트폴리오 ================= */
@@ -267,7 +290,9 @@ export function pricing(c) {
       <div class="flag-copy">
         <p class="flag-tag">${flagship.tag}</p>
         <h2 class="flag-title">${flagship.name}</h2>
+        ${comboLine(flagship)}
         <p class="flag-text">${flagship.text}</p>
+        ${forLine(flagship, 'flag-for')}
         <div class="flag-price"><b>가격 상담 문의</b><span>카카오톡 상담에서 견적을 안내합니다</span></div>
         ${kakaoBtn(c, '이 상품 카카오톡 상담')}
       </div>
@@ -282,6 +307,7 @@ export function pricing(c) {
       <p class="price-tag">${s.tag}</p>
       <h3>${s.name}</h3>
       <p class="price-short">${s.short}</p>
+      ${forLine(s, 'price-for')}
       <ul>${s.points.map(p => `<li>${icon('check')}${p}</li>`).join('')}</ul>
       <p class="price-val">가격 상담 문의</p>
       ${kakaoBtn(c, '카카오톡 상담', { variant: 'ghost', cls: 'btn-block' })}
@@ -322,7 +348,7 @@ export function faq(c) {
     <p class="faq-more">원하는 답이 없다면 카카오톡으로 물어보세요. <a class="text-link" href="${kakaoHref(c)}">카카오톡 상담${icon('arrow')}</a></p>
   </div>
 </section>`;
-  return page(c, { title: 'FAQ', desc: META.faq, bodyClass: 'p-faq', body: pageHead(c, { kicker: 'FAQ', title: '자주 묻는 질문', lede: '상담 전에 가장 많이 묻는 질문을 모았습니다. (답변은 예시, 업체 확인 필요)' }) + body + ctaBand(c) });
+  return page(c, { title: 'FAQ', desc: META.faq, bodyClass: 'p-faq', body: pageHead(c, { kicker: 'FAQ', title: '자주 묻는 질문', lede: '상담 전에 가장 많이 묻는 질문을 모았습니다.' }) + body + ctaBand(c) });
 }
 
 /* ================= 상담 안내 (카카오톡) ================= */
