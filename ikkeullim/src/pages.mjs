@@ -64,7 +64,7 @@ const resultCard = (c, r, { quoteFirst = false } = {}) => `<li class="res-card${
 /* ---------- 업종을 골라 보는 사례 화면 ----------
    왼쪽: 업종 · 사장님 말 · 고민→한 일→결과 · 큰 숫자
    오른쪽: 실제 검색 화면(검색창 + 상위노출된 그 글, 원래 크기) 위에 카톡 대화 휴대폰을 겹쳐 둠 */
-const storyPanel = (c, k, i) => `<div class="st-panel" id="st-${k.id}" role="tabpanel" aria-labelledby="stt-${k.id}"${i ? ' hidden' : ''}>
+const storyPanel = (c, k, i) => `<div class="st-panel${k.post[1] > 480 ? ' is-wide' : k.post[1] <= 340 ? ' is-narrow' : ''}" id="st-${k.id}" role="tabpanel" aria-labelledby="stt-${k.id}"${i ? ' hidden' : ''}>
   <div class="st-copy">
     <p class="st-ind">${esc(k.industry)}</p>
     <p class="st-quote">${esc(k.quote)}</p>

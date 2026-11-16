@@ -652,13 +652,34 @@ p.ca-phone { font-size: 17px; font-weight: 500; }
 .res-wall .rl-kw { font-size: 16.5px; font-weight: 700; line-height: 1.4; }
 .res-wall .rl-out { font-size: 14.5px; color: var(--text-2); }
 
+/* 넓은 글(학원 등): 이야기를 위에 가로로 펼치고, 아래에 원래 크기 검색 화면 + 휴대폰을 나란히 */
+.st-panel.is-wide { grid-template-columns: minmax(0, 1fr) 262px; column-gap: 40px; }
+.st-panel.is-wide .st-ind { justify-self: start; }
+.st-panel.is-wide .st-post img { margin: 0 auto; }
+.st-panel.is-wide .st-copy { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 0 48px; align-items: end; }
+.st-panel.is-wide .st-ind, .st-panel.is-wide .st-quote { grid-column: 1; }
+.st-panel.is-wide .st-steps { grid-column: 2; grid-row: 1 / span 3; margin-top: 0; align-self: end; }
+.st-panel.is-wide .st-stat { grid-column: 1; }
+.st-panel.is-wide .st-phone { margin-top: 0; }
+/* 좁은 글(휴대폰 캡처): 검색 화면도 휴대폰처럼, 두 휴대폰을 나란히 */
+.st-panel.is-narrow { grid-template-columns: minmax(0, 1fr) 352px 262px; }
+.st-panel.is-narrow .st-search { padding: 34px 12px 16px; border-radius: 36px; box-shadow: 0 0 0 10px #1A1D22, 0 0 0 11px rgba(255, 255, 255, .08), 0 30px 60px -24px rgba(0, 0, 0, .9); margin: 10px; position: relative; }
+.st-panel.is-narrow .st-search::before { content: ''; position: absolute; left: 50%; top: 12px; width: 64px; height: 6px; margin-left: -32px; border-radius: 3px; background: #DDE1E6; }
+.st-panel.is-narrow .st-bar { height: 42px; font-size: 15px; }
 @media (max-width: 1180px) {
+  .st-panel.is-wide, .st-panel.is-narrow { grid-template-columns: minmax(0, 1fr) 262px; }
+  .st-panel.is-wide .st-copy { display: block; }
+  .st-panel.is-wide .st-steps { margin-top: 28px; }
+  .st-panel.is-narrow .st-search { justify-self: center; width: calc(100% - 20px); max-width: 352px; }
   .st-panel { grid-template-columns: minmax(0, 1fr) 260px; }
   .st-copy { grid-column: 1 / -1; }
   .st-phone { margin-top: 0; }
   .res-wall { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 760px) {
+  .st-panel, .st-panel.is-wide, .st-panel.is-narrow { grid-template-columns: 1fr; }
+  .st-panel.is-wide .st-phone { justify-self: center; }
+  .st-panel.is-narrow .st-search { margin: 10px auto; max-width: 352px; width: calc(100% - 20px); }
   .st-panel { grid-template-columns: 1fr; padding: 24px 18px; gap: 24px; }
   .st-phone { max-width: 320px; width: 100%; justify-self: center; }
   .st-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-right: calc(var(--gut) * -1); padding-right: var(--gut); }
