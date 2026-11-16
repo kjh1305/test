@@ -1,5 +1,5 @@
 /* 페이지: 홈, 회사소개, 서비스, 포트폴리오, 상품 안내, 고객후기, FAQ, 상담신청, 404 */
-import { CO, PH, SERVICES, WHY, PROCESS, RESULTS, REVIEWS, REVIEW_SLOTS, REVIEW_FEATURED, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
+import { CO, PH, SERVICES, WHY, PROCESS, RESULTS, SHORTS, REVIEWS, REVIEW_SLOTS, REVIEW_FEATURED, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
 import { esc, br, ph, val, telHref, pad, icon, mark, btn, kakaoBtn, kakaoHref, secHead, page, pageHead, ctaBand } from './layout.mjs';
 
 const svc = id => SERVICES.find(s => s.id === id);
@@ -41,12 +41,13 @@ const serviceCard = (s, c, big = false) => `<li class="svc-card${big ? ' is-big'
   </a>
 </li>`;
 
-const resultCard = r => `<li class="res-card" data-reveal>
-  <div class="res-shot">${r.img ? `<img src="${r.img}" alt="">` : `<span>${icon('image')}실제 검색 화면 이미지</span>`}</div>
+const resultCard = (c, r) => `<li class="res-card" data-reveal>
+  <a class="res-shot" href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc(r.industry + ' · ' + r.keyword)}"><img src="${c.asset('img/reviews/' + r.img)}" alt="${esc(r.industry)} 업체 '${esc(r.keyword)}' 검색 결과와 고객 대화 (업체명 가림)" loading="lazy" decoding="async"></a>
   <div class="res-body">
-    <p class="res-ind">${r.industry ? esc(r.industry) : ph('업종')}</p>
-    <p class="res-kw">${r.keyword ? esc(r.keyword) : ph('목표 키워드')}</p>
-    <p class="res-out">${r.result ? esc(r.result) : ph('결과 (예: 검색 1위 노출)')}</p>
+    <p class="res-ind">${esc(r.industry)}</p>
+    <p class="res-kw">'${esc(r.keyword)}'</p>
+    <p class="res-out">${esc(r.result)}</p>
+    ${r.quote ? `<p class="res-quote">“${esc(r.quote)}”</p>` : ''}
   </div>
 </li>`;
 
@@ -105,8 +106,8 @@ export function home(c) {
 
   const results = `<section class="sec" aria-labelledby="res-title">
   <div class="wrap">
-    <div class="sec-row">${secHead({ no: 3, title: ['함께하면,', '이렇게 달라집니다'], sub: '업종별 실제 검색 화면으로 보여드립니다. (성과 이미지 정리 후 채울 자리)', id: 'res-title' })}${btn(c.url('portfolio/'), '포트폴리오 보기', { variant: 'ghost' })}</div>
-    <ul class="res-grid">${RESULTS.slice(0, 3).map(resultCard).join('')}</ul>
+    <div class="sec-row">${secHead({ no: 3, title: ['함께하면,', '이렇게 달라집니다'], sub: '업종별 실제 검색 화면과 사장님들이 보내 주신 대화입니다. 업체명은 가렸습니다.', id: 'res-title' })}${btn(c.url('portfolio/'), '포트폴리오 보기', { variant: 'ghost' })}</div>
+    <ul class="res-grid">${RESULTS.slice(0, 3).map(r => resultCard(c, r)).join('')}</ul>
   </div>
 </section>`;
 
@@ -124,7 +125,7 @@ export function home(c) {
   <div class="rv-strip" data-reveal><ul>${REVIEW_FEATURED.map(f => REVIEWS.find(r => r.img === f)).filter(Boolean).map(r => reviewTile(c, r)).join('')}</ul></div>
 </section>`;
 
-  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + marquee + why + services + results + process + reviews + ctaBand(c) });
+  return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + marquee + why + services + results + process + reviews + lightbox() + ctaBand(c) });
 }
 
 /* ================= 회사소개 ================= */
@@ -186,17 +187,23 @@ export function services(c) {
 export function portfolio(c) {
   const results = `<section class="sec sec-first">
   <div class="wrap">
-    ${secHead({ title: '함께한 결과', sub: '업종별 목표 키워드와 실제 검색 화면을 모읍니다. 성과 이미지를 정리하면 이 칸들이 채워집니다.' })}
-    <ul class="res-grid">${RESULTS.map(resultCard).join('')}</ul>
+    ${secHead({ title: '함께한 결과', sub: `${RESULTS.length}개 업종의 목표 키워드와 실제 검색 화면, 사장님 반응입니다. 이미지를 누르면 크게 볼 수 있습니다.` })}
+    <ul class="res-grid">${RESULTS.map(r => resultCard(c, r)).join('')}</ul>
   </div>
 </section>`;
-  const works = `<section class="sec sec-alt">
+  const shorts = `<section class="sec sec-alt">
   <div class="wrap">
-    ${secHead({ title: '제작 사례', sub: '홈페이지와 블로그 홈페이지형 디자인 사례가 들어갈 자리입니다.' })}
-    <ul class="work-grid">${Array.from({ length: 6 }, (_, i) => `<li class="work" data-reveal><div class="work-shot"><span>${icon('image')}제작 사례 ${pad(i + 1)}</span></div><p class="work-name">${ph('업체 · 업종')}</p></li>`).join('')}</ul>
+    ${secHead({ title: '숏폼 제작 사례', sub: '제품 홍보부터 시공 현장까지, 숏츠 · 릴스 · 클립용 세로 영상을 만듭니다. 업체명과 연락처는 가렸습니다.' })}
+    <ul class="short-grid">${SHORTS.map(v => `<li class="short" data-reveal><video src="${c.asset('video/' + v.file)}" poster="${c.asset('video/' + v.poster)}" controls playsinline preload="none" width="404" height="720"></video><p class="short-title">${v.title}</p><p class="short-meta">${v.meta}</p></li>`).join('')}</ul>
   </div>
 </section>`;
-  return page(c, { title: '포트폴리오', desc: META.portfolio, bodyClass: 'p-portfolio', body: pageHead(c, { kicker: '포트폴리오', title: ['검색 첫 화면이', '증명합니다'], lede: '함께한 업체의 검색 노출 결과와 제작 사례를 모았습니다.' }) + results + works + ctaBand(c) });
+  const works = `<section class="sec">
+  <div class="wrap">
+    ${secHead({ title: '홈페이지 · 블로그 디자인 제작 사례', sub: '제작 사례 이미지를 받으면 채울 자리입니다.' })}
+    <ul class="work-grid">${Array.from({ length: 3 }, (_, i) => `<li class="work" data-reveal><div class="work-shot"><span>${icon('image')}제작 사례 ${pad(i + 1)}</span></div><p class="work-name">${ph('업체 · 업종')}</p></li>`).join('')}</ul>
+  </div>
+</section>`;
+  return page(c, { title: '포트폴리오', desc: META.portfolio, bodyClass: 'p-portfolio', body: pageHead(c, { kicker: '포트폴리오', title: ['검색 첫 화면이', '증명합니다'], lede: '함께한 업체의 검색 노출 결과, 숏폼 영상, 제작 사례를 모았습니다.' }) + results + shorts + works + lightbox() + ctaBand(c) });
 }
 
 /* ================= 상품 안내 ================= */

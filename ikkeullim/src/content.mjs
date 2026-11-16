@@ -102,7 +102,30 @@ export const PROCESS = [
 ];
 
 /* 성과 사례: 이미지 분석 후 채움. 지금은 칸만 (업종·키워드·결과·캡처 이미지) */
-export const RESULTS = Array.from({ length: 6 }, (_, i) => ({ industry: null, keyword: null, result: null, img: null, no: i + 1 }));
+/* 성과 사례: 받은 후기 이미지(모자이크본)에서 정리. 업체명은 넣지 않고 업종·검색어·결과·고객 반응만.
+   img는 assets/img/reviews/ 의 파일 (누르면 크게 보기). 홈에는 앞의 3개가 나옴 */
+export const RESULTS = [
+  { industry: '인테리어 필름', keyword: '경기도 인테리어 필름시공', result: '목표 키워드 포스팅 상위노출', quote: '블로그 보고 바로 연락 와서 시공한 거예요', img: 'r089.webp' },
+  { industry: '철거', keyword: '화성시 철거', result: '지역 철거 키워드 상위노출 · 문의량 증가', quote: '문의 전화 조금씩 들어오는 것 같아요', img: 'r093.webp' },
+  { industry: '식품 설비', keyword: '금속 검출기 · 중고 프로컷터', result: '상위노출 + 인기글 노출', quote: '네 감사합니다. 효과가 있네요', img: 'r092.webp' },
+  { industry: '주방 후드', keyword: '서울 후드분해청소', result: '지역 키워드 포스팅 상위노출', quote: '노출이 되는 것 같아요, 만족하고 있습니다', img: 'r096.webp' },
+  { industry: '학원', keyword: '수원 망포동 수학학원', result: '지역 학원 키워드 상위노출', quote: '감사 감사~ 짱', img: 'r077.webp' },
+  { industry: '자동차 딜러', keyword: '26년식 미니쿠퍼', result: '차종 키워드 검색 첫 화면 노출', quote: '오 좋네요 감사합니다', img: 'r063.webp' },
+  { industry: '도시락', keyword: '프리미엄 수제 도시락', result: '목표 키워드 상위노출', quote: '블로그 보는 재미를 느껴요', img: 'r062.webp' },
+  { industry: '폐차', keyword: '인천 아반떼 폐차', result: '지역·차종 키워드 상단 노출', quote: null, img: 'r091.webp' },
+  { industry: '목공 학원', keyword: '목공 수업 현장', result: '수업 현장 키워드 최상단 노출', quote: null, img: 'r088.webp' },
+  { industry: '입주청소', keyword: '수원시 아파트 입주청소', result: '상위노출 후 톡톡 문의 증가', quote: null, img: 'r094.webp' },
+  { industry: '해외 배송', keyword: '캐나다 택배 배송', result: '목표 키워드 포스팅 상위노출', quote: null, img: 'r095.webp' },
+  { industry: '산업 기계', keyword: '인버터 스크류 콤프레샤', result: '포스팅 상위노출 1위 + 인기글', quote: null, img: 'r084.webp' },
+  { industry: '렌탈', keyword: '가차 머신 렌탈', result: '인기글 노출', quote: null, img: 'r075.webp' },
+  { industry: '바닥 시공', keyword: '시공 사례 포스팅', result: '블로그 개선 전후 비교 · 공감 댓글 활성화', quote: null, img: 'r064.webp' }
+];
+
+/* 숏폼 제작 사례 (2026-11-16 받은 영상, 업체명·전화번호 모자이크) */
+export const SHORTS = [
+  { file: 'short-air.mp4', poster: 'short-air.jpg', title: '천장형 공기청정기 제품 소개', meta: '제품 홍보 숏폼 · 1분 37초' },
+  { file: 'short-window.mp4', poster: 'short-window.jpg', title: '창호 레일 보수 시공 현장', meta: '시공 현장 숏폼 · 47초' }
+];
 
 /* 고객후기: 후기 이미지 70~80장을 받으면 { img, w, h, alt, industry } 로 채움.
    비어 있는 동안은 REVIEW_SLOTS 개수만큼 '후기 이미지 자리'가 나옵니다 */
@@ -210,7 +233,7 @@ export const REVIEW_SLOTS = 24;
 /* 홈 후기 띠에 먼저 보여 줄 것 (대화가 잘 보이는 것) */
 export const REVIEW_FEATURED = ['r065.webp', 'r062.webp', 'r092.webp', 'r063.webp', 'r093.webp', 'r077.webp', 'r089.webp', 'r080.webp'];
 
-export const INDUSTRIES = ['학원', '병원 · 의원', '인테리어', '시공 · 설비', '부동산', '음식점 · 카페', '뷰티', '법률 · 세무', '자동차', '간판', '청소 · 홈케어', '쇼핑몰'];
+export const INDUSTRIES = ['인테리어 필름', '철거', '학원', '입주청소', '주방 후드', '식품 설비', '도시락 · 케이터링', '폐차', '자동차 딜러', '해외 배송', '폐기물 · 고철', '석면 해체', '전기공사', '산업 기계', '렌탈', '음식물처리기'];
 
 /* 상품 안내 */
 export const PRICING = {
@@ -267,7 +290,7 @@ export const META = {
   home: '이끌림 마케팅: 마음을 끌고, 성과를 만듭니다. 홈페이지 및 블로그 관리대행, 블로그 마케팅, 홈페이지 제작. 무료 상담·진단.',
   about: '이끌림 마케팅 회사소개: 검색에서 시작해 문의로 이어지는 마케팅, 일하는 방식.',
   services: '이끌림 서비스: 홈페이지 및 블로그 관리대행, 블로그 관리대행, 홈페이지 제작·관리대행, 포스팅 대행, 숏폼·언론·플레이스.',
-  portfolio: '이끌림 포트폴리오: 함께한 업체의 검색 노출 결과와 제작 사례.',
+  portfolio: '이끌림 포트폴리오: 인테리어 필름, 철거, 학원, 입주청소 등 업종별 검색 상위노출 결과와 숏폼 제작 사례.',
   pricing: '이끌림 상품 안내: 관리대행, 제작·단품, 상담 상품. 가격은 무료 상담에서 안내합니다.',
   reviews: '이끌림 고객후기: 먼저 맡겨 본 사장님들의 이야기.',
   faq: '이끌림 자주 묻는 질문: 서비스, 진행, 결제.',
