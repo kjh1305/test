@@ -1,7 +1,7 @@
 /* 공통 레이아웃: <head>, 헤더, 모바일 메뉴, 푸터, 모바일 하단 바, 공통 조각 */
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { BASE_URL, PH, CO, NAV } from './content.mjs';
+import { BASE_URL, PH, CO, NAV, CHAT } from './content.mjs';
 
 const hashOf = f => createHash('md5').update(readFileSync(new URL('../assets/' + f, import.meta.url))).digest('hex').slice(0, 8);
 const VER = { css: hashOf('css/site.css'), js: hashOf('js/site.js'), ico: hashOf('favicon.png') };
@@ -51,7 +51,7 @@ export const btn = (href, label, { variant = 'primary', cls = '', ext = false, i
 /* 상담 버튼: 카카오톡 주소가 있으면 새 창으로 채팅, 없으면 상담 안내 페이지 */
 export const kakaoHref = c => CO.kakao || c.url('contact/');
 export const kakaoBtn = (c, label = '카카오톡 상담', { variant = 'primary', cls = '' } = {}) =>
-  `<a class="btn btn-${variant} ${cls}" href="${kakaoHref(c)}"${CO.kakao ? ' target="_blank" rel="noopener"' : ''}>${icon('chat', 'ic-chat')}<span>${label}</span></a>`;
+  `<a class="btn btn-${variant} ${cls}" href="${kakaoHref(c)}"${CO.kakao ? ' target="_blank" rel="noopener"' : ''} data-chat-open>${icon('chat', 'ic-chat')}<span>${label}</span></a>`;
 
 export function secHead({ no, title, sub, cls = '', id = '' }) {
   return `<div class="sec-head ${cls}" data-reveal>
@@ -98,11 +98,24 @@ function footer(c) {
 </footer>`;
 }
 
-/* 모바일 하단 바와 PC 오른쪽 아래 떠 있는 버튼: 둘 다 카카오톡 상담 */
+/* 모바일 하단 바와 PC 오른쪽 아래 떠 있는 버튼: 누르면 채팅 모양 상담 창이 열림.
+   상담 창은 대화를 시작하는 곳이고, 실제 상담은 '카카오톡으로 이어서 상담하기'로 카카오톡에서 진행.
+   JS가 꺼져 있으면 버튼은 그냥 카카오톡(또는 상담 안내 페이지)으로 감 */
 function quickbar(c) {
   const ext = CO.kakao ? ' target="_blank" rel="noopener"' : '';
-  return `<a class="quickbar" href="${kakaoHref(c)}"${ext}>${icon('chat')}카카오톡으로 상담하기</a>
-<a class="fl-kakao" href="${kakaoHref(c)}"${ext} aria-label="카카오톡 상담">${icon('chat')}<span>상담</span></a>`;
+  const data = JSON.stringify({ hello: CHAT.hello, options: CHAT.options, next: CHAT.next, copyTpl: CHAT.copyTpl, kakao: kakaoHref(c), ext: !!CO.kakao, hasKakao: !!CO.kakao }).replace(/</g, '\\u003c');
+  return `<a class="quickbar" href="${kakaoHref(c)}"${ext} data-chat-open>${icon('chat')}카카오톡으로 상담하기</a>
+<a class="fl-kakao" href="${kakaoHref(c)}"${ext} aria-label="상담 창 열기" data-chat-open data-chat-fab>${icon('chat')}<span>상담</span></a>
+<section class="chat" id="chat" role="dialog" aria-modal="false" aria-labelledby="chat-name" data-chat hidden>
+  <header class="chat-hd">
+    <span class="chat-av">${mark()}</span>
+    <div><p class="chat-name" id="chat-name">${CO.name}</p><p class="chat-status"><span class="chat-dot" aria-hidden="true"></span>${CHAT.status}</p></div>
+    <button type="button" class="chat-x" data-chat-close aria-label="상담 창 닫기">${icon('close')}</button>
+  </header>
+  <div class="chat-log" data-chat-log aria-live="polite"></div>
+  <div class="chat-ft" data-chat-ft></div>
+  <script type="application/json" data-chat-data>${data}</script>
+</section>`;
 }
 
 export function page(c, { title, desc, body, bodyClass = '' }) {

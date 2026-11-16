@@ -1,5 +1,5 @@
 /* 페이지: 홈, 회사소개, 서비스, 포트폴리오, 상품 안내, 고객후기, FAQ, 상담신청, 404 */
-import { CO, PH, SERVICES, WHY, PROCESS, RESULTS, REVIEWS, REVIEW_SLOTS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
+import { CO, PH, SERVICES, WHY, PROCESS, RESULTS, REVIEWS, REVIEW_SLOTS, REVIEW_FEATURED, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
 import { esc, br, ph, val, telHref, pad, icon, mark, btn, kakaoBtn, kakaoHref, secHead, page, pageHead, ctaBand } from './layout.mjs';
 
 const svc = id => SERVICES.find(s => s.id === id);
@@ -50,8 +50,10 @@ const resultCard = r => `<li class="res-card" data-reveal>
   </div>
 </li>`;
 
-const reviewTiles = (c, n) => {
-  if (REVIEWS.length) return REVIEWS.slice(0, n).map(r => `<li class="rv-tile"><a href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc(r.alt)}"><img src="${c.asset('img/reviews/' + r.img)}" width="${r.w}" height="${r.h}" alt="${esc(r.alt)}" loading="lazy" decoding="async"></a></li>`).join('');
+const reviewTile = (c, r) => `<li class="rv-tile"><a href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc(r.alt)}"><img src="${c.asset('img/reviews/' + r.img)}" width="${r.w}" height="${r.h}" alt="${esc(r.alt)}" loading="lazy" decoding="async"></a></li>`;
+const reviewTiles = (c, n, group) => {
+  const list = REVIEWS.filter(r => !group || r.group === group);
+  if (list.length) return list.slice(0, n).map(r => reviewTile(c, r)).join('');
   const hs = [340, 260, 300, 380, 280, 320];
   return Array.from({ length: n }, (_, i) => `<li class="rv-tile is-ph" style="--h:${hs[i % hs.length]}px"><span>${icon('image')}후기 이미지 ${pad(i + 1)}</span></li>`).join('');
 };
@@ -119,7 +121,7 @@ export function home(c) {
   <div class="wrap">
     <div class="sec-row">${secHead({ no: 5, title: ['먼저 맡겨 본', '사장님들의 이야기'], sub: '실제 고객후기 이미지를 그대로 보여드립니다.', id: 'rv-title' })}${btn(c.url('reviews/'), '고객후기 전체 보기', { variant: 'ghost' })}</div>
   </div>
-  <div class="rv-strip" data-reveal><ul>${reviewTiles(c, 8)}</ul></div>
+  <div class="rv-strip" data-reveal><ul>${REVIEW_FEATURED.map(f => REVIEWS.find(r => r.img === f)).filter(Boolean).map(r => reviewTile(c, r)).join('')}</ul></div>
 </section>`;
 
   return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + marquee + why + services + results + process + reviews + ctaBand(c) });
@@ -234,14 +236,19 @@ export function pricing(c) {
 
 /* ================= 고객후기 ================= */
 export function reviews(c) {
-  const n = REVIEWS.length || REVIEW_SLOTS;
+  const res = REVIEWS.filter(r => r.group === 'result'), srch = REVIEWS.filter(r => r.group === 'search');
   const wall = `<section class="sec sec-first">
   <div class="wrap">
-    <p class="rv-note">${REVIEWS.length ? `후기 ${REVIEWS.length}건` : `후기 이미지 70~80장이 들어갈 자리입니다. 지금은 ${REVIEW_SLOTS}칸만 보여 줍니다.`} 누르면 크게 볼 수 있습니다.</p>
-    <ul class="rv-wall">${reviewTiles(c, n)}</ul>
+    <div class="rv-tabs" role="tablist" aria-label="후기 종류">
+      <button type="button" role="tab" aria-selected="true" aria-controls="rv-result" id="tab-result" data-rv-tab>성과 · 고객 대화 <span>${res.length}</span></button>
+      <button type="button" role="tab" aria-selected="false" aria-controls="rv-search" id="tab-search" data-rv-tab tabindex="-1">검색 상위노출 화면 <span>${srch.length}</span></button>
+    </div>
+    <p class="rv-note">업체명과 개인정보는 모자이크로 가렸습니다. 이미지를 누르면 크게 볼 수 있습니다.</p>
+    <ul class="rv-grid" id="rv-result" role="tabpanel" aria-labelledby="tab-result">${res.map(r => reviewTile(c, r)).join('')}</ul>
+    <ul class="rv-wall" id="rv-search" role="tabpanel" aria-labelledby="tab-search" hidden>${srch.map(r => reviewTile(c, r)).join('')}</ul>
   </div>
 </section>`;
-  return page(c, { title: '고객후기', desc: META.reviews, bodyClass: 'p-reviews', body: pageHead(c, { kicker: '고객후기', title: ['먼저 맡겨 본', '사장님들의 이야기'], lede: '받은 후기를 고치지 않고 그대로 보여드립니다.' }) + wall + lightbox() + ctaBand(c) });
+  return page(c, { title: '고객후기', desc: META.reviews, bodyClass: 'p-reviews', body: pageHead(c, { kicker: '고객후기', title: ['먼저 맡겨 본', '사장님들의 이야기'], lede: `함께한 업체의 검색 상위노출 결과와 사장님들이 보내 주신 대화 ${REVIEWS.length}장입니다.` }) + wall + lightbox() + ctaBand(c) });
 }
 
 /* ================= FAQ ================= */

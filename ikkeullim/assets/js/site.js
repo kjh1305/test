@@ -49,6 +49,99 @@
     else if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) field.unpauseAnimations(); else field.pauseAnimations(); }); }).observe(field);
   }
 
+  /* 채팅 모양 상담 창: 말풍선으로 대화를 시작하고, 실제 상담은 카카오톡으로 이어감 */
+  var chat = $('[data-chat]');
+  if (chat) {
+    var D = JSON.parse($('[data-chat-data]', chat).textContent);
+    var log = $('[data-chat-log]', chat), ft = $('[data-chat-ft]', chat), fab = $('[data-chat-fab]');
+    var opener = null, started = false, timers = [];
+    var wait = function (ms) { return reduce ? 0 : ms; };
+    var later = function (fn, ms) { timers.push(setTimeout(fn, wait(ms))); };
+    var scroll = function () { log.scrollTop = log.scrollHeight; };
+    var bubble = function (text, who) { var b = document.createElement('p'); b.className = 'cb cb-' + who; b.textContent = text; log.appendChild(b); scroll(); return b; };
+    var typing = function () { var t = document.createElement('p'); t.className = 'cb cb-bot cb-typing'; t.setAttribute('aria-label', '입력 중'); t.innerHTML = '<span></span><span></span><span></span>'; log.appendChild(t); scroll(); return t; };
+    /* 봇 말풍선 여러 개를 '입력 중' 표시와 함께 차례로 */
+    var say = function (lines, done) {
+      var i = 0;
+      (function next() {
+        if (i >= lines.length) { if (done) done(); return; }
+        var t = typing();
+        later(function () { t.remove(); bubble(lines[i++], 'bot'); later(next, 260); }, 520 + Math.min(lines[i].length * 12, 700));
+      })();
+    };
+    var showOptions = function () {
+      ft.innerHTML = '';
+      var wrap = document.createElement('div'); wrap.className = 'chat-opts';
+      D.options.forEach(function (o) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'chat-opt'; b.textContent = o.label;
+        b.addEventListener('click', function () { pick(o); });
+        wrap.appendChild(b);
+      });
+      ft.appendChild(wrap);
+      var first = wrap.querySelector('button'); if (first && chat.contains(document.activeElement)) first.focus();
+    };
+    var pick = function (o) {
+      ft.innerHTML = '';
+      bubble(o.label, 'me');
+      say([o.reply, D.next], function () { showHandoff(o); });
+    };
+    var showHandoff = function (o) {
+      ft.innerHTML = '';
+      var go = document.createElement('a'); go.className = 'chat-go'; go.href = D.kakao;
+      if (D.ext) { go.target = '_blank'; go.rel = 'noopener'; }
+      go.innerHTML = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4C7 4 3 7.1 3 11c0 2.5 1.6 4.6 4 5.9L6.2 20l3.7-2.3c.7.1 1.4.2 2.1.2 5 0 9-3.1 9-7s-4-7-9-7z"/></svg>카카오톡으로 이어서 상담하기';
+      var row = document.createElement('div'); row.className = 'chat-row';
+      var copy = document.createElement('button'); copy.type = 'button'; copy.className = 'chat-sub'; copy.textContent = '보낼 문구 복사';
+      copy.addEventListener('click', function () {
+        var text = D.copyTpl.replace('{label}', o.label);
+        var ok = function () { copy.textContent = '복사했어요'; setTimeout(function () { copy.textContent = '보낼 문구 복사'; }, 2000); };
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, function () {}); else ok();
+      });
+      var back = document.createElement('button'); back.type = 'button'; back.className = 'chat-sub'; back.textContent = '처음으로';
+      back.addEventListener('click', function () { reset(); start(); });
+      row.appendChild(copy); row.appendChild(back);
+      ft.appendChild(go); ft.appendChild(row);
+      if (!D.hasKakao) { var n = document.createElement('p'); n.className = 'chat-note'; n.textContent = '시안: 카카오톡 채널 주소를 받으면 이 버튼이 카카오톡 채팅으로 바로 열립니다.'; ft.appendChild(n); }
+      if (chat.contains(document.activeElement) || document.activeElement === document.body) go.focus();
+    };
+    var reset = function () { timers.forEach(clearTimeout); timers = []; log.innerHTML = ''; ft.innerHTML = ''; };
+    var start = function () { started = true; say(D.hello, showOptions); };
+    var open = function (from) {
+      opener = from || null;
+      chat.hidden = false; requestAnimationFrame(function () { chat.classList.add('is-open'); });
+      body.classList.add('chat-open');
+      if (fab) fab.setAttribute('aria-expanded', 'true');
+      if (!started) start();
+      $('[data-chat-close]', chat).focus();
+    };
+    var close = function () {
+      chat.classList.remove('is-open'); body.classList.remove('chat-open');
+      if (fab) fab.setAttribute('aria-expanded', 'false');
+      setTimeout(function () { if (!chat.classList.contains('is-open')) chat.hidden = true; }, reduce ? 0 : 220);
+      if (opener) opener.focus();
+    };
+    if (fab) { fab.setAttribute('aria-controls', 'chat'); fab.setAttribute('aria-expanded', 'false'); }
+    $$('[data-chat-open]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey) return;
+        e.preventDefault();
+        if (a === fab && !chat.hidden) close(); else open(a);
+      });
+    });
+    $('[data-chat-close]', chat).addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !chat.hidden) close(); });
+  }
+
+  /* 후기 탭 */
+  var tabs = $$('[data-rv-tab]');
+  tabs.forEach(function (t, i) {
+    var sel = function () {
+      tabs.forEach(function (o) { var on = o === t; o.setAttribute('aria-selected', on ? 'true' : 'false'); o.tabIndex = on ? 0 : -1; document.getElementById(o.getAttribute('aria-controls')).hidden = !on; });
+    };
+    t.addEventListener('click', sel);
+    t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; n.focus(); n.click(); } });
+  });
+
   /* 후기 크게 보기 */
   var dlg = $('[data-lb-dialog]');
   var shots = $$('[data-lb]');

@@ -106,8 +106,109 @@ export const RESULTS = Array.from({ length: 6 }, (_, i) => ({ industry: null, ke
 
 /* 고객후기: 후기 이미지 70~80장을 받으면 { img, w, h, alt, industry } 로 채움.
    비어 있는 동안은 REVIEW_SLOTS 개수만큼 '후기 이미지 자리'가 나옵니다 */
-export const REVIEWS = [];
+/* 후기 이미지 96장 (2026-11-16 받음). 업체명·블로그명·사람 이름·전화번호·프로필 사진은 모자이크 처리 (README '후기 이미지' 참고).
+   group: result = 성과 + 고객 대화를 한 장에 정리한 것, search = 검색 결과 화면 */
+export const REVIEWS = [
+  { img: 'r001.webp', w: 526, h: 974, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r002.webp', w: 644, h: 650, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r003.webp', w: 694, h: 905, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r004.webp', w: 616, h: 957, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r005.webp', w: 604, h: 953, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r006.webp', w: 650, h: 1167, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r007.webp', w: 650, h: 1413, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r008.webp', w: 650, h: 1413, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r009.webp', w: 650, h: 1103, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r010.webp', w: 396, h: 755, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r011.webp', w: 757, h: 950, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r012.webp', w: 734, h: 891, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r013.webp', w: 577, h: 815, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r014.webp', w: 562, h: 780, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r015.webp', w: 650, h: 717, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r016.webp', w: 586, h: 931, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r017.webp', w: 571, h: 901, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r018.webp', w: 565, h: 913, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r019.webp', w: 523, h: 824, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r020.webp', w: 453, h: 835, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r022.webp', w: 683, h: 936, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r023.webp', w: 738, h: 924, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r024.webp', w: 705, h: 884, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r025.webp', w: 667, h: 931, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r026.webp', w: 524, h: 936, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r027.webp', w: 610, h: 944, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r028.webp', w: 667, h: 927, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r029.webp', w: 597, h: 842, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r030.webp', w: 588, h: 902, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r031.webp', w: 590, h: 938, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r032.webp', w: 986, h: 813, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r033.webp', w: 569, h: 934, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r034.webp', w: 629, h: 877, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r035.webp', w: 584, h: 945, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r036.webp', w: 683, h: 936, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r037.webp', w: 510, h: 938, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r038.webp', w: 944, h: 764, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r039.webp', w: 739, h: 849, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r040.webp', w: 668, h: 866, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r041.webp', w: 652, h: 933, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r043.webp', w: 624, h: 748, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r044.webp', w: 628, h: 936, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r045.webp', w: 699, h: 908, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r046.webp', w: 629, h: 782, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r047.webp', w: 625, h: 926, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r048.webp', w: 903, h: 882, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r049.webp', w: 699, h: 945, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r050.webp', w: 638, h: 944, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r052.webp', w: 640, h: 940, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r053.webp', w: 576, h: 930, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r054.webp', w: 625, h: 936, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r056.webp', w: 604, h: 949, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r057.webp', w: 693, h: 897, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r058.webp', w: 596, h: 936, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r059.webp', w: 628, h: 932, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r060.webp', w: 641, h: 883, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
+  { img: 'r061.webp', w: 1400, h: 698, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r062.webp', w: 1400, h: 736, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r063.webp', w: 1164, h: 840, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r064.webp', w: 1400, h: 746, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r065.webp', w: 1192, h: 687, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r066.webp', w: 1400, h: 726, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r067.webp', w: 1400, h: 722, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r068.webp', w: 1400, h: 705, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r069.webp', w: 641, h: 805, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r070.webp', w: 748, h: 927, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r071.webp', w: 618, h: 911, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r072.webp', w: 549, h: 808, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r073.webp', w: 1099, h: 797, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r074.webp', w: 558, h: 808, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r075.webp', w: 577, h: 809, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r076.webp', w: 1400, h: 709, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r077.webp', w: 1285, h: 831, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r078.webp', w: 1290, h: 799, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r079.webp', w: 1143, h: 808, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r080.webp', w: 1400, h: 725, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r081.webp', w: 1400, h: 787, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r082.webp', w: 954, h: 822, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r083.webp', w: 581, h: 835, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r084.webp', w: 1400, h: 775, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r085.webp', w: 1212, h: 825, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r086.webp', w: 1091, h: 831, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r087.webp', w: 565, h: 818, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r088.webp', w: 649, h: 829, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r089.webp', w: 1400, h: 721, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r090.webp', w: 1104, h: 819, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r091.webp', w: 573, h: 828, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r092.webp', w: 1400, h: 698, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r093.webp', w: 1400, h: 713, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r094.webp', w: 1400, h: 791, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r095.webp', w: 1012, h: 808, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r096.webp', w: 1400, h: 613, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r021.webp', w: 848, h: 369, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r042.webp', w: 1400, h: 687, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r051.webp', w: 1400, h: 804, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
+  { img: 'r055.webp', w: 1400, h: 814, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' }
+];
 export const REVIEW_SLOTS = 24;
+/* 홈 후기 띠에 먼저 보여 줄 것 (대화가 잘 보이는 것) */
+export const REVIEW_FEATURED = ['r065.webp', 'r062.webp', 'r092.webp', 'r063.webp', 'r093.webp', 'r077.webp', 'r089.webp', 'r080.webp'];
 
 export const INDUSTRIES = ['학원', '병원 · 의원', '인테리어', '시공 · 설비', '부동산', '음식점 · 카페', '뷰티', '법률 · 세무', '자동차', '간판', '청소 · 홈케어', '쇼핑몰'];
 
@@ -143,6 +244,23 @@ export const CONTACT = {
     ['지금 고민', '문의가 줄었다, 검색에 안 나온다처럼 편하게 적어 주세요.']
   ],
   steps: ['카카오톡으로 상담 시작', '담당자가 내용 확인 후 답변', '블로그 · 홈페이지 무료 진단', '업종에 맞는 상품 제안']
+};
+
+/* 채팅 모양 상담 창: 홈페이지에서 대화를 시작하고 실제 상담은 카카오톡으로 이어감.
+   손님이 고른 항목에 따라 짧은 답을 보여 주고, 카카오톡에 보낼 문구를 복사할 수 있게 함 */
+export const CHAT = {
+  status: '카카오톡으로 답변드려요',
+  hello: ['안녕하세요, 이끌림입니다.', '어떤 게 궁금하세요? 아래에서 골라 주세요.'],
+  options: [
+    { id: 'total', label: '홈페이지 및 블로그 관리대행', reply: '홈페이지와 블로그를 한 팀이 함께 운영하는 대표 상품이에요. 블로그에서 들어온 고객이 홈페이지에서 문의까지 남기도록 두 채널을 하나로 설계합니다.' },
+    { id: 'blog', label: '블로그 관리대행', reply: '키워드 분석부터 원고 작성, 발행, 이웃과 체류시간 관리까지 맡아요. 매달 리포트로 성과를 보여드립니다.' },
+    { id: 'web', label: '홈페이지 제작', reply: '업종 고객이 무엇을 보고 문의하는지부터 정리해서 만들어요. 휴대폰에서 먼저 보기 좋게, 문의 버튼까지 연결해 드립니다.' },
+    { id: 'check', label: '무료 블로그 진단', reply: '블로그 주소를 보내 주시면 지금 상태를 무료로 진단해 드려요. 어떤 키워드부터 공략하면 좋을지도 함께 알려 드립니다.' },
+    { id: 'price', label: '가격이 궁금해요', reply: '업종과 키워드 경쟁, 필요한 범위에 따라 달라서 상담에서 견적으로 안내해 드려요. 단품으로 가볍게 시작하실 수도 있어요.' },
+    { id: 'etc', label: '그 밖의 문의', reply: '편하게 물어보세요. 담당자가 확인하고 답변드릴게요.' }
+  ],
+  next: '카카오톡으로 이어서 상담하시면 담당자가 직접 답변드려요. 상호와 업종, 블로그나 홈페이지 주소를 함께 보내 주시면 더 빨라요.',
+  copyTpl: '안녕하세요, 이끌림 홈페이지 보고 연락드립니다.\n문의: {label}\n상호: \n업종: \n블로그·홈페이지 주소: '
 };
 
 export const META = {
