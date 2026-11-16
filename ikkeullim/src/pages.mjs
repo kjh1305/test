@@ -135,7 +135,7 @@ export function home(c) {
       <h1 class="hero-title" id="hero-title"><span class="ln">마음을 끌고,</span><span class="ln"><em class="grad">성과</em>를 만듭니다</span></h1>
       <p class="hero-lede">검색에서 우리 가게를 찾은 고객이 블로그를 읽고, 홈페이지에서 문의를 남기기까지. 이끌림은 그 흐름을 설계하고 매달 숫자로 보여드립니다.</p>
       <div class="hero-btns">${kakaoBtn(c, '카카오톡으로 무료 상담', { cls: 'btn-lg' })}${btn(c.url('pricing/'), '상품 보기', { variant: 'ghost', cls: 'btn-lg' })}</div>
-      <ul class="hero-notes"><li>${icon('check')}카카오톡으로 편하게 상담</li><li>${icon('check')}무료 블로그 진단</li><li>${icon('check')}전문 작가 원고</li><li>${icon('check')}월간 성과 리포트</li></ul>
+      <ul class="hero-notes"><li>${icon('check')}카카오톡으로 편하게 상담</li><li>${icon('check')}무료 블로그 진단</li><li>${icon('check')}원고 작성부터 발행까지</li><li>${icon('check')}월간 성과 리포트</li></ul>
     </div>
     ${field()}
   </div>
