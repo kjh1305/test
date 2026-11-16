@@ -111,6 +111,7 @@ export const RESULTS = [
   { industry: '주방 후드', keyword: '서울 후드분해청소', result: '지역 키워드 포스팅 상위노출', quote: '노출이 되는 것 같아요, 만족하고 있습니다', img: 'r096.webp' },
   { industry: '학원', keyword: '수원 망포동 수학학원', result: '지역 학원 키워드 상위노출', quote: '감사 감사~ 짱', img: 'r077.webp' },
   { industry: '자동차 딜러', keyword: '26년식 미니쿠퍼', result: '차종 키워드 검색 첫 화면 노출', quote: '오 좋네요 감사합니다', img: 'r063.webp' },
+  { industry: null, keyword: null, result: '블로그 운영 후 문의 증가', quote: '덕분에 문의가 조금 늘어서 바쁘게 보내고 있습니다. 항상 감사해요~', img: 'r065.webp' },
   { industry: '도시락', keyword: '프리미엄 수제 도시락', result: '목표 키워드 상위노출', quote: '블로그 보는 재미를 느껴요', img: 'r062.webp' },
   { industry: '폐차', keyword: '인천 아반떼 폐차', result: '지역·차종 키워드 상단 노출', quote: null, img: 'r091.webp' },
   { industry: '목공 학원', keyword: '목공 수업 현장', result: '수업 현장 키워드 최상단 노출', quote: null, img: 'r088.webp' },
@@ -231,7 +232,8 @@ export const REVIEWS = [
 ];
 export const REVIEW_SLOTS = 24;
 /* 홈 후기 띠에 먼저 보여 줄 것 (대화가 잘 보이는 것) */
-export const REVIEW_FEATURED = ['r065.webp', 'r062.webp', 'r092.webp', 'r063.webp', 'r093.webp', 'r077.webp', 'r089.webp', 'r080.webp'];
+/* 후기 페이지 '검색 결과 화면'에 먼저 보여 줄 16장 (한 장짜리 검색 화면 중 깔끔한 것). 나머지는 '원본 캡처 전체 보기' 안에 */
+export const REVIEW_PICKS = ['r002.webp', 'r012.webp', 'r003.webp', 'r022.webp', 'r046.webp', 'r011.webp', 'r013.webp', 'r017.webp', 'r024.webp', 'r027.webp', 'r019.webp', 'r033.webp', 'r014.webp', 'r037.webp', 'r054.webp', 'r005.webp'];
 
 export const INDUSTRIES = ['인테리어 필름', '철거', '학원', '입주청소', '주방 후드', '식품 설비', '도시락 · 케이터링', '폐차', '자동차 딜러', '해외 배송', '폐기물 · 고철', '석면 해체', '전기공사', '산업 기계', '렌탈', '음식물처리기'];
 

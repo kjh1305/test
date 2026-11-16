@@ -537,3 +537,38 @@ p.ca-phone { font-size: 17px; font-weight: 500; }
   .btn { padding: 0 20px; }
   .hero-title { font-size: 44px; }
 }
+
+/* ---------- 성과 · 후기 카드 (정리본) ---------- */
+.res-card { display: flex; flex-direction: column; padding: 22px; }
+.res-card .res-body { padding: 0; margin-top: 18px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.mock { padding: 14px; border-radius: 10px; background: #F7F8FA; box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .04); }
+.mock-bar { display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 12px; border: 1.5px solid #03C75A; border-radius: 999px; background: #fff; color: #191919; font-size: 14px; font-weight: 700; }
+.mock-bar .ic { width: 16px; height: 16px; margin-left: auto; color: #03C75A; }
+.mock-n { display: grid; place-items: center; width: 18px; height: 18px; border-radius: 4px; background: #03C75A; color: #fff; font-size: 11px; font-weight: 900; }
+.mock-kw { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.mock-row { position: relative; height: 34px; margin-top: 8px; border-radius: 6px; background: linear-gradient(#E6E8EC, #E6E8EC) 10px 8px / 55% 6px no-repeat, linear-gradient(#EEF0F3, #EEF0F3) 10px 20px / 80% 5px no-repeat, #fff; }
+.mock-hit { box-shadow: 0 0 0 2px #E53935; background: linear-gradient(#9CC4F0, #9CC4F0) 10px 8px / 60% 6px no-repeat, linear-gradient(#DCE6F2, #DCE6F2) 10px 20px / 78% 5px no-repeat, #fff; }
+.mock-hit span { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); padding: 2px 8px; border-radius: 999px; background: #E53935; color: #fff; font-size: 11.5px; font-weight: 700; }
+.res-kw { font-size: 18px; }
+.res-say { margin-top: 10px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 15.5px; color: var(--text); }
+.res-proof { display: inline-flex; align-items: center; gap: 6px; align-self: flex-start; margin-top: auto; padding-top: 14px; font-size: 14px; font-weight: 600; color: var(--sky); }
+.res-proof .ic { width: 16px; height: 16px; }
+.res-proof:hover { text-decoration: underline; text-underline-offset: 3px; }
+.quote-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; align-items: stretch; }
+.quote-grid .res-card { border: 1px solid var(--line); border-radius: var(--r); background: var(--card); }
+.res-quote { position: relative; margin-bottom: 20px; padding-top: 34px; font-size: clamp(19px, 1.6vw, 22px); font-weight: 700; line-height: 1.5; letter-spacing: -.03em; }
+.res-quote::before { content: '“'; position: absolute; left: -2px; top: -14px; font-family: var(--serif); font-size: 72px; line-height: 1; color: var(--sky); }
+.quote-grid .mock { margin-top: auto; }
+.shot-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.shot a { display: block; aspect-ratio: 3 / 4; overflow: hidden; border-radius: var(--r); background: #fff; border: 1px solid var(--line); cursor: zoom-in; }
+.shot img { width: 100%; height: 100%; object-fit: cover; object-position: center top; transition: transform .5s; }
+.shot a:hover img { transform: scale(1.03); }
+.more-shots { margin-top: 40px; border-top: 1px solid var(--line); }
+.more-shots summary { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 22px 0; font-weight: 700; cursor: pointer; list-style: none; color: var(--text-2); }
+.more-shots summary::-webkit-details-marker { display: none; }
+.more-shots summary span { font-size: 14px; font-weight: 500; color: var(--muted); }
+.more-shots summary .ic { width: 18px; height: 18px; transition: transform .25s; }
+.more-shots[open] summary .ic { transform: rotate(45deg); }
+.more-shots .shot-grid { margin-top: 8px; }
+@media (max-width: 1040px) { .quote-grid { grid-template-columns: 1fr 1fr; } .shot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .quote-grid { grid-template-columns: 1fr; } .shot-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }

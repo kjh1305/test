@@ -1,5 +1,5 @@
 /* 페이지: 홈, 회사소개, 서비스, 포트폴리오, 상품 안내, 고객후기, FAQ, 상담신청, 404 */
-import { CO, PH, SERVICES, WHY, PROCESS, RESULTS, SHORTS, REVIEWS, REVIEW_SLOTS, REVIEW_FEATURED, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
+import { CO, PH, SERVICES, WHY, PROCESS, RESULTS, SHORTS, REVIEWS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
 import { esc, br, ph, val, telHref, pad, icon, mark, btn, kakaoBtn, kakaoHref, secHead, page, pageHead, ctaBand } from './layout.mjs';
 
 const svc = id => SERVICES.find(s => s.id === id);
@@ -41,13 +41,23 @@ const serviceCard = (s, c, big = false) => `<li class="svc-card${big ? ' is-big'
   </a>
 </li>`;
 
-const resultCard = (c, r) => `<li class="res-card" data-reveal>
-  <a class="res-shot" href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc(r.industry + ' · ' + r.keyword)}"><img src="${c.asset('img/reviews/' + r.img)}" alt="${esc(r.industry)} 업체 '${esc(r.keyword)}' 검색 결과와 고객 대화 (업체명 가림)" loading="lazy" decoding="async"></a>
+/* 성과·후기 카드: 캡처 대신 검색 화면을 그림으로 다시 그리고(검색어 + 강조된 결과), 사장님 말은 글자로.
+   실제 캡처(가림 처리본)는 '실제 화면 보기'로 크게 열림 */
+const mock = kw => `<div class="mock" aria-hidden="true">
+    <div class="mock-bar"><span class="mock-n">N</span><span class="mock-kw">${esc(kw)}</span>${icon('search')}</div>
+    <div class="mock-row"></div>
+    <div class="mock-row mock-hit"><span>상위노출</span></div>
+    <div class="mock-row"></div>
+  </div>`;
+const resultCard = (c, r, { quoteFirst = false } = {}) => `<li class="res-card${r.quote ? ' has-quote' : ''}" data-reveal>
+  ${quoteFirst && r.quote ? `<p class="res-quote">${esc(r.quote)}</p>` : ''}
+  ${r.keyword ? mock(r.keyword) : ''}
   <div class="res-body">
-    <p class="res-ind">${esc(r.industry)}</p>
-    <p class="res-kw">'${esc(r.keyword)}'</p>
+    <p class="res-ind">${r.industry ? esc(r.industry) : '업종 비공개'}</p>
+    ${r.keyword ? `<p class="res-kw">‘${esc(r.keyword)}’</p>` : ''}
     <p class="res-out">${esc(r.result)}</p>
-    ${r.quote ? `<p class="res-quote">“${esc(r.quote)}”</p>` : ''}
+    ${!quoteFirst && r.quote ? `<p class="res-say">“${esc(r.quote)}”</p>` : ''}
+    <a class="res-proof" href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc((r.industry || '') + ' 실제 화면 (업체명·개인정보 가림)')}">${icon('image')}실제 화면 보기</a>
   </div>
 </li>`;
 
@@ -120,9 +130,9 @@ export function home(c) {
 
   const reviews = `<section class="sec" aria-labelledby="rv-title">
   <div class="wrap">
-    <div class="sec-row">${secHead({ no: 5, title: ['먼저 맡겨 본', '사장님들의 이야기'], sub: '실제 고객후기 이미지를 그대로 보여드립니다.', id: 'rv-title' })}${btn(c.url('reviews/'), '고객후기 전체 보기', { variant: 'ghost' })}</div>
+    <div class="sec-row">${secHead({ no: 5, title: ['먼저 맡겨 본', '사장님들의 이야기'], sub: '사장님들이 보내 주신 말을 그대로 옮겼습니다. 실제 화면도 함께 확인하실 수 있습니다.', id: 'rv-title' })}${btn(c.url('reviews/'), '고객후기 전체 보기', { variant: 'ghost' })}</div>
   </div>
-  <div class="rv-strip" data-reveal><ul>${REVIEW_FEATURED.map(f => REVIEWS.find(r => r.img === f)).filter(Boolean).map(r => reviewTile(c, r)).join('')}</ul></div>
+  <div class="wrap"><ul class="quote-grid">${RESULTS.filter(r => r.quote).slice(3, 6).map(r => resultCard(c, r, { quoteFirst: true })).join('')}</ul></div>
 </section>`;
 
   return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + marquee + why + services + results + process + reviews + lightbox() + ctaBand(c) });
@@ -243,19 +253,27 @@ export function pricing(c) {
 
 /* ================= 고객후기 ================= */
 export function reviews(c) {
-  const res = REVIEWS.filter(r => r.group === 'result'), srch = REVIEWS.filter(r => r.group === 'search');
-  const wall = `<section class="sec sec-first">
+  const quotes = RESULTS.filter(r => r.quote);
+  const picks = REVIEW_PICKS.map(f => REVIEWS.find(r => r.img === f)).filter(Boolean);
+  const rest = REVIEWS.filter(r => !REVIEW_PICKS.includes(r.img));
+  const tile = r => `<li class="shot"><a href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc(r.alt)}"><img src="${c.asset('img/reviews/' + r.img)}" width="${r.w}" height="${r.h}" alt="${esc(r.alt)}" loading="lazy" decoding="async"></a></li>`;
+  const body = `<section class="sec sec-first">
   <div class="wrap">
-    <div class="rv-tabs" role="tablist" aria-label="후기 종류">
-      <button type="button" role="tab" aria-selected="true" aria-controls="rv-result" id="tab-result" data-rv-tab>성과 · 고객 대화 <span>${res.length}</span></button>
-      <button type="button" role="tab" aria-selected="false" aria-controls="rv-search" id="tab-search" data-rv-tab tabindex="-1">검색 상위노출 화면 <span>${srch.length}</span></button>
-    </div>
-    <p class="rv-note">업체명과 개인정보는 모자이크로 가렸습니다. 이미지를 누르면 크게 볼 수 있습니다.</p>
-    <ul class="rv-grid" id="rv-result" role="tabpanel" aria-labelledby="tab-result">${res.map(r => reviewTile(c, r)).join('')}</ul>
-    <ul class="rv-wall" id="rv-search" role="tabpanel" aria-labelledby="tab-search" hidden>${srch.map(r => reviewTile(c, r)).join('')}</ul>
+    ${secHead({ title: '사장님들이 보내 주신 말', sub: `${quotes.length}곳의 이야기를 그대로 옮겼습니다. '실제 화면 보기'로 원래 캡처를 확인할 수 있습니다.` })}
+    <ul class="quote-grid">${quotes.map(r => resultCard(c, r, { quoteFirst: true })).join('')}</ul>
+  </div>
+</section>
+<section class="sec sec-alt">
+  <div class="wrap">
+    ${secHead({ title: '검색 첫 화면에 올라간 글', sub: '목표 키워드를 검색했을 때의 실제 화면입니다. 빨간 테두리가 이끌림이 작업한 글이고, 업체명과 다른 글은 가렸습니다.' })}
+    <ul class="shot-grid">${picks.map(tile).join('')}</ul>
+    <details class="more-shots">
+      <summary>원본 캡처 전체 보기 <span>${REVIEWS.length}장</span>${icon('plus')}</summary>
+      <ul class="shot-grid">${rest.map(tile).join('')}</ul>
+    </details>
   </div>
 </section>`;
-  return page(c, { title: '고객후기', desc: META.reviews, bodyClass: 'p-reviews', body: pageHead(c, { kicker: '고객후기', title: ['먼저 맡겨 본', '사장님들의 이야기'], lede: `함께한 업체의 검색 상위노출 결과와 사장님들이 보내 주신 대화 ${REVIEWS.length}장입니다.` }) + wall + lightbox() + ctaBand(c) });
+  return page(c, { title: '고객후기', desc: META.reviews, bodyClass: 'p-reviews', body: pageHead(c, { kicker: '고객후기', title: ['먼저 맡겨 본', '사장님들의 이야기'], lede: '검색 상위노출 결과와 그 뒤에 들어온 문의, 사장님들의 반응을 모았습니다.' }) + body + lightbox() + ctaBand(c) });
 }
 
 /* ================= FAQ ================= */
