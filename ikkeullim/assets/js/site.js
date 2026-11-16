@@ -142,29 +142,35 @@
     t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; n.focus(); n.click(); } });
   });
 
-  /* 후기 사례 슬라이드: 탭을 누르거나, 화면에 보이는 동안 5초마다 자동으로 넘어감 (마우스를 올리면 멈춤) */
-  $$('[data-slider]').forEach(function (sl) {
-    var slides = $$('.cs-slide', sl), tabs = $$('.cs-tab', sl), cur = 0, timer = null, visible = false, hover = false;
-    if (slides.length < 2) return;
-    var go = function (i, auto) {
-      cur = (i + slides.length) % slides.length;
-      slides.forEach(function (s, k) { s.classList.toggle('is-on', k === cur); s.setAttribute('aria-hidden', k === cur ? 'false' : 'true'); });
-      tabs.forEach(function (t, k) { t.classList.remove('is-on'); t.removeAttribute('aria-current'); t.style.setProperty('--dur', '0s'); });
-      var t = tabs[cur]; void t.offsetWidth; t.style.setProperty('--dur', (auto && !reduce) ? '5s' : '0s'); t.classList.add('is-on'); t.setAttribute('aria-current', 'true');
+  /* 업종을 골라 보는 사례 화면 */
+  $$('[data-stories]').forEach(function (st) {
+    var tabs = $$('[role="tab"]', st), count = $('[data-st-count]', st), cur = 0;
+    var show = function (i, focus) {
+      cur = (i + tabs.length) % tabs.length;
+      tabs.forEach(function (t, k) {
+        var on = k === cur; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1;
+        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (count) count.textContent = (cur + 1) + ' / ' + tabs.length;
+      if (focus) tabs[cur].focus();
+      tabs[cur].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: reduce ? 'auto' : 'smooth' });
     };
-    var tick = function () { clearTimeout(timer); if (reduce || !visible || hover) return; timer = setTimeout(function () { go(cur + 1, true); tick(); }, 5000); };
-    tabs.forEach(function (t, k) { t.addEventListener('click', function () { go(k, false); hover = true; clearTimeout(timer); }); });
-    sl.addEventListener('mouseenter', function () { hover = true; clearTimeout(timer); });
-    sl.addEventListener('mouseleave', function () { hover = false; go(cur, true); tick(); });
-    if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { es.forEach(function (e) { visible = e.isIntersecting; if (visible) { go(cur, true); tick(); } else clearTimeout(timer); }); }, { threshold: 0.4 }).observe(sl);
+    tabs.forEach(function (t, k) {
+      t.addEventListener('click', function () { show(k); });
+      t.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); show(k + 1, true); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); show(k - 1, true); }
+      });
+    });
+    var next = $('[data-st-next]', st);
+    if (next) next.addEventListener('click', function () { show(cur + 1); });
   });
-  /* 사장님 대화 보기 방식 비교 (글자 말풍선 / 실제 캡처 조각) */
-  $$('[data-chatmode]').forEach(function (b) {
+  /* 휴대폰 속 대화: 글자 말풍선 ↔ 실제 캡처 */
+  $$('[data-chatswap]').forEach(function (b) {
     b.addEventListener('click', function () {
-      var img = b.getAttribute('data-chatmode') === 'img';
-      $$('[data-chatmode]').forEach(function (o) { o.setAttribute('aria-pressed', o === b ? 'true' : 'false'); });
-      $$('.cs-chat-text').forEach(function (e) { e.hidden = img; });
-      $$('.cs-chat-img').forEach(function (e) { e.hidden = !img; });
+      var ph = b.closest('.st-phone'), img = b.getAttribute('aria-pressed') !== 'true';
+      $('.st-chat-text', ph).hidden = img; $('.st-chat-img', ph).hidden = !img;
+      b.setAttribute('aria-pressed', img ? 'true' : 'false'); b.textContent = img ? '글자로 보기' : '실제 캡처로 보기';
     });
   });
 
