@@ -710,6 +710,7 @@ p.ca-phone { font-size: 17px; font-weight: 500; }
 .st-chat-text .bub { max-width: 88%; font-size: 14px; }
 .st-chat-img { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
 .st-chat-img img { max-width: 100%; height: auto; border-radius: 6px; }
+.st-chat-img img.is-me { align-self: flex-end; }
 .st-swap { display: block; margin: 10px auto 2px; padding: 4px 10px; border: 0; background: none; color: #9AA3AE; font-size: 12.5px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 .st-swap:hover { color: #fff; }
 .st-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-top: 16px; }

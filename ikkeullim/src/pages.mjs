@@ -41,7 +41,7 @@ const serviceCard = (s, c, big = false) => `<li class="svc-card${big ? ' is-big'
   </a>
 </li>`;
 
-/* 성과·후기 카드: 캡처 대신 검색 화면을 그림으로 다시 그리고(검색어 + 강조된 결과), 사장님 말은 글자로.
+/* 성과·후기 카드: 캡처 대신 검색 화면을 그림으로 다시 그리고(검색어 + 강조된 결과), 대표님 말은 글자로.
    실제 캡처(가림 처리본)는 '실제 화면 보기'로 크게 열림 */
 const mock = kw => `<div class="mock" aria-hidden="true">
     <div class="mock-bar"><span class="mock-n">N</span><span class="mock-kw">${esc(kw)}</span>${icon('search')}</div>
@@ -62,7 +62,7 @@ const resultCard = (c, r, { quoteFirst = false } = {}) => `<li class="res-card${
 </li>`;
 
 /* ---------- 업종을 골라 보는 사례 화면 ----------
-   왼쪽: 업종 · 사장님 말 · 고민→한 일→결과 · 큰 숫자
+   왼쪽: 업종 · 대표님 말 · 고민→한 일→결과 · 큰 숫자
    오른쪽: 실제 검색 화면(검색창 + 상위노출된 그 글, 원래 크기) 위에 카톡 대화 휴대폰을 겹쳐 둠 */
 const storyPanel = (c, k, i) => `<div class="st-panel${k.post[1] > 480 ? ' is-wide' : k.post[1] <= 340 ? ' is-narrow' : ''}" id="st-${k.id}" role="tabpanel" aria-labelledby="stt-${k.id}"${i ? ' hidden' : ''}>
   <div class="st-copy">
@@ -80,13 +80,13 @@ const storyPanel = (c, k, i) => `<div class="st-panel${k.post[1] > 480 ? ' is-wi
       </div>
       <figcaption>실제 검색 화면 · 고객사 이름은 가렸습니다</figcaption>
     </figure>
-    <div class="st-phone" aria-label="사장님과 나눈 카카오톡 대화">
-      <div class="st-phone-hd"><span class="st-av">${esc(k.industry.slice(0, 1))}</span><b>${esc(k.industry)} 사장님</b></div>
+    <div class="st-phone" aria-label="대표님과 나눈 카카오톡 대화">
+      <div class="st-phone-hd"><span class="st-av">${esc(k.industry.slice(0, 1))}</span><b>${esc(k.industry)} 대표님</b></div>
       <div class="st-phone-bd">
-        <div class="st-chat-text">${k.chat.map(([w, t]) => `<p class="bub bub-${w}">${esc(t)}</p>`).join('')}</div>
-        <div class="st-chat-img" hidden>${k.chatImgs.map(([f, w, h]) => `<img src="${c.asset('img/cases/' + f)}" width="${w}" height="${h}" alt="실제 카카오톡 말풍선" loading="lazy" decoding="async">`).join('')}</div>
+        <div class="st-chat-text" hidden>${k.chat.map(([w, t]) => `<p class="bub bub-${w}">${esc(t)}</p>`).join('')}</div>
+        <div class="st-chat-img">${k.chatImgs.map(([f, w, h, s = 1, who]) => `<img${who === 'me' ? ' class="is-me"' : ''} src="${c.asset('img/cases/' + f)}" width="${Math.round(w * s)}" height="${Math.round(h * s)}" alt="실제 카카오톡 말풍선" loading="lazy" decoding="async">`).join('')}</div>
       </div>
-      <button type="button" class="st-swap" data-chatswap aria-pressed="false">실제 캡처로 보기</button>
+      <button type="button" class="st-swap" data-chatswap aria-pressed="true">글자로 보기</button>
     </div>
   </div>
 </div>`;
@@ -95,7 +95,7 @@ const storyBlock = (c, list = STORIES) => `<div class="st" data-stories>
   <div class="st-stage">${list.map((k, i) => storyPanel(c, k, i)).join('')}</div>
   <div class="st-foot"><button type="button" class="st-next" data-st-next>다른 업종 사례 보기${icon('arrow')}</button><span class="st-count" data-st-count>1 / ${list.length}</span></div>
 </div>`;
-const voices = () => `<div class="vc" aria-label="사장님 한마디"><div class="vc-track">${[0, 1].map(k => `<ul${k ? ' aria-hidden="true"' : ''}>${VOICES.map(([w, t]) => `<li><p>“${esc(t)}”</p><span>${esc(w)}</span></li>`).join('')}</ul>`).join('')}</div></div>`;
+const voices = () => `<div class="vc" aria-label="대표님 한마디"><div class="vc-track">${[0, 1].map(k => `<ul${k ? ' aria-hidden="true"' : ''}>${VOICES.map(([w, t]) => `<li><p>“${esc(t)}”</p><span>${esc(w)}</span></li>`).join('')}</ul>`).join('')}</div></div>`;
 const resultList = list => `<ul class="res-wall">${list.map(r => `<li data-reveal><span class="rl-ind">${r.industry ? esc(r.industry) : '업종 비공개'}</span><span class="rl-kw">${r.keyword ? '‘' + esc(r.keyword) + '’' : ''}</span><span class="rl-out">${esc(r.result)}</span></li>`).join('')}</ul>`;
 const STORY_KW = new Set(STORIES.map(k => k.keyword)), STORY_IND = new Set(['철거', '인테리어 필름', '식품 설비', '주방 후드', '학원', '도시락']);
 const otherResults = () => RESULTS.filter(r => r.keyword && !STORY_KW.has(r.keyword) && !STORY_IND.has(r.industry));
@@ -110,7 +110,7 @@ const reviewTiles = (c, n, group) => {
 
 /* 번호 + 꼬리표가 붙은 3단 목록. cycle이면 칸 사이에 화살표, 아래에 '순환' 띠 */
 const whyList = (list, { cycle = false } = {}) => `<ol class="why${cycle ? ' is-cycle' : ''}">${list.map((w, i) => `<li data-reveal style="--d:${i}">${cycle && i ? `<span class="why-arrow" aria-hidden="true">${icon('arrow')}</span>` : ''}<div class="why-top"><span class="why-no serif">${pad(i + 1)}</span>${w.tag ? `<span class="why-tag">${w.tag}</span>` : ''}</div><h3>${w.title}</h3><p>${w.text}</p></li>`).join('')}</ol>`;
-const roleNote = () => `<p class="role-note" data-reveal><b>사장님이 하실 일</b><span>${ROLE}</span></p>`;
+const roleNote = () => `<p class="role-note" data-reveal><b>대표님이 하실 일</b><span>${ROLE}</span></p>`;
 const forLine = (s, cls) => s.for ? `<p class="${cls}"><span>이런 분께</span>${s.for}</p>` : '';
 const comboLine = s => s.combo ? `<p class="combo">${s.combo.map(x => `<span>${x}</span>`).join('<i aria-hidden="true">+</i>')}</p>` : '';
 
@@ -162,7 +162,7 @@ export function home(c) {
 
   const results = `<section class="sec" aria-labelledby="res-title">
   <div class="wrap">
-    <div class="sec-row">${secHead({ no: 3, title: ['함께하면,', '이렇게 달라집니다'], sub: '사장님 업종을 골라 보세요. 실제 검색 화면과 사장님이 보내 주신 말을 그대로 보여 드립니다.', id: 'res-title' })}${btn(c.url('reviews/'), '고객후기 전체 보기', { variant: 'ghost' })}</div>
+    <div class="sec-row">${secHead({ no: 3, title: ['함께하면,', '이렇게 달라집니다'], sub: '대표님 업종을 골라 보세요. 실제 검색 화면과 대표님이 보내 주신 말을 그대로 보여 드립니다.', id: 'res-title' })}${btn(c.url('reviews/'), '고객후기 전체 보기', { variant: 'ghost' })}</div>
     ${storyBlock(c)}
   </div>
 </section>`;
@@ -177,7 +177,7 @@ export function home(c) {
 
   const reviews = `<section class="sec" aria-labelledby="rv-title">
   <div class="wrap">
-    <div class="sec-row">${secHead({ no: 5, title: ['먼저 맡겨 본', '사장님들의 한마디'], sub: '카카오톡으로 받은 말을 그대로 옮겼습니다.', id: 'rv-title' })}${btn(c.url('reviews/'), '고객후기 전체 보기', { variant: 'ghost' })}</div>
+    <div class="sec-row">${secHead({ no: 5, title: ['먼저 맡겨 본', '대표님들의 한마디'], sub: '카카오톡으로 받은 말을 그대로 옮겼습니다.', id: 'rv-title' })}${btn(c.url('reviews/'), '고객후기 전체 보기', { variant: 'ghost' })}</div>
   </div>
   ${voices()}
 </section>`;
@@ -259,7 +259,7 @@ export function services(c) {
 export function portfolio(c) {
   const results = `<section class="sec sec-first">
   <div class="wrap">
-    ${secHead({ title: '함께한 결과', sub: '업종을 골라 실제 검색 화면과 사장님 반응을 확인해 보세요.' })}
+    ${secHead({ title: '함께한 결과', sub: '업종을 골라 실제 검색 화면과 대표님 반응을 확인해 보세요.' })}
     ${storyBlock(c)}
     <h3 class="res-list-title">그 밖의 상위노출 사례</h3>
     ${resultList(otherResults())}
@@ -322,12 +322,12 @@ export function pricing(c) {
 export function reviews(c) {
   const body = `<section class="sec sec-first">
   <div class="wrap">
-    ${secHead({ title: '우리 업종도 될까요?', sub: '업종을 골라 보세요. 어떤 고민이 있었고, 무엇을 했고, 검색에서 어떻게 보였는지, 사장님이 뭐라고 하셨는지 그대로 보여 드립니다.' })}
+    ${secHead({ title: '우리 업종도 될까요?', sub: '업종을 골라 보세요. 어떤 고민이 있었고, 무엇을 했고, 검색에서 어떻게 보였는지, 대표님이 뭐라고 하셨는지 그대로 보여 드립니다.' })}
     ${storyBlock(c)}
   </div>
 </section>
 <section class="sec sec-alt sec-voices">
-  <div class="wrap">${secHead({ title: '사장님 한마디', sub: '카카오톡으로 받은 말을 그대로 옮겼습니다.' })}</div>
+  <div class="wrap">${secHead({ title: '대표님 한마디', sub: '카카오톡으로 받은 말을 그대로 옮겼습니다.' })}</div>
   ${voices()}
 </section>
 <section class="sec">
@@ -336,7 +336,7 @@ export function reviews(c) {
     ${resultList(otherResults())}
   </div>
 </section>`;
-  return page(c, { title: '고객후기', desc: META.reviews, bodyClass: 'p-reviews', body: pageHead(c, { kicker: '고객후기', title: ['먼저 맡겨 본', '사장님들의 이야기'], lede: '검색 상위노출 결과와 그 뒤에 들어온 문의, 사장님들의 반응을 모았습니다.' }) + body + lightbox() + ctaBand(c) });
+  return page(c, { title: '고객후기', desc: META.reviews, bodyClass: 'p-reviews', body: pageHead(c, { kicker: '고객후기', title: ['먼저 맡겨 본', '대표님들의 이야기'], lede: '검색 상위노출 결과와 그 뒤에 들어온 문의, 대표님들의 반응을 모았습니다.' }) + body + lightbox() + ctaBand(c) });
 }
 
 /* ================= FAQ ================= */
