@@ -22,6 +22,7 @@ export const ph = (t = PH) => `<span class="ph">${t}</span>`;
 /* 값이 있으면 값, 없으면 채울 자리 */
 export const val = (v, fmt = x => esc(x)) => (v ? fmt(v) : ph());
 export const telHref = p => 'tel:' + String(p).replace(/[^0-9+]/g, '');
+export const smsHref = p => 'sms:' + String(p).replace(/[^0-9+]/g, '');
 
 /* 사진 자리: slot.img가 있으면 사진, 없으면 점선 상자 */
 export function photo(c, slot, { cls = '', label = '사진', ratio = '4 / 3', eager = false } = {}) {
@@ -96,6 +97,8 @@ function footer(c) {
       <div><dt>전화</dt><dd>${val(CO.phone, p => `<a href="${telHref(p)}">${esc(p)}</a>`)}</dd></div>
       <div><dt>주소</dt><dd>${val(CO.address)}</dd></div>
       <div><dt>사업자등록번호</dt><dd>${val(CO.bizNo)}</dd></div>
+      <div><dt>이메일</dt><dd>${val(CO.email, e => `<a href="mailto:${esc(e)}">${esc(e)}</a>`)}</dd></div>
+      <div><dt>상담 시간</dt><dd>${val(CO.hours)}</dd></div>
     </dl>
     <div class="f-bottom">
       <p class="f-note">이 사이트는 홈페이지 제작 시안입니다. 표시한 자리와 일부 문구는 실제 자료로 바꿀 예정입니다.</p>
@@ -107,9 +110,10 @@ function footer(c) {
 
 function quickbar(c) {
   const call = CO.phone
-    ? `<a class="qb-phone" href="${telHref(CO.phone)}">${icon('phone')}<span>${esc(CO.phone)}</span></a>`
+    ? `<a class="qb-phone" href="${telHref(CO.phone)}" aria-label="전화 ${esc(CO.phone)}">${icon('phone')}<span>전화</span></a>`
     : `<span class="qb-phone is-ph">${icon('phone')}<span>전화번호<small>${PH}</small></span></span>`;
-  return `<div class="quickbar" data-quickbar>${call}<a class="qb-form" href="${c.url('contact/')}">${icon('doc')}<span>견적문의</span></a></div>`;
+  const sms = CO.phone ? `<a class="qb-sms" href="${smsHref(CO.phone)}">${icon('doc')}<span>문자</span></a>` : '';
+  return `<div class="quickbar" data-quickbar>${call}${sms}<a class="qb-form" href="${c.url('contact/')}">${icon('doc')}<span>견적문의</span></a></div>`;
 }
 
 /* 떠 있는 버튼: 블로그, 견적문의(어느 화면에서나 보임), 맨 위로. 모바일은 하단 바가 견적문의를 맡음 */

@@ -1,7 +1,7 @@
 /* 페이지 본문: 홈, 회사소개, 사업분야, 시공사례, 견적문의, 없는 주소 */
 import { CO, PH, SERVICES, PRINCIPLES, PROCESS, RESTORE_CHECK, PROJECTS, FAQ, POPUPS, HOME, ABOUT, CONTACT, META } from './content.mjs';
 import { icon } from './art.mjs';
-import { page, pageHead, ctaBand, btn, secHead, photo, ph, val, telHref, br, esc } from './layout.mjs';
+import { page, pageHead, ctaBand, btn, secHead, photo, ph, val, telHref, smsHref, br, esc } from './layout.mjs';
 
 const SVC = Object.fromEntries(SERVICES.map(s => [s.id, s]));
 const coverOf = p => (p.gallery || []).find(x => x.img === p.cover) || (p.gallery || [])[0] || p;
@@ -29,6 +29,7 @@ export function home(c) {
       <h1 class="hero-title" id="hero-title">${br(HOME.heroTitle)}</h1>
       <p class="hero-lede">${HOME.heroLede}</p>
       <div class="hero-btns">${btn(c.url('contact/'), '견적문의 · 방문 예약', { cls: 'btn-lg' })}${CO.phone ? `<a class="btn btn-line btn-lg" href="${telHref(CO.phone)}">${icon('phone')}${esc(CO.phone)}</a>` : ''}</div>
+      ${CO.hours ? `<p class="hero-hours"><span class="dot" aria-hidden="true"></span>${CO.hours} 상담</p>` : ''}
     </div>
     <div class="hero-media">
       ${photo(c, im1, { cls: 'hero-ph1', ratio: '4 / 5', eager: true })}
@@ -136,7 +137,7 @@ export function about(c) {
     ['이메일', val(CO.email, e => `<a href="mailto:${esc(e)}">${esc(e)}</a>`)],
     ['주소', val(CO.address)],
     ['사업자등록번호', val(CO.bizNo)],
-    ['면허·등록', val(CO.license)],
+    ['상담 시간', val(CO.hours)],
     ['블로그', `<a href="${CO.blog}" target="_blank" rel="noopener">${CO.blogName}${icon('external')}</a>`]
   ];
   const info = `<section class="sec sec-stone">
@@ -263,12 +264,14 @@ export function contact(c) {
     <details class="privacy-more"><summary>내용 보기</summary><p>${CONTACT.privacyText}</p></details>
   </div>
   <button class="btn btn-primary btn-lg" type="submit">견적문의 · 방문 예약 보내기</button>
+  <p class="form-note">${icon('mail')}${CONTACT.formNote}</p>
 </form>`;
   const aside = `<aside class="contact-aside">
   <div class="ca-card">
-    <h2>전화 상담</h2>
+    <h2>전화 · 문자 · 이메일</h2>
     ${CO.phone ? `<a class="ca-phone" href="${telHref(CO.phone)}">${esc(CO.phone)}</a>` : `<p class="ca-phone">${ph()}</p>`}
-    <dl class="ca-dl"><div><dt>시공 지역</dt><dd>${CO.area}</dd></div><div><dt>상담 시간</dt><dd>${val(CO.hours)}</dd></div><div><dt>이메일</dt><dd>${val(CO.email)}</dd></div></dl>
+    <div class="ca-btns">${CO.phone ? `<a class="btn btn-primary" href="${telHref(CO.phone)}">${icon('phone')}전화하기</a><a class="btn btn-line" href="${smsHref(CO.phone)}">${icon('doc')}문자 보내기</a>` : ''}${CO.email ? `<a class="btn btn-line" href="mailto:${esc(CO.email)}">${icon('mail')}이메일 보내기</a>` : ''}</div>
+    <dl class="ca-dl"><div><dt>상담 시간</dt><dd>${val(CO.hours)}</dd></div><div><dt>이메일</dt><dd>${val(CO.email)}</dd></div><div><dt>시공 지역</dt><dd>${CO.area}</dd></div></dl>
   </div>
   <div class="ca-card">
     <h2>알려 주시면 좋은 것</h2>
