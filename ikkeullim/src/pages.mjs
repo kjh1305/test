@@ -97,7 +97,7 @@ const storyBlock = (c, list = STORIES) => `<div class="st" data-stories>
 </div>`;
 const voices = () => `<div class="vc" aria-label="사장님 한마디"><div class="vc-track">${[0, 1].map(k => `<ul${k ? ' aria-hidden="true"' : ''}>${VOICES.map(([w, t]) => `<li><p>“${esc(t)}”</p><span>${esc(w)}</span></li>`).join('')}</ul>`).join('')}</div></div>`;
 const resultList = list => `<ul class="res-wall">${list.map(r => `<li data-reveal><span class="rl-ind">${r.industry ? esc(r.industry) : '업종 비공개'}</span><span class="rl-kw">${r.keyword ? '‘' + esc(r.keyword) + '’' : ''}</span><span class="rl-out">${esc(r.result)}</span></li>`).join('')}</ul>`;
-const STORY_KW = new Set(STORIES.map(k => k.keyword)), STORY_IND = new Set(['철거', '인테리어 필름', '식품 설비', '주방 후드', '학원', '자동차 딜러', '도시락']);
+const STORY_KW = new Set(STORIES.map(k => k.keyword)), STORY_IND = new Set(['철거', '인테리어 필름', '식품 설비', '주방 후드', '학원', '도시락']);
 const otherResults = () => RESULTS.filter(r => r.keyword && !STORY_KW.has(r.keyword) && !STORY_IND.has(r.industry));
 
 const reviewTile = (c, r) => `<li class="rv-tile"><a href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc(r.alt)}"><img src="${c.asset('img/reviews/' + r.img)}" width="${r.w}" height="${r.h}" alt="${esc(r.alt)}" loading="lazy" decoding="async"></a></li>`;

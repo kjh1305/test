@@ -140,7 +140,6 @@ export const RESULTS = [
   { industry: '식품 설비', keyword: '금속 검출기 · 중고 프로컷터', result: '상위노출 + 인기글 노출', quote: '네 감사합니다. 효과가 있네요', img: 'r092.webp' },
   { industry: '주방 후드', keyword: '서울 후드분해청소', result: '지역 키워드 포스팅 상위노출', quote: '노출이 되는 것 같아요, 만족하고 있습니다', img: 'r096.webp' },
   { industry: '학원', keyword: '수원 망포동 수학학원', result: '지역 학원 키워드 상위노출', quote: '감사 감사~ 짱', img: 'r077.webp' },
-  { industry: '자동차 딜러', keyword: '26년식 미니쿠퍼', result: '차종 키워드 검색 첫 화면 노출', quote: '오 좋네요 감사합니다', img: 'r063.webp' },
   { industry: null, keyword: null, result: '블로그 운영 후 문의 증가', quote: '덕분에 문의가 조금 늘어서 바쁘게 보내고 있습니다. 항상 감사해요~', img: 'r065.webp' },
   { industry: '도시락', keyword: '프리미엄 수제 도시락', result: '목표 키워드 상위노출', quote: '블로그 보는 재미를 느껴요', img: 'r062.webp' },
   { industry: '폐차', keyword: '인천 아반떼 폐차', result: '지역·차종 키워드 상단 노출', quote: null, img: 'r091.webp' },
@@ -185,12 +184,6 @@ export const STORIES = [
     post: ['p077.webp', 541, 200],
     chat: [['them', 'ㅎㅎ 힘찬 fighting으로 출발하자구요~~ Thank you!!'], ['them', '플레이스도 1등 올라갔어요 ㅎ 감사 감사~~'], ['me', '진짜요?'], ['them', '그러게요 ~~~짱']],
     chatImgs: [['c077-0.webp', 150, 70], ['c077-1.webp', 124, 34]] },
-  { id: 'car', chip: '자동차', industry: '수입차 딜러', keyword: '26년식 미니쿠퍼', badge: '검색 첫 화면', stat: ['첫 화면', '차종 검색 메인 노출'],
-    quote: '오 좋네요 ㅎㅎ 감사합니다!',
-    steps: [['한 일', '신형 차종 ‘26년식 미니쿠퍼’의 달라진 점을 정리한 글을 발행했습니다'], ['결과', '차종 검색 첫 화면(메인페이지)에 노출됐습니다'], ['공유', '노출된 화면을 캡처해 바로 딜러님께 보내 드렸습니다']],
-    post: ['p063.webp', 397, 108],
-    chat: [['me', '저희 지금 26년식 미니쿠퍼로 검색하면'], ['me', '메인페이지에 노출되는 중이에요!!'], ['them', '오 좋네요ㅎㅎ 감사합니다!']],
-    chatImgs: [['c063-0.webp', 230, 68], ['c063-1.webp', 164, 32]] },
   { id: 'lunch', chip: '음식 · 도시락', industry: '수제 도시락 · 케이터링', keyword: '프리미엄 수제 도시락', badge: '블로그 1번째', stat: ['1번째', '목표 검색어 맨 위'],
     quote: '블로그 보는 재미를 느끼고 있어요',
     steps: [['한 일', '대학교 회의 도시락 납품 현장을 ‘프리미엄 수제 도시락’ 글로 발행했습니다'], ['결과', '블로그 검색 1번째에 노출됐습니다'], ['그 뒤', '이웃이 늘고, 사장님이 블로그 보는 재미를 느끼신다고 하셨습니다']],
@@ -218,7 +211,7 @@ export const SHORTS = [
 
 /* 고객후기: 후기 이미지 70~80장을 받으면 { img, w, h, alt, industry } 로 채움.
    비어 있는 동안은 REVIEW_SLOTS 개수만큼 '후기 이미지 자리'가 나옵니다 */
-/* 후기 이미지 96장 (2026-11-16 받음). 업체명·블로그명·사람 이름·전화번호·프로필 사진은 모자이크 처리 (README '후기 이미지' 참고).
+/* 후기 이미지 96장 (2026-11-16 받음, 2026-11-17 업체 요청으로 미니쿠퍼 r063 제외 → 95장). 업체명·블로그명·사람 이름·전화번호·프로필 사진은 모자이크 처리 (README '후기 이미지' 참고).
    group: result = 성과 + 고객 대화를 한 장에 정리한 것, search = 검색 결과 화면 */
 export const REVIEWS = [
   { img: 'r001.webp', w: 526, h: 974, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
@@ -279,7 +272,6 @@ export const REVIEWS = [
   { img: 'r060.webp', w: 641, h: 883, group: 'search', alt: '네이버 검색 상위노출 화면 (업체명·개인정보 가림)' },
   { img: 'r061.webp', w: 1631, h: 814, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
   { img: 'r062.webp', w: 1556, h: 819, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
-  { img: 'r063.webp', w: 1164, h: 840, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
   { img: 'r064.webp', w: 1535, h: 819, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
   { img: 'r065.webp', w: 1192, h: 687, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
   { img: 'r066.webp', w: 1556, h: 808, group: 'result', alt: '성과와 고객 대화 캡처 (업체명·개인정보 가림)' },
@@ -323,7 +315,7 @@ export const REVIEW_SLOTS = 24;
 /* 후기 페이지 '검색 결과 화면'에 먼저 보여 줄 16장 (한 장짜리 검색 화면 중 깔끔한 것). 나머지는 '원본 캡처 전체 보기' 안에 */
 export const REVIEW_PICKS = ['r002.webp', 'r012.webp', 'r003.webp', 'r022.webp', 'r046.webp', 'r011.webp', 'r013.webp', 'r017.webp', 'r024.webp', 'r027.webp', 'r019.webp', 'r033.webp', 'r014.webp', 'r037.webp', 'r054.webp', 'r005.webp'];
 
-export const INDUSTRIES = ['인테리어 필름', '철거', '학원', '입주청소', '주방 후드', '식품 설비', '도시락 · 케이터링', '폐차', '자동차 딜러', '해외 배송', '폐기물 · 고철', '석면 해체', '전기공사', '산업 기계', '렌탈', '음식물처리기'];
+export const INDUSTRIES = ['인테리어 필름', '철거', '학원', '입주청소', '주방 후드', '식품 설비', '도시락 · 케이터링', '폐차', '해외 배송', '폐기물 · 고철', '석면 해체', '전기공사', '산업 기계', '렌탈', '음식물처리기'];
 
 /* 상품 안내 */
 export const PRICING = {
