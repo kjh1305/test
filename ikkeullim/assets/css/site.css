@@ -220,7 +220,8 @@ body.menu-open { overflow: hidden; }
 .nv-ours b { font-size: 13px; color: var(--sky); }
 
 /* 서비스 벤토 */
-.bento { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: minmax(220px, auto); gap: 14px; }
+.bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(220px, auto); gap: 14px; }
+.bento > .svc-card:nth-child(n+6) { grid-column: span 2; }
 .svc-card { position: relative; }
 .svc-card.is-big { grid-column: span 2; grid-row: span 2; }
 .svc-card a { position: relative; display: flex; flex-direction: column; height: 100%; padding: 30px; border: 1px solid var(--line); border-radius: var(--r); background: linear-gradient(160deg, var(--card-2), var(--card) 60%); overflow: hidden; transition: border-color .3s, transform .3s; }
@@ -558,6 +559,7 @@ p.ca-phone { font-size: 17px; font-weight: 500; }
   .why-arrow { left: 0; top: -15px; transform: rotate(90deg); }
   .nv-grid { grid-template-columns: 1fr; }
   .bento { grid-template-columns: 1fr 1fr; }
+  .bento > .svc-card:nth-child(n+6) { grid-column: auto; }
   .svc-card.is-big { grid-column: 1 / -1; grid-row: auto; }
   .res-grid, .price-grid, .work-grid { grid-template-columns: 1fr 1fr; }
   .steps { grid-template-columns: 1fr; gap: 0; }

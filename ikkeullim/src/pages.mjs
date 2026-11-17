@@ -156,7 +156,7 @@ export function home(c) {
   const services = `<section class="sec sec-alt" aria-labelledby="svc-title">
   <div class="wrap">
     <div class="sec-row">${secHead({ no: 2, title: ['필요한 만큼,', '한 팀이 맡습니다'], sub: '블로그 포스팅 한 건부터 블로그와 홈페이지를 함께 맡기는 통합 패키지까지 고를 수 있습니다.', id: 'svc-title' })}${btn(c.url('services/'), '서비스 전체 보기', { variant: 'ghost' })}</div>
-    <ul class="bento">${serviceCard(svc('total'), c, true)}${['posting', 'blog', 'web', 'blogdesign', 'video'].map(id => serviceCard(svc(id), c)).join('')}</ul>
+    <ul class="bento">${serviceCard(svc('total'), c, true)}${['posting', 'blog', 'web', 'blogdesign', 'video', 'press'].map(id => serviceCard(svc(id), c)).join('')}</ul>
   </div>
 </section>`;
 
@@ -372,7 +372,7 @@ export function contact(c) {
         <h2>상담은 이렇게 진행돼요</h2>
         <ol class="ca-steps">${CONTACT.steps.map(t => `<li>${t}</li>`).join('')}</ol>
       </div>
-      <dl class="ks-info" data-reveal><div><dt>운영시간</dt><dd>${val(CO.hours)}</dd></div><div><dt>이메일</dt><dd>${val(CO.email)}</dd></div></dl>
+      <dl class="ks-info" data-reveal><div><dt>전화</dt><dd>${val(CO.phone, p => `<a href="${telHref(p)}">${esc(p)}</a>`)}</dd></div><div><dt>운영시간</dt><dd>${val(CO.hours)}</dd></div><div><dt>이메일</dt><dd>${val(CO.email)}</dd></div></dl>
     </div>
   </div>
 </section>`;
