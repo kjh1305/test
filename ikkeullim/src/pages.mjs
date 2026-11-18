@@ -57,7 +57,7 @@ const resultCard = (c, r, { quoteFirst = false } = {}) => `<li class="res-card${
     ${r.keyword ? `<p class="res-kw">‘${esc(r.keyword)}’</p>` : ''}
     <p class="res-out">${esc(r.result)}</p>
     ${!quoteFirst && r.quote ? `<p class="res-say">“${esc(r.quote)}”</p>` : ''}
-    <a class="res-proof" href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc((r.industry || '') + ' 실제 화면 (업체명·개인정보 가림)')}">${icon('image')}실제 화면 보기</a>
+    <a class="res-proof" href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc((r.industry || '') + ' 실제 화면 (고객 이름·업체명 가림)')}">${icon('image')}실제 화면 보기</a>
   </div>
 </li>`;
 
