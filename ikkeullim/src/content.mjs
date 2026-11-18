@@ -315,6 +315,131 @@ export const REVIEWS = [
 ];
 export const REVIEW_SLOTS = 24;
 /* 홈 후기 띠에 먼저 보여 줄 것 (대화가 잘 보이는 것) */
+/* ===== 고객후기 · 포트폴리오 (2026-11-18 나눔) =====
+   받은 캡처 95장 중 대화 · 문의가 담긴 16장은 고객후기, 검색 결과 화면 79장은 포트폴리오.
+   문구는 캡처에 실제로 적힌 말만 (말투는 그대로, ㅎㅎ 같은 웃음만 뺌). 고객 이름 · 업체명은 이미지에서 가림 */
+export const TALK_TAGS = [
+  ['inq', '문의가 늘었어요'],
+  ['rank', '검색 상위에 올랐어요'],
+  ['deal', '계약 · 소개로 이어졌어요'],
+  ['good', '만족해요']
+];
+/* 대표님이 보내 주신 말: img = 원본 캡처(r###), crop = 대화 부분만 자른 것(assets/img/talk) */
+export const TALKS = [
+  { img: 'r093.webp', crop: ['k093.webp', 620, 738], industry: '철거 · 폐기물 수거', tag: 'inq', quote: '6개월 동안 통 전화 없다가 들어오는 이 느낌, 너무 좋아요', sub: '문의 전화 조금씩 들어오는 거 같군요' },
+  { img: 'r065.webp', crop: ['k065.webp', 900, 431], industry: '소음방지 바닥장판 · 바닥매트 시공', tag: 'inq', quote: '덕분에 문의가 조금 늘어서 바쁘게 보내고 있습니당', sub: '전화로 블로그 보고 연락드렸어요 하시거나 톡톡으로 문의하시더라구요' },
+  { img: 'r089.webp', crop: ['k089.webp', 900, 389], industry: '인테리어 필름', tag: 'deal', quote: '블로그 보고 바로 윗집에서 연락 와서 시공한 거예요', sub: '또 있으면 연결해 드릴게요' },
+  { img: 'r067.webp', crop: ['k067.webp', 271, 467], industry: '욕실 리모델링 · 인테리어', tag: 'inq', quote: '팀장님 덕분에 블로그가 커져서 요새 일이 정신없네요' },
+  { img: 'r077.webp', crop: ['k077.webp', 391, 720], industry: '수학학원', tag: 'rank', quote: '플레이스도 1등 올라갔어요, 감사 감사~' },
+  { img: 'r087.webp', crop: ['k087.webp', 393, 713], industry: '인테리어 · 사이니지 시공', tag: 'inq', quote: '그래도 블로그 보고 연락이 오네요, 감사해요' },
+  { img: 'r068.webp', crop: ['k068.webp', 412, 608], industry: '비둘기 오물 청소', tag: 'rank', quote: '와~ 덕분에 1위 하나 했네요~ 감사합니다!!' },
+  { img: 'r062.webp', crop: ['k062.webp', 344, 633], industry: '수제 도시락 · 케이터링', tag: 'good', quote: '블로그 보는 재미를 느끼고 있어요~ 오늘 좋은 느낌이에요' },
+  { img: 'r096.webp', crop: ['k096.webp', 370, 524], industry: '주방 후드 교체 · 청소', tag: 'good', quote: '노출이 되는 거 같아요, 만족하고 있습니다' },
+  { img: 'r092.webp', crop: ['k092.webp', 379, 551], industry: '중고 포장 · 식품 설비', tag: 'good', quote: '네 감사합니다. 효과가 있네요' },
+  { img: 'r021.webp', crop: ['k021.webp', 848, 369], industry: '고철 · 폐기물 처리', tag: 'good', quote: '글 좋습니다.', note: '임시저장한 원고를 발행 전에 보내 드리자 온 답장' },
+];
+/* 블로그를 보고 들어온 문의 (문의한 분 이름은 가림) */
+export const INQUIRIES = [
+  { img: 'r094.webp', crop: ['k094.webp', 731, 730], industry: '입주 · 이사 청소', channel: '네이버 톡톡', text: '원룸 청소 때문에 문의 남깁니다! 청소 가격이 어떻게 되는지 알 수 있을까요?' },
+  { img: 'r055.webp', crop: ['k055.webp', 675, 170], industry: '단체급식 · 도시락', channel: '네이버 톡톡', text: '구월동 입원실 있는 한의원인데요, 이동급식 관련해서 문의 사항이 있습니다' },
+  { img: 'r051.webp', crop: ['k051.webp', 900, 174], industry: '곰팡이 제거', channel: '네이버 톡톡', text: '안방 붙박이장 뒤 곰팡이 제거, 붙박이장 교체는 안 하시나요?' },
+  { img: 'r042.webp', crop: ['k042.webp', 460, 456], industry: '곰팡이 제거', channel: '네이버 톡톡', text: '싱크대 바닥 곰팡이 부분, 빠르면 빠를수록 좋음' },
+  { img: 'r081.webp', crop: ['k081.webp', 320, 580], industry: 'PC방', channel: '블로그 댓글', text: 'PC방 혜택도 받아지나요?' },
+];
+/* 포트폴리오: 검색 결과 화면. thumb = assets/img/reviews/s (폭 560) */
+export const WORK_CATS = [
+  ['demo', '철거 · 폐기물'],
+  ['build', '인테리어 · 시공'],
+  ['clean', '청소 · 방역'],
+  ['food', '음식 · 케이터링'],
+  ['machine', '기계 · 설비'],
+  ['car', '자동차'],
+  ['estate', '부동산'],
+  ['etc', '서비스 · 교육']
+];
+/* kw: 검색창에 실제로 입력된 검색어 / title: 검색어 대신 붙인 이름(전 · 후 비교 등) / badge: 이미지에 적힌 노출 결과(1위, 인기글, 순위권)만 */
+export const WORKS = [
+  { img: 'r001.webp', thumb: [526, 974], cat: 'machine', kw: ['포항 음식물처리기'] },
+  { img: 'r002.webp', thumb: [560, 565], cat: 'machine', kw: ['부산 음식물처리기'] },
+  { img: 'r003.webp', thumb: [560, 730], cat: 'estate', kw: ['부산 대저동 창고임대'] },
+  { img: 'r004.webp', thumb: [560, 870], cat: 'car', kw: ['제주 배터리교체'] },
+  { img: 'r005.webp', thumb: [560, 884], cat: 'build', kw: ['경기도 욕실바닥 줄눈시공'] },
+  { img: 'r006.webp', thumb: [560, 1005], cat: 'build', kw: ['에어비앤비 숙박 리모델링'] },
+  { img: 'r007.webp', thumb: [560, 1217], cat: 'car', kw: ['제주 차량구난'] },
+  { img: 'r008.webp', thumb: [560, 1217], cat: 'car', kw: ['서귀포 차량구난'] },
+  { img: 'r009.webp', thumb: [560, 950], cat: 'build', kw: ['인천 줄눈시공'] },
+  { img: 'r010.webp', thumb: [396, 755], cat: 'demo', kw: ['충북 폐기물'] },
+  { img: 'r011.webp', thumb: [560, 703], cat: 'food', kw: ['이동급식 전문'] },
+  { img: 'r012.webp', thumb: [560, 680], cat: 'food', kw: ['케이터링 이동급식'] },
+  { img: 'r013.webp', thumb: [560, 791], cat: 'demo', kw: ['충북 괴산 폐기물'] },
+  { img: 'r014.webp', thumb: [560, 777], cat: 'demo', kw: ['충북 사업장폐기물'] },
+  { img: 'r015.webp', thumb: [560, 618], cat: 'demo', kw: null, title: '블로그 화면 전 · 후' },
+  { img: 'r016.webp', thumb: [560, 890], cat: 'demo', kw: ['문산리 석면해체'] },
+  { img: 'r017.webp', thumb: [560, 884], cat: 'demo', kw: ['충주 슬레이트철거'] },
+  { img: 'r018.webp', thumb: [560, 905], cat: 'demo', kw: ['문산리 슬레이트철거'] },
+  { img: 'r019.webp', thumb: [523, 824], cat: 'demo', kw: ['대전 공장폐기물'] },
+  { img: 'r020.webp', thumb: [453, 835], cat: 'demo', kw: ['충주 석면'] },
+  { img: 'r022.webp', thumb: [560, 767], cat: 'demo', kw: ['충북 고철'] },
+  { img: 'r023.webp', thumb: [560, 701], cat: 'demo', kw: ['충주 고철'] },
+  { img: 'r024.webp', thumb: [560, 702], cat: 'clean', kw: ['음성 붙박이장 곰팡이제거'] },
+  { img: 'r025.webp', thumb: [560, 782], cat: 'clean', kw: ['용산 붙박이장 곰팡이제거'] },
+  { img: 'r026.webp', thumb: [524, 936], cat: 'clean', kw: ['용인 베란다 곰팡이제거'] },
+  { img: 'r027.webp', thumb: [560, 867], cat: 'machine', kw: ['해운대 업소용 음식물처리기'] },
+  { img: 'r028.webp', thumb: [560, 778], cat: 'car', kw: ['제주 배터리교체'] },
+  { img: 'r029.webp', thumb: [560, 790], cat: 'car', kw: ['제주 사고견인'] },
+  { img: 'r030.webp', thumb: [560, 859], cat: 'car', kw: ['제주 차량 구난'] },
+  { img: 'r031.webp', thumb: [560, 890], cat: 'car', kw: ['제주 타이어파스'] },
+  { img: 'r032.webp', thumb: [560, 462], cat: 'demo', kw: ['충주 고철'] },
+  { img: 'r033.webp', thumb: [560, 919], cat: 'food', kw: ['수제도시락 배송'] },
+  { img: 'r034.webp', thumb: [560, 781], cat: 'build', kw: ['일산 약국간판'] },
+  { img: 'r035.webp', thumb: [560, 906], cat: 'build', kw: ['헬스장 간판'] },
+  { img: 'r036.webp', thumb: [560, 767], cat: 'demo', kw: ['충북 고철'] },
+  { img: 'r037.webp', thumb: [510, 938], cat: 'food', kw: ['개업식 케이터링'] },
+  { img: 'r038.webp', thumb: [560, 453], cat: 'food', kw: null, title: '블로그 지수 화면' },
+  { img: 'r039.webp', thumb: [560, 643], cat: 'etc', kw: ['원격지원'] },
+  { img: 'r040.webp', thumb: [560, 726], cat: 'food', kw: ['인천 회사급식'] },
+  { img: 'r041.webp', thumb: [560, 801], cat: 'machine', kw: ['부산 음식물처리기'] },
+  { img: 'r043.webp', thumb: [560, 671], cat: 'estate', kw: ['덕은구 지식산업센터'] },
+  { img: 'r044.webp', thumb: [560, 835], cat: 'build', kw: ['대전 전기공사'] },
+  { img: 'r045.webp', thumb: [560, 727], cat: 'demo', kw: ['충주 고철폐기물'] },
+  { img: 'r046.webp', thumb: [560, 696], cat: 'demo', kw: ['충주 고철'] },
+  { img: 'r047.webp', thumb: [560, 830], cat: 'demo', kw: ['충주 석면해체'] },
+  { img: 'r048.webp', thumb: [560, 547], cat: 'food', kw: ['인천 단체급식'] },
+  { img: 'r049.webp', thumb: [560, 757], cat: 'food', kw: ['서울 단체도시락'] },
+  { img: 'r050.webp', thumb: [560, 829], cat: 'build', kw: ['서울 약국간판'] },
+  { img: 'r052.webp', thumb: [560, 822], cat: 'build', kw: ['세종 전기'] },
+  { img: 'r053.webp', thumb: [560, 904], cat: 'build', kw: ['세종 전기공사'] },
+  { img: 'r054.webp', thumb: [560, 839], cat: 'food', kw: ['서울 출장뷔페'] },
+  { img: 'r056.webp', thumb: [560, 880], cat: 'estate', kw: ['김해 창고매매'] },
+  { img: 'r057.webp', thumb: [560, 725], cat: 'clean', kw: ['군포 곰팡이제거'] },
+  { img: 'r058.webp', thumb: [560, 879], cat: 'food', kw: ['인천 케이터링'] },
+  { img: 'r059.webp', thumb: [560, 831], cat: 'food', kw: ['남양주 케이터링'] },
+  { img: 'r060.webp', thumb: [560, 771], cat: 'food', kw: ['수제도시락'] },
+  { img: 'r061.webp', thumb: [560, 279], cat: 'build', kw: ['대구 단열필름', '울산 단열필름'] },
+  { img: 'r064.webp', thumb: [560, 299], cat: 'build', kw: null, title: '공감 · 댓글 늘리기 전 · 후' },
+  { img: 'r066.webp', thumb: [560, 291], cat: 'clean', kw: ['부산 방역업체 추천', '부산 방역전문업체'] },
+  { img: 'r069.webp', thumb: [560, 703], cat: 'food', kw: ['수제도시락'] },
+  { img: 'r070.webp', thumb: [560, 694], cat: 'clean', kw: ['당진 곰팡이제거'] },
+  { img: 'r071.webp', thumb: [560, 826], cat: 'demo', kw: ['중화동 철거'] },
+  { img: 'r072.webp', thumb: [549, 808], cat: 'demo', kw: ['충북 폐기물처리'] },
+  { img: 'r073.webp', thumb: [560, 406], cat: 'estate', kw: ['김해 대동 창고임대', '부산 대동산단 임대'] },
+  { img: 'r074.webp', thumb: [558, 808], cat: 'estate', kw: ['김해 공장매매'], badge: '순위권' },
+  { img: 'r075.webp', thumb: [560, 785], cat: 'etc', kw: ['가차머신 렌탈'], badge: '인기글' },
+  { img: 'r076.webp', thumb: [560, 284], cat: 'machine', kw: ['배수용 펌프', '해수 펌프'] },
+  { img: 'r078.webp', thumb: [560, 347], cat: 'etc', kw: ['고양시 심리상담', '사춘기 자녀상담'] },
+  { img: 'r079.webp', thumb: [560, 396], cat: 'build', kw: ['경기 양중 곰방', '서울 양중 작업'] },
+  { img: 'r080.webp', thumb: [560, 290], cat: 'machine', kw: ['김해 와이어로프', '코팅 와이어'], badge: '1위' },
+  { img: 'r082.webp', thumb: [560, 483], cat: 'etc', kw: ['원격지원 프로그램'] },
+  { img: 'r083.webp', thumb: [560, 805], cat: 'clean', kw: ['충남 유품정리'] },
+  { img: 'r084.webp', thumb: [560, 310], cat: 'machine', kw: ['인버터 스크류 콤프레샤'], badge: '1위 · 인기글' },
+  { img: 'r085.webp', thumb: [560, 381], cat: 'build', kw: ['청주 인테리어 업체'] },
+  { img: 'r086.webp', thumb: [560, 427], cat: 'build', kw: ['3D 시안 인테리어'] },
+  { img: 'r088.webp', thumb: [560, 715], cat: 'etc', kw: ['목공 수업 현장'] },
+  { img: 'r090.webp', thumb: [560, 415], cat: 'build', kw: ['남양주 인테리어필름'] },
+  { img: 'r091.webp', thumb: [560, 809], cat: 'car', kw: ['인천 아반떼 폐차'] },
+  { img: 'r095.webp', thumb: [560, 447], cat: 'etc', kw: ['해외배송 전문', '캐나다 택배 배송'] },
+];
+
 /* 후기 페이지 '검색 결과 화면'에 먼저 보여 줄 16장 (한 장짜리 검색 화면 중 깔끔한 것). 나머지는 '원본 캡처 전체 보기' 안에 */
 export const REVIEW_PICKS = ['r002.webp', 'r012.webp', 'r003.webp', 'r022.webp', 'r046.webp', 'r011.webp', 'r013.webp', 'r017.webp', 'r024.webp', 'r027.webp', 'r019.webp', 'r033.webp', 'r014.webp', 'r037.webp', 'r054.webp', 'r005.webp'];
 
@@ -380,9 +505,9 @@ export const META = {
   home: '이끌림 마케팅: 마음을 끌고, 성과를 만듭니다. 블로그 포스팅, 블로그 활성화, 홈페이지 제작, 홈페이지 및 블로그 관리대행. 무료 상담·진단.',
   about: '이끌림 마케팅 회사소개: 검색되는 브랜드가 선택받는 브랜드입니다. 이끌림이 다른 점과 일하는 6단계.',
   services: '이끌림 서비스: 네이버가 글을 고르는 방식(C-RANK, D.I.A.+, 스마트블록)과 블로그 포스팅, 블로그 활성화, 홈페이지 제작, 블로그 스킨 디자인, 영상 제작, 언론 송출.',
-  portfolio: '이끌림 포트폴리오: 인테리어 필름, 철거, 학원, 입주청소 등 업종별 검색 상위노출 결과와 대표님 반응.',
+  portfolio: '이끌림 포트폴리오: 철거, 인테리어, 청소, 케이터링 등 업종별 네이버 검색 상위노출 화면.',
   pricing: '이끌림 상품 안내: 블로그 포스팅, 블로그 활성화, 홈페이지 & 브랜드 디자인, 영상 · 언론 송출, 통합 패키지. 가격은 무료 상담에서 안내합니다.',
-  reviews: '이끌림 고객후기: 먼저 맡겨 본 대표님들의 이야기.',
+  reviews: '이끌림 고객후기: 대표님들이 카카오톡으로 보내 주신 말과 블로그를 보고 들어온 실제 문의.',
   faq: '이끌림 자주 묻는 질문: 서비스, 진행, 결제.',
   contact: '이끌림 상담 안내: 카카오톡 채팅으로 편하게 상담하세요. 무료 블로그 진단도 카카오톡으로 신청합니다.'
 };

@@ -1,5 +1,5 @@
 /* 페이지: 홈, 회사소개, 서비스, 포트폴리오, 상품 안내, 고객후기, FAQ, 상담신청, 404 */
-import { CO, PH, SERVICES, WHY, METHOD, NAVER, PROCESS, ROLE, RESULTS, STORIES, VOICES, REVIEWS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
+import { CO, PH, SERVICES, WHY, METHOD, NAVER, PROCESS, ROLE, STORIES, VOICES, REVIEWS, TALK_TAGS, TALKS, INQUIRIES, WORK_CATS, WORKS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
 import { esc, br, ph, val, telHref, pad, icon, mark, btn, kakaoBtn, kakaoHref, secHead, page, pageHead, ctaBand } from './layout.mjs';
 
 const svc = id => SERVICES.find(s => s.id === id);
@@ -96,9 +96,6 @@ const storyBlock = (c, list = STORIES) => `<div class="st" data-stories>
   <div class="st-foot"><button type="button" class="st-next" data-st-next>다른 업종 사례 보기${icon('arrow')}</button><span class="st-count" data-st-count>1 / ${list.length}</span></div>
 </div>`;
 const voices = () => `<div class="vc" aria-label="대표님 한마디"><div class="vc-track">${[0, 1].map(k => `<ul${k ? ' aria-hidden="true"' : ''}>${VOICES.map(([w, t]) => `<li><p>“${esc(t)}”</p><span>${esc(w)}</span></li>`).join('')}</ul>`).join('')}</div></div>`;
-const resultList = list => `<ul class="res-wall">${list.map(r => `<li data-reveal><span class="rl-ind">${r.industry ? esc(r.industry) : '업종 비공개'}</span><span class="rl-kw">${r.keyword ? '‘' + esc(r.keyword) + '’' : ''}</span><span class="rl-out">${esc(r.result)}</span></li>`).join('')}</ul>`;
-const STORY_KW = new Set(STORIES.map(k => k.keyword)), STORY_IND = new Set(['철거', '인테리어 필름', '식품 설비', '주방 후드', '학원', '도시락']);
-const otherResults = () => RESULTS.filter(r => r.keyword && !STORY_KW.has(r.keyword) && !STORY_IND.has(r.industry));
 
 const reviewTile = (c, r) => `<li class="rv-tile"><a href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc(r.alt)}"><img src="${c.asset('img/reviews/' + r.img)}" width="${r.w}" height="${r.h}" alt="${esc(r.alt)}" loading="lazy" decoding="async"></a></li>`;
 const reviewTiles = (c, n, group) => {
@@ -106,6 +103,40 @@ const reviewTiles = (c, n, group) => {
   if (list.length) return list.slice(0, n).map(r => reviewTile(c, r)).join('');
   const hs = [340, 260, 300, 380, 280, 320];
   return Array.from({ length: n }, (_, i) => `<li class="rv-tile is-ph" style="--h:${hs[i % hs.length]}px"><span>${icon('image')}후기 이미지 ${pad(i + 1)}</span></li>`).join('');
+};
+
+/* ===== 고객후기 · 포트폴리오 공통: 고르기 버튼 (data-flt → data-flt-items 안의 data-f) ===== */
+const filterBar = (id, label, opts, total) => `<div class="flt" role="group" aria-label="${label}" data-flt="${id}">
+  <button type="button" aria-pressed="true" data-v="all">전체<span>${total}</span></button>${opts.map(([v, name, n]) => `<button type="button" aria-pressed="false" data-v="${v}">${name}<span>${n}</span></button>`).join('')}
+</div>`;
+const TAG_NAME = Object.fromEntries(TALK_TAGS), CAT_NAME = Object.fromEntries(WORK_CATS);
+
+/* 고객후기: 대표님이 보내 주신 말 (말이 먼저, 실제 대화 캡처는 아래) */
+const talkCard = (c, t) => `<li class="tk" data-f="${t.tag}">
+  <p class="tk-tag">${TAG_NAME[t.tag]}</p>
+  <blockquote class="tk-quote"><p>${esc(t.quote)}</p></blockquote>
+  ${t.sub ? `<p class="tk-sub">“${esc(t.sub)}”</p>` : ''}${t.note ? `<p class="tk-note">${esc(t.note)}</p>` : ''}
+  <p class="tk-who"><span class="tk-av" aria-hidden="true">${esc(t.industry.slice(0, 1))}</span><span><b>${esc(t.industry)}</b> 대표님</span></p>
+  <a class="tk-shot" href="${c.asset('img/reviews/' + t.img)}" data-lb data-cap="${esc(t.industry)} 대표님과 나눈 카카오톡 (고객 이름·업체명 가림)"><img src="${c.asset('img/talk/' + t.crop[0])}" width="${t.crop[1]}" height="${t.crop[2]}" alt="${esc(t.industry)} 대표님과 나눈 실제 카카오톡 대화" loading="lazy" decoding="async"><span class="tk-zoom">${icon('image')}원본 캡처 보기</span></a>
+</li>`;
+/* 고객후기: 블로그를 보고 들어온 문의 */
+const inqCard = (c, q) => `<li class="iq" data-reveal>
+  <p class="iq-head"><span class="iq-ch">${icon('chat')}${esc(q.channel)}</span><span class="iq-ind">${esc(q.industry)}</span></p>
+  <p class="iq-bub">${esc(q.text)}</p>
+  <a class="iq-shot" href="${c.asset('img/reviews/' + q.img)}" data-lb data-cap="${esc(q.industry)} 업체로 들어온 ${esc(q.channel)} 문의 (문의한 분 이름 가림)"><img src="${c.asset('img/talk/' + q.crop[0])}" width="${q.crop[1]}" height="${q.crop[2]}" alt="${esc(q.industry)} 업체로 들어온 실제 ${esc(q.channel)} 문의 화면" loading="lazy" decoding="async"></a>
+</li>`;
+/* 포트폴리오: 검색 결과 화면 사진첩 (전체 보기에서는 업종을 섞어서) */
+const workOrder = () => {
+  const by = WORK_CATS.map(([v]) => WORKS.filter(w => w.cat === v)), out = [];
+  for (let i = 0; out.length < WORKS.length; i++) by.forEach(l => { if (l[i]) out.push(l[i]); });
+  return out;
+};
+const workCard = (c, w) => {
+  const name = w.kw ? w.kw.map(k => `‘${k}’`).join(' · ') : w.title;
+  return `<li class="pf" data-f="${w.cat}">
+  <a class="pf-shot" href="${c.asset('img/reviews/' + w.img)}" data-lb data-cap="${esc(name)} ${w.kw ? '검색 결과' : ''} (고객 이름·업체명 가림)"><img src="${c.asset('img/reviews/s/' + w.img)}" width="${w.thumb[0]}" height="${w.thumb[1]}" alt="${esc(name)} ${w.kw ? '네이버 검색 결과 화면' : '화면'}" loading="lazy" decoding="async">${w.badge ? `<span class="pf-badge">${icon('star')}${esc(w.badge)}</span>` : ''}</a>
+  <div class="pf-cap">${w.kw ? `<p class="pf-kw">${w.kw.map(k => `<span>${icon('search')}${esc(k)}</span>`).join('')}</p>` : `<p class="pf-kw is-title">${esc(w.title)}</p>`}<p class="pf-cat">${CAT_NAME[w.cat]}</p></div>
+</li>`;
 };
 
 /* 번호 + 꼬리표가 붙은 3단 목록. cycle이면 칸 사이에 화살표, 아래에 '순환' 띠 */
@@ -257,12 +288,19 @@ export function services(c) {
 
 /* ================= 포트폴리오 ================= */
 export function portfolio(c) {
-  const results = `<section class="sec sec-first">
+  const kwCount = new Set(WORKS.flatMap(w => w.kw || []).map(k => k.replace(/\s/g, ''))).size;
+  const cats = WORK_CATS.map(([v, n]) => [v, n, WORKS.filter(w => w.cat === v).length]);
+  const gallery = `<section class="sec sec-first">
   <div class="wrap">
-    ${secHead({ title: '함께한 결과', sub: '업종을 골라 실제 검색 화면과 대표님 반응을 확인해 보세요.' })}
-    ${storyBlock(c)}
-    <h3 class="res-list-title">그 밖의 상위노출 사례</h3>
-    ${resultList(otherResults())}
+    <dl class="pf-stats" data-reveal>
+      <div><dt>검색 결과 화면</dt><dd>${WORKS.length}<span>장</span></dd></div>
+      <div><dt>업종 묶음</dt><dd>${WORK_CATS.length}<span>개</span></dd></div>
+      <div><dt>노출된 검색어</dt><dd>${kwCount}<span>개</span></dd></div>
+    </dl>
+    ${filterBar('pf', '업종 골라 보기', cats, WORKS.length)}
+    <ul class="pf-wall" data-flt-items="pf" data-flt-limit="16">${workOrder().map(w => workCard(c, w)).join('')}</ul>
+    <div class="pf-more" hidden><button type="button" class="btn btn-ghost" data-flt-more="pf">검색 결과 화면 더 보기<span>${WORKS.length - 16}장</span></button></div>
+    <p class="pf-note">모두 받은 캡처 그대로입니다. 고객 이름과 업체명만 가렸고, 누르면 원본 크기로 볼 수 있습니다.</p>
   </div>
 </section>`;
   const works = `<section class="sec sec-alt">
@@ -271,7 +309,7 @@ export function portfolio(c) {
     <ul class="work-grid">${Array.from({ length: 3 }, (_, i) => `<li class="work" data-reveal><div class="work-shot"><span>${icon('image')}제작 사례 ${pad(i + 1)}</span></div><p class="work-name">${ph('업체 · 업종')}</p></li>`).join('')}</ul>
   </div>
 </section>`;
-  return page(c, { title: '포트폴리오', desc: META.portfolio, bodyClass: 'p-portfolio', body: pageHead(c, { kicker: '포트폴리오', title: ['검색 첫 화면이', '증명합니다'], lede: '함께한 업체의 검색 노출 결과, 숏폼 영상, 제작 사례를 모았습니다.' }) + results + works + lightbox() + ctaBand(c) });
+  return page(c, { title: '포트폴리오', desc: META.portfolio, bodyClass: 'p-portfolio', body: pageHead(c, { kicker: '포트폴리오', title: ['검색 첫 화면이', '증명합니다'], lede: '이끌림이 쓴 글이 실제 네이버 검색 결과에 오른 화면입니다. 업종을 골라 보세요.' }) + gallery + works + ctaBand(c) + lightbox() });
 }
 
 /* ================= 상품 안내 ================= */
@@ -314,23 +352,21 @@ export function pricing(c) {
 
 /* ================= 고객후기 ================= */
 export function reviews(c) {
+  const tags = TALK_TAGS.map(([v, n]) => [v, n, TALKS.filter(t => t.tag === v).length]);
   const body = `<section class="sec sec-first">
   <div class="wrap">
-    ${secHead({ title: '우리 업종도 될까요?', sub: '업종을 골라 보세요. 어떤 고민이 있었고, 무엇을 했고, 검색에서 어떻게 보였는지, 대표님이 뭐라고 하셨는지 그대로 보여 드립니다.' })}
-    ${storyBlock(c)}
+    ${secHead({ title: '대표님이 보내 주신 말', sub: '함께 일하며 카카오톡으로 받은 말을 그대로 옮겼습니다. 아래는 그 대화의 실제 캡처입니다.' })}
+    ${filterBar('tk', '반응 골라 보기', tags, TALKS.length)}
+    <ul class="tk-wall" data-flt-items="tk">${TALKS.map(t => talkCard(c, t)).join('')}</ul>
   </div>
 </section>
-<section class="sec sec-alt sec-voices">
-  <div class="wrap">${secHead({ title: '대표님 한마디', sub: '카카오톡으로 받은 말을 그대로 옮겼습니다.' })}</div>
-  ${voices()}
-</section>
-<section class="sec">
+<section class="sec sec-alt">
   <div class="wrap">
-    ${secHead({ title: '이 업종들도 검색 첫 화면에', sub: '업종과 목표 검색어, 결과입니다.' })}
-    ${resultList(otherResults())}
+    ${secHead({ title: '블로그를 보고 들어온 문의', sub: '대표님 업체로 실제로 들어온 톡톡 · 댓글 문의입니다. 문의한 분의 이름은 가렸습니다.' })}
+    <ul class="iq-wall">${INQUIRIES.map(q => inqCard(c, q)).join('')}</ul>
   </div>
 </section>`;
-  return page(c, { title: '고객후기', desc: META.reviews, bodyClass: 'p-reviews', body: pageHead(c, { kicker: '고객후기', title: ['먼저 맡겨 본', '대표님들의 이야기'], lede: '검색 상위노출 결과와 그 뒤에 들어온 문의, 대표님들의 반응을 모았습니다.' }) + body + lightbox() + ctaBand(c) });
+  return page(c, { title: '고객후기', desc: META.reviews, bodyClass: 'p-reviews', body: pageHead(c, { kicker: '고객후기', title: ['먼저 맡겨 본', '대표님들의 이야기'], lede: '숫자보다 먼저, 대표님들이 직접 하신 말을 보여 드립니다.' }) + body + ctaBand(c) + lightbox() });
 }
 
 /* ================= FAQ ================= */

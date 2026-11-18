@@ -195,13 +195,34 @@
     });
   });
 
+  /* 고르기 버튼 (고객후기: 반응 / 포트폴리오: 업종) */
+  $$('[data-flt]').forEach(function (bar) {
+    var id = bar.getAttribute('data-flt'), box = $('[data-flt-items="' + id + '"]'), btns = $$('button', bar);
+    if (!box) return;
+    var limit = +box.getAttribute('data-flt-limit') || 0, more = $('[data-flt-more="' + id + '"]'), open = !limit, v = 'all';
+    var apply = function () {
+      $$('[data-f]', box).forEach(function (it, i) { it.hidden = (v !== 'all' && it.getAttribute('data-f') !== v) || (v === 'all' && !open && i >= limit); });
+      if (more) more.parentNode.hidden = open || v !== 'all';
+    };
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        v = b.getAttribute('data-v');
+        btns.forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        apply();
+      });
+    });
+    if (more) more.addEventListener('click', function () { open = true; apply(); var n = $$('[data-f]', box)[limit]; if (n) { var a = n.querySelector('a'); if (a) a.focus({ preventScroll: true }); } });
+    apply();
+  });
+
   /* 후기 크게 보기 */
   var dlg = $('[data-lb-dialog]');
   var shots = $$('[data-lb]');
   if (dlg && shots.length && dlg.showModal) {
     var lbImg = $('[data-lb-img]', dlg), lbCap = $('[data-lb-cap]', dlg), cur = 0, opener = null;
-    var show = function (i) { cur = (i + shots.length) % shots.length; var a = shots[cur]; lbImg.src = a.getAttribute('href'); lbImg.alt = a.getAttribute('data-cap') || ''; lbCap.textContent = (cur + 1) + ' / ' + shots.length; };
-    shots.forEach(function (a, i) { a.addEventListener('click', function (e) { e.preventDefault(); opener = a; show(i); dlg.showModal(); }); });
+    var vis = shots; /* 같은 섹션에서 보이는 것만 넘겨 보기 (고르기 버튼으로 숨긴 것은 뺌) */
+    var show = function (i) { cur = (i + vis.length) % vis.length; var a = vis[cur]; lbImg.src = a.getAttribute('href'); lbImg.alt = a.getAttribute('data-cap') || ''; lbCap.textContent = (a.getAttribute('data-cap') || '') + '  ·  ' + (cur + 1) + ' / ' + vis.length; };
+    shots.forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); opener = a; var sc = a.closest('section') || document.body; vis = shots.filter(function (x) { return sc.contains(x) && x.offsetParent !== null; }); show(Math.max(0, vis.indexOf(a))); dlg.showModal(); }); });
     $('[data-lb-prev]', dlg).addEventListener('click', function () { show(cur - 1); });
     $('[data-lb-next]', dlg).addEventListener('click', function () { show(cur + 1); });
     $('[data-lb-close]', dlg).addEventListener('click', function () { dlg.close(); });
