@@ -253,10 +253,6 @@ body.menu-open { overflow: hidden; }
 a.res-shot { cursor: zoom-in; overflow: hidden; }
 a.res-shot:hover img { transform: scale(1.03); }
 .res-quote { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 15px; color: var(--text); }
-.short-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 300px)); gap: 20px; }
-.short video { display: block; width: 100%; height: auto; aspect-ratio: 404 / 720; border: 1px solid var(--line); border-radius: var(--r); background: #000; }
-.short-title { margin-top: 12px; font-size: 17px; font-weight: 700; }
-.short-meta { font-size: 14px; color: var(--muted); }
 .res-body { padding: 22px 24px 26px; display: grid; gap: 4px; }
 .res-ind { font-size: 13.5px; color: var(--sky); }
 .res-kw { font-size: 19px; font-weight: 700; }

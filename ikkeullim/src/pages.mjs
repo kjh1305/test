@@ -1,5 +1,5 @@
 /* 페이지: 홈, 회사소개, 서비스, 포트폴리오, 상품 안내, 고객후기, FAQ, 상담신청, 404 */
-import { CO, PH, SERVICES, WHY, METHOD, NAVER, PROCESS, ROLE, RESULTS, SHORTS, STORIES, VOICES, REVIEWS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
+import { CO, PH, SERVICES, WHY, METHOD, NAVER, PROCESS, ROLE, RESULTS, STORIES, VOICES, REVIEWS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
 import { esc, br, ph, val, telHref, pad, icon, mark, btn, kakaoBtn, kakaoHref, secHead, page, pageHead, ctaBand } from './layout.mjs';
 
 const svc = id => SERVICES.find(s => s.id === id);
@@ -265,19 +265,13 @@ export function portfolio(c) {
     ${resultList(otherResults())}
   </div>
 </section>`;
-  const shorts = `<section class="sec sec-alt">
-  <div class="wrap">
-    ${secHead({ title: '숏폼 제작 사례', sub: '제품 홍보부터 시공 현장까지, 숏츠 · 릴스 · 클립용 세로 영상을 만듭니다. 업체명과 연락처는 가렸습니다.' })}
-    <ul class="short-grid">${SHORTS.map(v => `<li class="short" data-reveal><video src="${c.asset('video/' + v.file)}" poster="${c.asset('video/' + v.poster)}" controls playsinline preload="none" width="404" height="720"></video><p class="short-title">${v.title}</p><p class="short-meta">${v.meta}</p></li>`).join('')}</ul>
-  </div>
-</section>`;
-  const works = `<section class="sec">
+  const works = `<section class="sec sec-alt">
   <div class="wrap">
     ${secHead({ title: '홈페이지 · 블로그 디자인 제작 사례', sub: '제작 사례 이미지를 받으면 채울 자리입니다.' })}
     <ul class="work-grid">${Array.from({ length: 3 }, (_, i) => `<li class="work" data-reveal><div class="work-shot"><span>${icon('image')}제작 사례 ${pad(i + 1)}</span></div><p class="work-name">${ph('업체 · 업종')}</p></li>`).join('')}</ul>
   </div>
 </section>`;
-  return page(c, { title: '포트폴리오', desc: META.portfolio, bodyClass: 'p-portfolio', body: pageHead(c, { kicker: '포트폴리오', title: ['검색 첫 화면이', '증명합니다'], lede: '함께한 업체의 검색 노출 결과, 숏폼 영상, 제작 사례를 모았습니다.' }) + results + shorts + works + lightbox() + ctaBand(c) });
+  return page(c, { title: '포트폴리오', desc: META.portfolio, bodyClass: 'p-portfolio', body: pageHead(c, { kicker: '포트폴리오', title: ['검색 첫 화면이', '증명합니다'], lede: '함께한 업체의 검색 노출 결과, 숏폼 영상, 제작 사례를 모았습니다.' }) + results + works + lightbox() + ctaBand(c) });
 }
 
 /* ================= 상품 안내 ================= */
