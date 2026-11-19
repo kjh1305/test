@@ -774,6 +774,25 @@ p.ca-phone { font-size: 17px; font-weight: 500; }
   .vc li { width: 270px; }
 }
 @media (max-width: 420px) { .res-wall { grid-template-columns: 1fr; } }
+/* 대표님 한마디 비교 (2026-11-19): A 실제 말풍선 / B 글 + 작은 캡처 */
+.vc-cmp + .vc-cmp { margin-top: 36px; }
+.vc-label { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; font-size: 14.5px; font-weight: 600; color: var(--text-2); }
+.vc-label b { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: var(--sky); color: var(--sky-ink); font-size: 14px; }
+.vc-bubble li.vb { width: 340px; min-height: 0; padding: 0; overflow: hidden; }
+.vb a { display: flex; flex-direction: column; height: 100%; color: inherit; cursor: zoom-in; }
+.vb-chat { flex: 1; display: flex; align-items: center; min-height: 170px; padding: 22px 18px; background: #B2C7D9; }
+.vb-chat img { display: block; max-width: 100%; height: auto; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .08)); }
+.vb-who { display: flex; align-items: center; gap: 10px; padding: 14px 18px; font-size: 14px; font-weight: 600; color: var(--text-2); }
+.vb-av { display: grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 10px; background: #fff; font-size: 13px; font-weight: 800; color: #2F6DB5; }
+:root[data-theme="light"] .vb-av { background: #E3ECF7; }
+.vb a:hover .vb-chat, .vb a:focus-visible .vb-chat { background: #A9C0D4; }
+.vc-thumb li.vt { width: 340px; }
+.vt-foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
+.vt-foot > span { font-size: 13.5px; color: var(--sky); }
+.vt-shot { position: relative; flex: none; display: block; width: 76px; height: 76px; border-radius: 12px; overflow: hidden; background: #B2C7D9; box-shadow: 0 0 0 1px var(--line-2); cursor: zoom-in; }
+.vt-shot img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+.vt-shot span { position: absolute; inset: auto 0 0; padding: 3px 0; background: rgba(6, 7, 9, .7); color: #fff; font-size: 11px; font-weight: 600; text-align: center; }
+@media (max-width: 640px) { .vc-bubble li.vb, .vc-thumb li.vt { width: 288px; } .vb-chat { min-height: 150px; } }
 @media (prefers-reduced-motion: reduce) { .vc-track { animation: none; } .vc { overflow-x: auto; } .st-panel { animation: none; } }
 
 /* ===== 고르기 버튼 (고객후기 · 포트폴리오) ===== */

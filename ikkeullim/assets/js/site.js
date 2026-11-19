@@ -222,7 +222,7 @@
     var lbImg = $('[data-lb-img]', dlg), lbCap = $('[data-lb-cap]', dlg), cur = 0, opener = null;
     var vis = shots; /* 같은 섹션에서 보이는 것만 넘겨 보기 (고르기 버튼으로 숨긴 것은 뺌) */
     var show = function (i) { cur = (i + vis.length) % vis.length; var a = vis[cur]; lbImg.src = a.getAttribute('href'); lbImg.alt = a.getAttribute('data-cap') || ''; lbCap.textContent = (a.getAttribute('data-cap') || '') + '  ·  ' + (cur + 1) + ' / ' + vis.length; };
-    shots.forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); opener = a; var sc = a.closest('section') || document.body; vis = shots.filter(function (x) { return sc.contains(x) && x.offsetParent !== null; }); show(Math.max(0, vis.indexOf(a))); dlg.showModal(); }); });
+    shots.forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); opener = a; var sc = a.closest('[data-lb-scope]') || a.closest('section') || document.body; vis = shots.filter(function (x) { return sc.contains(x) && x.offsetParent !== null && !x.closest('[aria-hidden="true"]'); }); var at = vis.indexOf(a); if (at < 0) at = vis.findIndex(function (x) { return x.getAttribute('href') === a.getAttribute('href'); }); show(Math.max(0, at)); dlg.showModal(); }); });
     $('[data-lb-prev]', dlg).addEventListener('click', function () { show(cur - 1); });
     $('[data-lb-next]', dlg).addEventListener('click', function () { show(cur + 1); });
     $('[data-lb-close]', dlg).addEventListener('click', function () { dlg.close(); });

@@ -95,7 +95,14 @@ const storyBlock = (c, list = STORIES) => `<div class="st" data-stories>
   <div class="st-stage">${list.map((k, i) => storyPanel(c, k, i)).join('')}</div>
   <div class="st-foot"><button type="button" class="st-next" data-st-next>다른 업종 사례 보기${icon('arrow')}</button><span class="st-count" data-st-count>1 / ${list.length}</span></div>
 </div>`;
-const voices = () => `<div class="vc" aria-label="대표님 한마디"><div class="vc-track">${[0, 1].map(k => `<ul${k ? ' aria-hidden="true"' : ''}>${VOICES.map(([w, t]) => `<li><p>“${esc(t)}”</p><span>${esc(w)}</span></li>`).join('')}</ul>`).join('')}</div></div>`;
+/* 대표님 한마디 흐르는 띠. kind: 'text'(글만) / 'bubble'(A: 실제 말풍선) / 'thumb'(B: 글 + 작은 실제 캡처) */
+const voiceItem = (c, v, kind, dup) => {
+  const t = dup ? ' tabindex="-1"' : '', cap = esc(v.industry) + ' 대표님과 나눈 카카오톡 (고객 이름·업체명 가림)';
+  if (kind === 'bubble') return `<li class="vb"><a href="${c.asset('img/reviews/' + v.img)}" data-lb data-cap="${cap}"${t}><span class="vb-chat"><img src="${c.asset('img/voice/' + v.bubble[0])}" width="${Math.round(v.bubble[1] * v.bubble[3])}" height="${Math.round(v.bubble[2] * v.bubble[3])}" alt="${esc(v.industry)} 대표님이 보낸 카카오톡: ${esc(v.text)}" loading="lazy" decoding="async"></span><span class="vb-who"><span class="vb-av" aria-hidden="true">${esc(v.industry.slice(0, 1))}</span>${esc(v.industry)} 대표님</span></a></li>`;
+  if (kind === 'thumb') return `<li class="vt"><p>“${esc(v.text)}”</p><div class="vt-foot"><span>${esc(v.industry)}</span><a class="vt-shot" href="${c.asset('img/reviews/' + v.img)}" data-lb data-cap="${cap}"${t}><img src="${c.asset('img/talk/' + v.talk)}" alt="" loading="lazy" decoding="async"><span>실제 대화</span></a></div></li>`;
+  return `<li><p>“${esc(v.text)}”</p><span>${esc(v.industry)}</span></li>`;
+};
+const voices = (c, kind = 'text') => `<div class="vc vc-${kind}" aria-label="대표님 한마디"><div class="vc-track">${[0, 1].map(k => `<ul${k ? ' aria-hidden="true"' : ''}>${VOICES.map(v => voiceItem(c, v, kind, k)).join('')}</ul>`).join('')}</div></div>`;
 
 const reviewTile = (c, r) => `<li class="rv-tile"><a href="${c.asset('img/reviews/' + r.img)}" data-lb data-cap="${esc(r.alt)}"><img src="${c.asset('img/reviews/' + r.img)}" width="${r.w}" height="${r.h}" alt="${esc(r.alt)}" loading="lazy" decoding="async"></a></li>`;
 const reviewTiles = (c, n, group) => {
@@ -210,7 +217,9 @@ export function home(c) {
   <div class="wrap">
     <div class="sec-row">${secHead({ no: 5, title: ['먼저 맡겨 본', '대표님들의 한마디'], sub: '카카오톡으로 받은 말을 그대로 옮겼습니다.', id: 'rv-title' })}${btn(c.url('reviews/'), '고객후기 전체 보기', { variant: 'ghost' })}</div>
   </div>
-  ${voices()}
+  <!-- 2026-11-19 비교용: A(실제 말풍선) / B(글 + 작은 실제 캡처). 고르면 하나만 남김 -->
+  <div class="vc-cmp" data-lb-scope><p class="wrap vc-label"><b>A</b>실제 카톡 말풍선</p>${voices(c, 'bubble')}</div>
+  <div class="vc-cmp" data-lb-scope><p class="wrap vc-label"><b>B</b>다듬은 글 + 작은 실제 캡처</p>${voices(c, 'thumb')}</div>
 </section>`;
 
   return page(c, { title: '', desc: META.home, bodyClass: 'p-home', body: hero + marquee + why + services + results + process + reviews + lightbox() + ctaBand(c) });
