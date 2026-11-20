@@ -297,15 +297,9 @@ export function services(c) {
 
 /* ================= 포트폴리오 ================= */
 export function portfolio(c) {
-  const kwCount = new Set(WORKS.flatMap(w => w.kw || []).map(k => k.replace(/\s/g, ''))).size;
   const cats = WORK_CATS.map(([v, n]) => [v, n, WORKS.filter(w => w.cat === v).length]);
   const gallery = `<section class="sec sec-first">
   <div class="wrap">
-    <dl class="pf-stats" data-reveal>
-      <div><dt>검색 결과 화면</dt><dd>${WORKS.length}<span>장</span></dd></div>
-      <div><dt>업종 묶음</dt><dd>${WORK_CATS.length}<span>개</span></dd></div>
-      <div><dt>노출된 검색어</dt><dd>${kwCount}<span>개</span></dd></div>
-    </dl>
     ${filterBar('pf', '업종 골라 보기', cats, WORKS.length)}
     <ul class="pf-wall" data-flt-items="pf" data-flt-limit="16">${workOrder().map(w => workCard(c, w)).join('')}</ul>
     <div class="pf-more" hidden><button type="button" class="btn btn-ghost" data-flt-more="pf">검색 결과 화면 더 보기<span>${WORKS.length - 16}장</span></button></div>

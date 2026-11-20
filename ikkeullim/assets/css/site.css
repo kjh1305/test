@@ -837,12 +837,6 @@ p.ca-phone { font-size: 17px; font-weight: 500; }
 .iq-shot:hover img { transform: scale(1.02); }
 
 /* ===== 포트폴리오: 검색 결과 사진첩 ===== */
-.pf-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0 0 36px; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.pf-stats > div { padding: 22px 4px; }
-.pf-stats > div + div { padding-left: 28px; border-left: 1px solid var(--line); }
-.pf-stats dt { font-size: 14.5px; color: var(--text-2); }
-.pf-stats dd { margin: 6px 0 0; font-family: var(--serif); font-size: clamp(44px, 5vw, 64px); line-height: 1; color: var(--text); }
-.pf-stats dd span { margin-left: 6px; font-family: 'Pretendard', sans-serif; font-size: 18px; color: var(--text-2); }
 .pf-wall { columns: 4 230px; column-gap: 16px; }
 .pf { break-inside: avoid; margin-bottom: 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); overflow: hidden; }
 .pf-shot { position: relative; display: block; background: #fff; cursor: zoom-in; overflow: hidden; }
@@ -878,7 +872,4 @@ p.ca-phone { font-size: 17px; font-weight: 500; }
   .pf { margin-bottom: 10px; }
   .pf-cap { padding: 10px 12px 12px; }
   .pf-kw { font-size: 14px; }
-  .pf-stats > div + div { padding-left: 14px; }
-  .pf-stats dt { font-size: 13px; }
-  .pf-stats dd span { font-size: 15px; }
 }
