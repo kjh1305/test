@@ -26,7 +26,7 @@ export const CO = {
   email: 'wormsdl5@nate.com',
   address: '경기도 수원시 권선구 상탑로 102, 1층',
   ceo: '심재근',
-  bizNo: null,        // 사업자등록번호: 업체가 사업자등록증을 보내 주기로 함 (건설업 면허는 없음)
+  bizNo: '135-24-80553',  // 사업자등록증(2026-11-24 받음)의 등록번호. 건설업 면허는 없음
   hours: '24시간 연중무휴',
   blog: 'https://m.blog.naver.com/tk51123',
   blogName: '네이버 블로그'
