@@ -1,10 +1,11 @@
 /* 페이지 본문: 홈, 회사소개, 사업분야, 시공사례, 견적문의, 없는 주소 */
-import { CO, PH, SERVICES, PRINCIPLES, PROCESS, RESTORE_CHECK, PROJECTS, FAQ, POPUPS, HOME, ABOUT, CONTACT, META } from './content.mjs';
+import { CO, PH, SERVICES, PRINCIPLES, PROCESS, RESTORE_CHECK, PROJECTS, BLOG_POSTS, FAQ, POPUPS, HOME, ABOUT, CONTACT, META } from './content.mjs';
 import { icon } from './art.mjs';
 import { page, pageHead, ctaBand, btn, secHead, photo, ph, val, telHref, smsHref, br, esc } from './layout.mjs';
 
 const SVC = Object.fromEntries(SERVICES.map(s => [s.id, s]));
 const coverOf = p => (p.gallery || []).find(x => x.img === p.cover) || (p.gallery || [])[0] || p;
+const day = d => (d ? `<time datetime="${d}">${d.replaceAll('-', '.')}</time>` : '');
 
 /* 시공사례 카드 (홈): 대표 사진, 이름, 위치, 공사 */
 const caseCard = (c, p) => `<li class="case">
@@ -12,7 +13,7 @@ const caseCard = (c, p) => `<li class="case">
     ${photo(c, coverOf(p), { label: '현장 사진' })}
     <h3 class="case-title">${p.title ? esc(p.title) : ph('현장 이름: ' + PH)}</h3>
   </a>
-  <p class="case-meta">${p.where ? esc(p.where) : ph()}<span aria-hidden="true">|</span>${(p.services || []).slice(0, 2).map(id => SVC[id].name).join(', ')}</p>
+  <p class="case-meta">${day(p.date)}<span aria-hidden="true">|</span>${p.where ? esc(p.where) : ph()}<span aria-hidden="true">|</span>${(p.services || []).slice(0, 1).map(id => SVC[id].name).join(', ')}</p>
 </li>`;
 
 /* 진행 과정 (순서가 있는 내용이라 번호를 붙임) */
@@ -150,7 +151,12 @@ export function about(c) {
   const map = `<section class="sec" id="location">
   <div class="wrap split">
     ${secHead({ title: ABOUT.mapTitle })}
-    <div class="ph-box ph-box-map" data-reveal>${icon('pin')}<b>주소와 지도</b><span>${PH}</span></div>
+    <div class="map-card" data-reveal>
+      ${icon('pin')}
+      <p class="map-addr">${val(CO.address)}</p>
+      <p class="map-note">현장 견적은 전국 어디든 직접 찾아가서 봅니다.</p>
+      ${CO.address ? `<div class="map-btns">${btn('https://map.naver.com/p/search/' + encodeURIComponent(CO.address), '네이버 지도', { variant: 'line', ext: true })}${btn('https://map.kakao.com/link/search/' + encodeURIComponent(CO.address), '카카오맵', { variant: 'line', ext: true })}</div>` : ''}
+    </div>
   </div>
 </section>`;
 
@@ -165,7 +171,7 @@ export function business(c) {
   const chips = `<nav class="chips" aria-label="사업분야 바로가기"><div class="wrap"><ul>${SERVICES.map(s => `<li><a href="#${s.id}">${s.name}</a></li>`).join('')}</ul></div></nav>`;
   const related = s => {
     const ps = PROJECTS.filter(p => (p.services || []).includes(s.id) && p.id);
-    return ps.length ? `<p class="biz-related"><span>관련 사례</span>${ps.map(p => `<a href="${c.url('projects/')}#${p.id}">${esc(p.title)}</a>`).join('')}</p>` : '';
+    return ps.length ? `<p class="biz-related"><span>관련 사례</span>${ps.slice(0, 4).map(p => `<a href="${c.url('projects/')}#${p.id}">${esc(p.title)}</a>`).join('')}${ps.length > 4 ? `<a href="${c.url('projects/')}">시공사례 전체 보기</a>` : ''}</p>` : '';
   };
   const restoreCheck = `<div class="biz-extra" data-reveal><h3>원상복구 전에 확인할 것</h3><ul class="check-grid">${RESTORE_CHECK.map(x => `<li>${icon('check')}<div><b>${x.title}</b><p>${x.text}</p></div></li>`).join('')}</ul></div>`;
   const secs = SERVICES.map(s => `<section class="biz" id="${s.id}">
@@ -201,12 +207,12 @@ export function business(c) {
 
 /* ================= 시공사례 ================= */
 export function projects(c) {
-  const chips = `<nav class="chips" aria-label="시공사례 바로가기"><div class="wrap"><ul>${PROJECTS.map(p => p.id ? `<li><a href="#${p.id}">${esc(p.title || '사례')}</a></li>` : '').join('')}</ul></div></nav>`;
+  const chips = `<nav class="chips" aria-label="시공사례 바로가기"><div class="wrap"><ul>${PROJECTS.map(p => p.id ? `<li><a href="#${p.id}">${esc(p.chip || p.title || '사례')}</a></li>` : '').join('')}</ul></div></nav>`;
   const block = (p, i) => `<section class="pj${i % 2 ? ' sec-stone' : ''}" id="${p.id}">
   <div class="wrap">
     <div class="pj-head" data-reveal>
       <div>
-        <p class="pj-where">${p.where ? esc(p.where) : ph()}</p>
+        <p class="pj-where">${p.where ? esc(p.where) : ph()}${p.date ? `<span aria-hidden="true">·</span>${day(p.date)}` : ''}</p>
         <h2 class="pj-title">${p.title ? esc(p.title) : ph('현장 이름: ' + PH)}</h2>
         <p class="pj-summary">${p.summary || ph()}</p>
         ${p.url ? `<p class="pj-link">${btn(p.url, '블로그 글 보기', { variant: 'line', ext: true })}</p>` : ''}
@@ -220,8 +226,9 @@ export function projects(c) {
     <ul class="gallery" data-gallery>${(p.gallery || []).map(x => `<li><a href="${c.asset('img/' + x.img)}" data-lb data-cap="${esc(x.alt)}"><img src="${c.asset('img/' + x.img)}" width="${x.w}" height="${x.h}" alt="${esc(x.alt)}" loading="lazy" decoding="async"></a><span>${esc(x.alt)}</span></li>`).join('')}</ul>
   </div>
 </section>`;
-  const more = `<section class="sec sec-top-line"><div class="wrap more-in" data-reveal>
-    <p>더 많은 현장은 블로그에 올리고 있습니다.</p>${btn(CO.blog, '블로그에서 더 보기', { variant: 'line', ext: true })}
+  const more = `<section class="sec sec-top-line" id="blog"><div class="wrap">
+    <div class="sec-row">${secHead({ title: '블로그 최근 글', sub: '현장 소식은 네이버 블로그에 먼저 올립니다. 글을 누르면 블로그에서 열립니다.' })}${btn(CO.blog, '블로그에서 더 보기', { variant: 'line', ext: true })}</div>
+    <ul class="blog-list" data-reveal>${BLOG_POSTS.map(b => `<li><a href="${esc(b.url)}" target="_blank" rel="noopener"><span class="bl-meta">${day(b.date)}<span>${esc(b.cat)}</span></span><span class="bl-title">${esc(b.title)}</span>${icon('external')}</a></li>`).join('')}</ul>
   </div></section>`;
   return page(c, {
     title: '시공사례', desc: META.projects, bodyClass: 'p-projects',
