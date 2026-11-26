@@ -166,4 +166,44 @@
       }
     }
   }
+
+  /* 첫 화면 사진 넘김: 막대가 다 차면 다음 사진. 멈춤 단추, 막대 눌러 고르기, 휴대폰은 옆으로 밀기.
+     화면에서 벗어나면 잠시 멈춤. 움직임 줄이기 설정이면 자동으로 넘기지 않음(막대 애니메이션이 없어서) */
+  var hs = $('[data-slides]');
+  if (hs) {
+    var slides = $$('.hs-slide', hs), dots = $$('.hs-dot', hs);
+    var nowEl = $('[data-slides-now]', hs), pauseBtn = $('[data-slides-pause]', hs);
+    var cur = 0;
+    var go = function (n) {
+      n = (n + slides.length) % slides.length;
+      if (n === cur) return;
+      slides[cur].classList.remove('is-on'); slides[cur].setAttribute('aria-hidden', 'true');
+      dots[cur].classList.remove('is-on'); dots[cur].removeAttribute('aria-current');
+      cur = n;
+      slides[cur].classList.add('is-on'); slides[cur].removeAttribute('aria-hidden');
+      dots[cur].classList.add('is-on'); dots[cur].setAttribute('aria-current', 'true');
+      nowEl.textContent = (cur < 9 ? '0' : '') + (cur + 1);
+    };
+    if (slides.length > 1) {
+      $('.hs-bar', hs).hidden = false;
+      dots.forEach(function (d, i) {
+        d.addEventListener('click', function () { go(i); });
+        d.firstChild.addEventListener('animationend', function () { if (i === cur) go(cur + 1); });
+      });
+      pauseBtn.addEventListener('click', function () {
+        var p = hs.classList.toggle('is-paused');
+        pauseBtn.setAttribute('aria-label', p ? '사진 넘김 다시 시작' : '사진 넘김 멈추기');
+      });
+      var x0 = null, y0 = 0;
+      hs.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+      hs.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) go(cur + (dx < 0 ? 1 : -1));
+      }, { passive: true });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) { hs.classList.toggle('is-away', !es[0].isIntersecting); }).observe(hs);
+      }
+    }
+  }
 })();

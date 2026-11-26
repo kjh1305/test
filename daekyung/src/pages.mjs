@@ -22,7 +22,17 @@ const principleList = () => `<ol class="principles">${PRINCIPLES.map((v, i) => `
 
 /* ================= 홈 ================= */
 export function home(c) {
-  const [im1, im2] = HOME.heroImgs;
+  /* 첫 화면 사진 넘김: JS가 없으면 첫 장만 보이고 아래 막대는 숨김 */
+  const slides = HOME.heroImgs;
+  const n2 = i => String(i).padStart(2, '0');
+  const heroMedia = `<div class="hero-media hs" data-slides role="region" aria-roledescription="carousel" aria-label="시공 분위기 사진">
+      <div class="hs-frame">${slides.map((s, i) => `<figure class="hs-slide${i ? '' : ' is-on'}" role="group" aria-roledescription="slide" aria-label="${slides.length}장 중 ${i + 1}번째"${i ? ' aria-hidden="true"' : ''}><img src="${c.asset('img/' + s.img)}" srcset="${c.asset('img/' + s.img.replace(/\.webp$/, '-800.webp'))} 800w, ${c.asset('img/' + s.img)} ${s.w}w" sizes="(max-width: 960px) calc(100vw - 40px), 48vw" width="${s.w}" height="${s.h}" alt="${esc(s.alt)}" style="object-position:${s.pos || '50%'} 50%"${i ? ' loading="lazy"' : ' fetchpriority="high"'} decoding="async"></figure>`).join('')}</div>
+      <div class="hs-bar" hidden>
+        <button class="hs-pause" type="button" data-slides-pause aria-label="사진 넘김 멈추기">${icon('pause')}${icon('play')}</button>
+        <p class="hs-count" aria-hidden="true"><b data-slides-now>01</b><span>/</span>${n2(slides.length)}</p>
+        <div class="hs-dots">${slides.map((s, i) => `<button class="hs-dot${i ? '' : ' is-on'}" type="button" aria-label="${i + 1}번째 사진 보기"${i ? '' : ' aria-current="true"'}><i></i></button>`).join('')}</div>
+      </div>
+    </div>`;
   const hero = `<section class="hero" aria-labelledby="hero-title">
   <div class="wrap hero-in">
     <div class="hero-copy">
@@ -32,10 +42,7 @@ export function home(c) {
       <div class="hero-btns">${btn(c.url('contact/'), '견적문의 · 방문 예약', { cls: 'btn-lg' })}${CO.phone ? `<a class="btn btn-line btn-lg" href="${telHref(CO.phone)}">${icon('phone')}${esc(CO.phone)}</a>` : ''}</div>
       ${CO.hours ? `<p class="hero-hours"><span class="dot" aria-hidden="true"></span>${CO.hours} 상담</p>` : ''}
     </div>
-    <div class="hero-media">
-      ${photo(c, im1, { cls: 'hero-ph1', ratio: '4 / 5', eager: true })}
-      ${photo(c, im2, { cls: 'hero-ph2', ratio: '1 / 1' })}
-    </div>
+    ${heroMedia}
   </div>
   <div class="wrap"><dl class="facts">${HOME.facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl></div>
 </section>`;

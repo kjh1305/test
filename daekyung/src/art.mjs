@@ -10,6 +10,8 @@ const I = {
   blog: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12.5h8M8 16h5"/>',
   user: '<circle cx="12" cy="8.5" r="3.5"/><path d="M5 20a7 7 0 0114 0"/>',
   chevron: '<path d="M9 6l6 6-6 6"/>',
+  pause: '<path d="M9 6v12M15 6v12"/>',
+  play: '<path d="M8.5 5.8v12.4L18.5 12z"/>',
   close: '<path d="M6 6l12 12M18 6L6 18"/>',
   arrowUpRight: '<path d="M7 17L17 7M8 7h9v9"/>',
   up: '<path d="M12 19V5M6 11l6-6 6 6"/>'
