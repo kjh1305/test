@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>T26 펼침 · 이끌림 홈페이지 템플릿</title>
+<meta name="description" content="이끌림 홈페이지 템플릿 T26 펼침: 아래로 내리면 작은 사진이 화면 가득 펼쳐지고, 글이 한 단어씩 떠오르고, 사진이 옆으로 흘러가는 스몰웨딩·전시·스튜디오형 홈페이지. 글과 사진은 예시입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;400&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../tpl.css">
+<style>
+:root {
+  --ivory: #fbf7f1;
+  --ink: #1f2a2e;
+  --ink-2: #5f6a6d;
+  --sea: #0f5c6e;
+  --gold: #b48a43;
+  --line: #e7ddd0;
+  --serif: "Noto Serif KR", serif;
+  --num: "Cormorant Garamond", serif;
+  --sans: "Pretendard", -apple-system, "Apple SD Gothic Neo", sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--ivory); color: var(--ink); font: 400 17px/1.8 var(--sans); word-break: keep-all; overflow-wrap: break-word; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--sea); outline-offset: 3px; }
+h1, h2, h3 { margin: 0; font-family: var(--serif); font-weight: 200; letter-spacing: -0.03em; line-height: 1.3; }
+p { margin: 0; }
+.wrap { width: min(1200px, 100% - 48px); margin: 0 auto; }
+
+.hd { position: relative; z-index: 20; }
+.hd .wrap { display: flex; align-items: center; gap: 28px; height: 72px; }
+.logo { font-family: var(--serif); font-weight: 400; font-size: 22px; text-decoration: none; }
+.nav { margin-left: auto; display: flex; gap: 26px; font-size: 15px; }
+.nav a { text-decoration: none; }
+
+/* 1. 펼쳐지는 사진 */
+.unfold { position: relative; height: 260vh; }
+.unfold-stick { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; place-items: center; }
+.unfold-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; clip-path: inset(var(--t, 42%) var(--s, 37%) var(--b, 16%) var(--s, 37%) round var(--r, 400px)); will-change: clip-path; }
+.unfold-txt { position: absolute; left: 0; right: 0; top: 8vh; z-index: 2; text-align: center; opacity: var(--o, 1); transform: translateY(var(--ty, 0)); pointer-events: none; }
+.unfold-txt h1 { font-size: clamp(42px, 6.4vw, 104px); line-height: 1.12; }
+.unfold-txt p { margin-top: 14px; font-size: 18px; color: var(--ink-2); }
+.unfold-stick::after { content: ""; position: absolute; inset: 0; background: rgba(20,28,30,calc(var(--o2, 0) * .3)); pointer-events: none; }
+.unfold-end { position: relative; z-index: 2; text-align: center; color: #fff; opacity: var(--o2, 0); transform: translateY(calc((1 - var(--o2, 0)) * 30px)); text-shadow: 0 2px 30px rgba(0,0,0,.35); pointer-events: none; }
+.unfold-end p { font-family: var(--serif); font-weight: 200; font-size: clamp(34px, 4.6vw, 72px); line-height: 1.25; }
+.unfold-end small { display: block; margin-top: 14px; font-family: var(--sans); font-size: 17px; }
+.hint { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); font-size: 13px; color: var(--ink-2); opacity: var(--o, 1); }
+.hint::after { content: ""; display: block; width: 1px; height: 40px; margin: 10px auto 0; background: var(--ink-2); animation: drop 1.6s ease-in-out infinite; transform-origin: top; }
+@keyframes drop { 0% { transform: scaleY(0); } 50% { transform: scaleY(1); } 100% { transform: scaleY(0); transform-origin: bottom; } }
+
+/* 2. 한 단어씩 떠오르는 글 */
+.words { padding: 160px 0; }
+.words p { max-width: 20em; font-family: var(--serif); font-weight: 200; font-size: clamp(30px, 3.8vw, 54px); line-height: 1.55; }
+.words .w { opacity: .14; transition: opacity .35s; }
+.words .w.on { opacity: 1; }
+.words .w.mark { color: var(--sea); }
+
+/* 3. 옆으로 흐르는 사진 */
+.hscroll { position: relative; height: var(--h, 400vh); background: var(--ink); color: var(--ivory); }
+.hscroll-stick { position: sticky; top: 0; height: 100vh; overflow: hidden; display: flex; flex-direction: column; justify-content: center; }
+.hscroll h2 { padding: 0 max(24px, calc((100vw - 1200px) / 2)); font-size: clamp(36px, 4.4vw, 60px); margin-bottom: 32px; }
+.track { display: flex; gap: 28px; padding: 0 max(24px, calc((100vw - 1200px) / 2)); will-change: transform; }
+.card { flex: none; width: min(380px, 70vw); margin: 0; }
+.card:nth-child(even) { margin-top: 60px; }
+.card img { width: 100%; aspect-ratio: 9 / 11; object-fit: cover; border-radius: 4px; }
+.card figcaption { display: flex; gap: 14px; align-items: baseline; margin-top: 14px; }
+.card .n { font-family: var(--num); font-style: italic; font-size: 34px; color: var(--gold); line-height: 1; }
+.card b { font-weight: 600; }
+.card span { display: block; font-size: 14px; color: #b9c2c4; }
+.progress { position: absolute; left: max(24px, calc((100vw - 1200px) / 2)); right: max(24px, calc((100vw - 1200px) / 2)); bottom: 40px; height: 1px; background: rgba(251,247,241,.25); }
+.progress i { display: block; height: 100%; width: calc(var(--p, 0) * 100%); background: var(--gold); }
+
+/* 4. 패키지 */
+.sec { padding: 140px 0; }
+.head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 48px; }
+.head h2 { font-size: clamp(38px, 4.6vw, 64px); }
+.head p { color: var(--ink-2); max-width: 26em; }
+.pack { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ink); }
+.pack > li { padding: 36px 32px 40px 0; }
+.pack > li + li { padding-left: 32px; border-left: 1px solid var(--line); }
+.pack .num { font-family: var(--num); font-style: italic; font-size: 72px; line-height: 1; color: var(--sea); }
+.pack .num small { font-family: var(--sans); font-style: normal; font-size: 15px; color: var(--ink-2); margin-left: 6px; }
+.pack h3 { margin-top: 14px; font-size: 26px; font-weight: 400; }
+.pack ul { margin: 18px 0 0; padding: 0; list-style: none; color: var(--ink-2); }
+.pack ul li { padding: 5px 0; }
+.pack .won { margin-top: 22px; font-weight: 700; }
+
+.day { background: #f1e9dd; }
+.day ol { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(6, 1fr); }
+.day li { position: relative; padding-top: 28px; padding-right: 16px; }
+.day li::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform .8s calc(var(--i) * .12s); }
+.day li::after { content: ""; position: absolute; top: -5px; left: 0; width: 11px; height: 11px; border-radius: 50%; background: var(--sea); transform: scale(0); transition: transform .4s calc(var(--i) * .12s + .3s); }
+.day.on li::before { transform: scaleX(1); }
+.day.on li::after { transform: scale(1); }
+.day time { font-family: var(--num); font-style: italic; font-size: 28px; color: var(--gold); }
+.day b { display: block; font-weight: 600; margin-top: 4px; }
+.day p { color: var(--ink-2); font-size: 15px; }
+
+.ask .wrap { display: grid; grid-template-columns: 1fr 1.2fr; gap: 72px; }
+.ask h2 { font-size: clamp(38px, 4.6vw, 64px); }
+.ask .lede { margin-top: 18px; color: var(--ink-2); }
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 24px; }
+.form label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: var(--ink-2); }
+.form .full { grid-column: 1 / -1; }
+.form input, .form select, .form textarea { padding: 12px 0; border: 0; border-bottom: 1px solid var(--ink); background: transparent; font: 400 17px var(--sans); color: var(--ink); border-radius: 0; }
+.form textarea { min-height: 100px; resize: vertical; }
+.form input:focus, .form select:focus, .form textarea:focus { outline: none; border-bottom: 2px solid var(--sea); }
+.send { display: inline-flex; align-items: center; justify-content: center; min-height: 58px; padding: 0 36px; border: 0; border-radius: 999px; background: var(--sea); color: #fff; font: 600 16px var(--sans); cursor: pointer; }
+.send:hover { background: #0a4553; }
+.form output { color: var(--sea); }
+
+.ft { padding: 40px 0 56px; border-top: 1px solid var(--line); font-size: 14px; color: var(--ink-2); }
+.ft .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+/* 움직임 줄이기: 펼침·가로 흐름 없이 차례로 보여 줌 */
+.still .unfold { height: auto; }
+.still .unfold-stick { position: relative; height: 80vh; }
+.still .unfold-img { clip-path: none; }
+.still .unfold-txt { color: #fff; text-shadow: 0 2px 30px rgba(0,0,0,.4); }
+.still .unfold-txt p { color: #fff; }
+.still .words .w { opacity: 1; }
+.still .hscroll { height: auto; padding: 96px 0; }
+.still .hscroll-stick { position: relative; height: auto; }
+.still .track { overflow-x: auto; transform: none !important; padding-bottom: 16px; }
+.still .progress, .still .hint::after { display: none; }
+.still .day li::before, .still .day li::after { transform: none; transition: none; }
+
+@media (max-width: 700px) { .unfold-img { clip-path: inset(var(--t, 42%) var(--s, 20%) var(--b, 16%) var(--s, 20%) round var(--r, 400px)); } }
+@media (max-width: 960px) {
+  .nav a:not(:last-child) { display: none; }
+  .pack { grid-template-columns: 1fr; }
+  .pack > li, .pack > li + li { padding: 28px 0; border-left: 0; border-bottom: 1px solid var(--line); }
+  .day ol { grid-template-columns: 1fr 1fr; gap: 32px 0; }
+  .ask .wrap { grid-template-columns: 1fr; gap: 40px; }
+  .sec, .words { padding: 96px 0; }
+}
+@media (max-width: 520px) {
+  .wrap { width: calc(100% - 32px); }
+  .form { grid-template-columns: 1fr; }
+  .card:nth-child(even) { margin-top: 30px; }
+}
+</style>
+</head>
+<body>
+<div class="tpl-bar" role="note">이끌림 홈페이지 템플릿 <b>T26 펼침</b><span class="tpl-note">글과 사진은 예시입니다. 업체 내용으로 바꿔 드립니다.</span><span class="tpl-links"><a href="../">템플릿 목록</a><a class="tpl-go" href="../../../contact/">이 템플릿으로 상담</a></span></div>
+
+<header class="hd"><div class="wrap"><a class="logo" href="#">바다정원</a><nav class="nav" aria-label="주 메뉴"><a href="#scenes">장면</a><a href="#pack">패키지</a><a href="#ask">상담 신청</a></nav></div></header>
+
+<main>
+  <section class="unfold" id="unfold">
+    <div class="unfold-stick">
+      <img class="unfold-img" src="img/bench.webp" width="1800" height="1100" alt="바다를 바라보는 벤치에 나란히 앉은 두 사람">
+      <div class="unfold-txt"><h1>두 사람의 하루를<br>바다 앞에서</h1><p>하객 80명까지, 하루 한 쌍만 받는 스몰웨딩 하우스</p></div>
+      <div class="unfold-end" aria-hidden="true"><p>오후 다섯 시,<br>바다가 가장 고운 시간</p><small>예식은 해 지기 한 시간 전에 시작합니다</small></div>
+      <p class="hint">아래로 내려 보세요</p>
+    </div>
+  </section>
+
+  <section class="words">
+    <div class="wrap"><p id="words">하루에 한 쌍만 받습니다. 앞 예식에 쫓기지 않고, 하객과 오래 이야기하고, 바다로 해가 지는 시간까지 그 공간은 두 사람의 것입니다.</p></div>
+  </section>
+
+  <section class="hscroll" id="scenes">
+    <div class="hscroll-stick">
+      <h2>바다정원의 장면들</h2>
+      <div class="track" id="track">
+        <figure class="card"><img src="img/heart.webp" width="900" height="1100" alt="노을 앞에서 손으로 만든 하트" loading="lazy"><figcaption><span class="n">01</span><div><b>해 질 녘 서약</b><span>야외 잔디 예식</span></div></figcaption></figure>
+        <figure class="card"><img src="img/dusk.webp" width="900" height="1100" alt="분홍빛 노을이 비친 바닷가" loading="lazy"><figcaption><span class="n">02</span><div><b>노을 스냅</b><span>예식 후 30분 촬영</span></div></figcaption></figure>
+        <figure class="card"><img src="img/cave.webp" width="900" height="1100" alt="바위 동굴 사이로 보이는 푸른 바다" loading="lazy"><figcaption><span class="n">03</span><div><b>바위 산책길</b><span>하객 대기 공간</span></div></figcaption></figure>
+        <figure class="card"><img src="img/light.webp" width="900" height="1100" alt="별이 뜬 하늘 아래 하얀 등대" loading="lazy"><figcaption><span class="n">04</span><div><b>등대 앞 2부</b><span>밤 파티</span></div></figcaption></figure>
+        <figure class="card"><img src="img/fire.webp" width="900" height="1100" alt="밤바다 위로 터지는 불꽃" loading="lazy"><figcaption><span class="n">05</span><div><b>마지막 불꽃</b><span>선택 옵션</span></div></figcaption></figure>
+        <figure class="card"><img src="img/city.webp" width="900" height="1100" alt="해 질 녘 도시와 바다가 보이는 높은 곳의 풍경" loading="lazy"><figcaption><span class="n">06</span><div><b>도시가 보이는 루프톱</b><span>비 오는 날 실내 예식</span></div></figcaption></figure>
+      </div>
+      <div class="progress" aria-hidden="true"><i id="prog"></i></div>
+    </div>
+  </section>
+
+  <section class="sec" id="pack">
+    <div class="wrap">
+      <div class="head"><h2>패키지</h2><p>꽃, 식사, 촬영, 진행을 한 번에 맡깁니다. 가격은 예시입니다.</p></div>
+      <ul class="pack">
+        <li><p class="num">30<small>명까지</small></p><h3>가족 예식</h3><ul><li>잔디 예식 1시간</li><li>코스 식사</li><li>스냅 200컷</li></ul><p class="won">0,000만 원부터</p></li>
+        <li><p class="num">50<small>명까지</small></p><h3>정원 예식</h3><ul><li>예식과 2부 파티 3시간</li><li>뷔페 식사, 웰컴 드링크</li><li>스냅, 영상 하이라이트</li></ul><p class="won">0,000만 원부터</p></li>
+        <li><p class="num">80<small>명까지</small></p><h3>하루 전체</h3><ul><li>오후부터 밤까지 단독 사용</li><li>꽃 장식 맞춤</li><li>불꽃 옵션</li></ul><p class="won">상담 후 안내</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec day" id="day">
+    <div class="wrap">
+      <div class="head"><h2>예식 날 하루</h2></div>
+      <ol>
+        <li style="--i:0"><time>14:00</time><b>도착 · 준비</b><p>신부 대기실, 메이크업</p></li>
+        <li style="--i:1"><time>16:00</time><b>하객 맞이</b><p>웰컴 드링크</p></li>
+        <li style="--i:2"><time>17:00</time><b>예식</b><p>잔디 정원</p></li>
+        <li style="--i:3"><time>17:40</time><b>노을 스냅</b><p>바닷가 30분</p></li>
+        <li style="--i:4"><time>18:30</time><b>식사 · 2부</b><p>테라스 파티</p></li>
+        <li style="--i:5"><time>20:30</time><b>마무리</b><p>불꽃 옵션</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec ask" id="ask">
+    <div class="wrap">
+      <div><h2>상담 신청</h2><p class="lede">원하는 날짜와 하객 수를 남겨 주시면 비어 있는 날을 확인해 연락드립니다. 방문 상담 때는 정원을 직접 걸어 보실 수 있습니다.</p></div>
+      <form class="form" novalidate>
+        <label>이름<input name="name" autocomplete="name" required></label>
+        <label>연락처<input name="tel" type="tel" autocomplete="tel" placeholder="010-0000-0000" required></label>
+        <label>원하는 날짜<input name="date" type="date"></label>
+        <label>하객 수<select name="guests"><option>30명 이하</option><option>31–50명</option><option>51–80명</option></select></label>
+        <label class="full">하고 싶은 이야기<textarea name="msg" placeholder="꿈꾸는 예식 분위기, 궁금한 점"></textarea></label>
+        <div class="full" style="display:flex;flex-wrap:wrap;align-items:center;gap:18px"><button class="send" type="submit">상담 신청하기</button><output aria-live="polite"></output></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="ft"><div class="wrap"><p>바다정원 · 대표 홍길동 · 사업자등록번호 000-00-00000 · 강원도 OO시 OO해안로 00</p><p>010-0000-0000</p></div></footer>
+
+<script>
+(function () {
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* 글을 단어로 나눔 */
+  var wp = document.getElementById('words'), marks = ['한', '쌍만', '두', '사람의'];
+  wp.setAttribute('aria-label', wp.textContent);
+  wp.innerHTML = wp.textContent.split(' ').map(function (w) { return '<span class="w' + (marks.indexOf(w.replace(/[.,]/g, '')) > -1 ? ' mark' : '') + '" aria-hidden="true">' + w + '</span>'; }).join(' ');
+  var ws = [].slice.call(wp.querySelectorAll('.w'));
+  var day = document.getElementById('day');
+  if (still) { document.documentElement.classList.add('still'); day.classList.add('on'); return; }
+
+  var unfold = document.getElementById('unfold'), stick = unfold.querySelector('.unfold-stick');
+  var hs = document.getElementById('scenes'), track = document.getElementById('track'), prog = document.getElementById('prog');
+  function size() { hs.style.setProperty('--h', (track.scrollWidth - window.innerWidth + window.innerHeight * 1.6) + 'px'); }
+  size(); window.addEventListener('resize', size);
+  var clamp = function (v) { return Math.max(0, Math.min(1, v)); };
+  function frame() {
+    var vh = window.innerHeight;
+    /* 1. 사진 펼치기 */
+    var r = unfold.getBoundingClientRect(), p = clamp(-r.top / (r.height - vh));
+    var e = 1 - Math.pow(1 - p, 3);
+    stick.style.setProperty('--t', (42 * (1 - e)) + '%');
+    stick.style.setProperty('--b', (16 * (1 - e)) + '%');
+    stick.style.setProperty('--s', ((innerWidth < 700 ? 20 : 37) * (1 - e)) + '%');
+    stick.style.setProperty('--r', (400 * (1 - e)) + 'px');
+    stick.style.setProperty('--o', Math.max(0, 1 - p * 2.6).toFixed(2));
+    stick.style.setProperty('--ty', (-p * 120) + 'px');
+    stick.style.setProperty('--o2', clamp((p - .55) / .3).toFixed(2));
+    /* 2. 단어 켜기 */
+    var wr = wp.getBoundingClientRect(), wpc = clamp((vh * .8 - wr.top) / (wr.height + vh * .35));
+    var n = Math.round(wpc * ws.length);
+    ws.forEach(function (w, i) { w.classList.toggle('on', i < n); });
+    /* 3. 옆으로 흐르기 */
+    var hr = hs.getBoundingClientRect(), hp = clamp(-hr.top / (hr.height - vh));
+    track.style.transform = 'translateX(' + (-hp * (track.scrollWidth - window.innerWidth)) + 'px)';
+    prog.style.setProperty('--p', hp.toFixed(3));
+    /* 4. 하루 줄 긋기 */
+    if (day.getBoundingClientRect().top < vh * .75) day.classList.add('on');
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(function () { frame(); ticking = false; }); } }, { passive: true });
+  frame();
+})();
+document.querySelector('.form').addEventListener('submit', function (e) {
+  e.preventDefault(); var f = e.target, out = f.querySelector('output');
+  if (!f.name.value.trim() || !f.tel.value.trim()) { out.textContent = '이름과 연락처를 적어 주세요.'; (f.name.value.trim() ? f.tel : f.name).focus(); return; }
+  out.textContent = '템플릿 미리보기라 실제로 보내지지는 않습니다.';
+});
+</script>
+</body>
+</html>

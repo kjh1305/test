@@ -61,10 +61,11 @@
 요청: 홈페이지 제작을 원하는 업체가 템플릿을 보고 기본 화면을 고를 수 있게, 서로 다른 느낌으로 20개 정도. 업체가 원하는 느낌을 말로만 설명하면 너무 추상적이라 고를 거리가 필요함.
 
 - 1차로 4개(T01~T04)를 만들어 보여 드림. 업체 답(2026-11-26): 포트폴리오 안에 넣고, 상담 중에 템플릿 모음 페이지를 보여 주며 고르게 함. 나머지는 알아서, 많을수록 좋음 → 24개로 정함(상담 중 한 화면에서 고르기 좋은 양, 분위기로 골라 보기). 처음 계획한 16개에 반려동물, 꽃집, 자동차 정비, 요가·필라테스를 더함
+- 추가 요청(2026-11-26): '좀 특이하고 애니메이션도 화려하게, 훅 끌리게' → 움직이는 템플릿 6개(T25~T30)를 더해 모두 30개. 분위기 버튼 '움직이는'으로 따로 골라 봄. 템플릿마다 큰 움직임 하나씩: 네온 간판 켜짐, 스크롤로 사진 펼치기와 가로 흐름, 교차하는 글자 띠와 따라오는 버튼, 떠다니는 사진과 배경색 전환, 스크롤로 그려지는 길과 트럭, 쾅 들어오는 글자와 운동 타이머. 기기에서 '움직임 줄이기'를 켠 사람에게는 움직임 없이 보임
 - 템플릿은 `portfolio/templates/tNN/index.html` 한 파일에 CSS·JS를 모두 넣은 한 장짜리 화면입니다(빌드 없이 그대로 고침). 사이트 빌드(`node build.mjs`)는 모음 페이지(`portfolio/templates/index.html`)만 만듭니다
 - 위쪽 안내 막대(`portfolio/templates/tpl.css`): 템플릿 번호와 이름, '글과 사진은 예시', 템플릿 목록, 이 템플릿으로 상담(상담 안내 페이지)
 - 상호, 글, 가격, 전화번호(02-000-0000, 010-0000-0000), 주소(OO구)는 모두 지어낸 예시
-- 목록 데이터: `src/content.mjs`의 `TEMPLATES`(번호, 이름, 분위기 `f`, 어울리는 업종, 설명, 색, 글꼴)와 `TPL_MOODS`(깔끔한, 고급스러운, 강렬한, 따뜻한, 자연스러운, 귀여운, 어두운)
+- 목록 데이터: `src/content.mjs`의 `TEMPLATES`(번호, 이름, 분위기 `f`, 어울리는 업종, 설명, 색, 글꼴)와 `TPL_MOODS`(움직이는, 깔끔한, 고급스러운, 강렬한, 따뜻한, 자연스러운, 귀여운, 어두운)
 - 목록의 화면 사진: `assets/img/tpl/tNN-pc.webp`(1440×900 화면을 960×600으로), `tNN-m.webp`(390×844 화면을 240×520으로). 안내 막대는 빼고 찍음. 템플릿을 고치면 다시 찍어야 함
 
 <!-- tpl-table -->
@@ -94,6 +95,12 @@
 | T22 | 꽃말 | 자연스러운, 따뜻한 | 짙은 잎색과 양귀비 빨강, 장식적인 제목 글씨. 오늘 배송 마감까지 남은 시간, 쓰임새별 꽃다발, 정기 구독, 배송 안내가 있습니다. | 꽃집, 선물 가게, 소품, 케이크 주문 | Grandiflora One · Gowun Dodum |
 | T23 | 주행 | 강렬한, 어두운 | 아스팔트 회색과 신호 빨강, 사선으로 자른 사진과 경고 띠. 탭으로 나눈 작업 가격표, 정비 순서, 차종과 날짜를 받는 예약 폼이 있습니다. | 자동차 정비, 세차, 광택, 타이어 | Gasoek One · Pretendard |
 | T24 | 숨 | 자연스러운, 깔끔한 | 연보라와 자두색, 천천히 커졌다 작아지는 숨쉬기 원. 수준을 고르면 맞는 수업만 보이는 주간 시간표와 회원권 안내가 있습니다. | 요가, 필라테스, 명상, 상담 | Sunflower |
+| T25 | 네온 | 움직이는, 어두운, 강렬한 | 한 글자씩 깜빡이며 켜지는 네온 간판, 음악에 맞춰 움직이는 막대, 흐르는 인기곡 띠. 지금 시각에 맞춰 낮·밤 요금이 바뀌고 영업 중이면 OPEN 사인이 켜집니다. | 노래방, 바, PC방, 공연장, 밤 장사 | Gugi · Pretendard |
+| T26 | 펼침 | 움직이는, 고급스러운 | 아래로 내리면 작은 둥근 사진이 화면 가득 펼쳐지고, 글이 한 단어씩 떠오르고, 사진들이 옆으로 흘러갑니다. 패키지와 예식 날 하루, 상담 폼이 이어집니다. | 스몰웨딩, 전시, 스튜디오, 호텔 | Noto Serif KR · Pretendard |
+| T27 | 흐름 | 움직이는, 강렬한 | 비스듬히 교차하며 흐르는 글자 띠, 돌아가는 원형 배지, 내리면 줄마다 반대로 밀리는 큰 글자. 상품 사진에 마우스를 올리면 '보기' 버튼이 따라오고 다른 컷으로 바뀝니다. | 패션, 편집숍, 신발, 브랜드 쇼룸 | Gothic A1 |
+| T28 | 둥둥 | 움직이는, 귀여운 | 마우스를 따라 떠다니는 둥근 사진, 올라오는 탄산 방울, 맛마다 바뀌는 배경색. 제품 캔은 마우스를 대면 기울어집니다. | 음료, 식품, 화장품, 제품 브랜드 | Gaegu · Pretendard |
+| T29 | 길 | 움직이는, 깔끔한 | 아래로 내리는 만큼 길이 그려지고 그 위를 트럭이 달립니다. 고르면 바로 나오는 예상 견적, 올라가는 숫자, 가격표가 있습니다. | 이사, 용달, 물류, 배송, 여행 | IBM Plex Sans KR |
+| T30 | 불꽃 | 움직이는, 강렬한 | 쾅 하고 들어오는 굵은 글자, 흐르는 사선 줄무늬, 차오르는 원형 그래프. 직접 눌러 보는 4분 운동 타이머가 들어 있습니다. | 헬스장, PT, 크로스핏, 복싱, 운동 교실 | Black Han Sans · Anton |
 <!-- /tpl-table -->
 
 ### 템플릿 사진 출처
@@ -208,6 +215,28 @@
 | `t24/img/hero.webp` | Federico Bottos | https://unsplash.com/photos/11H1SSVcIxc |
 | `t24/img/hill.webp` | Anton Sulsky | https://unsplash.com/photos/YcfCXxo7rpc |
 | `t24/img/calm.webp` | Vladimir Kudinov | https://unsplash.com/photos/-wWRHIUklxM |
+| `t25/img/stage.webp` | Daniel Robert | https://unsplash.com/photos/MRxD-J9-4ps |
+| `t25/img/alley.webp` | Matthew Skinner | https://unsplash.com/photos/t05kfHeygbE |
+| `t25/img/bokeh.webp` | Maria Carrasco | https://unsplash.com/photos/vwY2D2Wr4ME |
+| `t26/img/bench.webp` | Charlie Foster | https://unsplash.com/photos/A88emaZe7d8 |
+| `t26/img/heart.webp` | Mayur Gala | https://unsplash.com/photos/2PODhmrvLik |
+| `t26/img/fire.webp` | kazuend | https://unsplash.com/photos/tsMVvBbpyGM |
+| `t26/img/dusk.webp` | Michael Baird | https://unsplash.com/photos/6WLGMivmV00 |
+| `t26/img/light.webp` | Joshua Hibbert | https://unsplash.com/photos/Pn6iimgM-wo |
+| `t26/img/cave.webp` | Stefan Kunze | https://unsplash.com/photos/1-C334jLxG0 |
+| `t26/img/city.webp` | Kevin Young | https://unsplash.com/photos/-icmOdYWXuQ |
+| `t27/img/wall.webp` | Rodion Kutsaev | https://unsplash.com/photos/IJ25m7fXqtk |
+| `t27/img/walk.webp` | Taylor Jacobs | https://unsplash.com/photos/J1EM-LnV-Eg |
+| `t27/img/shoes.webp` | Ilham Rahmansyah | https://unsplash.com/photos/DwTZwZYi9Ww |
+| `t27/img/coat.webp` | Matthew Wiebe | https://unsplash.com/photos/tBtuxtLvAZs |
+| `t28/img/pine.webp` | Pineapples | https://unsplash.com/photos/t-W4_309hi8 |
+| `t28/img/drop.webp` | Shyamanta Baruah | https://unsplash.com/photos/kxqvE41_07k |
+| `t28/img/leaf.webp` | Buzo Jesús | https://unsplash.com/photos/pHM4a_RZSLE |
+| `t28/img/dand.webp` | Coley Christine | https://unsplash.com/photos/GyvMk5pPDXI |
+| `t29/img/road.webp` | Andrea Boldizsar | https://unsplash.com/photos/BwgKUh9tN84 |
+| `t29/img/pass.webp` | Alex Talmon | https://unsplash.com/photos/6iat9p85VnQ |
+| `t29/img/bridge.webp` | Tiago Gerken | https://unsplash.com/photos/vCqmY3bfqfo |
+| `t30/img/ride.webp` | Maico Amorim | https://unsplash.com/photos/SJWPKMb9u-k |
 <!-- /tpl-credits -->
 
 ## 후기 이미지 (2026-11-16 받음, 96장)

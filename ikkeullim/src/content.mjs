@@ -505,7 +505,7 @@ export const CHAT = {
 /* 홈페이지 템플릿: 제작을 원하는 업체가 기본 화면을 고르는 목록 (templates/). 각 템플릿은 templates/tNN/index.html 한 장짜리 화면.
    글·상호·가격은 지어낸 예시이고, 사진은 Unsplash 사진(Lorem Picsum으로 받음, README에 출처).
    f: 고르기 버튼 값 (TPL_MOODS), fit: 어울리는 업종 예시, colors: 대표 색 */
-export const TPL_MOODS = [['clean', '깔끔한'], ['premium', '고급스러운'], ['bold', '강렬한'], ['warm', '따뜻한'], ['natural', '자연스러운'], ['cute', '귀여운'], ['dark', '어두운']];
+export const TPL_MOODS = [['motion', '움직이는'], ['clean', '깔끔한'], ['premium', '고급스러운'], ['bold', '강렬한'], ['warm', '따뜻한'], ['natural', '자연스러운'], ['cute', '귀여운'], ['dark', '어두운']];
 export const TEMPLATES = [
   { no: 'T01', slug: 't01', name: '여백', f: ['clean'], fit: '병원·의원, 한의원, 상담 업종', desc: '넓은 여백과 가는 글자, 아치형 사진으로 차분하게 보여 줍니다. 진료 시간표에 오늘 요일과 지금 진료 중인지를 표시합니다.', colors: ['#ffffff', '#f1f4f5', '#2f6f86', '#14232a'], font: 'IBM Plex Sans KR' },
   { no: 'T02', slug: 't02', name: '지면', f: ['premium', 'clean'], fit: '인테리어, 건축, 가구, 사진 스튜디오', desc: '잡지처럼 큰 명조 제목과 넓게 펼친 사진. 작업마다 위치, 면적, 기간, 공사 범위를 붙이고 상담 신청 폼으로 끝납니다.', colors: ['#ffffff', '#e6eae3', '#4e5d3f', '#1f2420'], font: 'Noto Serif KR · Pretendard' },
@@ -530,7 +530,13 @@ export const TEMPLATES = [
   { no: 'T21', slug: 't21', name: '산책', f: ['cute', 'warm'], fit: '반려동물 미용, 호텔, 용품, 동물병원', desc: '귤색과 남색에 통통한 글씨. 몸 크기를 고르면 바뀌는 미용 가격표, 호텔·데이케어 카드, 하루 일과, 예약 전 확인할 것이 있습니다.', colors: ['#ff8a3d', '#1d2b53', '#fff1e6', '#7ed7c1'], font: 'Bagel Fat One · Pretendard' },
   { no: 'T22', slug: 't22', name: '꽃말', f: ['natural', 'warm'], fit: '꽃집, 선물 가게, 소품, 케이크 주문', desc: '짙은 잎색과 양귀비 빨강, 장식적인 제목 글씨. 오늘 배송 마감까지 남은 시간, 쓰임새별 꽃다발, 정기 구독, 배송 안내가 있습니다.', colors: ['#234a33', '#e0483a', '#eef2ea', '#f3c93f'], font: 'Grandiflora One · Gowun Dodum' },
   { no: 'T23', slug: 't23', name: '주행', f: ['bold', 'dark'], fit: '자동차 정비, 세차, 광택, 타이어', desc: '아스팔트 회색과 신호 빨강, 사선으로 자른 사진과 경고 띠. 탭으로 나눈 작업 가격표, 정비 순서, 차종과 날짜를 받는 예약 폼이 있습니다.', colors: ['#26282b', '#e10600', '#edeef0', '#ffffff'], font: 'Gasoek One · Pretendard' },
-  { no: 'T24', slug: 't24', name: '숨', f: ['natural', 'clean'], fit: '요가, 필라테스, 명상, 상담', desc: '연보라와 자두색, 천천히 커졌다 작아지는 숨쉬기 원. 수준을 고르면 맞는 수업만 보이는 주간 시간표와 회원권 안내가 있습니다.', colors: ['#e9e4f4', '#4b3b6b', '#cfe3d6', '#f4e4cf'], font: 'Sunflower' }
+  { no: 'T24', slug: 't24', name: '숨', f: ['natural', 'clean'], fit: '요가, 필라테스, 명상, 상담', desc: '연보라와 자두색, 천천히 커졌다 작아지는 숨쉬기 원. 수준을 고르면 맞는 수업만 보이는 주간 시간표와 회원권 안내가 있습니다.', colors: ['#e9e4f4', '#4b3b6b', '#cfe3d6', '#f4e4cf'], font: 'Sunflower' },
+  { no: 'T25', slug: 't25', name: '네온', f: ['motion', 'dark', 'bold'], fit: '노래방, 바, PC방, 공연장, 밤 장사', desc: '한 글자씩 깜빡이며 켜지는 네온 간판, 음악에 맞춰 움직이는 막대, 흐르는 인기곡 띠. 지금 시각에 맞춰 낮·밤 요금이 바뀌고 영업 중이면 OPEN 사인이 켜집니다.', colors: ['#12081f', '#ff3fd8', '#3be8ff', '#f4ff61'], font: 'Gugi · Pretendard' },
+  { no: 'T26', slug: 't26', name: '펼침', f: ['motion', 'premium'], fit: '스몰웨딩, 전시, 스튜디오, 호텔', desc: '아래로 내리면 작은 둥근 사진이 화면 가득 펼쳐지고, 글이 한 단어씩 떠오르고, 사진들이 옆으로 흘러갑니다. 패키지와 예식 날 하루, 상담 폼이 이어집니다.', colors: ['#fbf7f1', '#0f5c6e', '#b48a43', '#1f2a2e'], font: 'Noto Serif KR · Pretendard' },
+  { no: 'T27', slug: 't27', name: '흐름', f: ['motion', 'bold'], fit: '패션, 편집숍, 신발, 브랜드 쇼룸', desc: '비스듬히 교차하며 흐르는 글자 띠, 돌아가는 원형 배지, 내리면 줄마다 반대로 밀리는 큰 글자. 상품 사진에 마우스를 올리면 \'보기\' 버튼이 따라오고 다른 컷으로 바뀝니다.', colors: ['#ffd200', '#000000', '#fffdf5', '#ff5c8a'], font: 'Gothic A1' },
+  { no: 'T28', slug: 't28', name: '둥둥', f: ['motion', 'cute'], fit: '음료, 식품, 화장품, 제품 브랜드', desc: '마우스를 따라 떠다니는 둥근 사진, 올라오는 탄산 방울, 맛마다 바뀌는 배경색. 제품 캔은 마우스를 대면 기울어집니다.', colors: ['#fff3c4', '#ffcf33', '#57d6a1', '#1e2a3a'], font: 'Gaegu · Pretendard' },
+  { no: 'T29', slug: 't29', name: '길', f: ['motion', 'clean'], fit: '이사, 용달, 물류, 배송, 여행', desc: '아래로 내리는 만큼 길이 그려지고 그 위를 트럭이 달립니다. 고르면 바로 나오는 예상 견적, 올라가는 숫자, 가격표가 있습니다.', colors: ['#f7f5ef', '#0b6e8a', '#ffc83d', '#17252b'], font: 'IBM Plex Sans KR' },
+  { no: 'T30', slug: 't30', name: '불꽃', f: ['motion', 'bold'], fit: '헬스장, PT, 크로스핏, 복싱, 운동 교실', desc: '쾅 하고 들어오는 굵은 글자, 흐르는 사선 줄무늬, 차오르는 원형 그래프. 직접 눌러 보는 4분 운동 타이머가 들어 있습니다.', colors: ['#ffffff', '#000000', '#d8ff3e', '#5b3bff'], font: 'Black Han Sans · Anton' }
 ];
 
 export const META = {

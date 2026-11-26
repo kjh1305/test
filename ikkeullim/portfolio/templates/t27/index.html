@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>T27 흐름 · 이끌림 홈페이지 템플릿</title>
+<meta name="description" content="이끌림 홈페이지 템플릿 T27 흐름: 비스듬히 교차하며 흐르는 글자 띠, 돌아가는 원형 배지, 내릴 때 옆으로 밀리는 큰 글자, 마우스를 따라오는 보기 버튼으로 시선을 끄는 패션·편집숍·브랜드형 홈페이지. 글과 사진은 예시입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../tpl.css">
+<style>
+:root {
+  --yellow: #ffd200;
+  --black: #000;
+  --paper: #fffdf5;
+  --gray: #6f6b60;
+  --pink: #ff5c8a;
+  --sans: "Gothic A1", -apple-system, "Apple SD Gothic Neo", sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--black); font: 400 17px/1.7 var(--sans); word-break: keep-all; overflow-wrap: break-word; overflow-x: hidden; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--pink); outline-offset: 2px; }
+h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.05em; line-height: 1; }
+p { margin: 0; }
+.wrap { width: min(1320px, 100% - 48px); margin: 0 auto; }
+
+.hd .wrap { display: flex; align-items: center; gap: 28px; height: 76px; }
+.logo { font-weight: 900; font-size: 26px; letter-spacing: -0.06em; text-decoration: none; }
+.logo span { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--pink); margin-left: 3px; }
+.nav { margin-left: auto; display: flex; gap: 24px; font-weight: 700; font-size: 15px; }
+.nav a { text-decoration: none; }
+.nav a:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 56px; padding: 0 28px; background: var(--black); color: var(--yellow); font: 900 16px/1 var(--sans); text-decoration: none; border: 0; cursor: pointer; }
+.btn:hover { background: var(--pink); color: var(--black); }
+
+/* 첫 화면: 내릴 때 줄마다 반대로 밀리는 큰 글자 */
+.hero { position: relative; padding: 24px 0 64px; overflow: hidden; isolation: isolate; }
+.big { font-size: clamp(64px, 12.4vw, 210px); line-height: .9; white-space: nowrap; }
+.big span { display: block; will-change: transform; }
+.big span:nth-child(2) { padding-left: 18vw; color: transparent; -webkit-text-stroke: 2px var(--black); }
+.big span:nth-child(3) { padding-left: 6vw; }
+.hero-photo { position: absolute; right: 6vw; top: 40px; width: min(30vw, 380px); z-index: -1; }
+.hero-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+.badge { position: absolute; right: calc(6vw + min(30vw, 380px) - 90px); top: min(34vw, 420px); width: 170px; height: 170px; }
+.badge svg { width: 100%; height: 100%; animation: spin 14s linear infinite; }
+.badge text { font: 900 15px var(--sans); letter-spacing: 3px; fill: var(--black); }
+.badge b { position: absolute; inset: 0; display: grid; place-items: center; font-size: 34px; }
+.badge circle { fill: var(--yellow); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.hero-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 24px; margin-top: 40px; }
+.hero-row p { max-width: 26em; font-weight: 700; }
+
+/* 교차하는 글자 띠 */
+.bands { position: relative; height: 200px; margin: 40px 0; overflow: hidden; }
+.band { position: absolute; left: -5%; right: -5%; top: 50%; overflow: hidden; padding: 18px 0; }
+.band.a { background: var(--black); color: var(--yellow); transform: translateY(-50%) rotate(-4deg); z-index: 1; }
+.band.b { background: var(--yellow); color: var(--black); transform: translateY(-50%) rotate(3deg); }
+.band-track { display: flex; width: max-content; animation: flow 22s linear infinite; }
+.band.b .band-track { animation-direction: reverse; animation-duration: 26s; }
+.band span { padding: 0 22px; font-size: 34px; font-weight: 900; white-space: nowrap; letter-spacing: -0.04em; }
+.band span::after { content: "✳"; margin-left: 44px; color: var(--pink); }
+@keyframes flow { to { transform: translateX(-50%); } }
+
+/* 신상: 마우스를 따라오는 보기 버튼, 사진 바뀜 */
+.sec { padding: 110px 0; }
+.head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 40px; }
+.head h2 { font-size: clamp(48px, 6.4vw, 100px); }
+.head p { color: var(--gray); font-weight: 700; }
+.items { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 0; padding: 0; list-style: none; }
+.items a { display: block; text-decoration: none; cursor: none; }
+.pic { position: relative; overflow: hidden; background: var(--yellow); }
+img[src$="wall.webp"] { object-position: 84% 88%; }
+.pic img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: opacity .4s, transform .6s; }
+.pic img + img { position: absolute; inset: 0; height: 100%; opacity: 0; transform: scale(1.08); }
+.items a:hover .pic img + img, .items a:focus-visible .pic img + img { opacity: 1; transform: scale(1); }
+.tag { position: absolute; left: 14px; top: 14px; z-index: 1; padding: 4px 10px; background: var(--pink); font-weight: 900; font-size: 13px; }
+.info { display: flex; justify-content: space-between; gap: 12px; margin-top: 14px; font-weight: 700; }
+.info small { display: block; color: var(--gray); font-weight: 400; font-size: 14px; }
+.cursor { position: fixed; left: 0; top: 0; z-index: 50; width: 96px; height: 96px; margin: -48px 0 0 -48px; border-radius: 50%; background: var(--black); color: var(--yellow); display: grid; place-items: center; font-weight: 900; pointer-events: none; transform: translate(var(--x, -200px), var(--y, -200px)) scale(var(--s, 0)); transition: transform .15s ease-out; }
+
+/* 룩북 */
+.look { background: var(--black); color: var(--paper); }
+.look .head p { color: #b8b4a6; }
+.look-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 24px; align-items: end; }
+.look-grid figure { margin: 0; overflow: hidden; }
+.look-grid img { width: 100%; object-fit: cover; transform: translateY(var(--py, 0)); will-change: transform; }
+.look-grid figure:first-child img { aspect-ratio: 4 / 5; }
+.look-grid figure:last-child img { aspect-ratio: 9 / 11; }
+.look-grid figcaption { margin-top: 12px; font-weight: 700; }
+.look-grid figcaption small { color: #b8b4a6; font-weight: 400; margin-left: 8px; }
+
+.store { background: var(--yellow); }
+.store .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: end; }
+.store h2 { font-size: clamp(48px, 6.4vw, 100px); }
+.store dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 24px; font-weight: 700; }
+.store dt { color: #6a5a00; }
+.store dd { margin: 0; }
+.store .cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+
+.ft { padding: 36px 0 52px; font-size: 13px; color: var(--gray); }
+.ft .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .band-track, .badge svg { animation: none; }
+  .big span, .look-grid img { transform: none !important; }
+  .cursor { display: none; }
+  .items a { cursor: pointer; }
+}
+@media (hover: none) { .cursor { display: none; } .items a { cursor: pointer; } }
+@media (max-width: 960px) {
+  .nav { display: none; }
+  .hero-photo { position: relative; right: auto; top: auto; width: 70%; margin: 24px 0 0 auto; z-index: 0; }
+  .badge { right: auto; left: 6%; top: 60px; bottom: auto; width: 120px; height: 120px; }
+  .badge b { font-size: 26px; }
+  .items { grid-template-columns: 1fr 1fr; }
+  .look-grid, .store .wrap { grid-template-columns: 1fr; }
+  .sec { padding: 80px 0; }
+  .band span { font-size: 24px; }
+  .bands { height: 150px; }
+}
+@media (max-width: 520px) {
+  .wrap { width: calc(100% - 32px); }
+  .items { grid-template-columns: 1fr; }
+  .big span:nth-child(2) { -webkit-text-stroke-width: 1.5px; }
+}
+</style>
+</head>
+<body>
+<div class="tpl-bar" role="note">이끌림 홈페이지 템플릿 <b>T27 흐름</b><span class="tpl-note">글과 사진은 예시입니다. 업체 내용으로 바꿔 드립니다.</span><span class="tpl-links"><a href="../">템플릿 목록</a><a class="tpl-go" href="../../../contact/">이 템플릿으로 상담</a></span></div>
+
+<header class="hd"><div class="wrap"><a class="logo" href="#">옷장열기<span aria-hidden="true"></span></a><nav class="nav" aria-label="주 메뉴"><a href="#new">이번 주 신상</a><a href="#look">룩북</a><a href="#store">매장</a></nav></div></header>
+
+<main>
+  <section class="hero">
+    <div class="hero-photo"><img src="img/wall.webp" width="1000" height="1250" alt="노란 벽 앞을 걸어가는 사람"></div>
+    <div class="badge" aria-hidden="true">
+      <svg viewBox="0 0 170 170"><defs><path id="c" d="M85,85 m-62,0 a62,62 0 1,1 124,0 a62,62 0 1,1 -124,0"/></defs><circle cx="85" cy="85" r="84"/><text><textPath href="#c">매주 금요일 신상 입고 · 매주 금요일 신상 입고 ·</textPath></text></svg>
+      <b>금</b>
+    </div>
+    <h1 class="big" aria-label="이번 주에 새로 들어온 옷"><span data-d="-1">이번 주에</span><span data-d="1">새로 들어온</span><span data-d="-1">옷들</span></h1>
+    <div class="wrap hero-row"><p>작은 브랜드의 옷을 직접 입어 보고 골라 옵니다. 같은 옷은 사이즈별로 두세 벌만 들여옵니다.</p><a class="btn" href="#new">신상 보러 가기</a></div>
+  </section>
+
+  <div class="bands" aria-hidden="true">
+    <div class="band b"><div class="band-track"><span>사이즈 교환 무료</span><span>매장 픽업</span><span>사이즈 교환 무료</span><span>매장 픽업</span><span>사이즈 교환 무료</span><span>매장 픽업</span><span>사이즈 교환 무료</span><span>매장 픽업</span></div></div>
+    <div class="band a"><div class="band-track"><span>이번 주 신상 24점</span><span>오늘 들어온 옷</span><span>이번 주 신상 24점</span><span>오늘 들어온 옷</span><span>이번 주 신상 24점</span><span>오늘 들어온 옷</span><span>이번 주 신상 24점</span><span>오늘 들어온 옷</span></div></div>
+  </div>
+
+  <section class="sec" id="new">
+    <div class="wrap">
+      <div class="head"><h2>이번 주 신상</h2><p>사진에 마우스를 올리면 다른 컷이 보입니다.</p></div>
+      <ul class="items">
+        <li><a href="#"><div class="pic"><span class="tag">새로 들어옴</span><img src="img/walk.webp" width="900" height="1100" alt="데님 바지와 갈색 구두를 신고 걷는 모습" loading="lazy"><img src="img/shoes.webp" width="900" height="1100" alt="" loading="lazy"></div><p class="info"><span>워싱 데님 팬츠<small>S · M · L</small></span><span>00,000원</span></p></a></li>
+        <li><a href="#"><div class="pic"><img src="img/shoes.webp" width="900" height="1100" alt="풀밭에 뻗은 다리와 캔버스 운동화" loading="lazy"><img src="img/wall.webp" width="1000" height="1250" alt="" loading="lazy"></div><p class="info"><span>캔버스 하이탑<small>230 – 280</small></span><span>00,000원</span></p></a></li>
+        <li><a href="#"><div class="pic"><span class="tag">두 벌 남음</span><img src="img/coat.webp" width="900" height="1100" alt="바닷가에 선 사람의 뒷모습과 코트" loading="lazy"><img src="img/walk.webp" width="900" height="1100" alt="" loading="lazy"></div><p class="info"><span>울 롱 코트<small>FREE</small></span><span>000,000원</span></p></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec look" id="look">
+    <div class="wrap">
+      <div class="head"><h2>룩북</h2><p>이번 시즌 매장 직원이 직접 입었습니다.</p></div>
+      <div class="look-grid">
+        <figure><img src="img/coat.webp" width="900" height="1100" alt="바닷가에 선 코트 차림의 뒷모습" loading="lazy" data-p="1"><figcaption>바닷가 오후<small>코트, 머플러</small></figcaption></figure>
+        <figure><img src="img/walk.webp" width="900" height="1100" alt="공원 길을 걷는 데님 차림" loading="lazy" data-p="-1"><figcaption>주말 산책<small>데님, 구두</small></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec store" id="store">
+    <div class="wrap">
+      <h2>매장에서<br>입어 보세요</h2>
+      <div>
+        <dl><dt>여는 시간</dt><dd>매일 12:00 – 21:00</dd><dt>주소</dt><dd>서울시 OO구 OO로 00, 1층</dd><dt>재고 문의</dt><dd>인스타그램 메시지, 카카오톡</dd></dl>
+        <div class="cta"><a class="btn" href="#">카카오톡 재고 문의</a><a class="btn" href="#" style="background:var(--paper);color:var(--black)">인스타그램</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ft"><div class="wrap"><p>옷장열기 · 대표 홍길동 · 사업자등록번호 000-00-00000 · 통신판매업 신고 제0000호</p><p>사진은 예시입니다</p></div></footer>
+<div class="cursor" aria-hidden="true">보기</div>
+
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var lines = [].slice.call(document.querySelectorAll('.big span')), looks = [].slice.call(document.querySelectorAll('[data-p]'));
+  function frame() {
+    var y = window.scrollY;
+    lines.forEach(function (l) { l.style.transform = 'translateX(' + (y * .35 * +l.dataset.d) + 'px)'; });
+    looks.forEach(function (im) { var r = im.parentNode.getBoundingClientRect(), c = (r.top + r.height / 2 - innerHeight / 2) / innerHeight; im.style.setProperty('--py', (c * 40 * +im.dataset.p) + 'px'); });
+  }
+  var t = false; window.addEventListener('scroll', function () { if (!t) { t = true; requestAnimationFrame(function () { frame(); t = false; }); } }, { passive: true }); frame();
+  /* 마우스를 따라오는 보기 버튼 */
+  if (!window.matchMedia('(hover: hover)').matches) return;
+  var cur = document.querySelector('.cursor');
+  document.querySelectorAll('.items a').forEach(function (a) {
+    a.addEventListener('mouseenter', function () { cur.style.setProperty('--s', 1); });
+    a.addEventListener('mouseleave', function () { cur.style.setProperty('--s', 0); });
+  });
+  window.addEventListener('mousemove', function (e) { cur.style.setProperty('--x', e.clientX + 'px'); cur.style.setProperty('--y', e.clientY + 'px'); });
+})();
+</script>
+</body>
+</html>

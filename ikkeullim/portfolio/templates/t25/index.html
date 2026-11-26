@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>T25 네온 · 이끌림 홈페이지 템플릿</title>
+<meta name="description" content="이끌림 홈페이지 템플릿 T25 네온: 한 글자씩 깜빡이며 켜지는 네온 간판, 움직이는 음악 막대, 흐르는 인기곡 띠, 지금 영업 중인지 알려 주는 OPEN 사인으로 눈길을 끄는 노래방·바·PC방형 홈페이지. 글과 사진은 예시입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gugi&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../tpl.css">
+<style>
+:root {
+  --night: #12081f;
+  --night-2: #1d1033;
+  --pink: #ff3fd8;
+  --cyan: #3be8ff;
+  --lemon: #f4ff61;
+  --text: #f3ecff;
+  --text-2: #b6a8cf;
+  --neon: "Gugi", "Pretendard", sans-serif;
+  --sans: "Pretendard", -apple-system, "Apple SD Gothic Neo", sans-serif;
+  --glow-pink: 0 0 4px #fff, 0 0 10px var(--pink), 0 0 22px var(--pink), 0 0 44px var(--pink);
+  --glow-cyan: 0 0 4px #fff, 0 0 10px var(--cyan), 0 0 22px var(--cyan), 0 0 44px var(--cyan);
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: var(--night); color: var(--text); font: 400 17px/1.7 var(--sans); word-break: keep-all; overflow-wrap: break-word; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--lemon); outline-offset: 3px; }
+h1, h2, h3 { margin: 0; font-family: var(--neon); font-weight: 400; letter-spacing: 0; line-height: 1.2; }
+p { margin: 0; }
+.wrap { width: min(1180px, 100% - 48px); margin: 0 auto; }
+
+.hd { position: absolute; left: 0; right: 0; z-index: 5; }
+.hd .wrap { display: flex; align-items: center; gap: 28px; height: 80px; }
+.logo { font-family: var(--neon); font-size: 26px; text-decoration: none; color: #fff; text-shadow: var(--glow-cyan); }
+.nav { margin-left: auto; display: flex; gap: 26px; }
+.nav a { font-size: 15px; font-weight: 600; text-decoration: none; color: var(--text-2); }
+.nav a:hover { color: #fff; text-shadow: 0 0 10px var(--pink); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 26px; border: 2px solid var(--pink); border-radius: 999px; background: transparent; color: #fff; font: 800 16px/1 var(--sans); text-decoration: none; box-shadow: 0 0 12px rgba(255,63,216,.55), inset 0 0 12px rgba(255,63,216,.35); cursor: pointer; transition: background .2s, box-shadow .2s; }
+.btn:hover { background: rgba(255,63,216,.18); box-shadow: 0 0 22px rgba(255,63,216,.9), inset 0 0 16px rgba(255,63,216,.5); }
+.btn-cyan { border-color: var(--cyan); box-shadow: 0 0 12px rgba(59,232,255,.5), inset 0 0 12px rgba(59,232,255,.3); }
+.btn-cyan:hover { background: rgba(59,232,255,.15); box-shadow: 0 0 22px rgba(59,232,255,.9), inset 0 0 16px rgba(59,232,255,.45); }
+.hd .btn { min-height: 42px; padding: 0 18px; font-size: 14px; }
+
+/* 첫 화면: 간판이 한 글자씩 켜짐 */
+.hero { position: relative; min-height: min(100vh, 900px); display: flex; align-items: center; overflow: hidden; }
+.hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .32; filter: saturate(1.3) hue-rotate(-20deg); }
+.hero::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 40%, rgba(18,8,31,.2), var(--night) 78%); }
+.hero .wrap { position: relative; z-index: 1; text-align: center; padding: 120px 0 80px; }
+.sign { display: inline-block; padding: 28px 44px 34px; border: 3px solid rgba(59,232,255,.9); border-radius: 28px; box-shadow: var(--glow-cyan), inset 0 0 22px rgba(59,232,255,.4); animation: frame 1.6s steps(1) .2s both; }
+.sign h1 { font-size: clamp(54px, 9.6vw, 148px); color: #fff; line-height: 1.05; }
+.sign h1 .ch { display: inline-block; text-shadow: var(--glow-pink); animation: on .5s steps(1) both, buzz 6s linear infinite; animation-delay: calc(.35s + var(--i) * .14s), calc(3s + var(--i) * .7s); }
+.sign h1 .ch.off { opacity: .2; text-shadow: none; }
+.sign small { display: block; margin-top: 10px; font-family: var(--neon); font-size: clamp(18px, 2.2vw, 28px); color: var(--lemon); text-shadow: 0 0 6px var(--lemon), 0 0 18px rgba(244,255,97,.7); animation: on .4s steps(1) 1.8s both; }
+@keyframes frame { 0% { opacity: 0; } 10% { opacity: 1; } 20% { opacity: .1; } 30%, 100% { opacity: 1; } }
+@keyframes on { 0% { opacity: .08; text-shadow: none; } 30% { opacity: 1; } 45% { opacity: .2; text-shadow: none; } 60%, 100% { opacity: 1; } }
+@keyframes buzz { 0%, 96% { opacity: 1; } 97% { opacity: .35; } 98% { opacity: 1; } 99% { opacity: .5; } 100% { opacity: 1; } }
+
+.eq { display: flex; justify-content: center; align-items: flex-end; gap: 6px; height: 56px; margin: 40px auto 0; }
+.eq i { width: 8px; height: 100%; border-radius: 4px; background: linear-gradient(0deg, var(--cyan), var(--pink)); box-shadow: 0 0 10px rgba(255,63,216,.6); transform-origin: bottom; animation: bar 1s ease-in-out infinite alternate; }
+.eq i:nth-child(odd) { animation-duration: .7s; }
+.eq i:nth-child(3n) { animation-duration: 1.2s; }
+.eq i:nth-child(4n+1) { animation-delay: -.4s; }
+.eq i:nth-child(5n) { animation-delay: -.8s; }
+@keyframes bar { from { transform: scaleY(.15); } to { transform: scaleY(1); } }
+.hero-lede { max-width: 30em; margin: 28px auto 0; color: var(--text-2); }
+.hero-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
+
+/* 흐르는 띠 */
+.ticker { overflow: hidden; border-top: 2px solid var(--pink); border-bottom: 2px solid var(--pink); box-shadow: 0 0 18px rgba(255,63,216,.45); background: var(--night-2); }
+.ticker-track { display: flex; width: max-content; animation: flow 28s linear infinite; }
+.ticker span { display: inline-flex; align-items: center; gap: 14px; padding: 16px 28px; white-space: nowrap; font-family: var(--neon); font-size: 22px; }
+.ticker span::before { content: "♪"; color: var(--cyan); text-shadow: 0 0 10px var(--cyan); }
+.ticker b { font-family: var(--sans); font-size: 14px; color: var(--lemon); }
+@keyframes flow { to { transform: translateX(-50%); } }
+
+.sec { padding: 120px 0; }
+.head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 44px; }
+.head h2 { font-size: clamp(40px, 5vw, 68px); color: #fff; text-shadow: var(--glow-cyan); }
+.head p { color: var(--text-2); max-width: 26em; }
+
+.rooms { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin: 0; padding: 0; list-style: none; }
+.rooms li { position: relative; padding: 28px 24px; border-radius: 22px; background: var(--night-2); border: 1px solid rgba(182,168,207,.2); transition: transform .25s, border-color .25s, box-shadow .25s; }
+.rooms li:hover { transform: translateY(-6px); border-color: var(--c); box-shadow: 0 0 26px var(--c); }
+.rooms .size { font-family: var(--neon); font-size: 54px; line-height: 1; color: #fff; text-shadow: 0 0 6px #fff, 0 0 18px var(--c), 0 0 36px var(--c); }
+.rooms h3 { margin-top: 14px; font-size: 24px; }
+.rooms p { margin-top: 6px; color: var(--text-2); font-size: 15px; }
+.rooms b { display: inline-block; margin-top: 14px; padding: 3px 12px; border-radius: 999px; border: 1px solid var(--c); color: var(--c); font-size: 14px; }
+
+.price { background: var(--night-2); }
+.switch { display: inline-flex; padding: 5px; border-radius: 999px; border: 1px solid rgba(182,168,207,.35); }
+.switch button { min-height: 42px; padding: 0 20px; border: 0; border-radius: 999px; background: none; font: 800 15px var(--sans); color: var(--text-2); cursor: pointer; }
+.switch button[aria-pressed="true"] { background: var(--lemon); color: var(--night); box-shadow: 0 0 16px rgba(244,255,97,.7); }
+.ptable { width: 100%; border-collapse: collapse; }
+.ptable th, .ptable td { padding: 20px 8px; border-bottom: 1px dashed rgba(182,168,207,.3); text-align: left; font-weight: 400; }
+.ptable th { font-family: var(--neon); font-size: 24px; }
+.ptable td { text-align: right; font-family: var(--neon); font-size: 30px; color: var(--lemon); text-shadow: 0 0 10px rgba(244,255,97,.6); }
+.ptable td small { font-family: var(--sans); font-size: 14px; color: var(--text-2); text-shadow: none; margin-left: 6px; }
+.p-note { margin-top: 16px; color: var(--text-2); font-size: 14px; }
+
+.event { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.event article { position: relative; min-height: 320px; padding: 36px; border-radius: 26px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; }
+.event article img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+.event article::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, var(--night) 10%, transparent 80%); }
+.event article > * { position: relative; z-index: 1; }
+.event h3 { font-size: 34px; text-shadow: var(--glow-pink); }
+.event p { margin-top: 8px; color: var(--text); }
+
+.visit .wrap { display: grid; grid-template-columns: auto 1fr; gap: 64px; align-items: center; }
+.open { display: grid; place-items: center; width: 240px; height: 240px; border-radius: 50%; border: 4px solid var(--c, #555); box-shadow: 0 0 20px var(--c, transparent), inset 0 0 20px var(--c, transparent); font-family: var(--neon); font-size: 56px; color: #fff; text-shadow: 0 0 8px #fff, 0 0 24px var(--c, transparent); text-align: center; line-height: 1; }
+.open small { display: block; margin-top: 8px; font-family: var(--sans); font-size: 14px; text-shadow: none; color: var(--text-2); }
+.open.is-on { --c: var(--pink); }
+.open.is-off { color: #6c5b88; text-shadow: none; }
+.visit dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 12px 28px; font-size: 18px; }
+.visit dt { color: var(--text-2); }
+.visit dd { margin: 0; }
+.visit .hero-cta { justify-content: flex-start; }
+
+.ft { padding: 40px 0 56px; border-top: 1px solid rgba(182,168,207,.2); color: var(--text-2); font-size: 14px; }
+.ft .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .sign, .sign h1 .ch, .sign small, .eq i, .ticker-track { animation: none !important; }
+  .eq i { transform: scaleY(.6); }
+  .ticker-track { flex-wrap: wrap; width: auto; }
+}
+@media (max-width: 960px) {
+  .nav { display: none; }
+  .hd .btn { margin-left: auto; }
+  .rooms { grid-template-columns: 1fr 1fr; }
+  .event { grid-template-columns: 1fr; }
+  .visit .wrap { grid-template-columns: 1fr; gap: 40px; justify-items: start; }
+  .sec { padding: 84px 0; }
+}
+@media (max-width: 520px) {
+  .wrap { width: calc(100% - 32px); }
+  .sign { padding: 20px 18px 24px; border-radius: 18px; }
+  .rooms { grid-template-columns: 1fr; }
+  .hero-cta .btn { flex: 1 1 100%; }
+  .open { width: 190px; height: 190px; font-size: 44px; }
+  .event article { padding: 26px; min-height: 260px; }
+}
+</style>
+</head>
+<body>
+<div class="tpl-bar" role="note">이끌림 홈페이지 템플릿 <b>T25 네온</b><span class="tpl-note">글과 사진은 예시입니다. 업체 내용으로 바꿔 드립니다.</span><span class="tpl-links"><a href="../">템플릿 목록</a><a class="tpl-go" href="../../../contact/">이 템플릿으로 상담</a></span></div>
+
+<div style="position:relative">
+<header class="hd"><div class="wrap"><a class="logo" href="#">별빛 코인노래방</a><nav class="nav" aria-label="주 메뉴"><a href="#rooms">방 안내</a><a href="#price">요금</a><a href="#event">이벤트</a><a href="#visit">오시는 길</a></nav><a class="btn" href="#visit">지금 빈방 확인</a></div></header>
+<section class="hero">
+  <img src="img/stage.webp" width="1800" height="1100" alt="공연장 무대 위로 쏟아지는 조명">
+  <div class="wrap">
+    <div class="sign"><h1 id="sign" aria-label="오늘 밤도 노래해">오늘 밤도<br>노래해</h1><small>새벽 5시까지 · 신곡 매주 업데이트</small></div>
+    <div class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <p class="hero-lede">방음 공사를 새로 한 방 열두 개. 마이크는 손님마다 새 커버로 바꿔 드립니다.</p>
+    <div class="hero-cta"><a class="btn" href="#price">요금 보기</a><a class="btn btn-cyan" href="tel:0200000000">단체 예약 전화</a></div>
+  </div>
+</section>
+</div>
+
+<div class="ticker" aria-label="이번 주 인기곡">
+  <div class="ticker-track">
+    <span>이번 주 인기곡 1위 <b>신곡</b></span><span>떼창 필수곡</span><span>회식 마무리 곡</span><span>듀엣 추천곡</span><span>90년대 명곡</span><span>애니메이션 주제가</span>
+    <span aria-hidden="true">이번 주 인기곡 1위 <b>신곡</b></span><span aria-hidden="true">떼창 필수곡</span><span aria-hidden="true">회식 마무리 곡</span><span aria-hidden="true">듀엣 추천곡</span><span aria-hidden="true">90년대 명곡</span><span aria-hidden="true">애니메이션 주제가</span>
+  </div>
+</div>
+
+<main>
+  <section class="sec" id="rooms">
+    <div class="wrap">
+      <div class="head"><h2>방 안내</h2><p>모든 방에 블루투스 스피커 연결, 녹음 기능, 탬버린이 있습니다.</p></div>
+      <ul class="rooms">
+        <li style="--c:var(--cyan)"><p class="size">1–2</p><h3>코인방</h3><p>혼자 연습하기 좋은 작은 방</p><b>6개</b></li>
+        <li style="--c:var(--pink)"><p class="size">3–5</p><h3>일반방</h3><p>친구끼리, 동아리 모임</p><b>4개</b></li>
+        <li style="--c:var(--lemon)"><p class="size">6–10</p><h3>대형방</h3><p>회식, 생일 파티</p><b>1개</b></li>
+        <li style="--c:#9d7bff"><p class="size">~20</p><h3>파티룸</h3><p>조명, 대형 화면, 음식 반입 가능</p><b>1개</b></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec price" id="price">
+    <div class="wrap">
+      <div class="head"><h2>요금</h2><div class="switch" role="group" aria-label="시간대"><button type="button" aria-pressed="true" data-t="day">낮 (13–19시)</button><button type="button" aria-pressed="false" data-t="night">밤 (19시–)</button></div></div>
+      <table class="ptable" aria-live="polite">
+        <tbody>
+          <tr><th scope="row">코인 (곡당)</th><td data-day="500" data-night="500">500<small>원</small></td></tr>
+          <tr><th scope="row">일반방 1시간</th><td data-day="12,000" data-night="16,000">12,000<small>원</small></td></tr>
+          <tr><th scope="row">대형방 1시간</th><td data-day="20,000" data-night="28,000">20,000<small>원</small></td></tr>
+          <tr><th scope="row">파티룸 2시간</th><td data-day="60,000" data-night="90,000">60,000<small>원</small></td></tr>
+        </tbody>
+      </table>
+      <p class="p-note">요금은 예시입니다. 학생증을 보여 주시면 낮 시간 20% 할인.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="event">
+    <div class="wrap">
+      <div class="head"><h2>이벤트</h2></div>
+      <div class="event">
+        <article><img src="img/alley.webp" width="1000" height="1250" alt="전구가 줄지어 걸린 밤 골목" loading="lazy"><h3>생일이면 30분 더</h3><p>신분증으로 생일을 확인하면 30분을 더 드립니다.</p></article>
+        <article><img src="img/bokeh.webp" width="1200" height="800" alt="밤거리의 흐릿한 불빛" loading="lazy"><h3>평일 밤 9시 이후</h3><p>일반방 2시간 예약하면 1시간 무료.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="visit" style="padding-top:40px">
+    <div class="wrap visit">
+      <p class="open" id="open">OPEN<small id="open-s">영업 시간 확인 중</small></p>
+      <div>
+        <div class="head" style="margin-bottom:24px"><h2>오시는 길</h2></div>
+        <dl><dt>영업</dt><dd>매일 13:00 – 05:00</dd><dt>주소</dt><dd>서울시 OO구 OO로 00, 지하 1층</dd><dt>전화</dt><dd>02-000-0000</dd></dl>
+        <div class="hero-cta" style="margin-top:28px"><a class="btn" href="tel:0200000000">빈방 전화 확인</a></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="ft"><div class="wrap"><p>별빛 코인노래방 · 대표 홍길동 · 사업자등록번호 000-00-00000</p><p>02-000-0000</p></div></footer>
+<script>
+(function () {
+  /* 간판 글자를 한 글자씩 나눠 차례로 켜지게 */
+  var sign = document.getElementById('sign'), i = 0;
+  sign.innerHTML = sign.innerHTML.split('<br>').map(function (line) {
+    return line.split('').map(function (c) { return c === ' ' ? ' ' : '<span class="ch" aria-hidden="true" style="--i:' + (i++) + '">' + c + '</span>'; }).join('');
+  }).join('<br>');
+  /* 낮·밤 요금 */
+  var sw = [].slice.call(document.querySelectorAll('.switch button')), cells = [].slice.call(document.querySelectorAll('.ptable td'));
+  sw.forEach(function (b) { b.addEventListener('click', function () {
+    sw.forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+    cells.forEach(function (td) { td.innerHTML = td.dataset[b.dataset.t] + '<small>원</small>'; });
+  }); });
+  var h = new Date().getHours(); if (h >= 19 || h < 5) sw[1].click();
+  /* 지금 영업 중이면 OPEN 사인이 켜짐 (13시 – 다음 날 5시) */
+  var o = document.getElementById('open'), s = document.getElementById('open-s'), on = h >= 13 || h < 5;
+  o.classList.add(on ? 'is-on' : 'is-off'); s.textContent = on ? '지금 영업 중' : '오후 1시에 문 열어요';
+})();
+</script>
+</body>
+</html>
