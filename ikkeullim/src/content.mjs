@@ -34,6 +34,7 @@ export const NAV = [
   ['about/', '회사소개'],
   ['services/', '서비스'],
   ['portfolio/', '포트폴리오'],
+  ['portfolio/templates/', '홈페이지 템플릿'],
   ['pricing/', '상품 안내'],
   ['reviews/', '고객후기'],
   ['faq/', 'FAQ'],

@@ -193,7 +193,7 @@ export function home(c) {
 
   const services = `<section class="sec sec-alt" aria-labelledby="svc-title">
   <div class="wrap">
-    <div class="sec-row">${secHead({ no: 2, title: ['필요한 만큼,', '한 팀이 맡습니다'], sub: '블로그 포스팅 한 건부터 블로그와 홈페이지를 함께 맡기는 통합 패키지까지 고를 수 있습니다.', id: 'svc-title' })}${btn(c.url('services/'), '서비스 전체 보기', { variant: 'ghost' })}</div>
+    <div class="sec-row">${secHead({ no: 2, title: ['필요한 만큼,', '한 팀이 맡습니다'], sub: '블로그 포스팅 한 건부터 블로그와 홈페이지를 함께 맡기는 통합 패키지까지 고를 수 있습니다.', id: 'svc-title' })}<div class="sec-btns">${btn(c.url('portfolio/templates/'), `홈페이지 템플릿 ${TEMPLATES.length}종`, { variant: 'ghost' })}${btn(c.url('services/'), '서비스 전체 보기', { variant: 'ghost' })}</div></div>
     <ul class="bento">${serviceCard(svc('total'), c, true)}${['posting', 'blog', 'web', 'blogdesign', 'video', 'press'].map(id => serviceCard(svc(id), c)).join('')}</ul>
   </div>
 </section>`;
@@ -306,19 +306,13 @@ export function portfolio(c) {
     <p class="pf-note">모두 받은 캡처 그대로입니다. 고객 이름과 업체명만 가렸고, 누르면 원본 크기로 볼 수 있습니다.</p>
   </div>
 </section>`;
-  const works = `<section class="sec sec-alt" id="templates">
-  <div class="wrap">
-    <div class="sec-row">${secHead({ title: '홈페이지 템플릿', sub: '홈페이지를 새로 만드실 때 기본 화면을 고르는 모음입니다. 번호로 골라 주시면 업체에 맞게 만들어 드립니다.' })}${btn(c.url('portfolio/templates/'), `템플릿 ${TEMPLATES.length}개 모두 보기`, { variant: 'primary' })}</div>
-    <ul class="tp-mini">${TEMPLATES.slice(0, 8).map(t => `<li data-reveal><a href="${c.url('portfolio/templates/')}#${t.slug}"><img src="${c.asset('img/tpl/' + t.slug + '-pc.webp')}" width="960" height="600" alt="" loading="lazy" decoding="async"><span><b>${t.no}</b>${esc(t.name)}</span><small>${esc(t.fit.split(',')[0])}</small></a></li>`).join('')}</ul>
-  </div>
-</section>`;
-  return page(c, { title: '포트폴리오', desc: META.portfolio, bodyClass: 'p-portfolio', body: pageHead(c, { kicker: '포트폴리오', title: ['검색 첫 화면이', '증명합니다'], lede: '이끌림이 쓴 글이 실제 네이버 검색 결과에 오른 화면입니다. 업종을 골라 보세요.' }) + pfTabs(c, 'search') + gallery + works + ctaBand(c) + lightbox() });
+  return page(c, { title: '포트폴리오', desc: META.portfolio, bodyClass: 'p-portfolio', body: pageHead(c, { kicker: '포트폴리오', title: ['검색 첫 화면이', '증명합니다'], lede: '이끌림이 쓴 글이 실제 네이버 검색 결과에 오른 화면입니다. 업종을 골라 보세요.' }) + pfTabs(c, 'search') + gallery + ctaBand(c) + lightbox() });
 }
 
 /* ================= 홈페이지 템플릿 ================= */
 const pfTabs = (c, cur) => `<nav class="pf-tabs" aria-label="포트폴리오 나눠 보기"><div class="wrap">
-  <a href="${c.url('portfolio/')}"${cur === 'search' ? ' aria-current="page"' : ''}>검색 결과 화면<span>${WORKS.length}</span></a>
-  <a href="${c.url('portfolio/templates/')}"${cur === 'tpl' ? ' aria-current="page"' : ''}>홈페이지 템플릿<span>${TEMPLATES.length}</span></a>
+  <a href="${c.url('portfolio/')}"${cur === 'search' ? ' aria-current="page"' : ''}><b>검색 결과 화면 <span>${WORKS.length}장</span></b><small>이끌림 글이 네이버 검색 첫 화면에 오른 모습</small></a>
+  <a href="${c.url('portfolio/templates/')}"${cur === 'tpl' ? ' aria-current="page"' : ''}><b>홈페이지 템플릿 <span>${TEMPLATES.length}종</span></b><small>홈페이지 만들 때 기본 화면 고르기</small></a>
 </div></nav>`;
 const MOOD_NAME = Object.fromEntries(TPL_MOODS);
 const tplCard = (c, t) => `<li class="tp" id="${t.slug}" data-f="${t.f.join(' ')}" data-reveal>

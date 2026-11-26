@@ -68,7 +68,9 @@ export function secHead({ no, title, sub, cls = '', id = '' }) {
 const logo = (c, cls = '') => `<a class="logo ${cls}" href="${c.url('')}" aria-label="${CO.name} 홈">${mark()}<span class="logo-word">${CO.name}</span></a>`;
 
 function header(c) {
-  const item = ([href, label]) => `<li><a href="${c.url(href)}"${c.slug === href || (href && c.slug.startsWith(href)) ? ' aria-current="page"' : ''}>${label}</a></li>`;
+  /* 지금 페이지 표시: 가장 길게 맞는 메뉴 하나만 (포트폴리오 안의 홈페이지 템플릿은 템플릿만) */
+  const cur = [...NAV].filter(([h]) => h && c.slug.startsWith(h)).sort((x, y) => y[0].length - x[0].length)[0]?.[0] ?? (c.slug === '' ? '' : null);
+  const item = ([href, label]) => `<li><a href="${c.url(href)}"${href === cur ? ' aria-current="page"' : ''}>${label}</a></li>`;
   return `<a class="skip" href="#main">본문 바로가기</a>
 <header class="site-header" data-header>
   <div class="wrap header-in">
