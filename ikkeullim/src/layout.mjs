@@ -1,10 +1,10 @@
 /* 공통 레이아웃: <head>, 헤더, 모바일 메뉴, 푸터, 모바일 하단 바, 공통 조각 */
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { BASE_URL, PH, CO, NAV, CHAT } from './content.mjs';
+import { BASE_URL, IS_LIVE, PH, CO, NAV, CHAT } from './content.mjs';
 
 const hashOf = f => createHash('md5').update(readFileSync(new URL('../assets/' + f, import.meta.url))).digest('hex').slice(0, 8);
-const VER = { css: hashOf('css/site.css'), js: hashOf('js/site.js'), ico: hashOf('favicon.png') };
+const VER = { css: hashOf('css/site.css'), js: hashOf('js/site.js'), ico: hashOf('favicon.png'), font: hashOf('fonts/pretendard/pretendardvariable-dynamic-subset.css') };
 
 export const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 export const br = a => (Array.isArray(a) ? a : [a]).map(l => `<span class="ln">${l}</span>`).join('');
@@ -135,16 +135,18 @@ export function page(c, { title, desc, body, bodyClass = '' }) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(full)}</title>
 <meta name="description" content="${esc(desc)}">
-<meta name="robots" content="noindex">
-<link rel="canonical" href="${canonical}">
+${IS_LIVE && c.slug !== '404.html' ? '' : '<meta name="robots" content="noindex">\n'}<link rel="canonical" href="${canonical}">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="${esc(CO.name)}">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:url" content="${canonical}">
 <meta property="og:title" content="${esc(full)}">
 <meta property="og:description" content="${esc(desc)}">
 <meta property="og:image" content="${BASE_URL}assets/og.png">
 <meta name="theme-color" content="#060709">
 <link rel="icon" href="${c.asset('favicon.png')}?v=${VER.ico}" type="image/png">
 <link rel="apple-touch-icon" href="${c.asset('apple-touch-icon.png')}?v=${VER.ico}">
-<link rel="stylesheet" href="${c.asset('fonts/pretendard/pretendardvariable-dynamic-subset.css')}">
+<link rel="stylesheet" href="${c.asset('fonts/pretendard/pretendardvariable-dynamic-subset.css')}?v=${VER.font}">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap">
 <link rel="stylesheet" href="${c.asset('css/site.css')}?v=${VER.css}">

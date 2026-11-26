@@ -6,7 +6,8 @@ import { ctx } from './src/layout.mjs';
 import { home, about, services, portfolio, pricing, reviews, faq, contact, templates, notFound } from './src/pages.mjs';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
-const write = (rel, html) => { const file = join(ROOT, rel); mkdirSync(dirname(file), { recursive: true }); writeFileSync(file, html); return rel; };
+const OUT = process.env.OUT_DIR || ROOT;   /* release.mjs가 실제 도메인용 묶음을 만들 때만 바꿈 */
+const write = (rel, html) => { const file = join(OUT, rel); mkdirSync(dirname(file), { recursive: true }); writeFileSync(file, html); return rel; };
 const out = [
   write('index.html', home(ctx(''))),
   write('about/index.html', about(ctx('about/'))),

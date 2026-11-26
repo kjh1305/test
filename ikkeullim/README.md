@@ -56,6 +56,22 @@
 
 상담 버튼(헤더, 첫 화면, 서비스·상품, 마무리 띠, PC 오른쪽 아래 노란 버튼, 모바일 하단 노란 바)은 모두 `CO.kakao`로 연결됩니다. 2026-11-26에 받은 카카오톡 오픈채팅 주소(https://open.kakao.com/o/sfqaHKYi)를 넣었습니다. 주소를 비우면 상담 안내 페이지로 갑니다.
 
+## 실제 도메인에 올리기 (ikkeulim.co.kr, 가비아 웹호스팅)
+
+2026-11-26: 도메인은 `ikkeulim.co.kr`(l 하나), 호스팅은 가비아. 이 폴더(시안)는 GitHub Pages용이라 검색에 안 나오게 막혀 있고, 실제 도메인용 묶음은 따로 만듭니다.
+
+```
+SITE_URL=https://ikkeulim.co.kr/ node release.mjs <시안 폴더 밖의 출력 폴더>
+```
+
+- 검색 허용(noindex 뺌), canonical·og 주소를 `https://ikkeulim.co.kr/…`로. 템플릿 예시 화면(`portfolio/templates/tNN/`)은 지어낸 업체라 그대로 검색 제외, 템플릿 모음 페이지는 검색 허용
+- `sitemap.xml`, `robots.txt`, `.htaccess`(없는 주소는 404 페이지로)를 넣음. 404 페이지는 어느 주소에서 열려도 그림이 깨지지 않게 `<base href>`를 붙임
+- 작업용 파일(`src`, `build.mjs`, `release.mjs`, `README.md`, `ik`)은 넣지 않음
+- 가비아 안내: 파일 이름은 영문 소문자로 → Pretendard 글꼴 파일 이름을 소문자로 바꿈(`pretendardvariable.subset.N.woff2`, `license.txt`)
+- 출력 폴더 안의 파일을 FTP(호스트: 도메인, 계정은 소문자, 공유기 쓰면 패시브 모드) 또는 SFTP(22번 포트)로 웹 폴더에 올림
+- 주소를 `https://`로 넣었으므로 가비아에서 SSL(보안 인증서)을 켜야 함. SSL 없이 쓰면 `SITE_URL=http://ikkeulim.co.kr/`로 다시 묶음
+- 올린 뒤: 네이버 서치어드바이저, 구글 서치 콘솔에 사이트 등록 → 소유 확인 파일이나 태그를 받아 넣고 `sitemap.xml` 제출
+
 ## 홈페이지 템플릿 (2026-11-26 요청)
 
 요청: 홈페이지 제작을 원하는 업체가 템플릿을 보고 기본 화면을 고를 수 있게, 서로 다른 느낌으로 20개 정도. 업체가 원하는 느낌을 말로만 설명하면 너무 추상적이라 고를 거리가 필요함.

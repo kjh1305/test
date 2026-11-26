@@ -8,7 +8,9 @@
    숫자·후기·가격은 지어내지 않습니다. 비어 있는 값(null)은 화면에 '채울 자리'로 나옵니다.
    ========================================================= */
 
-export const BASE_URL = 'https://kjh1305.github.io/test/ikkeullim/';
+/* 사이트 주소: 시안(GitHub Pages)이 기본. 실제 도메인용 묶음은 release.mjs가 SITE_URL을 넣어 만듦 (검색 허용, 주소 바꿈) */
+export const BASE_URL = (typeof process !== 'undefined' && process.env.SITE_URL) || 'https://kjh1305.github.io/test/ikkeullim/';
+export const IS_LIVE = !!(typeof process !== 'undefined' && process.env.SITE_URL);
 export const PH = '채울 자리';
 
 export const CO = {
