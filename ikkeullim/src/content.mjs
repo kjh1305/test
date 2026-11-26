@@ -505,12 +505,20 @@ export const CHAT = {
 /* 홈페이지 템플릿: 제작을 원하는 업체가 기본 화면을 고르는 목록 (templates/). 각 템플릿은 templates/tNN/index.html 한 장짜리 화면.
    글·상호·가격은 지어낸 예시이고, 사진은 Unsplash 사진(Lorem Picsum으로 받음, README에 출처).
    f: 고르기 버튼 값 (TPL_MOODS), fit: 어울리는 업종 예시, colors: 대표 색 */
-export const TPL_MOODS = [['clean', '깔끔한'], ['premium', '고급스러운'], ['bold', '강렬한'], ['warm', '따뜻한'], ['cute', '귀여운']];
+export const TPL_MOODS = [['clean', '깔끔한'], ['premium', '고급스러운'], ['bold', '강렬한'], ['warm', '따뜻한'], ['natural', '자연스러운'], ['cute', '귀여운'], ['dark', '어두운']];
 export const TEMPLATES = [
   { no: 'T01', slug: 't01', name: '여백', f: ['clean'], fit: '병원·의원, 한의원, 상담 업종', desc: '넓은 여백과 가는 글자, 아치형 사진으로 차분하게 보여 줍니다. 진료 시간표에 오늘 요일과 지금 진료 중인지를 표시합니다.', colors: ['#ffffff', '#f1f4f5', '#2f6f86', '#14232a'], font: 'IBM Plex Sans KR' },
   { no: 'T02', slug: 't02', name: '지면', f: ['premium', 'clean'], fit: '인테리어, 건축, 가구, 사진 스튜디오', desc: '잡지처럼 큰 명조 제목과 넓게 펼친 사진. 작업마다 위치, 면적, 기간, 공사 범위를 붙이고 상담 신청 폼으로 끝납니다.', colors: ['#ffffff', '#e6eae3', '#4e5d3f', '#1f2420'], font: 'Noto Serif KR · Pretendard' },
   { no: 'T03', slug: 't03', name: '물살', f: ['bold'], fit: '운동·레슨, 학원, 체육시설', desc: '화면을 채우는 굵은 글자와 진한 파랑. 반별 안내, 요일별 시간표, 요금표를 크고 분명하게 보여 줍니다.', colors: ['#0b4bdb', '#062a7a', '#8ee3ef', '#f2463a'], font: 'Black Han Sans · Pretendard' },
-  { no: 'T04', slug: 't04', name: '오늘구움', f: ['cute', 'warm'], fit: '디저트·카페, 동네 가게, 꽃집, 키즈', desc: '둥근 글자와 딸기색, 물결 테두리. 오늘 나오는 시간을 지금 시각에 맞춰 보여 주고, 메뉴와 가격을 사진과 함께 놓습니다.', colors: ['#ffdbe0', '#e23d4b', '#ffe38a', '#3b2418'], font: 'Jua · Gowun Dodum' }
+  { no: 'T04', slug: 't04', name: '오늘구움', f: ['cute', 'warm'], fit: '디저트·카페, 동네 가게, 꽃집, 키즈', desc: '둥근 글자와 딸기색, 물결 테두리. 오늘 나오는 시간을 지금 시각에 맞춰 보여 주고, 메뉴와 가격을 사진과 함께 놓습니다.', colors: ['#ffdbe0', '#e23d4b', '#ffe38a', '#3b2418'], font: 'Jua · Gowun Dodum' },
+  { no: 'T05', slug: 't05', name: '밤의 식탁', f: ['premium', 'dark'], fit: '와인바, 다이닝, 오마카세, 바', desc: '어두운 와인색과 황동색. 차림표처럼 정리한 코스와 잔 와인 가격, 대관 안내, 날짜·시간을 고르는 예약 문의가 있습니다.', colors: ['#24090f', '#4a1521', '#c9a45c', '#f2ede4'], font: 'Hahmlet · Pretendard' },
+  { no: 'T06', slug: 't06', name: '단단함', f: ['clean', 'bold'], fit: '제조, 공장, 기업 간 거래, 설비', desc: '남색과 파랑. 회사 개요 숫자, 가공 범위, 보유 설비 표, 납품 절차, 고객사 로고 자리, 도면을 첨부하는 견적 폼까지 회사 소개에 필요한 것을 갖췄습니다.', colors: ['#13294b', '#1e6fd9', '#eef1f5', '#f28c28'], font: 'Gothic A1' },
+  { no: 'T07', slug: 't07', name: '숲결', f: ['natural', 'warm'], fit: '한의원, 약국, 자연주의 제품, 상담', desc: '연한 초록과 부드러운 명조, 둥근 사진 틀과 세로로 쓴 글귀. 진료 안내, 한약 소개, 진료 과정, 진료 시간을 편안하게 보여 줍니다.', colors: ['#eef3ec', '#c9d6c3', '#3f6b4e', '#22392b'], font: 'Gowun Batang · Pretendard' },
+  { no: 'T08', slug: 't08', name: '결', f: ['premium', 'warm'], fit: '피부관리, 네일, 헤어, 뷰티 숍', desc: '연분홍과 모브색, 가는 명조. 겹쳐 놓은 사진, 탭으로 나눈 관리 메뉴와 가격, 처음 오시는 분 안내, 네이버 예약 버튼이 있습니다.', colors: ['#f6e3e1', '#efd0cc', '#8c5b6b', '#2b1e22'], font: 'Nanum Myeongjo · Pretendard' },
+  { no: 'T09', slug: 't09', name: '놀이터', f: ['cute', 'bold'], fit: '어린이집, 유치원, 키즈 카페, 아이 학원', desc: '노랑·하늘·초록·주황에 굵은 테두리, 스티커처럼 기울인 반 소개 카드. 하루 일과표와 이번 주 식단표를 매주 바꿔 올릴 수 있습니다.', colors: ['#ffc531', '#49a6f2', '#3dbe75', '#ff6b4a'], font: 'Dongle · Pretendard' },
+  { no: 'T10', slug: 't10', name: '밑줄', f: ['clean', 'cute'], fit: '학원, 교습소, 공부방, 과외', desc: '모눈 공책 바탕에 형광펜 밑줄과 빨간 손글씨 메모. 학년별로 골라 보는 반 시간표, 일주일 수업 방식, 레벨 테스트 신청이 있습니다.', colors: ['#ffffff', '#0f1e3d', '#ffe14d', '#d93a30'], font: 'Pretendard · Nanum Pen Script' },
+  { no: 'T11', slug: 't11', name: '정도', f: ['premium', 'clean'], fit: '법률, 세무, 노무, 회계, 전문직', desc: '버건디와 금색 선, 고전적인 명조. 펼쳐 보는 업무 분야 목차, 대표 소개, 상담 절차와 비용 표, 상담 예약 폼으로 믿음을 줍니다.', colors: ['#6b1f2a', '#a88450', '#f3f4f6', '#23262b'], font: 'Song Myung · Pretendard' },
+  { no: 'T12', slug: 't12', name: '반반', f: ['bold', 'clean'], fit: '부동산, 분양, 매장 여러 곳, 상품 목록', desc: '화면을 반으로 나눠 한쪽은 사진, 한쪽은 목록. 아래로 내릴 때마다 사진이 바뀌고, 종류별로 골라 보는 매물 카드와 중개 보수 표가 있습니다.', colors: ['#22252a', '#ff5a1f', '#f2f2f0', '#ffffff'], font: 'Noto Sans KR' }
 ];
 
 export const META = {

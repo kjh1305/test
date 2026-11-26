@@ -16,7 +16,7 @@ const out = [
   write('reviews/index.html', reviews(ctx('reviews/'))),
   write('faq/index.html', faq(ctx('faq/'))),
   write('contact/index.html', contact(ctx('contact/'))),
-  write('templates/index.html', templates(ctx('templates/'))),
+  write('portfolio/templates/index.html', templates(ctx('portfolio/templates/'))),
   write('404.html', notFound(ctx('404.html')))
 ];
 console.log(`${out.length} files`);

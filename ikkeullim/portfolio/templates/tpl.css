@@ -12,3 +12,7 @@
   .tpl-bar { padding: 8px 14px; gap: 4px 10px; }
   .tpl-bar .tpl-note { display: none; }
 }
+
+/* 모든 템플릿 공통: 폼 칸이 좁은 화면(320px)에서 밖으로 밀리지 않게 */
+.form, .form > * { min-width: 0; }
+.form input, .form select, .form textarea { width: 100%; max-width: 100%; min-width: 0; }

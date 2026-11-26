@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>T09 놀이터 · 이끌림 홈페이지 템플릿</title>
+<meta name="description" content="이끌림 홈페이지 템플릿 T09 놀이터: 노랑·하늘·초록·주황의 밝은 색, 스티커처럼 기울인 카드와 하루 일과표로 즐겁게 보여 주는 어린이집·키즈 업종 홈페이지. 글과 사진은 예시입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dongle:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../tpl.css">
+<style>
+:root {
+  --sun: #ffc531;
+  --sky: #49a6f2;
+  --sky-soft: #e7f4ff;
+  --grass: #3dbe75;
+  --tomato: #ff6b4a;
+  --ink: #26323f;
+  --ink-2: #5b6878;
+  --round: "Dongle", "Pretendard", sans-serif;
+  --sans: "Pretendard", -apple-system, "Apple SD Gothic Neo", sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: #fff; color: var(--ink); font: 500 17px/1.7 var(--sans); word-break: keep-all; overflow-wrap: break-word; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--sky); outline-offset: 3px; border-radius: 8px; }
+h1, h2, h3 { margin: 0; font-family: var(--round); font-weight: 700; line-height: .95; letter-spacing: 0; }
+p { margin: 0; }
+.wrap { width: min(1160px, 100% - 48px); margin: 0 auto; }
+
+.hd .wrap { display: flex; align-items: center; gap: 24px; height: 84px; }
+.logo { display: flex; align-items: center; gap: 10px; font-family: var(--round); font-weight: 700; font-size: 46px; line-height: 1; text-decoration: none; }
+.logo i { display: inline-grid; grid-template-columns: 1fr 1fr; gap: 3px; width: 30px; height: 30px; }
+.logo i::before, .logo i::after { content: ""; border-radius: 50%; }
+.logo i::before { background: var(--sun); box-shadow: 16px 16px 0 var(--grass); }
+.logo i::after { background: var(--sky); box-shadow: -16px 16px 0 var(--tomato); }
+.nav { margin-left: auto; display: flex; gap: 22px; }
+.nav a { font-weight: 700; font-size: 16px; text-decoration: none; }
+.nav a:hover { color: var(--sky); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 54px; padding: 0 26px; border-radius: 16px; background: var(--tomato); color: #fff; font: 800 16px/1 var(--sans); text-decoration: none; border: 3px solid var(--ink); box-shadow: 4px 4px 0 var(--ink); transition: transform .12s, box-shadow .12s; }
+.btn:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--ink); }
+.btn-sun { background: var(--sun); color: var(--ink); }
+.btn-white { background: #fff; color: var(--ink); }
+.hd .btn { min-height: 46px; padding: 0 18px; font-size: 15px; }
+
+.hero { position: relative; padding: 48px 0 110px; overflow: hidden; }
+.hero::before { content: ""; position: absolute; width: 520px; height: 520px; right: -140px; top: -160px; border-radius: 50%; background: var(--sun); z-index: -1; }
+.hero::after { content: ""; position: absolute; width: 260px; height: 260px; left: -90px; bottom: -80px; border-radius: 50%; background: var(--sky-soft); z-index: -1; }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(84px, 11vw, 150px); }
+.hero h1 span { display: block; }
+.hero h1 span:nth-child(2) { color: var(--sky); }
+.hero h1 span:nth-child(3) { color: var(--grass); }
+.hero-lede { margin-top: 20px; max-width: 24em; color: var(--ink-2); font-size: 18px; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+.window { position: relative; padding: 18px; border: 3px solid var(--ink); border-radius: 48px; background: #fff; box-shadow: 10px 10px 0 var(--ink); transform: rotate(2deg); }
+.window img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 32px; }
+.badge { position: absolute; left: -26px; bottom: 36px; padding: 12px 18px; border: 3px solid var(--ink); border-radius: 18px; background: var(--grass); color: #fff; font-weight: 800; transform: rotate(-6deg); }
+
+.sec { padding: 110px 0; }
+.sec-sky { background: var(--sky-soft); }
+.head { margin-bottom: 52px; }
+.head h2 { font-size: clamp(64px, 7vw, 96px); }
+.head p { color: var(--ink-2); margin-top: 8px; max-width: 30em; }
+.classes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 0; padding: 0; list-style: none; }
+.classes li { padding: 26px 22px 28px; border: 3px solid var(--ink); border-radius: 26px; background: #fff; box-shadow: 6px 6px 0 var(--ink); }
+.classes li:nth-child(1) { transform: rotate(-2deg); }
+.classes li:nth-child(2) { transform: rotate(1.5deg); }
+.classes li:nth-child(3) { transform: rotate(-1deg); }
+.classes li:nth-child(4) { transform: rotate(2deg); }
+.classes .age { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 14px; font-weight: 800; }
+.classes h3 { margin-top: 14px; font-size: 56px; }
+.classes p { color: var(--ink-2); font-size: 15px; margin-top: 6px; }
+.classes dl { margin: 16px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 15px; }
+.classes dt { color: var(--ink-2); }
+.classes dd { margin: 0; font-weight: 800; }
+
+.day .wrap { display: grid; grid-template-columns: .8fr 1.2fr; gap: 64px; align-items: start; }
+.day-img img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 32px; border: 3px solid var(--ink); }
+.day-img p { margin-top: 18px; color: var(--ink-2); }
+.timeline { margin: 0; padding: 0; list-style: none; position: relative; }
+.timeline::before { content: ""; position: absolute; left: 70px; top: 10px; bottom: 10px; border-left: 3px dashed #b7c7d6; }
+.timeline li { position: relative; display: grid; grid-template-columns: 70px 1fr; gap: 28px; padding: 12px 0; }
+.timeline time { font-weight: 800; font-size: 16px; padding-top: 4px; }
+.timeline li::after { content: ""; position: absolute; left: 62px; top: 20px; width: 19px; height: 19px; border-radius: 50%; border: 3px solid var(--ink); background: var(--c, var(--sun)); }
+.timeline b { font-family: var(--round); font-weight: 700; font-size: 40px; line-height: 1; }
+.timeline p { color: var(--ink-2); font-size: 15px; }
+
+.meal-wrap { overflow-x: auto; border: 3px solid var(--ink); border-radius: 26px; background: #fff; }
+.meal { width: 100%; min-width: 680px; border-collapse: collapse; }
+.meal th, .meal td { padding: 16px 18px; text-align: left; border-bottom: 2px solid #e4ecf3; }
+.meal thead th { background: var(--sun); font-weight: 800; }
+.meal tbody th { font-weight: 800; color: var(--ink-2); width: 90px; }
+.meal tr:last-child th, .meal tr:last-child td { border-bottom: 0; }
+.meal-note { margin-top: 14px; color: var(--ink-2); font-size: 15px; }
+
+.join { background: var(--grass); color: #fff; }
+.join .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.join h2 { font-size: clamp(64px, 7vw, 96px); }
+.join p { margin-top: 12px; }
+.join ol { margin: 0; padding: 0; list-style: none; counter-reset: j; display: grid; gap: 14px; }
+.join li { counter-increment: j; display: flex; align-items: center; gap: 16px; padding: 18px 20px; border: 3px solid var(--ink); border-radius: 20px; background: #fff; color: var(--ink); font-weight: 800; }
+.join li::before { content: counter(j); display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--sun); border: 3px solid var(--ink); }
+.join li span { display: block; font-weight: 500; color: var(--ink-2); font-size: 15px; }
+.join .hero-cta { margin-top: 28px; }
+
+.ft { background: var(--ink); color: #b9c4d0; font-size: 14px; padding: 40px 0 56px; }
+.ft .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+.ft b { font-family: var(--round); font-size: 36px; color: #fff; line-height: 1; }
+
+@media (max-width: 1000px) {
+  .nav { display: none; }
+  .hd .btn { margin-left: auto; }
+  .hero .wrap, .day .wrap, .join .wrap { grid-template-columns: 1fr; gap: 48px; }
+  .window { max-width: 440px; margin-left: 20px; }
+  .classes { grid-template-columns: 1fr 1fr; }
+  .sec { padding: 84px 0; }
+}
+@media (max-width: 560px) {
+  .wrap { width: calc(100% - 36px); }
+  body { font-size: 16px; }
+  .logo { font-size: 38px; }
+  .hd .btn { font-size: 14px; padding: 0 12px; }
+  .classes { grid-template-columns: 1fr; }
+  .hero-cta .btn { flex: 1 1 100%; }
+  .badge { left: -12px; }
+  .hero::before { width: 320px; height: 320px; right: -120px; top: -100px; }
+}
+</style>
+</head>
+<body>
+<div class="tpl-bar" role="note">이끌림 홈페이지 템플릿 <b>T09 놀이터</b><span class="tpl-note">글과 사진은 예시입니다. 업체 내용으로 바꿔 드립니다.</span><span class="tpl-links"><a href="../">템플릿 목록</a><a class="tpl-go" href="../../../contact/">이 템플릿으로 상담</a></span></div>
+
+<header class="hd">
+  <div class="wrap">
+    <a class="logo" href="#"><i aria-hidden="true"></i>몽글 어린이집</a>
+    <nav class="nav" aria-label="주 메뉴"><a href="#class">우리 반</a><a href="#day">하루 일과</a><a href="#meal">이번 주 식단</a><a href="#join">입소 상담</a></nav>
+    <a class="btn btn-sun" href="#join">입소 상담</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1><span>오늘도</span><span>신나게</span><span>놀았어요</span></h1>
+        <p class="hero-lede">만 1세부터 5세까지, 반마다 선생님 두 분이 함께합니다. 하루 일과와 식단은 매주 이 페이지에 올립니다.</p>
+        <div class="hero-cta"><a class="btn" href="#join">입소 상담 신청</a><a class="btn btn-white" href="#day">하루 일과 보기</a></div>
+      </div>
+      <div class="window">
+        <img src="img/trike.webp" width="1000" height="1000" alt="빨간 세발자전거가 놓인 현관 앞">
+        <p class="badge">마당 놀이 매일 1시간</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-sky" id="class">
+    <div class="wrap">
+      <div class="head"><h2>우리 반 소개</h2><p>나이에 맞춰 네 반으로 나눕니다. 반마다 정원이 적어 한 명 한 명 눈을 맞출 수 있어요.</p></div>
+      <ul class="classes">
+        <li><span class="age" style="background:var(--sun)">만 1세</span><h3>새싹반</h3><p>낮잠과 먹는 습관을 먼저 맞춰요</p><dl><dt>정원</dt><dd>6명</dd><dt>선생님</dt><dd>2명</dd></dl></li>
+        <li><span class="age" style="background:#c7e6ff">만 2세</span><h3>햇살반</h3><p>손으로 만지고 노는 감각 놀이</p><dl><dt>정원</dt><dd>8명</dd><dt>선생님</dt><dd>2명</dd></dl></li>
+        <li><span class="age" style="background:#c8f0d8">만 3–4세</span><h3>숲반</h3><p>바깥 놀이와 그림책 시간</p><dl><dt>정원</dt><dd>12명</dd><dt>선생님</dt><dd>2명</dd></dl></li>
+        <li><span class="age" style="background:#ffd5cb">만 5세</span><h3>무지개반</h3><p>초등학교 가기 전 생활 연습</p><dl><dt>정원</dt><dd>14명</dd><dt>선생님</dt><dd>2명</dd></dl></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="sec day" id="day">
+    <div class="wrap">
+      <div>
+        <div class="head" style="margin-bottom:28px"><h2>하루 일과</h2></div>
+        <div class="day-img"><img src="img/swing.webp" width="1200" height="800" alt="놀이터에 나란히 매달린 그네" loading="lazy"><p>비가 오지 않는 날은 오전과 오후에 한 번씩 마당에서 놉니다.</p></div>
+      </div>
+      <ol class="timeline">
+        <li><time>08:30</time><div><b>등원</b><p>손 씻고 오늘 기분 나누기</p></div></li>
+        <li style="--c:var(--sky)"><time>10:00</time><div><b>오전 놀이</b><p>반별 놀이와 마당 놀이</p></div></li>
+        <li style="--c:var(--tomato)"><time>11:40</time><div><b>점심</b><p>원에서 직접 만든 식사</p></div></li>
+        <li style="--c:#c7e6ff"><time>13:00</time><div><b>낮잠 · 쉬는 시간</b><p>나이에 맞춰 1~2시간</p></div></li>
+        <li style="--c:var(--grass)"><time>15:00</time><div><b>간식 · 오후 놀이</b><p>그림책, 만들기, 음악</p></div></li>
+        <li><time>16:30</time><div><b>하원</b><p>오늘 있었던 일을 알림장으로 보내 드려요</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec sec-sky" id="meal">
+    <div class="wrap">
+      <div class="head"><h2>이번 주 식단</h2><p>영양사 선생님이 짠 식단입니다. 알레르기가 있으면 입소 상담 때 알려 주세요.</p></div>
+      <div class="meal-wrap" tabindex="0" role="region" aria-label="이번 주 식단표, 옆으로 밀어 볼 수 있음">
+        <table class="meal">
+          <thead><tr><th scope="col">요일</th><th scope="col">점심</th><th scope="col">오후 간식</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">월</th><td>현미밥, 미역국, 닭가슴살 채소볶음</td><td>바나나, 우유</td></tr>
+            <tr><th scope="row">화</th><td>보리밥, 된장국, 생선구이</td><td>찐 고구마</td></tr>
+            <tr><th scope="row">수</th><td>카레라이스, 오이무침</td><td>요거트, 블루베리</td></tr>
+            <tr><th scope="row">목</th><td>콩밥, 소고기뭇국, 시금치나물</td><td>떡, 보리차</td></tr>
+            <tr><th scope="row">금</th><td>비빔밥, 맑은 국, 과일</td><td>감자전</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="meal-note">식단은 예시입니다.</p>
+    </div>
+  </section>
+
+  <section class="sec join" id="join">
+    <div class="wrap">
+      <div>
+        <h2>입소 상담</h2>
+        <p>상담은 평일 오후 2시부터 4시 사이에 받습니다. 아이와 함께 오셔서 교실을 둘러보셔도 좋아요.</p>
+        <div class="hero-cta"><a class="btn btn-sun" href="tel:0200000000">02-000-0000 전화</a><a class="btn btn-white" href="#">카카오톡 상담</a></div>
+      </div>
+      <ol>
+        <li><div>전화로 상담 날짜 잡기<span>원하는 반과 입소 시기를 알려 주세요</span></div></li>
+        <li><div>원 둘러보기<span>교실, 마당, 주방을 직접 보세요</span></div></li>
+        <li><div>입소 서류 내기<span>필요한 서류를 문자로 안내해요</span></div></li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="ft">
+  <div class="wrap"><b>몽글 어린이집</b><div><p>원장 홍길동 · 사업자등록번호 000-00-00000</p><p>서울시 OO구 OO로 00 · 02-000-0000</p></div></div>
+</footer>
+</body>
+</html>

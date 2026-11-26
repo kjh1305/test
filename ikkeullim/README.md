@@ -46,13 +46,13 @@
 | `/` | 첫 화면, 업종 흐름 띠, 이끌림의 방법(3가지 순환), 서비스 벤토, 업종별 사례 화면, 진행 6단계 + 사장님이 하실 일, 사장님 한마디 띠, 마무리 |
 | `about/` | 소개 글('검색되는 브랜드가 선택받는 브랜드입니다'), 이끌림이 다른 점(3), 진행 6단계, 운영 정보(대표·주소·사업자등록번호) |
 | `services/` | 맨 위 '네이버가 글을 고르는 방식'(크롤링→인덱싱→랭킹, C-RANK · D.I.A.+ · 스마트블록과 이끌림의 대응), 서비스 6개: 홈페이지 및 블로그 관리대행(통합 패키지), 블로그 포스팅, 블로그 활성화, 홈페이지 제작, 블로그 스킨 디자인, 영상 제작. 각 서비스에 '이런 분께' |
-| `portfolio/` | 검색 결과 화면 79장 사진첩(업종 골라 보기, 16장 + 더 보기), 홈페이지 · 블로그 디자인 제작 사례(채울 자리) |
+| `portfolio/` | 위쪽 탭(검색 결과 화면 / 홈페이지 템플릿), 검색 결과 화면 79장 사진첩(업종 골라 보기, 16장 + 더 보기), 홈페이지 템플릿 미리보기 8개와 '모두 보기'. 원래 있던 '홈페이지 · 블로그 디자인 제작 사례' 빈자리는 템플릿으로 바꿈(실제 제작 사례 이미지를 받으면 다시 넣을 수 있음) |
 | `pricing/` | 대표 상품(홈페이지 및 블로그 관리대행 = 포스팅 + 활성화 + 디자인 통합 패키지) 크게, 블로그 / 홈페이지 & 브랜드 디자인 두 묶음. 가격은 모두 '상담 문의' |
 | `reviews/` | 대표님이 보내 주신 말 11개(반응 골라 보기, 실제 카톡 캡처), 블로그를 보고 들어온 문의 5개 |
 | `faq/` | 서비스 · 진행 · 결제 12문항. 제안서 질문·답변 7개(`src: '제안서'`) + 예시 답변 5개 |
 | `contact/` | 상담 안내: 카카오톡 상담 버튼, 보내 주면 좋은 내용 4가지, 진행 순서 |
-| `templates/` | 홈페이지 템플릿 목록: 고르는 순서 3단계, 분위기 골라 보기, 템플릿마다 PC·휴대폰 화면, 설명, 어울리는 업종, 색, 글꼴, 미리보기. 서비스의 '홈페이지 제작'과 포트폴리오 제작 사례 아래에서 들어감 (메뉴에는 아직 없음) |
-| `templates/t01/` … | 템플릿 한 장짜리 화면. 위에 '템플릿 목록 / 이 템플릿으로 상담' 막대 |
+| `portfolio/templates/` | 홈페이지 템플릿 모음(상담 중에 '여기서 골라 주세요' 하고 보여 주는 페이지): 고르는 순서 3단계, 분위기 골라 보기, 템플릿마다 PC·휴대폰 화면, 설명, 어울리는 업종, 색, 글꼴, 미리보기. 포트폴리오 위쪽 탭, 포트폴리오 아래 템플릿 미리보기, 서비스의 '홈페이지 제작'에서 들어감 |
+| `portfolio/templates/t01/` … | 템플릿 한 장짜리 화면. 위에 '템플릿 목록 / 이 템플릿으로 상담' 막대 |
 
 상담 버튼(헤더, 첫 화면, 서비스·상품, 마무리 띠, PC 오른쪽 아래 노란 버튼, 모바일 하단 노란 바)은 모두 `CO.kakao`로 연결됩니다. 주소가 비어 있는 동안은 상담 안내 페이지로 갑니다.
 
@@ -60,25 +60,36 @@
 
 요청: 홈페이지 제작을 원하는 업체가 템플릿을 보고 기본 화면을 고를 수 있게, 서로 다른 느낌으로 20개 정도. 업체가 원하는 느낌을 말로만 설명하면 너무 추상적이라 고를 거리가 필요함.
 
-- 1차로 4개(T01~T04)를 만들고 목록 페이지(`templates/`)에 올림. 확인을 받은 뒤 나머지를 같은 방식으로 추가
-- 템플릿은 `templates/tNN/index.html` 한 파일에 CSS·JS를 모두 넣은 한 장짜리 화면입니다(빌드 없이 그대로 고침). 사이트 빌드(`node build.mjs`)는 목록 페이지만 만듭니다
-- 위쪽 안내 막대(`templates/tpl.css`): 템플릿 번호와 이름, '글과 사진은 예시', 템플릿 목록, 이 템플릿으로 상담(상담 안내 페이지)
+- 1차로 4개(T01~T04)를 만들어 보여 드림. 업체 답(2026-11-26): 포트폴리오 안에 넣고, 상담 중에 템플릿 모음 페이지를 보여 주며 고르게 함. 나머지는 알아서, 많을수록 좋음 → 24개로 정함(상담 중 한 화면에서 고르기 좋은 양, 분위기로 골라 보기). 처음 계획한 16개에 반려동물, 꽃집, 자동차 정비, 요가·필라테스를 더함
+- 템플릿은 `portfolio/templates/tNN/index.html` 한 파일에 CSS·JS를 모두 넣은 한 장짜리 화면입니다(빌드 없이 그대로 고침). 사이트 빌드(`node build.mjs`)는 모음 페이지(`portfolio/templates/index.html`)만 만듭니다
+- 위쪽 안내 막대(`portfolio/templates/tpl.css`): 템플릿 번호와 이름, '글과 사진은 예시', 템플릿 목록, 이 템플릿으로 상담(상담 안내 페이지)
 - 상호, 글, 가격, 전화번호(02-000-0000, 010-0000-0000), 주소(OO구)는 모두 지어낸 예시
-- 목록 데이터: `src/content.mjs`의 `TEMPLATES`(번호, 이름, 분위기 `f`, 어울리는 업종, 설명, 색, 글꼴)와 `TPL_MOODS`(깔끔한, 고급스러운, 강렬한, 따뜻한, 귀여운)
+- 목록 데이터: `src/content.mjs`의 `TEMPLATES`(번호, 이름, 분위기 `f`, 어울리는 업종, 설명, 색, 글꼴)와 `TPL_MOODS`(깔끔한, 고급스러운, 강렬한, 따뜻한, 자연스러운, 귀여운, 어두운)
 - 목록의 화면 사진: `assets/img/tpl/tNN-pc.webp`(1440×900 화면을 960×600으로), `tNN-m.webp`(390×844 화면을 240×520으로). 안내 막대는 빼고 찍음. 템플릿을 고치면 다시 찍어야 함
 
-| 번호 | 이름 | 느낌과 화면 구성 | 예시 업종 | 글꼴 |
-| --- | --- | --- | --- | --- |
-| T01 | 여백 | 흰 바탕, 가는 글자, 아치형 사진, 진료 과목 목록, 오늘 요일이 표시되는 진료 시간표, 지금 진료 중인지 알려 주는 표시 | 피부과의원 | IBM Plex Sans KR |
-| T02 | 지면 | 잡지처럼 화면 너비 가득 큰 명조 제목, 넓게 펼친 사진과 작업별 위치·면적·기간, 진행 5단계, 상담 신청 폼 | 인테리어 스튜디오 | Noto Serif KR, Pretendard |
-| T03 | 물살 | 진한 파랑에 아주 큰 굵은 글자, 수영장 레인 줄 무늬 구분선, 레인별 반 안내, 요일별 시간표, 요금표 | 수영 교실 | Black Han Sans, Pretendard |
-| T04 | 오늘구움 | 분홍과 딸기색, 둥근 글자, 물결 테두리와 꽃 모양 사진, 지금 시각에 맞춘 '오늘 굽는 시간', 가격표가 붙은 메뉴 | 쿠키·디저트 가게 | Jua, Gowun Dodum |
+<!-- tpl-table -->
+| 번호 | 이름 | 분위기 | 화면 구성 | 어울리는 업종 | 글꼴 |
+| --- | --- | --- | --- | --- | --- |
+| T01 | 여백 | 깔끔한 | 넓은 여백과 가는 글자, 아치형 사진으로 차분하게 보여 줍니다. 진료 시간표에 오늘 요일과 지금 진료 중인지를 표시합니다. | 병원·의원, 한의원, 상담 업종 | IBM Plex Sans KR |
+| T02 | 지면 | 고급스러운, 깔끔한 | 잡지처럼 큰 명조 제목과 넓게 펼친 사진. 작업마다 위치, 면적, 기간, 공사 범위를 붙이고 상담 신청 폼으로 끝납니다. | 인테리어, 건축, 가구, 사진 스튜디오 | Noto Serif KR · Pretendard |
+| T03 | 물살 | 강렬한 | 화면을 채우는 굵은 글자와 진한 파랑. 반별 안내, 요일별 시간표, 요금표를 크고 분명하게 보여 줍니다. | 운동·레슨, 학원, 체육시설 | Black Han Sans · Pretendard |
+| T04 | 오늘구움 | 귀여운, 따뜻한 | 둥근 글자와 딸기색, 물결 테두리. 오늘 나오는 시간을 지금 시각에 맞춰 보여 주고, 메뉴와 가격을 사진과 함께 놓습니다. | 디저트·카페, 동네 가게, 꽃집, 키즈 | Jua · Gowun Dodum |
+| T05 | 밤의 식탁 | 고급스러운, 어두운 | 어두운 와인색과 황동색. 차림표처럼 정리한 코스와 잔 와인 가격, 대관 안내, 날짜·시간을 고르는 예약 문의가 있습니다. | 와인바, 다이닝, 오마카세, 바 | Hahmlet · Pretendard |
+| T06 | 단단함 | 깔끔한, 강렬한 | 남색과 파랑. 회사 개요 숫자, 가공 범위, 보유 설비 표, 납품 절차, 고객사 로고 자리, 도면을 첨부하는 견적 폼까지 회사 소개에 필요한 것을 갖췄습니다. | 제조, 공장, 기업 간 거래, 설비 | Gothic A1 |
+| T07 | 숲결 | 자연스러운, 따뜻한 | 연한 초록과 부드러운 명조, 둥근 사진 틀과 세로로 쓴 글귀. 진료 안내, 한약 소개, 진료 과정, 진료 시간을 편안하게 보여 줍니다. | 한의원, 약국, 자연주의 제품, 상담 | Gowun Batang · Pretendard |
+| T08 | 결 | 고급스러운, 따뜻한 | 연분홍과 모브색, 가는 명조. 겹쳐 놓은 사진, 탭으로 나눈 관리 메뉴와 가격, 처음 오시는 분 안내, 네이버 예약 버튼이 있습니다. | 피부관리, 네일, 헤어, 뷰티 숍 | Nanum Myeongjo · Pretendard |
+| T09 | 놀이터 | 귀여운, 강렬한 | 노랑·하늘·초록·주황에 굵은 테두리, 스티커처럼 기울인 반 소개 카드. 하루 일과표와 이번 주 식단표를 매주 바꿔 올릴 수 있습니다. | 어린이집, 유치원, 키즈 카페, 아이 학원 | Dongle · Pretendard |
+| T10 | 밑줄 | 깔끔한, 귀여운 | 모눈 공책 바탕에 형광펜 밑줄과 빨간 손글씨 메모. 학년별로 골라 보는 반 시간표, 일주일 수업 방식, 레벨 테스트 신청이 있습니다. | 학원, 교습소, 공부방, 과외 | Pretendard · Nanum Pen Script |
+| T11 | 정도 | 고급스러운, 깔끔한 | 버건디와 금색 선, 고전적인 명조. 펼쳐 보는 업무 분야 목차, 대표 소개, 상담 절차와 비용 표, 상담 예약 폼으로 믿음을 줍니다. | 법률, 세무, 노무, 회계, 전문직 | Song Myung · Pretendard |
+| T12 | 반반 | 강렬한, 깔끔한 | 화면을 반으로 나눠 한쪽은 사진, 한쪽은 목록. 아래로 내릴 때마다 사진이 바뀌고, 종류별로 골라 보는 매물 카드와 중개 보수 표가 있습니다. | 부동산, 분양, 매장 여러 곳, 상품 목록 | Noto Sans KR |
+<!-- /tpl-table -->
 
 ### 템플릿 사진 출처
 
 사진은 Unsplash 사진입니다(Unsplash 라이선스: 상업적으로 무료로 쓸 수 있고 출처 표기는 필요 없음). Unsplash 검색은 봇 확인 화면이 떠서 쓰지 않았고, Unsplash 사진을 모아 둔 Lorem Picsum(picsum.photos)에서 크기에 맞게 잘라 받아 WebP로 줄였습니다. 실제 업체 홈페이지에는 업체 사진을 씁니다.
 
-| 파일 (`templates/`) | 찍은 사람 | 원본 |
+<!-- tpl-credits -->
+| 파일 (`portfolio/templates/`) | 찍은 사람 | 원본 |
 | --- | --- | --- |
 | `t01/img/hero.webp` | Todd Quackenbush | https://unsplash.com/photos/JJB_K8aCPU4 |
 | `t01/img/dome.webp` | Drew Patrick Miller | https://unsplash.com/photos/VLT62-JzddA |
@@ -100,6 +111,32 @@
 | `t04/img/latte.webp` | Carli Jean | https://unsplash.com/photos/UWRqlJcDCXA |
 | `t04/img/honey.webp` | Sonja Langford | https://unsplash.com/photos/RQHzRELE2Ss |
 | `t04/img/berries.webp` | Ben Moore | https://unsplash.com/photos/pJILiyPdrXI |
+| `t05/img/hero.webp` | Todd Quackenbush | https://unsplash.com/photos/x5SRhkFajrA |
+| `t05/img/grapes.webp` | Jassy Onyae | https://unsplash.com/photos/1gBUXhf0PtA |
+| `t05/img/forks.webp` | Alejandro Escamilla | https://unsplash.com/photos/8yqds_91OLw |
+| `t05/img/dish.webp` | davide ragusa | https://unsplash.com/photos/4jcFu1byopQ |
+| `t06/img/hero.webp` | Sylwia Bartyzel | https://unsplash.com/photos/sfO5mHyObtM |
+| `t06/img/grid.webp` | Mika Ruusunen | https://unsplash.com/photos/ypVM8PnygUo |
+| `t06/img/hall.webp` | Erez Attias | https://unsplash.com/photos/KqVHRmHVwwM |
+| `t07/img/hero.webp` | Jean Lakosnyk | https://unsplash.com/photos/N9yFjkDc0vA |
+| `t07/img/buds.webp` | John French | https://unsplash.com/photos/SNW4DWZEy8I |
+| `t07/img/green.webp` | Noah Baslé | https://unsplash.com/photos/kqB7IDljjMI |
+| `t08/img/hero.webp` | Aaron Burden | https://unsplash.com/photos/UvRMcIeXq9Y |
+| `t08/img/coral.webp` | Cas Cornelissen | https://unsplash.com/photos/G2UTNecskWg |
+| `t08/img/cup.webp` | Carli Jean | https://unsplash.com/photos/15YDf39RIVc |
+| `t08/img/bloom.webp` | Arvee Marie | https://unsplash.com/photos/YnfGtpt2gf4 |
+| `t09/img/trike.webp` | Florian Klauer | https://unsplash.com/photos/GG0jOrmwqtw |
+| `t09/img/swing.webp` | Aaron Burden | https://unsplash.com/photos/ob6O_xd67O0 |
+| `t10/img/book.webp` | Alejandro Escamilla | https://unsplash.com/photos/cZhUxIQjILg |
+| `t10/img/note.webp` | Noe Araujo | https://unsplash.com/photos/ChY016PARQY |
+| `t11/img/hero.webp` | Alec Cutter | https://unsplash.com/photos/Sfn8f32ZIj0 |
+| `t11/img/hall.webp` | Hartmut Tobies | https://unsplash.com/photos/O9TEKuI1Icw |
+| `t12/img/park.webp` | freddie marriage | https://unsplash.com/photos/utwYoEu9SU8 |
+| `t12/img/sea.webp` | Rúben dos Santos | https://unsplash.com/photos/DROwSrK20nE |
+| `t12/img/city.webp` | Lili Popper | https://unsplash.com/photos/71cd1rWqO8M |
+| `t12/img/sky.webp` | Carli Jean | https://unsplash.com/photos/Gk6YgzmrLgM |
+| `t12/img/white.webp` | Julien Moreau | https://unsplash.com/photos/688Fna1pwOQ |
+<!-- /tpl-credits -->
 
 ## 후기 이미지 (2026-11-16 받음, 96장)
 

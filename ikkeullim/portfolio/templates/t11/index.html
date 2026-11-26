@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>T11 정도 · 이끌림 홈페이지 템플릿</title>
+<meta name="description" content="이끌림 홈페이지 템플릿 T11 정도: 버건디와 금색 선, 고전적인 명조, 펼쳐 보는 업무 분야 목차와 상담 비용 표로 신뢰감을 주는 법률·세무·전문직 홈페이지. 글과 사진은 예시입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Song+Myung&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../tpl.css">
+<style>
+:root {
+  --burgundy: #6b1f2a;
+  --burgundy-2: #561822;
+  --char: #23262b;
+  --text-2: #5c6068;
+  --gold: #a88450;
+  --mist: #f3f4f6;
+  --line: #dadce0;
+  --serif: "Song Myung", "Noto Serif KR", serif;
+  --sans: "Pretendard", -apple-system, "Apple SD Gothic Neo", sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: #fff; color: var(--char); font: 400 17px/1.8 var(--sans); word-break: keep-all; overflow-wrap: break-word; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+h1, h2, h3 { margin: 0; font-family: var(--serif); font-weight: 400; letter-spacing: -0.01em; line-height: 1.4; }
+p { margin: 0; }
+.wrap { width: min(1160px, 100% - 48px); margin: 0 auto; }
+
+.hd { text-align: center; border-bottom: 1px solid var(--line); }
+.hd-top { display: flex; justify-content: space-between; align-items: center; padding: 22px 0 10px; font-size: 14px; color: var(--text-2); }
+.logo { font-family: var(--serif); font-size: 32px; text-decoration: none; color: var(--burgundy); letter-spacing: .06em; }
+.logo small { display: block; font-family: var(--sans); font-size: 12px; letter-spacing: .3em; color: var(--gold); margin-top: -2px; }
+.nav { display: flex; justify-content: center; gap: 40px; padding: 14px 0 16px; }
+.nav a { font-size: 15px; text-decoration: none; }
+.nav a:hover { color: var(--burgundy); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 28px; background: var(--burgundy); color: #fff; font: 600 15px/1 var(--sans); text-decoration: none; border: 1px solid var(--burgundy); cursor: pointer; }
+.btn:hover { background: var(--burgundy-2); }
+.btn-line { background: transparent; color: #fff; border-color: rgba(255,255,255,.6); }
+.btn-line:hover { background: rgba(255,255,255,.1); }
+
+.hero { display: grid; grid-template-columns: 1.1fr .9fr; min-height: 600px; }
+.hero-txt { background: var(--burgundy); color: #fff; padding: 96px 64px 88px max(24px, calc((100vw - 1160px) / 2)); display: flex; flex-direction: column; justify-content: center; }
+.rule { display: block; width: 64px; height: 1px; background: var(--gold); margin-bottom: 32px; }
+.hero h1 { font-size: clamp(38px, 4.4vw, 60px); }
+.hero-lede { margin-top: 24px; color: #e8d6d8; max-width: 28em; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
+.hero-cta .btn:first-child { background: #fff; color: var(--burgundy); border-color: #fff; }
+.hero-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.sec { padding: 112px 0; }
+.sec-mist { background: var(--mist); }
+.title { text-align: center; margin-bottom: 56px; }
+.title .rule { margin: 0 auto 24px; }
+.title h2 { font-size: clamp(32px, 3.6vw, 46px); }
+.title p { margin-top: 12px; color: var(--text-2); }
+
+.index { max-width: 880px; margin: 0 auto; border-top: 1px solid var(--char); }
+.index details { border-bottom: 1px solid var(--line); }
+.index summary { display: grid; grid-template-columns: 44px 1fr auto; gap: 16px; align-items: baseline; padding: 24px 4px; cursor: pointer; list-style: none; }
+.index summary::-webkit-details-marker { display: none; }
+.index .no { font-family: var(--serif); color: var(--gold); font-size: 20px; }
+.index h3 { font-size: 24px; }
+.index .open { font-size: 14px; color: var(--text-2); white-space: nowrap; }
+.index .open::after { content: "펼치기"; }
+.index details[open] .open::after { content: "접기"; }
+.index summary:hover h3 { color: var(--burgundy); }
+.index .body { padding: 0 4px 28px 64px; color: var(--text-2); }
+.index .body ul { margin: 12px 0 0; padding-left: 18px; }
+
+.lawyer .wrap { display: grid; grid-template-columns: 360px 1fr; gap: 72px; align-items: start; }
+.portrait { aspect-ratio: 3 / 4; display: grid; place-items: center; background: var(--mist); border: 1px solid var(--line); color: var(--text-2); font-size: 14px; outline: 1px solid var(--gold); outline-offset: 10px; margin: 10px; }
+.lawyer h2 { font-size: clamp(30px, 3.2vw, 42px); }
+.lawyer h2 small { display: block; font-family: var(--sans); font-size: 15px; color: var(--gold); letter-spacing: .1em; margin-bottom: 6px; }
+.lawyer blockquote { margin: 28px 0 0; padding-left: 22px; border-left: 2px solid var(--burgundy); font-family: var(--serif); font-size: 21px; line-height: 1.7; }
+.career { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 36px; }
+.career h3 { font-family: var(--sans); font-weight: 700; font-size: 15px; color: var(--text-2); margin-bottom: 10px; }
+.career ul { margin: 0; padding: 0; list-style: none; }
+.career li { padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 16px; }
+
+.fees-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 52px 1fr; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.steps li::before { content: counter(s); display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--gold); border-radius: 50%; font-family: var(--serif); color: var(--gold); }
+.steps b { display: block; font-weight: 700; }
+.steps span { color: var(--text-2); font-size: 15px; }
+.fees { width: 100%; border-collapse: collapse; background: #fff; }
+.fees caption { text-align: left; font-family: var(--serif); font-size: 22px; padding-bottom: 14px; }
+.fees th, .fees td { padding: 16px 18px; border-bottom: 1px solid var(--line); text-align: left; font-weight: 400; }
+.fees th { color: var(--text-2); }
+.fees td { text-align: right; font-weight: 700; }
+.fees-note { margin-top: 12px; font-size: 14px; color: var(--text-2); }
+
+.office { position: relative; color: #fff; }
+.office img { width: 100%; height: 420px; object-fit: cover; filter: grayscale(.3); }
+.office::after { content: ""; position: absolute; inset: 0; background: rgba(35,38,43,.55); }
+.office div { position: absolute; inset: 0; z-index: 1; display: grid; place-items: center; text-align: center; padding: 24px; }
+.office p { font-family: var(--serif); font-size: clamp(22px, 2.6vw, 32px); line-height: 1.6; }
+
+.contact .wrap { display: grid; grid-template-columns: 1fr 1.3fr; gap: 64px; }
+.contact h2 { font-size: clamp(30px, 3.2vw, 42px); }
+.contact dl { margin: 28px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 10px 24px; }
+.contact dt { color: var(--text-2); }
+.contact dd { margin: 0; }
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: var(--text-2); }
+.form .full { grid-column: 1 / -1; }
+.form input, .form select, .form textarea { padding: 14px; border: 1px solid var(--line); background: #fff; font: 400 16px var(--sans); color: var(--char); border-radius: 0; }
+.form textarea { min-height: 130px; resize: vertical; }
+.form input:focus, .form select:focus, .form textarea:focus { outline: none; border-color: var(--burgundy); }
+.form output { color: var(--burgundy); }
+
+.ft { background: var(--char); color: #a9adb4; font-size: 14px; padding: 48px 0 60px; }
+.ft .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+.ft b { font-family: var(--serif); font-weight: 400; color: #fff; font-size: 22px; }
+
+@media (max-width: 960px) {
+  .hd-top span:first-child { display: none; }
+  .nav { gap: 18px; overflow-x: auto; justify-content: flex-start; padding-left: 4px; }
+  .nav a { white-space: nowrap; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-txt { padding: 64px 24px; }
+  .hero-img img { aspect-ratio: 16 / 11; }
+  .lawyer .wrap, .fees-wrap, .contact .wrap { grid-template-columns: 1fr; gap: 48px; }
+  .portrait { max-width: 280px; }
+  .sec { padding: 80px 0; }
+  .index .body { padding-left: 4px; }
+}
+@media (max-width: 520px) {
+  .wrap { width: calc(100% - 36px); }
+  body { font-size: 16px; }
+  .hd-top { justify-content: center; }
+  .hd-top span { display: none; }
+  .career, .form { grid-template-columns: 1fr; }
+  .index summary { grid-template-columns: 32px 1fr; }
+  .index .open { display: none; }
+  .index h3 { font-size: 21px; }
+  .hero-cta .btn { flex: 1 1 100%; }
+}
+</style>
+</head>
+<body>
+<div class="tpl-bar" role="note">이끌림 홈페이지 템플릿 <b>T11 정도</b><span class="tpl-note">글과 사진은 예시입니다. 업체 내용으로 바꿔 드립니다.</span><span class="tpl-links"><a href="../">템플릿 목록</a><a class="tpl-go" href="../../../contact/">이 템플릿으로 상담</a></span></div>
+
+<header class="hd">
+  <div class="wrap">
+    <div class="hd-top"><span>평일 09:00 – 18:00</span><a class="logo" href="#">정도 법률사무소<small>변호사 홍길동</small></a><span>02-000-0000</span></div>
+    <nav class="nav" aria-label="주 메뉴"><a href="#area">업무 분야</a><a href="#lawyer">변호사 소개</a><a href="#fees">상담 절차와 비용</a><a href="#contact">상담 예약</a></nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-txt">
+      <span class="rule" aria-hidden="true"></span>
+      <h1>결과보다 먼저<br>과정을 설명합니다</h1>
+      <p class="hero-lede">사건을 맡기 전에 예상되는 기간, 비용, 위험을 숨기지 않고 말씀드립니다. 상담은 변호사가 직접 합니다.</p>
+      <div class="hero-cta"><a class="btn" href="#contact">상담 예약하기</a><a class="btn btn-line" href="#area">업무 분야 보기</a></div>
+    </div>
+    <div class="hero-img"><img src="img/hero.webp" width="1000" height="1300" alt="아래에서 올려다본 오래된 석조 건물"></div>
+  </section>
+
+  <section class="sec" id="area">
+    <div class="wrap">
+      <div class="title"><span class="rule" aria-hidden="true"></span><h2>업무 분야</h2><p>항목을 누르면 주로 맡는 사건을 볼 수 있습니다.</p></div>
+      <div class="index">
+        <details open><summary><span class="no">1</span><h3>민사 · 손해배상</h3><span class="open"></span></summary><div class="body">돈을 빌려주고 받지 못한 일, 계약을 지키지 않은 일, 사고로 생긴 손해를 다룹니다.<ul><li>대여금, 공사대금 청구</li><li>계약 해제와 손해배상</li></ul></div></details>
+        <details><summary><span class="no">2</span><h3>형사 사건</h3><span class="open"></span></summary><div class="body">수사 단계부터 함께 갑니다.<ul><li>경찰 조사 동행</li><li>고소장 작성, 합의 진행</li></ul></div></details>
+        <details><summary><span class="no">3</span><h3>가사 · 이혼</h3><span class="open"></span></summary><div class="body">이혼, 재산 분할, 양육권, 상속 문제를 다룹니다.<ul><li>협의·재판 이혼</li><li>상속 재산 분할</li></ul></div></details>
+        <details><summary><span class="no">4</span><h3>부동산 · 임대차</h3><span class="open"></span></summary><div class="body">보증금 반환, 명도, 매매 분쟁을 다룹니다.<ul><li>전세 보증금 반환</li><li>상가 임대차 분쟁</li></ul></div></details>
+        <details><summary><span class="no">5</span><h3>기업 자문</h3><span class="open"></span></summary><div class="body">계약서 검토와 노무, 채권 관리를 돕습니다.<ul><li>계약서 작성·검토</li><li>월 자문 계약</li></ul></div></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-mist lawyer" id="lawyer">
+    <div class="wrap">
+      <div class="portrait">변호사 사진 자리</div>
+      <div>
+        <h2><small>대표 변호사</small>홍길동</h2>
+        <blockquote>“소송을 하지 않는 편이 나을 때는 그렇다고 말씀드립니다.”</blockquote>
+        <div class="career">
+          <div><h3>학력</h3><ul><li>OO대학교 법학과 졸업</li><li>OO대학교 법학전문대학원 졸업</li></ul></div>
+          <div><h3>경력</h3><ul><li>변호사시험 합격</li><li>OO법무법인 소속 변호사</li><li>OO구청 법률 상담 위원</li></ul></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="fees">
+    <div class="wrap">
+      <div class="title"><span class="rule" aria-hidden="true"></span><h2>상담 절차와 비용</h2><p>상담료는 사건을 맡기시면 수임료에서 빼 드립니다.</p></div>
+      <div class="fees-wrap">
+        <ol class="steps">
+          <li><div><b>상담 예약</b><span>전화나 폼으로 날짜를 정합니다.</span></div></li>
+          <li><div><b>자료 준비</b><span>계약서, 문자, 사진 등 관련 자료를 챙겨 오세요.</span></div></li>
+          <li><div><b>변호사 상담</b><span>사건의 흐름과 예상 비용을 설명드립니다.</span></div></li>
+          <li><div><b>수임 결정</b><span>충분히 생각해 보신 뒤 정하셔도 됩니다.</span></div></li>
+        </ol>
+        <div>
+          <table class="fees">
+            <caption>상담 비용</caption>
+            <tbody>
+              <tr><th scope="row">전화 상담 (15분)</th><td>무료</td></tr>
+              <tr><th scope="row">방문 상담 (30분)</th><td>00,000원</td></tr>
+              <tr><th scope="row">방문 상담 (60분)</th><td>00,000원</td></tr>
+              <tr><th scope="row">서면 검토</th><td>건당 00,000원부터</td></tr>
+            </tbody>
+          </table>
+          <p class="fees-note">비용은 예시입니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="office" aria-label="사무소">
+    <img src="img/hall.webp" width="1600" height="800" alt="아치형 기둥이 이어진 긴 복도" loading="lazy">
+    <div><p>상담 내용은 수임 여부와 관계없이<br>밖으로 나가지 않습니다.</p></div>
+  </section>
+
+  <section class="sec sec-mist contact" id="contact">
+    <div class="wrap">
+      <div>
+        <h2>상담 예약</h2>
+        <dl><dt>전화</dt><dd>02-000-0000</dd><dt>시간</dt><dd>평일 09:00 – 18:00, 야간 상담은 예약제</dd><dt>주소</dt><dd>서울시 OO구 OO로 00, 7층</dd></dl>
+      </div>
+      <form class="form" novalidate>
+        <label>이름<input name="name" autocomplete="name" required></label>
+        <label>연락처<input name="tel" type="tel" autocomplete="tel" placeholder="010-0000-0000" required></label>
+        <label class="full">분야<select name="area"><option>민사 · 손해배상</option><option>형사 사건</option><option>가사 · 이혼</option><option>부동산 · 임대차</option><option>기업 자문</option></select></label>
+        <label class="full">간단한 내용<textarea name="msg" placeholder="언제, 어떤 일이 있었는지 짧게 적어 주세요."></textarea></label>
+        <div class="full" style="display:flex;flex-wrap:wrap;align-items:center;gap:16px"><button class="btn" type="submit">상담 예약하기</button><output aria-live="polite"></output></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="ft">
+  <div class="wrap"><b>정도 법률사무소</b><div><p>대표 변호사 홍길동 · 사업자등록번호 000-00-00000</p><p>서울시 OO구 OO로 00, 7층 · 02-000-0000</p></div></div>
+</footer>
+<script>
+document.querySelector('.form').addEventListener('submit', function (e) {
+  e.preventDefault(); var f = e.target, out = f.querySelector('output');
+  if (!f.name.value.trim() || !f.tel.value.trim()) { out.textContent = '이름과 연락처를 적어 주세요.'; (f.name.value.trim() ? f.tel : f.name).focus(); return; }
+  out.textContent = '템플릿 미리보기라 실제로 보내지지는 않습니다.';
+});
+</script>
+</body>
+</html>

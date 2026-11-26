@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>T05 밤의 식탁 · 이끌림 홈페이지 템플릿</title>
+<meta name="description" content="이끌림 홈페이지 템플릿 T05 밤의 식탁: 어두운 와인색과 황동색, 차림표처럼 정리한 코스로 분위기를 보여 주는 와인바·다이닝형 홈페이지. 글과 사진은 예시입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@300;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../tpl.css">
+<style>
+:root {
+  --night: #24090f;
+  --wine: #4a1521;
+  --wine-2: #5e1d2b;
+  --brass: #c9a45c;
+  --bone: #f2ede4;
+  --mute: #bba9a3;
+  --serif: "Hahmlet", "Noto Serif KR", serif;
+  --sans: "Pretendard", -apple-system, "Apple SD Gothic Neo", sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--night); color: var(--bone); font: 400 17px/1.75 var(--sans); word-break: keep-all; overflow-wrap: break-word; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+h1, h2, h3 { margin: 0; font-family: var(--serif); font-weight: 300; letter-spacing: -0.02em; }
+p { margin: 0; }
+.wrap { width: min(1200px, 100% - 48px); margin: 0 auto; }
+
+.hd { position: absolute; left: 0; right: 0; z-index: 10; }
+.hd .wrap { display: flex; align-items: center; gap: 28px; height: 88px; }
+.logo { font-family: var(--serif); font-size: 26px; font-weight: 500; text-decoration: none; }
+.logo small { display: block; font-family: var(--sans); font-size: 12px; color: var(--mute); font-weight: 400; margin-top: -2px; }
+.nav { margin-left: auto; display: flex; gap: 28px; }
+.nav a { font-size: 15px; text-decoration: none; color: var(--mute); }
+.nav a:hover { color: var(--bone); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 50px; padding: 0 28px; border: 1px solid var(--brass); color: var(--brass); font: 600 15px/1 var(--sans); text-decoration: none; background: transparent; cursor: pointer; transition: background .2s, color .2s; }
+.btn:hover { background: var(--brass); color: var(--night); }
+.btn-fill { background: var(--brass); color: var(--night); }
+.btn-fill:hover { background: #dcbb78; }
+.hd .btn { min-height: 42px; padding: 0 20px; }
+
+.hero { position: relative; min-height: min(92vh, 860px); display: flex; align-items: flex-end; }
+.hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(36,9,15,.55) 0%, rgba(36,9,15,.2) 40%, rgba(36,9,15,.92) 100%); }
+.hero .wrap { position: relative; z-index: 1; padding-bottom: 72px; }
+.hero h1 { font-size: clamp(44px, 7vw, 104px); line-height: 1.12; }
+.hero-info { display: flex; flex-wrap: wrap; gap: 8px 36px; margin-top: 32px; padding-top: 24px; border-top: 1px solid rgba(201,164,92,.45); color: var(--mute); font-size: 15px; }
+.hero-info b { color: var(--bone); font-weight: 600; margin-right: 8px; }
+
+.sec { padding: 128px 0; }
+.course .wrap { display: grid; grid-template-columns: 5fr 7fr; gap: 72px; align-items: start; }
+.course-img img { width: 100%; aspect-ratio: 9 / 11; object-fit: cover; }
+.course-img p { margin-top: 14px; font-size: 14px; color: var(--mute); }
+.card { padding: 56px 56px 48px; border: 1px solid rgba(201,164,92,.5); outline: 1px solid rgba(201,164,92,.25); outline-offset: -10px; }
+.card h2 { font-size: clamp(34px, 3.6vw, 48px); text-align: center; }
+.card .sub { text-align: center; color: var(--mute); margin-top: 6px; font-size: 15px; }
+.menu { margin: 40px 0 0; padding: 0; list-style: none; counter-reset: c; }
+.menu li { counter-increment: c; display: grid; grid-template-columns: 34px 1fr; gap: 4px 14px; padding: 16px 0; }
+.menu li::before { content: counter(c); grid-row: 1 / 3; font-family: var(--serif); color: var(--brass); font-size: 20px; }
+.menu b { font-family: var(--serif); font-weight: 500; font-size: 21px; }
+.menu span { color: var(--mute); font-size: 15px; }
+.price { margin-top: 28px; padding-top: 24px; border-top: 1px solid rgba(201,164,92,.35); display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.price b { font-family: var(--serif); font-size: 30px; font-weight: 500; color: var(--brass); }
+.price span { color: var(--mute); font-size: 14px; }
+
+.wine { background: var(--wine); }
+.wine h2, .room h2, .book h2 { font-size: clamp(34px, 4vw, 56px); }
+.wine-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 48px; }
+.wine-head p { color: var(--mute); max-width: 26em; }
+.glass { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.glass section { padding: 0 36px; }
+.glass section + section { border-left: 1px solid rgba(201,164,92,.35); }
+.glass section:first-child { padding-left: 0; }
+.glass h3 { font-size: 24px; color: var(--brass); margin-bottom: 18px; }
+.glass dl { margin: 0; }
+.glass div { display: flex; align-items: baseline; gap: 10px; padding: 9px 0; }
+.glass dt { white-space: nowrap; }
+.glass div::after { content: ""; order: 1; flex: 1; border-bottom: 1px dotted rgba(242,237,228,.35); transform: translateY(-4px); }
+.glass dd { order: 2; margin: 0; white-space: nowrap; color: var(--mute); }
+
+.room .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.room-txt { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 32px; }
+.room-txt p { color: var(--mute); align-self: end; }
+.room img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+
+.book { background: var(--wine); }
+.book .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+.book-info { margin-top: 28px; color: var(--mute); }
+.book-info p + p { margin-top: 6px; }
+.form { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-content: start; }
+.form label { display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--mute); }
+.form .full { grid-column: 1 / -1; }
+.form input, .form select { min-height: 52px; padding: 0 16px; background: transparent; border: 1px solid rgba(242,237,228,.3); color: var(--bone); font: 400 16px var(--sans); border-radius: 0; color-scheme: dark; }
+.form select option { background: var(--night); }
+.form input:focus, .form select:focus { outline: none; border-color: var(--brass); }
+.form output { grid-column: 1 / -1; color: var(--brass); font-size: 15px; min-height: 1.5em; }
+
+.ft { padding: 48px 0 64px; color: var(--mute); font-size: 14px; }
+.ft .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+.ft b { font-family: var(--serif); font-weight: 500; color: var(--bone); font-size: 20px; }
+
+@media (max-width: 960px) {
+  .nav { display: none; }
+  .hd .btn { margin-left: auto; }
+  .sec { padding: 88px 0; }
+  .course .wrap, .book .wrap, .room-txt { grid-template-columns: 1fr; gap: 40px; }
+  .course-img { max-width: 420px; }
+  .glass { grid-template-columns: 1fr; gap: 36px; }
+  .glass section, .glass section:first-child { padding: 0; }
+  .glass section + section { border-left: 0; }
+}
+@media (max-width: 520px) {
+  .wrap { width: calc(100% - 36px); }
+  body { font-size: 16px; }
+  .card { padding: 40px 22px 32px; }
+  .room .wrap { grid-template-columns: 1fr; }
+  .form { grid-template-columns: 1fr; }
+  .hero { min-height: 640px; }
+}
+</style>
+</head>
+<body>
+<div class="tpl-bar" role="note">이끌림 홈페이지 템플릿 <b>T05 밤의 식탁</b><span class="tpl-note">글과 사진은 예시입니다. 업체 내용으로 바꿔 드립니다.</span><span class="tpl-links"><a href="../">템플릿 목록</a><a class="tpl-go" href="../../../contact/">이 템플릿으로 상담</a></span></div>
+
+<div style="position:relative">
+<header class="hd">
+  <div class="wrap">
+    <a class="logo" href="#">여덟시<small>와인과 작은 접시</small></a>
+    <nav class="nav" aria-label="주 메뉴"><a href="#course">오늘의 코스</a><a href="#wine">와인</a><a href="#room">공간</a></nav>
+    <a class="btn" href="#book">예약하기</a>
+  </div>
+</header>
+<section class="hero">
+  <img src="img/hero.webp" width="2000" height="1200" alt="어두운 나무 탁자 위에 놓인 향신료와 조리 도구, 차림표">
+  <div class="wrap">
+    <h1>하루를 천천히<br>닫는 자리</h1>
+    <p class="hero-info"><span><b>여는 시간</b>매일 18:00 – 01:00</span><span><b>쉬는 날</b>월요일</span><span><b>좌석</b>바 8석, 테이블 4개</span></p>
+  </div>
+</section>
+</div>
+
+<main>
+  <section class="sec course" id="course">
+    <div class="wrap">
+      <figure class="course-img" style="margin:0"><img src="img/grapes.webp" width="900" height="1100" alt="잎 사이에 매달린 검은 포도송이" loading="lazy"><p>코스는 계절마다 바뀝니다.</p></figure>
+      <div class="card">
+        <h2>오늘의 코스</h2>
+        <p class="sub">셰프가 고른 다섯 접시와 어울리는 와인 세 잔</p>
+        <ol class="menu">
+          <li><b>구운 빵과 발효 버터</b><span>매일 아침 들어오는 사워도우</span></li>
+          <li><b>제철 생선 카르파치오</b><span>유자 드레싱, 레몬 오일</span></li>
+          <li><b>버섯 리소토</b><span>표고와 양송이, 숙성 치즈</span></li>
+          <li><b>한우 채끝 구이</b><span>구운 채소, 레드와인 소스</span></li>
+          <li><b>오늘의 디저트</b><span>계절 과일과 아이스크림</span></li>
+        </ol>
+        <p class="price"><span>1인, 와인 페어링 포함</span><b>00,000원</b></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wine" id="wine">
+    <div class="wrap">
+      <div class="wine-head"><h2>잔으로 마시는 와인</h2><p>병으로는 120여 종을 두고 있습니다. 어울리는 와인은 자리에서 추천해 드립니다.</p></div>
+      <div class="glass">
+        <section><h3>화이트</h3><dl><div><dt>소비뇽 블랑</dt><dd>00,000</dd></div><div><dt>샤르도네</dt><dd>00,000</dd></div><div><dt>리슬링</dt><dd>00,000</dd></div></dl></section>
+        <section><h3>레드</h3><dl><div><dt>피노 누아</dt><dd>00,000</dd></div><div><dt>네비올로</dt><dd>00,000</dd></div><div><dt>시라</dt><dd>00,000</dd></div></dl></section>
+        <section><h3>스파클링</h3><dl><div><dt>카바</dt><dd>00,000</dd></div><div><dt>크레망</dt><dd>00,000</dd></div><div><dt>샴페인</dt><dd>00,000</dd></div></dl></section>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec room" id="room">
+    <div class="wrap">
+      <div class="room-txt"><h2>열두 명이면<br>가게를 통째로</h2><p>평일 저녁에는 대관을 받습니다. 생일, 송년회, 작은 모임에 맞춰 코스와 와인을 따로 짜 드립니다.</p></div>
+      <img src="img/forks.webp" width="1200" height="800" alt="어둠 속에 겹쳐 놓인 은색 포크" loading="lazy">
+      <img src="img/dish.webp" width="1200" height="900" alt="검은 접시 위에 담긴 구운 요리" loading="lazy">
+    </div>
+  </section>
+
+  <section class="sec book" id="book">
+    <div class="wrap">
+      <div>
+        <h2>예약</h2>
+        <div class="book-info"><p>바 좌석은 예약 없이 오셔도 됩니다.</p><p>코스는 하루 전까지 예약해 주세요.</p><p>전화 02-000-0000</p></div>
+      </div>
+      <form class="form" novalidate>
+        <label>날짜<input type="date" name="date" required></label>
+        <label>시간<select name="time"><option>18:00</option><option>19:30</option><option>21:00</option></select></label>
+        <label>인원<select name="people"><option>2명</option><option>3명</option><option>4명</option><option>5명 이상</option></select></label>
+        <label>연락처<input type="tel" name="tel" placeholder="010-0000-0000" autocomplete="tel" required></label>
+        <button class="btn btn-fill full" type="submit">예약 문의 보내기</button>
+        <output aria-live="polite"></output>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="ft">
+  <div class="wrap"><b>여덟시</b><div><p>대표 홍길동 · 사업자등록번호 000-00-00000</p><p>서울시 OO구 OO로 00, 2층 · 02-000-0000</p></div></div>
+</footer>
+<script>
+document.querySelector('.form').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var f = e.target, out = f.querySelector('output');
+  if (!f.date.value || !f.tel.value.trim()) { out.textContent = '날짜와 연락처를 적어 주세요.'; (f.date.value ? f.tel : f.date).focus(); return; }
+  out.textContent = '템플릿 미리보기라 실제로 보내지지는 않습니다.';
+});
+</script>
+</body>
+</html>
