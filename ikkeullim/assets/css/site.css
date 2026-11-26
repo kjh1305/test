@@ -883,7 +883,8 @@ p.ca-phone { font-size: 17px; font-weight: 500; }
 .tp-how li::before { content: counter(how); display: grid; place-items: center; width: 28px; height: 28px; margin-bottom: 12px; border-radius: 50%; background: var(--sky); color: var(--sky-ink); font-weight: 800; font-size: 14px; }
 .tp-how b { display: block; font-size: 18px; margin-bottom: 4px; }
 .tp-how span { color: var(--text-2); font-size: 15px; }
-.tp-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 64px 36px; margin: 0; padding: 0; list-style: none; }
+.tp-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 56px 28px; margin: 0; padding: 0; list-style: none; }
+@media (max-width: 1100px) { .tp-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .tp-list > li[hidden] { display: none; }
 .tp-shot { position: relative; display: block; padding-bottom: 30px; }
 .tp-pc { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-radius: 10px; border: 1px solid var(--line-2); box-shadow: 0 14px 34px rgba(0, 0, 0, .14); transition: transform .25s; }
@@ -891,7 +892,7 @@ p.ca-phone { font-size: 17px; font-weight: 500; }
 .tp-shot:hover .tp-pc { transform: translateY(-4px); }
 .tp-shot:focus-visible { outline: 2px solid var(--sky); outline-offset: 6px; border-radius: 12px; }
 .tp-body { margin-top: 18px; }
-.tp-name { display: flex; align-items: center; gap: 12px; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; }
+.tp-name { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 800; letter-spacing: -0.02em; }
 .tp-no { padding: 3px 10px; border-radius: 999px; background: var(--sky); color: var(--sky-ink); font-size: 14px; font-weight: 800; letter-spacing: 0; }
 .tp-moods { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .tp-moods span { padding: 2px 10px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--text-2); font-size: 13px; font-weight: 700; }

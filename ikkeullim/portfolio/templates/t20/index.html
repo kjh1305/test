@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>T20 모노 · 이끌림 홈페이지 템플릿</title>
+<meta name="description" content="이끌림 홈페이지 템플릿 T20 모노: 흑백 사진과 아주 가는 큰 글자, 빨간 선 하나, 마우스를 올리면 사진이 바뀌는 작업 목록으로 보여 주는 건축·디자인 사무소형 홈페이지. 글과 사진은 예시입니다.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<link rel="stylesheet" href="../tpl.css">
+<style>
+:root { --black: #000; --gray: #767676; --line: #dcdcdc; --red: #e0301e; --sans: "Pretendard", -apple-system, "Apple SD Gothic Neo", sans-serif; }
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: #fff; color: var(--black); font: 400 16px/1.7 var(--sans); word-break: keep-all; overflow-wrap: break-word; border-top: 4px solid var(--red); }
+img { display: block; max-width: 100%; height: auto; }
+.mono { filter: grayscale(1) contrast(1.05); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+h1, h2, h3 { margin: 0; font-weight: 100; letter-spacing: -0.05em; line-height: 1; }
+p { margin: 0; }
+.wrap { width: calc(100% - 64px); max-width: 1600px; margin: 0 auto; }
+
+.hd .wrap { display: flex; align-items: baseline; gap: 32px; padding: 24px 0; }
+.logo { font-weight: 800; font-size: 17px; text-decoration: none; letter-spacing: -0.02em; }
+.nav { margin-left: auto; display: flex; gap: 32px; font-size: 14px; }
+.nav a { text-decoration: none; }
+.nav a:hover { color: var(--red); }
+
+.hero { padding: 6vw 0 4vw; }
+.hero h1 { font-size: clamp(64px, 13vw, 240px); line-height: .92; }
+.hero-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--black); font-size: 15px; }
+.hero-row p { color: var(--gray); }
+.hero-row b { display: block; color: var(--black); font-weight: 800; margin-bottom: 4px; }
+.cover img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+
+.sec { padding: 120px 0; }
+.sec-title { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 40px; }
+.sec-title h2 { font-size: clamp(48px, 7vw, 120px); }
+.sec-title p { color: var(--gray); max-width: 22em; }
+
+.index { display: grid; grid-template-columns: 1fr 38%; gap: 48px; align-items: start; }
+.list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--black); }
+.list a { display: grid; grid-template-columns: 70px 1fr 1fr 90px; gap: 16px; align-items: baseline; padding: 20px 0; border-bottom: 1px solid var(--line); text-decoration: none; transition: padding .2s, color .2s; }
+.list a:hover, .list a:focus-visible, .list a.on { color: var(--red); padding-left: 12px; outline: none; }
+.list .y { font-size: 14px; color: var(--gray); }
+.list .n { font-size: clamp(22px, 2vw, 30px); font-weight: 300; letter-spacing: -0.03em; }
+.list .t { font-size: 14px; color: var(--gray); }
+.list .a { font-size: 14px; text-align: right; }
+.preview { position: sticky; top: 24px; }
+.preview img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.preview p { margin-top: 10px; font-size: 14px; color: var(--gray); }
+@media (prefers-reduced-motion: reduce) { .list a { transition: none; } }
+
+.strip { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(300px, 40%); gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 32px 12px; }
+.strip figure { margin: 0; scroll-snap-align: start; }
+.strip img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.strip figcaption { margin-top: 8px; font-size: 13px; color: var(--gray); }
+
+.about .wrap { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; }
+.about h2 { grid-column: 1 / -1; font-size: clamp(36px, 5vw, 80px); max-width: 14em; line-height: 1.1; margin-bottom: 24px; }
+.about h3 { font-weight: 800; font-size: 17px; letter-spacing: -0.02em; margin-bottom: 10px; line-height: 1.4; }
+.about p { color: var(--gray); }
+.people { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px 40px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--black); font-size: 15px; }
+.people span { color: var(--gray); margin-left: 8px; }
+
+.contact { padding: 120px 0 80px; border-top: 1px solid var(--black); }
+.contact a.mail { display: inline-block; font-size: clamp(36px, 7vw, 120px); font-weight: 100; letter-spacing: -0.05em; text-decoration: none; line-height: 1.1; border-bottom: 2px solid var(--red); }
+.contact a.mail:hover { color: var(--red); }
+.contact-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-top: 56px; font-size: 15px; }
+.contact-row b { display: block; font-weight: 800; }
+.contact-row p { color: var(--gray); }
+
+.ft { padding: 24px 0 40px; font-size: 13px; color: var(--gray); }
+.ft .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (max-width: 900px) {
+  .wrap { width: calc(100% - 40px); }
+  .nav a:not(:last-child) { display: none; }
+  .hero-row, .about .wrap, .contact-row { grid-template-columns: 1fr; gap: 20px; }
+  .index { grid-template-columns: 1fr; }
+  .preview { display: none; }
+  .list a { grid-template-columns: 56px 1fr; }
+  .list .t { grid-column: 2; }
+  .list .a { display: none; }
+  .sec-title { flex-direction: column; align-items: start; }
+  .strip { grid-auto-columns: 80%; padding: 0 20px 12px; }
+  .sec { padding: 80px 0; }
+}
+</style>
+</head>
+<body>
+<div class="tpl-bar" role="note">이끌림 홈페이지 템플릿 <b>T20 모노</b><span class="tpl-note">글과 사진은 예시입니다. 업체 내용으로 바꿔 드립니다.</span><span class="tpl-links"><a href="../">템플릿 목록</a><a class="tpl-go" href="../../../contact/">이 템플릿으로 상담</a></span></div>
+
+<header class="hd"><div class="wrap"><a class="logo" href="#">백지 건축사사무소</a><nav class="nav" aria-label="주 메뉴"><a href="#work">작업</a><a href="#about">사무소</a><a href="#contact">연락</a></nav></div></header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <h1>비워 두는<br>설계</h1>
+      <div class="hero-row"><div><b>주택 · 근린생활시설</b><p>단독주택, 상가주택, 작은 사옥을 설계합니다.</p></div><div><b>설계부터 감리까지</b><p>허가와 공사 감리를 같은 팀이 맡습니다.</p></div><div><b>2012년부터</b><p>서울과 경기에서 지은 건물 40여 채.</p></div></div>
+    </div>
+  </section>
+  <figure class="cover wrap" style="margin-bottom:0"><img class="mono" src="img/hero.webp" width="1600" height="1000" alt="검은 하늘을 배경으로 선 흰 콘크리트 건물의 모서리"></figure>
+
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="sec-title"><h2>작업</h2><p>목록에 마우스를 올리면 사진이 바뀝니다.</p></div>
+      <div class="index">
+        <ul class="list">
+          <li><a href="#" class="on" data-img="img/p1.webp" data-cap="OO동 상가주택, 중정"><span class="y">2026</span><span class="n">OO동 상가주택</span><span class="t">근린생활시설 · 주택</span><span class="a">412㎡</span></a></li>
+          <li><a href="#" data-img="img/p2.webp" data-cap="OO 사옥, 계단실"><span class="y">2025</span><span class="n">OO 사옥</span><span class="t">업무시설</span><span class="a">1,280㎡</span></a></li>
+          <li><a href="#" data-img="img/p3.webp" data-cap="OO 전시관, 곡면 외벽"><span class="y">2024</span><span class="n">OO 전시관</span><span class="t">문화시설</span><span class="a">860㎡</span></a></li>
+          <li><a href="#" data-img="img/p4.webp" data-cap="OO 오피스, 올려다본 모습"><span class="y">2023</span><span class="n">OO 오피스</span><span class="t">업무시설 리모델링</span><span class="a">2,040㎡</span></a></li>
+          <li><a href="#" data-img="img/p5.webp" data-cap="OO 주택, 입면"><span class="y">2022</span><span class="n">OO 단독주택</span><span class="t">단독주택</span><span class="a">198㎡</span></a></li>
+          <li><a href="#" data-img="img/p6.webp" data-cap="OO 아파트 상가, 창의 반복"><span class="y">2021</span><span class="n">OO 아파트 상가</span><span class="t">근린생활시설</span><span class="a">640㎡</span></a></li>
+        </ul>
+        <figure class="preview" style="margin:0" aria-hidden="true"><img class="mono" id="pv" src="img/p1.webp" width="1200" height="800" alt=""><p id="pvc">OO동 상가주택, 중정</p></figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" tabindex="0" role="region" aria-label="작업 사진, 옆으로 넘겨 볼 수 있음">
+    <figure><img class="mono" src="img/p2.webp" width="1200" height="800" alt="둥근 천장 아래 교차하는 구조물" loading="lazy"><figcaption>OO 사옥</figcaption></figure>
+    <figure><img class="mono" src="img/p3.webp" width="1200" height="800" alt="물결처럼 휘어진 외벽" loading="lazy"><figcaption>OO 전시관</figcaption></figure>
+    <figure><img class="mono" src="img/p4.webp" width="1200" height="800" alt="아래에서 올려다본 고층 건물 사이 하늘" loading="lazy"><figcaption>OO 오피스</figcaption></figure>
+    <figure><img class="mono" src="img/p6.webp" width="1200" height="800" alt="같은 창이 반복되는 흰 건물 외벽" loading="lazy"><figcaption>OO 아파트 상가</figcaption></figure>
+  </div>
+
+  <section class="sec about" id="about">
+    <div class="wrap">
+      <h2>필요한 만큼만 짓고, 나머지는 비워 둡니다</h2>
+      <div><h3>땅을 먼저 봅니다</h3><p>해가 드는 방향, 옆 건물과의 거리, 골목의 높이를 재고 나서 선을 긋습니다.</p></div>
+      <div><h3>예산을 숨기지 않습니다</h3><p>설계 단계마다 공사비 예상을 함께 드려, 다 그린 뒤에 놀라는 일이 없게 합니다.</p></div>
+      <div><h3>준공 후에도 봅니다</h3><p>입주 1년 뒤 다시 찾아가 고칠 곳을 함께 봅니다.</p></div>
+      <p class="people">홍길동<span>대표 건축사</span>김OO<span>설계 실장</span>이OO<span>감리</span></p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <a class="mail" href="mailto:office@example.com">office@example.com</a>
+      <div class="contact-row"><div><b>전화</b><p>02-000-0000</p></div><div><b>사무소</b><p>서울시 OO구 OO로 00, 5층</p></div><div><b>상담</b><p>대지 주소와 원하는 규모를 메일로 보내 주세요.</p></div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="ft"><div class="wrap"><p>백지 건축사사무소 · 대표 건축사 홍길동 · 사업자등록번호 000-00-00000</p><p>사진은 예시입니다</p></div></footer>
+<script>
+(function () {
+  var pv = document.getElementById('pv'), pvc = document.getElementById('pvc'), links = [].slice.call(document.querySelectorAll('.list a'));
+  function show(a) { links.forEach(function (x) { x.classList.toggle('on', x === a); }); pv.src = a.dataset.img; pvc.textContent = a.dataset.cap; }
+  links.forEach(function (a) { a.addEventListener('mouseenter', function () { show(a); }); a.addEventListener('focus', function () { show(a); }); a.addEventListener('click', function (e) { e.preventDefault(); show(a); }); });
+})();
+</script>
+</body>
+</html>

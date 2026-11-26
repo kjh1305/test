@@ -82,6 +82,18 @@
 | T10 | 밑줄 | 깔끔한, 귀여운 | 모눈 공책 바탕에 형광펜 밑줄과 빨간 손글씨 메모. 학년별로 골라 보는 반 시간표, 일주일 수업 방식, 레벨 테스트 신청이 있습니다. | 학원, 교습소, 공부방, 과외 | Pretendard · Nanum Pen Script |
 | T11 | 정도 | 고급스러운, 깔끔한 | 버건디와 금색 선, 고전적인 명조. 펼쳐 보는 업무 분야 목차, 대표 소개, 상담 절차와 비용 표, 상담 예약 폼으로 믿음을 줍니다. | 법률, 세무, 노무, 회계, 전문직 | Song Myung · Pretendard |
 | T12 | 반반 | 강렬한, 깔끔한 | 화면을 반으로 나눠 한쪽은 사진, 한쪽은 목록. 아래로 내릴 때마다 사진이 바뀌고, 종류별로 골라 보는 매물 카드와 중개 보수 표가 있습니다. | 부동산, 분양, 매장 여러 곳, 상품 목록 | Noto Sans KR |
+| T13 | 프레임 | 깔끔한 | 흰 바탕에 사진만 크게. 종류별로 골라 보는 벽돌 쌓기 사진첩, 누르면 크게 보기, 촬영 상품표가 있습니다. 작업물이 많은 업체에 맞습니다. | 사진관, 영상 제작, 작가, 디자이너 | Pretendard |
+| T14 | 바로문의 | 강렬한 | 첫 화면에 견적 폼을 두고 노랑과 검정으로 눈에 띄게. 고객 고민, 시공 순서, 가격표, 자주 묻는 질문, 휴대폰 하단 전화 버튼까지 문의 받기에 집중했습니다. | 시공, 청소, 이사, 수리, 방역 | Do Hyeon · Pretendard |
+| T15 | 골목 | 따뜻한, 귀여운 | 빨강·겨자·민트에 옛날 간판 글씨. 차림판처럼 꾸민 메뉴와 가격, 기울여 붙인 사진, 가게 연혁, 포장·배달 안내가 있습니다. | 분식, 노포, 동네 식당, 오래된 가게 | Yeon Sung · Nanum Gothic |
+| T16 | 회로 | 깔끔한 | 밝은 회청색에 파랑과 민트. 화면 안에 직접 만든 프로그램 화면, 기능 소개, 월·연 결제로 바뀌는 요금표, 자주 묻는 질문이 있습니다. | IT, 앱, 프로그램, 온라인 서비스 | Orbit · IBM Plex Sans KR |
+| T17 | 나뭇결 | 따뜻한, 자연스러운 | 호두나무색과 굵은 명조. 옆으로 넘겨 보는 작품, 눌러 보는 나무 견본, 클래스 안내와 주문 제작 순서가 있습니다. | 가구, 목공, 공방, 수공예 | Noto Serif KR · Pretendard |
+| T18 | 한상 | 자연스러운, 고급스러운 | 한지 바탕에 먹색, 붓글씨를 세로로 쓰고 붉은 낙관을 찍었습니다. 족자처럼 걸어 놓은 차림표와 계절 상차림이 있습니다. | 찻집, 한식당, 떡집, 전통 공예 | Nanum Brush Script · Nanum Myeongjo |
+| T19 | 머무름 | 자연스러운, 고급스러운 | 화면 가득한 풍경 위에 날짜와 인원을 고르는 예약 막대. 객실 카드, 평일·주말·성수기 요금표, 주변 즐길 거리, 이용 안내가 있습니다. | 펜션, 숙소, 캠핑장, 스테이 | Diphylleia · Pretendard |
+| T20 | 모노 | 고급스러운, 강렬한 | 흑백 사진과 아주 가는 큰 글자, 맨 위의 빨간 선 하나. 마우스를 올리면 사진이 바뀌는 작업 목록과 넘겨 보는 사진 띠가 있습니다. | 건축, 인테리어 설계, 디자인 사무소 | Pretendard |
+| T21 | 산책 | 귀여운, 따뜻한 | 귤색과 남색에 통통한 글씨. 몸 크기를 고르면 바뀌는 미용 가격표, 호텔·데이케어 카드, 하루 일과, 예약 전 확인할 것이 있습니다. | 반려동물 미용, 호텔, 용품, 동물병원 | Bagel Fat One · Pretendard |
+| T22 | 꽃말 | 자연스러운, 따뜻한 | 짙은 잎색과 양귀비 빨강, 장식적인 제목 글씨. 오늘 배송 마감까지 남은 시간, 쓰임새별 꽃다발, 정기 구독, 배송 안내가 있습니다. | 꽃집, 선물 가게, 소품, 케이크 주문 | Grandiflora One · Gowun Dodum |
+| T23 | 주행 | 강렬한, 어두운 | 아스팔트 회색과 신호 빨강, 사선으로 자른 사진과 경고 띠. 탭으로 나눈 작업 가격표, 정비 순서, 차종과 날짜를 받는 예약 폼이 있습니다. | 자동차 정비, 세차, 광택, 타이어 | Gasoek One · Pretendard |
+| T24 | 숨 | 자연스러운, 깔끔한 | 연보라와 자두색, 천천히 커졌다 작아지는 숨쉬기 원. 수준을 고르면 맞는 수업만 보이는 주간 시간표와 회원권 안내가 있습니다. | 요가, 필라테스, 명상, 상담 | Sunflower |
 <!-- /tpl-table -->
 
 ### 템플릿 사진 출처
@@ -136,6 +148,66 @@
 | `t12/img/city.webp` | Lili Popper | https://unsplash.com/photos/71cd1rWqO8M |
 | `t12/img/sky.webp` | Carli Jean | https://unsplash.com/photos/Gk6YgzmrLgM |
 | `t12/img/white.webp` | Julien Moreau | https://unsplash.com/photos/688Fna1pwOQ |
+| `t13/img/hero.webp` | Jeff Sheldon | https://unsplash.com/photos/zr8msYQhfRg |
+| `t13/img/g1.webp` | Alexey Topolyanskiy | https://unsplash.com/photos/-oWyJoSqBRM |
+| `t13/img/g2.webp` | Christian Joudrey | https://unsplash.com/photos/mWRR1xj95hg |
+| `t13/img/g3.webp` | Andrew Coelho | https://unsplash.com/photos/VB-w_3dnyvI |
+| `t13/img/g4.webp` | Wolfgang Lutz | https://unsplash.com/photos/yOujaSETXlo |
+| `t13/img/g5.webp` | Go Wild | https://unsplash.com/photos/V0yAek6BgGk |
+| `t13/img/g6.webp` | Philippe Wuyts | https://unsplash.com/photos/_h7aBovKia4 |
+| `t13/img/g7.webp` | Ales Krivec | https://unsplash.com/photos/HkTMcmlMOUQ |
+| `t13/img/g8.webp` | Paul Jarvis | https://unsplash.com/photos/NYDo21ssGao |
+| `t13/img/cam.webp` | Mia Domenico | https://unsplash.com/photos/1z1F5Qc30Bs |
+| `t14/img/hero.webp` | Jeff Sheldon | https://unsplash.com/photos/JWiMShWiF14 |
+| `t14/img/wood.webp` | Steve Richey | https://unsplash.com/photos/6xqAK6oAeHA |
+| `t15/img/shop.webp` | Thong Vo | https://unsplash.com/photos/ZLmSzOPoUno |
+| `t15/img/coffee.webp` | Justin Leibow | https://unsplash.com/photos/ZJsseAxEcqM |
+| `t15/img/door.webp` | Brennan Ehrhardt | https://unsplash.com/photos/HALe2SmkWAI |
+| `t15/img/veg.webp` | Webvilla | https://unsplash.com/photos/hv1MrBzGGNY |
+| `t15/img/bowl.webp` | Monstruo Estudio | https://unsplash.com/photos/lQy6mHZ7fYk |
+| `t15/img/mug.webp` | Shyamanta Baruah | https://unsplash.com/photos/aeVA-j1y2BY |
+| `t16/img/desk.webp` | Vadim Sherbakov | https://unsplash.com/photos/Hi9GSwWkCJk |
+| `t16/img/imac.webp` | William Iven | https://unsplash.com/photos/GANqCr1BRTU |
+| `t16/img/white.webp` | Jeff Sheldon | https://unsplash.com/photos/9dI3g8owHiI |
+| `t17/img/hero.webp` | Todd Quackenbush | https://unsplash.com/photos/IClZBVw5W5A |
+| `t17/img/shop.webp` | Ariana Prestes | https://unsplash.com/photos/MpSnQAUTgcE |
+| `t17/img/bench.webp` | Jeff Sheldon | https://unsplash.com/photos/o6Y9E-DdG6w |
+| `t17/img/pencil.webp` | Jeff Sheldon | https://unsplash.com/photos/guH91yuPaMk |
+| `t17/img/cabin.webp` | Alexander Shustov | https://unsplash.com/photos/OxzhYtL-00Y |
+| `t17/img/room.webp` | Clark Street Mercantile | https://unsplash.com/photos/vC-GqGbakJo |
+| `t18/img/pot.webp` | Vee O | https://unsplash.com/photos/hGO27G5tZJ8 |
+| `t18/img/cup.webp` | Dominik Martin | https://unsplash.com/photos/JYFmYif4n70 |
+| `t18/img/knit.webp` | Padurariu Alexandru | https://unsplash.com/photos/k0SwnevO_wk |
+| `t19/img/hero.webp` | Ales Krivec | https://unsplash.com/photos/DgtRKZOOE0w |
+| `t19/img/night.webp` | Aurélien bellanger | https://unsplash.com/photos/uoSEDUu8F-I |
+| `t19/img/walk.webp` | Aleksandra Boguslawska | https://unsplash.com/photos/MS7KD9Ti7FQ |
+| `t19/img/dusk.webp` | Stefanus Martanto Setyo Husodo | https://unsplash.com/photos/GKR1tBkmW3M |
+| `t19/img/coast.webp` | Rob Bye | https://unsplash.com/photos/OlZ1nWLEEgM |
+| `t20/img/hero.webp` | Carl Nenzen Loven | https://unsplash.com/photos/busqfOj6i80 |
+| `t20/img/p1.webp` | Noah Rosenfield | https://unsplash.com/photos/Za0O5DovZBc |
+| `t20/img/p2.webp` | Padurariu Alexandru | https://unsplash.com/photos/ZKBQmgMyf8s |
+| `t20/img/p3.webp` | Samuel Zeller | https://unsplash.com/photos/j0g8taxHZa0 |
+| `t20/img/p4.webp` | Matthew Wiebe | https://unsplash.com/photos/VviFtDJakYk |
+| `t20/img/p5.webp` | Anthony DELANOIX | https://unsplash.com/photos/b5POxb2aL9o |
+| `t20/img/p6.webp` | Roman Kraft | https://unsplash.com/photos/7sMHTVJ0OTA |
+| `t21/img/hero.webp` | André Spieker | https://unsplash.com/photos/8wTPqxlnKM4 |
+| `t21/img/pug.webp` | Matthew Wiebe | https://unsplash.com/photos/U5rMrSI7Pn4 |
+| `t21/img/bull.webp` | Yamon  Figurs | https://unsplash.com/photos/2zlxFmByClI |
+| `t21/img/husky.webp` | Alexander Dimitrov | https://unsplash.com/photos/KGy1GFeKBu4 |
+| `t21/img/dash.webp` | Noel Lopez | https://unsplash.com/photos/BjelfpszQDw |
+| `t22/img/hero.webp` | Leigh Kendell | https://unsplash.com/photos/-So60UAgCtU |
+| `t22/img/b1.webp` | Ales Krivec | https://unsplash.com/photos/hLxqYJspAkE |
+| `t22/img/b2.webp` | Steven Spassov | https://unsplash.com/photos/tVIqMgGlAG0 |
+| `t22/img/b3.webp` | Shannon Richards | https://unsplash.com/photos/jJzmexjwfGE |
+| `t22/img/b4.webp` | Rula Sibai | https://unsplash.com/photos/-vq7mi4oF0s |
+| `t22/img/b5.webp` | Alejandro Escamilla | https://unsplash.com/photos/Iuq0EL4EINY |
+| `t22/img/vase.webp` | Padurariu Alexandru | https://unsplash.com/photos/iNmouRApXYM |
+| `t23/img/hero.webp` | jamie mink | https://unsplash.com/photos/5Qwz2KyfIBE |
+| `t23/img/dash.webp` | Sean Stratton | https://unsplash.com/photos/3I5j50pIXvU |
+| `t23/img/seat.webp` | David Marcu | https://unsplash.com/photos/_iVG4MsY2N0 |
+| `t24/img/hero.webp` | Federico Bottos | https://unsplash.com/photos/11H1SSVcIxc |
+| `t24/img/hill.webp` | Anton Sulsky | https://unsplash.com/photos/YcfCXxo7rpc |
+| `t24/img/calm.webp` | Vladimir Kudinov | https://unsplash.com/photos/-wWRHIUklxM |
 <!-- /tpl-credits -->
 
 ## 후기 이미지 (2026-11-16 받음, 96장)
