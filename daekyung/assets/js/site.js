@@ -206,4 +206,82 @@
       }
     }
   }
+
+  /* 공사 전과 후: 사진 위를 누르거나 끌면 경계가 따라옴. 세로로 밀면 페이지가 그대로 내려감(touch-action: pan-y).
+     키보드는 숨은 range 입력으로 좌우 화살표 */
+  $$('[data-ba]').forEach(function (ba) {
+    var range = $('.ba-range', ba), dragging = false;
+    var set = function (v) {
+      v = Math.max(0, Math.min(100, v));
+      ba.style.setProperty('--x', v + '%');
+      range.value = Math.round(v);
+    };
+    var fromEvent = function (e) { var r = ba.getBoundingClientRect(); return (e.clientX - r.left) / r.width * 100; };
+    ba.addEventListener('pointerdown', function (e) {
+      if (e.button !== undefined && e.button !== 0) return;
+      dragging = true; set(fromEvent(e));
+      try { ba.setPointerCapture(e.pointerId); } catch (err) { /* 캡처 못 해도 동작 */ }
+    });
+    ba.addEventListener('pointermove', function (e) { if (dragging) set(fromEvent(e)); });
+    ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (t) { ba.addEventListener(t, function () { dragging = false; }); });
+    range.addEventListener('input', function () { set(Number(range.value)); });
+  });
+
+  /* 공사 전과 후 현장 고르기 (탭). JS가 없으면 세 현장이 모두 보임 */
+  var baTabs = $('[data-ba-tabs]');
+  if (baTabs) {
+    var tabs = $$('[role="tab"]', baTabs), panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+    var pick = function (i, focus) {
+      tabs.forEach(function (t, j) {
+        var on = i === j;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        panels[j].hidden = !on;
+      });
+      if (focus) tabs[i].focus();
+    };
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { pick(i); });
+      t.addEventListener('keydown', function (e) {
+        var k = e.key, n = tabs.length;
+        if (k === 'ArrowRight' || k === 'ArrowLeft' || k === 'Home' || k === 'End') {
+          e.preventDefault();
+          pick(k === 'Home' ? 0 : k === 'End' ? n - 1 : (i + (k === 'ArrowRight' ? 1 : -1) + n) % n, true);
+        }
+      });
+    });
+    baTabs.hidden = false;
+    pick(0);
+  }
+
+  /* 시공사례 목록: 공사 종류로 걸러 보기. ?type=restore 처럼 붙여 열 수도 있음.
+     예전 주소(projects/#현장)로 들어오면 그 현장 페이지로 보냄 */
+  var pf = $('[data-pf]');
+  if (pf) {
+    var cards = $$('[data-pj]');
+    if (location.hash) {
+      var hit = cards.filter(function (li) { return '#' + li.getAttribute('data-pj') === location.hash; })[0];
+      if (hit) { location.replace($('a', hit).href); return; }
+    }
+    var pfBtns = $$('[data-pf-v]', pf), pfCount = $('[data-pf-count]', pf);
+    var apply = function (v) {
+      var shown = 0;
+      cards.forEach(function (li) {
+        var ok = v === 'all' || (' ' + li.getAttribute('data-svc') + ' ').indexOf(' ' + v + ' ') > -1;
+        li.hidden = !ok; if (ok) shown++;
+      });
+      pfBtns.forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-pf-v') === v ? 'true' : 'false'); });
+      pfCount.textContent = '현장 ' + shown + '곳';
+    };
+    pfBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var v = b.getAttribute('data-pf-v');
+        apply(v);
+        try { history.replaceState(null, '', v === 'all' ? location.pathname : '?type=' + v); } catch (e) { /* 주소만 못 바꿈 */ }
+      });
+    });
+    var start = new URLSearchParams(location.search).get('type');
+    apply(start && pfBtns.some(function (b) { return b.getAttribute('data-pf-v') === start; }) ? start : 'all');
+    pf.hidden = false;
+  }
 })();

@@ -11,6 +11,7 @@ const I = {
   user: '<circle cx="12" cy="8.5" r="3.5"/><path d="M5 20a7 7 0 0114 0"/>',
   chevron: '<path d="M9 6l6 6-6 6"/>',
   pause: '<path d="M9 6v12M15 6v12"/>',
+  arrowsH: '<path d="M8.5 7L3.5 12l5 5M15.5 7l5 5-5 5"/>',
   play: '<path d="M8.5 5.8v12.4L18.5 12z"/>',
   close: '<path d="M6 6l12 12M18 6L6 18"/>',
   arrowUpRight: '<path d="M7 17L17 7M8 7h9v9"/>',

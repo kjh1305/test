@@ -61,7 +61,9 @@ const LOGO_SVG = `<svg class="logo-svg" viewBox="85 20 850 400" aria-hidden="tru
 const logo = (c, cls = '') => `<a class="logo ${cls}" href="${c.url('')}" aria-label="${CO.name} (Dae Kyeong DIVERSE) 홈">${LOGO_SVG}<span class="logo-ko">${CO.name}</span></a>`;
 
 function header(c) {
-  const item = ([s, label]) => `<li><a href="${c.url(s)}"${c.slug === s ? ' aria-current="page"' : ''}>${label}</a></li>`;
+  /* 현장별 페이지(projects/<id>/)에서도 '시공사례'에 밑줄 */
+  const isCur = s => c.slug === s || (s && s !== '404.html' && c.slug.startsWith(s));
+  const item = ([s, label]) => `<li><a href="${c.url(s)}"${isCur(s) ? ' aria-current="page"' : ''}>${label}</a></li>`;
   return `<a class="skip" href="#main">본문으로 건너뛰기</a>
 <header class="site-header" data-header>
   <div class="wrap header-in">
@@ -169,10 +171,11 @@ ${floaters(c)}
 }
 
 /* 하위 페이지 머리 */
-export function pageHead(c, { title, lede, crumb }) {
-  return `<section class="page-head">
+export function pageHead(c, { title, lede, crumb, parent = null, meta = '', cls = '' }) {
+  return `<section class="page-head ${cls}">
   <div class="wrap page-head-in">
-    <nav class="crumbs" aria-label="현재 위치"><a href="${c.url('')}">홈</a>${icon('chevron')}<span aria-current="page">${crumb}</span></nav>
+    <nav class="crumbs" aria-label="현재 위치"><a href="${c.url('')}">홈</a>${icon('chevron')}${parent ? `<a href="${c.url(parent[0])}">${parent[1]}</a>${icon('chevron')}` : ''}<span aria-current="page">${crumb}</span></nav>
+    ${meta}
     <h1 class="page-title" data-reveal>${br(title)}</h1>
     ${lede ? `<p class="page-lede" data-reveal>${lede}</p>` : ''}
   </div>
