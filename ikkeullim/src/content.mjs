@@ -502,6 +502,17 @@ export const CHAT = {
   copyTpl: '안녕하세요, 이끌림 홈페이지 보고 연락드립니다.\n문의: {label}\n상호: \n업종: \n블로그·홈페이지 주소: '
 };
 
+/* 홈페이지 템플릿: 제작을 원하는 업체가 기본 화면을 고르는 목록 (templates/). 각 템플릿은 templates/tNN/index.html 한 장짜리 화면.
+   글·상호·가격은 지어낸 예시이고, 사진은 Unsplash 사진(Lorem Picsum으로 받음, README에 출처).
+   f: 고르기 버튼 값 (TPL_MOODS), fit: 어울리는 업종 예시, colors: 대표 색 */
+export const TPL_MOODS = [['clean', '깔끔한'], ['premium', '고급스러운'], ['bold', '강렬한'], ['warm', '따뜻한'], ['cute', '귀여운']];
+export const TEMPLATES = [
+  { no: 'T01', slug: 't01', name: '여백', f: ['clean'], fit: '병원·의원, 한의원, 상담 업종', desc: '넓은 여백과 가는 글자, 아치형 사진으로 차분하게 보여 줍니다. 진료 시간표에 오늘 요일과 지금 진료 중인지를 표시합니다.', colors: ['#ffffff', '#f1f4f5', '#2f6f86', '#14232a'], font: 'IBM Plex Sans KR' },
+  { no: 'T02', slug: 't02', name: '지면', f: ['premium', 'clean'], fit: '인테리어, 건축, 가구, 사진 스튜디오', desc: '잡지처럼 큰 명조 제목과 넓게 펼친 사진. 작업마다 위치, 면적, 기간, 공사 범위를 붙이고 상담 신청 폼으로 끝납니다.', colors: ['#ffffff', '#e6eae3', '#4e5d3f', '#1f2420'], font: 'Noto Serif KR · Pretendard' },
+  { no: 'T03', slug: 't03', name: '물살', f: ['bold'], fit: '운동·레슨, 학원, 체육시설', desc: '화면을 채우는 굵은 글자와 진한 파랑. 반별 안내, 요일별 시간표, 요금표를 크고 분명하게 보여 줍니다.', colors: ['#0b4bdb', '#062a7a', '#8ee3ef', '#f2463a'], font: 'Black Han Sans · Pretendard' },
+  { no: 'T04', slug: 't04', name: '오늘구움', f: ['cute', 'warm'], fit: '디저트·카페, 동네 가게, 꽃집, 키즈', desc: '둥근 글자와 딸기색, 물결 테두리. 오늘 나오는 시간을 지금 시각에 맞춰 보여 주고, 메뉴와 가격을 사진과 함께 놓습니다.', colors: ['#ffdbe0', '#e23d4b', '#ffe38a', '#3b2418'], font: 'Jua · Gowun Dodum' }
+];
+
 export const META = {
   home: '이끌림 마케팅: 마음을 끌고, 성과를 만듭니다. 블로그 포스팅, 블로그 활성화, 홈페이지 제작, 홈페이지 및 블로그 관리대행. 무료 상담·진단.',
   about: '이끌림 마케팅 회사소개: 검색되는 브랜드가 선택받는 브랜드입니다. 이끌림이 다른 점과 일하는 6단계.',
@@ -510,5 +521,6 @@ export const META = {
   pricing: '이끌림 상품 안내: 블로그 포스팅, 블로그 활성화, 홈페이지 & 브랜드 디자인, 영상 · 언론 송출, 통합 패키지. 가격은 무료 상담에서 안내합니다.',
   reviews: '이끌림 고객후기: 대표님들이 카카오톡으로 보내 주신 말과 블로그를 보고 들어온 실제 문의.',
   faq: '이끌림 자주 묻는 질문: 서비스, 진행, 결제.',
+  templates: '이끌림 홈페이지 템플릿: 분위기와 화면 구성이 다른 템플릿을 미리 보고, 마음에 드는 번호를 골라 홈페이지 제작을 시작하세요.',
   contact: '이끌림 상담 안내: 카카오톡 채팅으로 편하게 상담하세요. 무료 블로그 진단도 카카오톡으로 신청합니다.'
 };

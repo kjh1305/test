@@ -1,0 +1,14 @@
+/* 이끌림 홈페이지 템플릿: 모든 템플릿 위에 붙는 안내 막대 (템플릿 디자인과 따로) */
+.tpl-bar { position: relative; z-index: 1000; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 8px 20px; background: #202022; color: #d9d9dc; font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; letter-spacing: 0; }
+.tpl-bar b { color: #fff; font-weight: 700; }
+.tpl-bar .tpl-note { color: #a5a5ab; }
+.tpl-bar .tpl-links { display: flex; gap: 6px; margin-left: auto; }
+.tpl-bar a { display: inline-flex; align-items: center; min-height: 30px; padding: 0 12px; border-radius: 6px; color: #fff; text-decoration: none; font-weight: 600; background: #3a3a3e; }
+.tpl-bar a.tpl-go { background: #fff; color: #202022; }
+.tpl-bar a:hover { background: #4a4a50; }
+.tpl-bar a.tpl-go:hover { background: #e9e9ec; }
+.tpl-bar a:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+@media (max-width: 640px) {
+  .tpl-bar { padding: 8px 14px; gap: 4px 10px; }
+  .tpl-bar .tpl-note { display: none; }
+}

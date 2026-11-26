@@ -51,8 +51,55 @@
 | `reviews/` | 대표님이 보내 주신 말 11개(반응 골라 보기, 실제 카톡 캡처), 블로그를 보고 들어온 문의 5개 |
 | `faq/` | 서비스 · 진행 · 결제 12문항. 제안서 질문·답변 7개(`src: '제안서'`) + 예시 답변 5개 |
 | `contact/` | 상담 안내: 카카오톡 상담 버튼, 보내 주면 좋은 내용 4가지, 진행 순서 |
+| `templates/` | 홈페이지 템플릿 목록: 고르는 순서 3단계, 분위기 골라 보기, 템플릿마다 PC·휴대폰 화면, 설명, 어울리는 업종, 색, 글꼴, 미리보기. 서비스의 '홈페이지 제작'과 포트폴리오 제작 사례 아래에서 들어감 (메뉴에는 아직 없음) |
+| `templates/t01/` … | 템플릿 한 장짜리 화면. 위에 '템플릿 목록 / 이 템플릿으로 상담' 막대 |
 
 상담 버튼(헤더, 첫 화면, 서비스·상품, 마무리 띠, PC 오른쪽 아래 노란 버튼, 모바일 하단 노란 바)은 모두 `CO.kakao`로 연결됩니다. 주소가 비어 있는 동안은 상담 안내 페이지로 갑니다.
+
+## 홈페이지 템플릿 (2026-11-26 요청)
+
+요청: 홈페이지 제작을 원하는 업체가 템플릿을 보고 기본 화면을 고를 수 있게, 서로 다른 느낌으로 20개 정도. 업체가 원하는 느낌을 말로만 설명하면 너무 추상적이라 고를 거리가 필요함.
+
+- 1차로 4개(T01~T04)를 만들고 목록 페이지(`templates/`)에 올림. 확인을 받은 뒤 나머지를 같은 방식으로 추가
+- 템플릿은 `templates/tNN/index.html` 한 파일에 CSS·JS를 모두 넣은 한 장짜리 화면입니다(빌드 없이 그대로 고침). 사이트 빌드(`node build.mjs`)는 목록 페이지만 만듭니다
+- 위쪽 안내 막대(`templates/tpl.css`): 템플릿 번호와 이름, '글과 사진은 예시', 템플릿 목록, 이 템플릿으로 상담(상담 안내 페이지)
+- 상호, 글, 가격, 전화번호(02-000-0000, 010-0000-0000), 주소(OO구)는 모두 지어낸 예시
+- 목록 데이터: `src/content.mjs`의 `TEMPLATES`(번호, 이름, 분위기 `f`, 어울리는 업종, 설명, 색, 글꼴)와 `TPL_MOODS`(깔끔한, 고급스러운, 강렬한, 따뜻한, 귀여운)
+- 목록의 화면 사진: `assets/img/tpl/tNN-pc.webp`(1440×900 화면을 960×600으로), `tNN-m.webp`(390×844 화면을 240×520으로). 안내 막대는 빼고 찍음. 템플릿을 고치면 다시 찍어야 함
+
+| 번호 | 이름 | 느낌과 화면 구성 | 예시 업종 | 글꼴 |
+| --- | --- | --- | --- | --- |
+| T01 | 여백 | 흰 바탕, 가는 글자, 아치형 사진, 진료 과목 목록, 오늘 요일이 표시되는 진료 시간표, 지금 진료 중인지 알려 주는 표시 | 피부과의원 | IBM Plex Sans KR |
+| T02 | 지면 | 잡지처럼 화면 너비 가득 큰 명조 제목, 넓게 펼친 사진과 작업별 위치·면적·기간, 진행 5단계, 상담 신청 폼 | 인테리어 스튜디오 | Noto Serif KR, Pretendard |
+| T03 | 물살 | 진한 파랑에 아주 큰 굵은 글자, 수영장 레인 줄 무늬 구분선, 레인별 반 안내, 요일별 시간표, 요금표 | 수영 교실 | Black Han Sans, Pretendard |
+| T04 | 오늘구움 | 분홍과 딸기색, 둥근 글자, 물결 테두리와 꽃 모양 사진, 지금 시각에 맞춘 '오늘 굽는 시간', 가격표가 붙은 메뉴 | 쿠키·디저트 가게 | Jua, Gowun Dodum |
+
+### 템플릿 사진 출처
+
+사진은 Unsplash 사진입니다(Unsplash 라이선스: 상업적으로 무료로 쓸 수 있고 출처 표기는 필요 없음). Unsplash 검색은 봇 확인 화면이 떠서 쓰지 않았고, Unsplash 사진을 모아 둔 Lorem Picsum(picsum.photos)에서 크기에 맞게 잘라 받아 WebP로 줄였습니다. 실제 업체 홈페이지에는 업체 사진을 씁니다.
+
+| 파일 (`templates/`) | 찍은 사람 | 원본 |
+| --- | --- | --- |
+| `t01/img/hero.webp` | Todd Quackenbush | https://unsplash.com/photos/JJB_K8aCPU4 |
+| `t01/img/dome.webp` | Drew Patrick Miller | https://unsplash.com/photos/VLT62-JzddA |
+| `t01/img/rest.webp` | David Mao | https://unsplash.com/photos/m0l5J8Lqnzo |
+| `t02/img/hero.webp` | Breather | https://unsplash.com/photos/DEdM9Vs6s8w |
+| `t02/img/frames.webp` | The Anchor | https://unsplash.com/photos/6hgsktgpfIE |
+| `t02/img/balcony.webp` | Dominik Martin | https://unsplash.com/photos/B6uUPYt7wz4 |
+| `t02/img/window.webp` | Logan Adermatt | https://unsplash.com/photos/VkF8pVVoFg0 |
+| `t02/img/desk.webp` | Aleksi Tappura | https://unsplash.com/photos/mCg0ZgD7BgU |
+| `t02/img/tools.webp` | Jeff Sheldon | https://unsplash.com/photos/8z2Q6XWLYa4 |
+| `t02/img/floor.webp` | Keith Misner | https://unsplash.com/photos/h0Vxgz5tyXA |
+| `t03/img/hero.webp` | Todd Quackenbush | https://unsplash.com/photos/E9PJO_vL3E8 |
+| `t03/img/under.webp` | Stefanus Martanto Setyo Husodo | https://unsplash.com/photos/74ytEYcOJDc |
+| `t04/img/hero.webp` | Olenka Kotyk | https://unsplash.com/photos/eqsEZNCm4-c |
+| `t04/img/cake.webp` | Annie Spratt | https://unsplash.com/photos/R3LcfTvcGWY |
+| `t04/img/rasp.webp` | Glen Carrie | https://unsplash.com/photos/FjjUVn_KHLU |
+| `t04/img/straw.webp` | veeterzy | https://unsplash.com/photos/OJJIaFZOeX4 |
+| `t04/img/yog.webp` | Jeffrey Deng | https://unsplash.com/photos/h6t2dbYgDuc |
+| `t04/img/latte.webp` | Carli Jean | https://unsplash.com/photos/UWRqlJcDCXA |
+| `t04/img/honey.webp` | Sonja Langford | https://unsplash.com/photos/RQHzRELE2Ss |
+| `t04/img/berries.webp` | Ben Moore | https://unsplash.com/photos/pJILiyPdrXI |
 
 ## 후기 이미지 (2026-11-16 받음, 96장)
 

@@ -201,7 +201,7 @@
     if (!box) return;
     var limit = +box.getAttribute('data-flt-limit') || 0, more = $('[data-flt-more="' + id + '"]'), open = !limit, v = 'all';
     var apply = function () {
-      $$('[data-f]', box).forEach(function (it, i) { it.hidden = (v !== 'all' && it.getAttribute('data-f') !== v) || (v === 'all' && !open && i >= limit); });
+      $$('[data-f]', box).forEach(function (it, i) { it.hidden = (v !== 'all' && (' ' + it.getAttribute('data-f') + ' ').indexOf(' ' + v + ' ') < 0) || (v === 'all' && !open && i >= limit); });
       if (more) more.parentNode.hidden = open || v !== 'all';
     };
     btns.forEach(function (b) {

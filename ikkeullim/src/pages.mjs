@@ -1,5 +1,5 @@
 /* 페이지: 홈, 회사소개, 서비스, 포트폴리오, 상품 안내, 고객후기, FAQ, 상담신청, 404 */
-import { CO, PH, SERVICES, WHY, METHOD, NAVER, PROCESS, ROLE, STORIES, VOICES, REVIEWS, TALK_TAGS, TALKS, INQUIRIES, WORK_CATS, WORKS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META } from './content.mjs';
+import { CO, PH, SERVICES, WHY, METHOD, NAVER, PROCESS, ROLE, STORIES, VOICES, REVIEWS, TALK_TAGS, TALKS, INQUIRIES, WORK_CATS, WORKS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META, TEMPLATES, TPL_MOODS } from './content.mjs';
 import { esc, br, ph, val, telHref, pad, icon, mark, btn, kakaoBtn, kakaoHref, secHead, page, pageHead, ctaBand } from './layout.mjs';
 
 const svc = id => SERVICES.find(s => s.id === id);
@@ -288,7 +288,7 @@ export function services(c) {
       <p>${s.text}</p>
       <ul class="srv-points">${s.points.map(p => `<li>${icon('check')}${p}</li>`).join('')}</ul>
       <div class="srv-detail">${ph('세부 작업 내용 · 성과 (이미지 분석 후 채움)')}</div>
-      ${kakaoBtn(c, '이 서비스 카카오톡 상담', { variant: i === 0 ? 'primary' : 'ghost' })}
+      ${s.id === 'web' ? `<div class="srv-btns">${btn(c.url('templates/'), '홈페이지 템플릿 보기', { variant: 'primary' })}${kakaoBtn(c, '이 서비스 카카오톡 상담', { variant: 'ghost' })}</div>` : kakaoBtn(c, '이 서비스 카카오톡 상담', { variant: i === 0 ? 'primary' : 'ghost' })}
     </div>
   </div>
 </section>`).join('');
@@ -310,9 +310,42 @@ export function portfolio(c) {
   <div class="wrap">
     ${secHead({ title: '홈페이지 · 블로그 디자인 제작 사례', sub: '제작 사례 이미지를 받으면 채울 자리입니다.' })}
     <ul class="work-grid">${Array.from({ length: 3 }, (_, i) => `<li class="work" data-reveal><div class="work-shot"><span>${icon('image')}제작 사례 ${pad(i + 1)}</span></div><p class="work-name">${ph('업체 · 업종')}</p></li>`).join('')}</ul>
+    <p class="work-tpl">홈페이지를 새로 만드신다면 <a href="${c.url('templates/')}">홈페이지 템플릿 ${TEMPLATES.length}개</a>에서 기본 화면을 먼저 골라 보세요.</p>
   </div>
 </section>`;
   return page(c, { title: '포트폴리오', desc: META.portfolio, bodyClass: 'p-portfolio', body: pageHead(c, { kicker: '포트폴리오', title: ['검색 첫 화면이', '증명합니다'], lede: '이끌림이 쓴 글이 실제 네이버 검색 결과에 오른 화면입니다. 업종을 골라 보세요.' }) + gallery + works + ctaBand(c) + lightbox() });
+}
+
+/* ================= 홈페이지 템플릿 ================= */
+const MOOD_NAME = Object.fromEntries(TPL_MOODS);
+const tplCard = (c, t) => `<li class="tp" id="${t.slug}" data-f="${t.f.join(' ')}" data-reveal>
+  <a class="tp-shot" href="${c.url('templates/' + t.slug + '/')}" aria-label="${t.no} ${esc(t.name)} 미리보기">
+    <img class="tp-pc" src="${c.asset('img/tpl/' + t.slug + '-pc.webp')}" width="960" height="600" alt="" loading="lazy" decoding="async">
+    <img class="tp-m" src="${c.asset('img/tpl/' + t.slug + '-m.webp')}" width="240" height="520" alt="" loading="lazy" decoding="async">
+  </a>
+  <div class="tp-body">
+    <p class="tp-name"><span class="tp-no">${t.no}</span>${esc(t.name)}</p>
+    <p class="tp-moods">${t.f.map(f => `<span>${MOOD_NAME[f]}</span>`).join('')}</p>
+    <p class="tp-desc">${esc(t.desc)}</p>
+    <dl class="tp-meta"><div><dt>어울리는 업종</dt><dd>${esc(t.fit)}</dd></div><div><dt>색</dt><dd class="tp-colors">${t.colors.map(x => `<i style="background:${x}" title="${x}"></i>`).join('')}</dd></div><div><dt>글꼴</dt><dd>${esc(t.font)}</dd></div></dl>
+    <a class="btn btn-ghost tp-go" href="${c.url('templates/' + t.slug + '/')}">${t.no} 미리보기</a>
+  </div>
+</li>`;
+export function templates(c) {
+  const moods = TPL_MOODS.map(([v, n]) => [v, n, TEMPLATES.filter(t => t.f.includes(v)).length]).filter(m => m[2]);
+  const how = `<section class="sec sec-first">
+  <div class="wrap">
+    <ol class="tp-how" aria-label="템플릿으로 홈페이지 만드는 순서">
+      <li><b>미리보기</b><span>PC와 휴대폰에서 실제 화면처럼 넘겨 봅니다.</span></li>
+      <li><b>번호 고르기</b><span>마음에 드는 번호를 카카오톡으로 알려 주세요. 두세 개를 섞어도 됩니다.</span></li>
+      <li><b>업체 내용으로 제작</b><span>상호, 글, 사진, 색을 업체에 맞게 바꾸고 필요한 페이지를 더합니다.</span></li>
+    </ol>
+    ${filterBar('tp', '분위기 골라 보기', moods, TEMPLATES.length)}
+    <ul class="tp-list" data-flt-items="tp">${TEMPLATES.map(t => tplCard(c, t)).join('')}</ul>
+    <p class="tp-note">템플릿의 상호, 글, 가격, 전화번호는 모두 지어낸 예시입니다. 사진은 상업적으로 쓸 수 있는 무료 사진(Unsplash)이고, 실제 제작 때는 업체 사진으로 바꿉니다.</p>
+  </div>
+</section>`;
+  return page(c, { title: '홈페이지 템플릿', desc: META.templates, bodyClass: 'p-templates', body: pageHead(c, { kicker: '홈페이지 템플릿', title: ['마음에 드는 화면을', '먼저 골라 보세요'], lede: '원하는 느낌을 말로 설명하기 어려우시면, 아래 템플릿에서 번호로 골라 주세요. 그 화면을 기본으로 업체에 맞게 만들어 드립니다.' }) + how + ctaBand(c) });
 }
 
 /* ================= 상품 안내 ================= */
