@@ -1,5 +1,5 @@
 /* 페이지: 홈, 회사소개, 서비스, 포트폴리오, 상품 안내, 고객후기, FAQ, 상담신청, 404 */
-import { CO, PH, SERVICES, WHY, METHOD, NAVER, PROCESS, ROLE, STORIES, VOICES, REVIEWS, TALK_TAGS, TALKS, INQUIRIES, WORK_CATS, WORKS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META, TEMPLATES, TPL_MOODS } from './content.mjs';
+import { CO, PH, SERVICES, WHY, METHOD, NAVER, PROCESS, ROLE, STORIES, VOICES, REVIEWS, TALK_TAGS, TALKS, INQUIRIES, WORK_CATS, WORKS, REVIEW_SLOTS, REVIEW_PICKS, INDUSTRIES, PRICING, FAQ, CONTACT, META, TEMPLATES, TPL_MOODS, TPL_FEATURES } from './content.mjs';
 import { esc, br, ph, val, telHref, pad, icon, mark, btn, kakaoBtn, kakaoHref, secHead, page, pageHead, ctaBand } from './layout.mjs';
 
 const svc = id => SERVICES.find(s => s.id === id);
@@ -325,7 +325,7 @@ const tplCard = (c, t) => `<li class="tp" id="${t.slug}" data-f="${t.f.join(' ')
     <p class="tp-moods">${t.f.map(f => `<span>${MOOD_NAME[f]}</span>`).join('')}</p>
     <p class="tp-desc">${esc(t.desc)}</p>
     <dl class="tp-meta"><div><dt>어울리는 업종</dt><dd>${esc(t.fit)}</dd></div><div><dt>색</dt><dd class="tp-colors">${t.colors.map(x => `<i style="background:${x}" title="${x}"></i>`).join('')}</dd></div><div><dt>글꼴</dt><dd>${esc(t.font)}</dd></div></dl>
-    <a class="btn btn-ghost tp-go" href="${c.url('portfolio/templates/' + t.slug + '/')}">${t.no} 미리보기</a>
+    <div class="tp-btns"><a class="btn btn-ghost" href="${c.url('portfolio/templates/' + t.slug + '/')}">${t.no} 미리보기</a><a class="btn btn-ghost" href="?pick=${t.slug}#pick" data-pick="${t.slug}">이 템플릿 고르기</a></div>
   </div>
 </li>`;
 export function templates(c) {
@@ -334,7 +334,7 @@ export function templates(c) {
   <div class="wrap">
     <ol class="tp-how" aria-label="템플릿으로 홈페이지 만드는 순서">
       <li><b>미리보기</b><span>PC와 휴대폰에서 실제 화면처럼 넘겨 봅니다.</span></li>
-      <li><b>번호 고르기</b><span>마음에 드는 번호를 카카오톡으로 알려 주세요. 두세 개를 섞어도 됩니다.</span></li>
+      <li><b>번호와 기능 고르기</b><span>마음에 드는 템플릿을 고르고, 아래에서 넣고 싶은 기능에 체크해 카카오톡으로 보내 주세요.</span></li>
       <li><b>업체 내용으로 제작</b><span>상호, 글, 사진, 색을 업체에 맞게 바꾸고 필요한 페이지를 더합니다.</span></li>
     </ol>
     ${filterBar('tp', '분위기 골라 보기', moods, TEMPLATES.length)}
@@ -342,7 +342,27 @@ export function templates(c) {
     <p class="tp-note">템플릿의 상호, 글, 가격, 전화번호는 모두 지어낸 예시입니다. 사진은 상업적으로 쓸 수 있는 무료 사진(Unsplash)이고, 실제 제작 때는 업체 사진으로 바꿉니다.</p>
   </div>
 </section>`;
-  return page(c, { title: '홈페이지 템플릿', desc: META.templates, bodyClass: 'p-templates', body: pageHead(c, { kicker: '포트폴리오 · 홈페이지 템플릿', title: ['마음에 드는 화면을', '먼저 골라 보세요'], lede: '원하는 느낌을 말로 설명하기 어려우시면, 아래 템플릿에서 번호로 골라 주세요. 그 화면을 기본으로 업체에 맞게 만들어 드립니다.' }) + pfTabs(c, 'tpl') + how + ctaBand(c) });
+  const tname = Object.fromEntries(TEMPLATES.map(t => [t.slug, t]));
+  const pick = `<section class="sec sec-alt" id="pick" aria-labelledby="pick-title">
+  <div class="wrap">
+    ${secHead({ title: ['필요한 기능을', '골라 보세요'], sub: '템플릿으로 모양을 골랐다면, 이제 넣고 싶은 기능에 체크하세요. 기능마다 넣을지와 비용은 상담하면서 함께 정합니다.', id: 'pick-title' })}
+    <div class="pk" data-pick-root data-kakao="${esc(kakaoHref(c))}">
+      <div class="pk-main">
+        <label class="pk-tpl"><span>템플릿</span><select data-pick-tpl><option value="">아직 안 골랐어요</option>${TEMPLATES.map(t => `<option value="${t.slug}">${t.no} ${esc(t.name)} · ${esc(t.fit.split(',')[0])}</option>`).join('')}</select></label>
+        ${TPL_FEATURES.map(g => `<fieldset class="pk-group"><legend>${g.g}</legend><ul>${g.items.map(f => `<li><label class="pk-item"><input type="checkbox" value="${f.id}" data-name="${esc(f.name)}"><span class="pk-box" aria-hidden="true">${icon('check')}</span><span class="pk-txt"><b>${esc(f.name)}<em>상담 후 결정</em></b><small>${esc(f.desc)}</small></span></label>${f.ex.length ? `<p class="pk-ex">예시 ${f.ex.map(x => `<a href="${c.url('portfolio/templates/' + x + '/')}">${tname[x].no} ${esc(tname[x].name)}</a>`).join('')}</p>` : ''}</li>`).join('')}</ul></fieldset>`).join('')}
+      </div>
+      <aside class="pk-sum" aria-label="고른 내용">
+        <p class="pk-sum-t">고른 내용</p>
+        <dl><div><dt>템플릿</dt><dd data-pick-out-tpl>아직 안 골랐어요</dd></div><div><dt>기능</dt><dd data-pick-out-f>아직 안 골랐어요</dd></div></dl>
+        <p class="pk-sum-note">고른 내용을 복사해 카카오톡 상담 창에 붙여 넣어 보내 주세요. 포함 여부와 비용은 상담 후 정합니다.</p>
+        <button type="button" class="btn btn-primary btn-block" data-pick-send>${icon('chat', 'ic-chat')}<span>복사하고 카카오톡 열기</span></button>
+        <button type="button" class="pk-reset" data-pick-reset>다시 고르기</button>
+        <p class="pk-msg" data-pick-msg aria-live="polite"></p>
+      </aside>
+    </div>
+  </div>
+</section>`;
+  return page(c, { title: '홈페이지 템플릿', desc: META.templates, bodyClass: 'p-templates', body: pageHead(c, { kicker: '포트폴리오 · 홈페이지 템플릿', title: ['마음에 드는 화면을', '먼저 골라 보세요'], lede: '원하는 느낌을 말로 설명하기 어려우시면, 아래 템플릿에서 번호로 골라 주세요. 그 화면을 기본으로 업체에 맞게 만들어 드립니다.' }) + pfTabs(c, 'tpl') + how + pick + ctaBand(c) });
 }
 
 /* ================= 상품 안내 ================= */

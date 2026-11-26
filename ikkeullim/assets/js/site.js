@@ -263,3 +263,41 @@
     });
   }
 })();
+
+/* 홈페이지 템플릿: 템플릿과 기능 고르기 → 복사하고 카카오톡 열기 */
+(function () {
+  var root = document.querySelector('[data-pick-root]'); if (!root) return;
+  var sel = root.querySelector('[data-pick-tpl]'), boxes = [].slice.call(root.querySelectorAll('.pk-item input'));
+  var outT = root.querySelector('[data-pick-out-tpl]'), outF = root.querySelector('[data-pick-out-f]'), msg = root.querySelector('[data-pick-msg]');
+  var none = '아직 안 골랐어요', reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function picked() { return boxes.filter(function (b) { return b.checked; }).map(function (b) { return b.dataset.name; }); }
+  function update() {
+    outT.textContent = sel.value ? sel.options[sel.selectedIndex].text : none;
+    var f = picked(); outF.textContent = f.length ? f.join(', ') : none; msg.textContent = '';
+  }
+  function text() {
+    var f = picked();
+    return '안녕하세요, 이끌림 홈페이지 보고 연락드립니다.\n홈페이지 템플릿: ' + (sel.value ? sel.options[sel.selectedIndex].text : '아직 못 골랐어요') +
+      '\n원하는 기능: ' + (f.length ? f.join(', ') : '상담하면서 정할게요') + '\n(기능 포함 여부와 비용은 상담 후 결정)\n상호: \n업종: ';
+  }
+  sel.addEventListener('change', update);
+  boxes.forEach(function (b) { b.addEventListener('change', update); });
+  var m = location.search.match(/[?&]pick=(t\d+)/); if (m && sel.querySelector('option[value="' + m[1] + '"]')) sel.value = m[1];
+  document.querySelectorAll('[data-pick]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault(); sel.value = a.dataset.pick; update();
+      document.getElementById('pick').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
+      try { sel.focus({ preventScroll: true }); } catch (err) {}
+      try { history.replaceState(null, '', '?pick=' + a.dataset.pick + '#pick'); } catch (err) {}
+    });
+  });
+  root.querySelector('[data-pick-send]').addEventListener('click', function () {
+    var t = text(), url = root.dataset.kakao;
+    var done = function () { msg.textContent = '복사했습니다. 열린 카카오톡 창에 붙여 넣어 보내 주세요.'; };
+    var fail = function () { msg.textContent = '복사가 안 되면 아래 내용을 직접 보내 주세요.\n\n' + t; };
+    try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, fail); else fail(); } catch (err) { fail(); }
+    if (/^https?:/.test(url)) window.open(url, '_blank', 'noopener'); else location.href = url;
+  });
+  root.querySelector('[data-pick-reset]').addEventListener('click', function () { sel.value = ''; boxes.forEach(function (b) { b.checked = false; }); update(); });
+  update();
+})();
