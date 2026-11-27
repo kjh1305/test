@@ -25,7 +25,7 @@ export const CO = {
   phone: '010-5478-4364',
   email: 'wormsdl5@nate.com',
   address: '경기도 수원시 권선구 상탑로 102, 1층',
-  ceo: '심재근',
+  ceo: '박미용',
   bizNo: '135-24-80553',  // 사업자등록증(2026-11-24 받음)의 등록번호. 건설업 면허는 없음
   hours: '24시간 연중무휴',
   blog: 'https://m.blog.naver.com/tk51123',
